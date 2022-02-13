@@ -1,0 +1,53 @@
+<form nz-form nzLayout="vertical" #filterHookLinkForm="ngForm">
+    <div class="row">
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="target">{{
+                    "hook.link.customer-partner" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <search-and-suggest-account-component [(ngModel)]="selectedUser" ngDefaultControl
+                        [ngModelOptions]="{ standalone: true }" #userValue="ngModel" [allowCustomer]="true"
+                        [allowServicer]="true" [placeHolder]="
+                            ('common.code' | translate) +
+                            '/' +
+                            ('common.name' | translate) +
+                            '/' +
+                            ('common.phone' | translate)
+                        ">
+                    </search-and-suggest-account-component>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="types">{{
+                    "common.type" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select [(ngModel)]="modelQuery.types" [nzPlaceHolder]="'filter.all' | translate" name="types"
+                        nzMode="multiple" nzAllowClear>
+                        <nz-option *ngFor="let item of types" [nzLabel]="
+                                'hook.hook-type-type.' + item | translate
+                            " [nzValue]="item">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-2">
+            <nz-form-item>
+                <nz-form-label class="form-label form-label--empty"></nz-form-label>
+                <nz-form-control>
+                    <button ad-button nzColor="red" (click)="search()">
+                        {{ "button.find" | translate }}
+                    </button>
+                    &nbsp;
+                    <button ad-button (click)="reset()">
+                        {{ "button.reset" | translate }}
+                    </button>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+</form>

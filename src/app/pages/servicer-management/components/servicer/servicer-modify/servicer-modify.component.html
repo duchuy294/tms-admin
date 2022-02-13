@@ -1,0 +1,608 @@
+<nz-modal nzWidth="900px" [nzVisible]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal()" [nzClosable]="false" [nzMaskClosable]="false">
+    <ng-template #modalTitle>
+        {{
+        model?._id
+        ? model?.fullName
+        : ("button.create-servicer" | translate)
+        }}
+    </ng-template>
+
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #servicerForm="ngForm">
+            <div class="row">
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "common.servicer-type" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-select [(ngModel)]="model.type" (ngModelChange)="changeType($event)" name="type"
+                                style="width: 100%" required>
+                                <nz-option *ngFor="let type of servicerTypes" [nzLabel]="
+                                        'servicer.type.' + type | translate
+                                    " [nzValue]="type">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-4" *ngIf="isEnterpriseStaffServicer">
+                    <nz-form-item>
+                        <nz-form-label nzFor="enterpriseId" nzRequired>
+                            {{
+                            "servicer.servicer.enterprise-name" | translate
+                            }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-select style="width: 100%" [(ngModel)]="model.enterpriseId"
+                                (ngModelChange)="updateEnterprise()" name="enterpriseId" [nzDisabled]="model?._id"
+                                required>
+                                <nz-option *ngFor="let enterprise of enterprises" [nzLabel]="enterprise.fullName"
+                                    [nzValue]="enterprise._id">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+
+            <nz-tabset [nzType]="'card'" [(nzSelectedIndex)]="selectedIndex">
+                <nz-tab [nzTitle]="'label.account-information' | translate">
+                    <div class="row">
+                        <div class="col-8">
+                            <nz-form-item>
+                                <ng-template [ngIf]="isEnterpriseServicer">
+                                    <nz-form-label nzRequired>
+                                        {{
+                                        "servicer.servicer.enterprise-name"
+                                        | translate
+                                        }}
+                                    </nz-form-label>
+                                </ng-template>
+                                <ng-template [ngIf]="!isEnterpriseServicer">
+                                    <nz-form-label nzRequired>
+                                        {{ "common.full-name" | translate }}
+                                    </nz-form-label>
+                                </ng-template>
+                                <nz-form-control>
+                                    <input nz-input name="fullName" [(ngModel)]="model.fullName" required
+                                        #fullName="ngModel" />
+                                    <nz-form-explain *ngIf="
+                                            (fullName.dirty ||
+                                                fullName.touched) &&
+                                            fullName.errors?.required
+                                        ">
+                                        {{
+                                        "validations-form.fullName.required"
+                                        | translate
+                                        }}
+                                    </nz-form-explain>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-4">
+                            <nz-form-item>
+                                <nz-form-label nzRequired>
+                                    {{ "table.phone-number" | translate }}
+                                </nz-form-label>
+                                <nz-form-control>
+                                    <input type="text" nz-input name="phone" [(ngModel)]="model.phone" #phone="ngModel"
+                                        required minlength="10" maxlength="12" />
+                                    <nz-form-explain *ngIf="
+                                            (phone.dirty || phone.touched) &&
+                                            phone.errors?.required
+                                        ">
+                                        {{
+                                        "validations-form.phone.required"
+                                        | translate
+                                        }}</nz-form-explain>
+                                    <nz-form-explain *ngIf="
+                                            (phone.dirty || phone.touched) &&
+                                            phone.errors?.minlength
+                                        ">
+                                        {{
+                                        "validations-form.phone.minlength"
+                                        | translate: { min: 10 }
+                                        }}
+                                    </nz-form-explain>
+                                    <nz-form-explain *ngIf="
+                                            (phone.dirty || phone.touched) &&
+                                            phone.errors?.maxlength
+                                        ">
+                                        {{
+                                        "validations-form.phone.maxlength"
+                                        | translate: { max: 12 }
+                                        }}
+                                    </nz-form-explain>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-4">
+                            <nz-form-item>
+                                <nz-form-label nzRequired>
+                                    {{ "common.email" | translate }}
+                                </nz-form-label>
+                                <nz-form-control>
+                                    <input nz-input name="email" [(ngModel)]="model.email" #email="ngModel" required
+                                        email />
+                                    <nz-form-explain *ngIf="
+                                            (email.dirty || email.touched) &&
+                                            email.errors?.required
+                                        ">
+                                        {{
+                                        "validations-form.email.required"
+                                        | translate
+                                        }}
+                                    </nz-form-explain>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-4" *ngIf="!model?._id">
+                            <nz-form-item>
+                                <nz-form-label nzRequired>
+                                    {{ "table.password" | translate }}
+                                </nz-form-label>
+                                <nz-form-control [ngClass]="{
+                                        'has-error':
+                                            (password.dirty ||
+                                                password.touched) &&
+                                            password.errors
+                                    }">
+                                    <input type="password" nz-input name="password" [(ngModel)]="model.password"
+                                        #password="ngModel" required
+                                        pattern="^(?=.*[A-Za-z@$!%*#?&])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$" />
+                                    <nz-form-explain *ngIf="
+                                            (password.dirty ||
+                                                password.touched) &&
+                                            password.errors?.required
+                                        ">
+                                        {{
+                                        "validations-form.password.required"
+                                        | translate
+                                        }}
+                                    </nz-form-explain>
+                                    <nz-form-explain *ngIf="
+                                            (password.dirty ||
+                                                password.touched) &&
+                                            password.errors?.pattern
+                                        ">
+                                        {{
+                                        "settings.createAccount.invalid-password"
+                                        | translate
+                                        }}
+                                    </nz-form-explain>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-4">
+                            <nz-form-item>
+                                <nz-form-label>
+                                    {{ "table.identity-number" | translate }}
+                                </nz-form-label>
+                                <nz-form-control>
+                                    <input type="text" nz-input name="identityNumber" [(ngModel)]="model.identityNumber"
+                                        #identityNumber="ngModel" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-4" *ngIf="!model._id && !isEnterpriseStaffServicer">
+                            <nz-form-item>
+                                <nz-form-label>
+                                    {{ "common.the-referrer" | translate }}
+                                </nz-form-label>
+                                <nz-form-control>
+                                    <nz-select [(ngModel)]="model.referralId" nzShowSearch nzAllowClear id="referralId"
+                                        name="referralId" [nzPlaceHolder]="
+                                            'common.the-referrer' | translate
+                                        " [nzServerSearch]="true" (nzOnSearch)="searchServicer($event)"
+                                        #referralId="ngModel">
+                                        <nz-option *ngFor="let item of referrals" [nzLabel]="
+                                                (item.code | uppercase) +
+                                                ' - ' +
+                                                item.fullName
+                                            " [nzValue]="item._id">
+                                        </nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <address *ngIf="visibleModal" [forceRender]="rerenderAddress" [(model)]="model.address" #address>
+                    </address>
+                    <div class="row">
+                        <div class="col-4">
+                            <nz-form-item>
+                                <nz-form-label nzFor="">{{
+                                    "common.status" | translate
+                                    }}</nz-form-label>
+                                <nz-form-control>
+                                    <nz-select style="width: 100%" [(ngModel)]="model.status" name="status"
+                                        nzShowSearch>
+                                        <nz-option *ngFor="let item of statuses" [nzLabel]="
+                                                'common.status' + item
+                                                    | translate
+                                            " [nzValue]="item">
+                                        </nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <nz-form-item>
+                                <nz-form-label nzRequired>{{
+                                    "servicer.servicer-image.avatar" | translate
+                                    }}</nz-form-label>
+                                <nz-form-control>
+                                    <nz-file-uploader [nzFileList]="images" [nzData]="{ path: 'images' }" (nzChange)="
+                                            changeImages($event, 'images')
+                                        "></nz-file-uploader>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-6">
+                            <nz-form-item>
+                                <nz-form-label>
+                                    {{
+                                    "servicer.servicer-image.identity-card"
+                                    | translate
+                                    }}
+                                </nz-form-label>
+                                <nz-form-control>
+                                    <nz-file-uploader [nzFileList]="identityCardImages" [nzData]="{
+                                            path: 'identityCardImages'
+                                        }" (nzChange)="
+                                            changeImages(
+                                                $event,
+                                                'identityCardImages'
+                                            )
+                                        "></nz-file-uploader>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="
+                            isEnterpriseServicer;
+                            else personalServicerImagesField
+                        ">
+                        <div class="col-6">
+                            <nz-form-item>
+                                <nz-form-label>
+                                    {{
+                                    "servicer.servicer-image.business-certificate"
+                                    | translate
+                                    }}
+                                </nz-form-label>
+                                <nz-form-control>
+                                    <nz-file-uploader [nzFileList]="businessCertificateImages" [nzData]="{
+                                            path: 'businessCertificateImages'
+                                        }" (nzChange)="
+                                            changeImages(
+                                                $event,
+                                                'businessCertificateImages'
+                                            )
+                                        ">
+                                    </nz-file-uploader>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                </nz-tab>
+                <nz-tab *ngIf="!isEnterpriseStaffServicer" [nzTitle]="'label.finance' | translate">
+                    <div class="row" *ngIf="!isEnterpriseStaffServicer">
+                        <div class="col-4">
+                            <nz-form-item>
+                                <nz-form-label>
+                                    {{ "bank.account-number" | translate }}
+                                </nz-form-label>
+                                <nz-form-control>
+                                    <input type="text" nz-input name="accountNumber"
+                                        [(ngModel)]="model.bank.accountNumber" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-4">
+                            <nz-form-item>
+                                <nz-form-label>
+                                    {{ "bank.bank" | translate }}
+                                </nz-form-label>
+                                <nz-form-control>
+                                    <nz-select style="width: 100%" [(ngModel)]="model.bank.bank" name="bank"
+                                        #bank="ngModel" nzAllowClear="true">
+                                        <nz-option *ngFor="let item of banks" [nzLabel]="item" [nzValue]="item">
+                                        </nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-4">
+                            <nz-form-item>
+                                <nz-form-label>{{ "bank.customer-name" | translate }}:
+                                </nz-form-label>
+                                <nz-form-control>
+                                    <input type="text" nz-input name="customerName"
+                                        [(ngModel)]="model.bank.customerName" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-4">
+                            <nz-form-item>
+                                <nz-form-label>
+                                    {{ "bank.agency" | translate }}
+                                </nz-form-label>
+                                <nz-form-control>
+                                    <input type="text" nz-input name="agency" [(ngModel)]="model.bank.agency" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                </nz-tab>
+                <nz-tab [nzTitle]="'label.service' | translate">
+                    <div class="row">
+                        <div class="col-4">
+                            <nz-form-item>
+                                <nz-form-label nzRequired>
+                                    {{ "common.group" | translate }}
+                                </nz-form-label>
+                                <nz-form-control>
+                                    <nz-select style="width: 100%" id="group" name="groupId" [(ngModel)]="model.groupId"
+                                        nzShowSearch (ngModelChange)="updateGroup()"
+                                        [nzDisabled]="isEnterpriseStaffServicer">
+                                        <nz-option *ngFor="let item of groups" [nzValue]="item._id"
+                                            [nzLabel]="item.name">
+                                        </nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-8">
+                            <nz-form-item>
+                                <nz-form-label nzRequired>
+                                    {{ "table.team-servicer-name" | translate }}
+                                </nz-form-label>
+                                <nz-form-control>
+                                    <div class="formControlWithAction" style="width: 468px">
+                                        <nz-select style="width: 100%" id="team" name="team" [(ngModel)]="selectedTeam">
+                                            <nz-option *ngFor="
+                                                    let item of model.type == 3
+                                                        ? enterpriseTeams
+                                                        : teams
+                                                " [nzValue]="item" [nzLabel]="item.name"></nz-option>
+                                        </nz-select>
+                                        <button type="button" ad-button nzColor="red" (click)="addTeam()">
+                                            {{ "button.add" | translate }}
+                                        </button>
+                                        <button type="button" ad-button nzColor="red" (click)="addAllTeams()">
+                                            {{ "button.addAll" | translate }}
+                                        </button>
+                                    </div>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span class="badge badge-pill badge-info" *ngFor="let item of model.teams">
+                                <a target="_blank" routerLink="/pages/servicer-management/team/detail/{{
+                                        item._id
+                                    }}">{{ item.name }}</a>
+                                <i class="material-icons" (click)="removeTeam(item)">
+                                    cancel
+                                </i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <nz-form-item>
+                                <div *ngIf="!isEnterpriseStaffServicer">
+                                    <nz-form-label ngFor="notStaffServicer" nzRequired>
+                                        {{
+                                        "common.support-customer"
+                                        | translate
+                                        }}
+                                    </nz-form-label>
+                                </div>
+                                <div *ngIf="isEnterpriseStaffServicer">
+                                    <nz-form-label ngFor="staffServicer">
+                                        {{
+                                        "common.support-customer"
+                                        | translate
+                                        }}
+                                    </nz-form-label>
+                                </div>
+                                <nz-form-control>
+                                    <nz-select name="support-customer" nzMode="multiple"
+                                        [(ngModel)]="model.serveLevelIds" #serveLevel="ngModel" nzAllowClear
+                                        [required]="!isEnterpriseStaffServicer">
+                                        <ng-template ngFor let-item [ngForOf]="listUserLevel">
+                                            <nz-option [nzValue]="item._id" [nzLabel]="item.name"></nz-option>
+                                        </ng-template>
+                                    </nz-select>
+                                    <ng-template [ngIf]="!isEnterpriseStaffServicer">
+                                        <nz-form-explain *ngIf="
+                                                (serveLevel.dirty ||
+                                                    serveLevel.touched) &&
+                                                serveLevel.errors?.required
+                                            ">
+                                            {{
+                                            "validations-form.support-customer.required"
+                                            | translate
+                                            }}
+                                        </nz-form-explain>
+                                    </ng-template>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <ng-template [ngIf]="!isEnterpriseStaffServicer">
+                        <div class="vehicle__list">
+                            <div class="vehicle__item" *ngFor="
+                                    let item of vehicles | keys;
+                                    let i = index
+                                ">
+                                <h3 class="vehicle__heading">
+                                    {{ "common.vehicle" | translate }}
+                                    {{ i + 1 }}
+                                    <span *ngIf="
+                                            isPersonalServicer &&
+                                            vehicleActive &&
+                                            vehicleActive === item.key
+                                        " class="vehicle__title__active">
+                                        ({{ "vehicle.in-use" | translate }})
+                                    </span>
+                                    <span class="vehicle__active__remove">
+                                        <a *ngIf="
+                                                isPersonalServicer &&
+                                                ((vehicleActive &&
+                                                    vehicleActive !==
+                                                        item.key) ||
+                                                    !vehicleActive)
+                                            " (click)="activeVehicle(item.key)">{{ "vehicle.use" | translate }} |
+                                        </a>
+                                        <a (click)="removeVehicle(item.key)">{{
+                                            "common.delete" | translate
+                                            }}</a>
+                                    </span>
+                                </h3>
+
+                                <div class="vehicle__content">
+                                    <vehicle-item [vehicle]="vehicle" [(model)]="vehicles[item.key]"></vehicle-item>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button ad-button nzColor="red" (click)="addVehicle()">
+                                    {{ "vehicle.add" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template [ngIf]="isEnterpriseStaffServicer">
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="vehicle__heading">
+                                    {{ "common.vehicle" | translate }}
+                                </h3>
+                                <nz-form-item>
+                                    <nz-form-control>
+                                        <div class="formControlWithAction">
+                                            <nz-select [(ngModel)]="vehicleStaff" name="vehicle" nzAllowClear>
+                                                <nz-option *ngFor="
+                                                        let item of enterpriseVehicles
+                                                    " [nzLabel]="
+                                                        vehicleParentName[
+                                                            item._id
+                                                        ] +
+                                                        ' | ' +
+                                                        item.name +
+                                                        ' | ' +
+                                                        item.number
+                                                    " [nzValue]="item._id">
+                                                </nz-option>
+                                            </nz-select>
+                                            <button type="button" ad-button nzColor="red" (click)="
+                                                    addVehicleEnterpriseStaff()
+                                                ">
+                                                {{ "button.add" | translate }}
+                                            </button>
+                                            <button type="button" ad-button nzColor="red" (click)="
+                                                    addVehicleEnterpriseStaff(
+                                                        'all'
+                                                    )
+                                                ">
+                                                {{
+                                                "button.addAll" | translate
+                                                }}
+                                            </button>
+                                        </div>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                        <nz-table #vehiclesStaff [nzData]="vehiclesEnterPriseStaff | keys" [nzLoading]="loading">
+                            <thead>
+                                <tr>
+                                    <th>{{ "table.vehicle" | translate }}</th>
+                                    <th>{{ "table.capacity" | translate }}</th>
+                                    <th>
+                                        {{ "table.name-vehicle" | translate }}
+                                    </th>
+                                    <th>
+                                        {{ "table.vehicle-number" | translate }}
+                                    </th>
+                                    <th>
+                                        {{ "table.active-vehicle" | translate }}
+                                    </th>
+                                    <th>
+                                        {{ "table.delete-vehicle" | translate }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of vehiclesStaff.data">
+                                    <td>
+                                        {{ vehicleParentName[data.value._id] }}
+                                    </td>
+                                    <td>
+                                        {{ capacityVehicles[data.value._id] }}
+                                    </td>
+                                    <td>{{ data.value.name }}</td>
+                                    <td>{{ data.value.number }}</td>
+                                    <td>
+                                        <nz-switch [nzLoading]="loadingStatusActive" [name]="
+                                                'activeVehicle' + data.value._id
+                                            " [ngModel]="
+                                                vehicleStatuses[data.value._id]
+                                            " [nzControl]="true" (click)="
+                                                onActiveStaffVehicle(
+                                                    data.value._id
+                                                )
+                                            "></nz-switch>
+                                    </td>
+                                    <td class="vehicle__delete__cursor" (click)="
+                                            removeStaffVehicle(data.value._id)
+                                        ">
+                                        {{ "button.clear" | translate }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </nz-table>
+                    </ng-template>
+                </nz-tab>
+            </nz-tabset>
+        </form>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div style="width: 350px; margin: 0 auto;">
+            <div class="buttonActions">
+                <button ad-button nzColor="primary" (click)="confirm()">
+                    {{ "button.yes" | translate }}
+                </button>
+                <button ad-button nzColor="gray" (click)="close()">
+                    {{ "button.cancel" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>
+
+<ng-template #personalServicerImagesField>
+    <div class="row">
+        <div class="col-6">
+            <nz-form-item>
+                <nz-form-label>{{
+                    "servicer.servicer-image.driver-license" | translate
+                    }}</nz-form-label>
+                <nz-form-control>
+                    <nz-file-uploader [nzFileList]="driverLicenseImages" [nzData]="{ path: 'driverLicenseImages' }"
+                        (nzChange)="changeImages($event, 'driverLicenseImages')"></nz-file-uploader>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+</ng-template>

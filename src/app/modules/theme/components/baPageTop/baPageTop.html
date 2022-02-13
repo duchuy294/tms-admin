@@ -1,0 +1,137 @@
+<div class="page-top clearfix" baScrollPosition maxHeight="50" (scrollChange)="scrolledChanged($event)">
+    <a routerLink="/" class="al-logo clearfix">
+        <img [hidden]="isMenuCollapsed" src="assets/images/logo-white.png" />
+        <!-- <img [hidden]="!isMenuCollapsed" src="assets/images/logo_short.png" /> -->
+    </a>
+    <div class="page-top__right">
+        <div>
+            <nz-badge [nzCount]="totalUnreadMessenger" nz-popover nzPopoverTrigger="click" nzPopoverPlacement="bottomRight"
+                [nzPopoverContent]="messenger" [nzPopoverOverlayStyle]="{left:'8px'}" [nzOverflowCount]="9"
+                [nzStyle]="{top:'5px',right:'-1px'}" (click)="loadMessenger()">
+                <i class="material-icons pointer">
+                    mail_outline
+                </i>
+            </nz-badge>
+            <ng-template #messenger>
+                <div infinite-scroll class="notification__content" [infiniteScrollDistance]="2"
+                    [infiniteScrollThrottle]="50" (scrolled)="loadMessenger(false)" [scrollWindow]="false">
+                    <ul *ngIf="messenger$.length" class="notification__list">
+                        <li [class]="(!item.seen)?'notification__item-unseen pointer':'notification__item pointer'"
+                            *ngFor="let item of messenger$" [routerLink]="['/pages/order', item.orderId,
+                                item.conversationId ]" (click)="seen(item)">
+                            <div class="notification__title">
+                                <span class="overflow">
+                                    <b>{{item.name}}</b><br>
+                                    <b>{{'common.orderCode' | translate}}</b>: {{item.orderCode}}
+                                </span>
+                                <small>{{ item.createdAt | date:'HH:mm dd/MM/yyyy' }}</small>
+                            </div>
+                        </li>
+                    </ul>
+                    <p *ngIf="!messenger$.length" class="notification__not-found">
+                        <ng-template [ngIf]="!isLoadingNotification">
+                            <img src="assets/icon/icon-notification.svg"
+                                [alt]="'notification.no-message' | translate" /><br />
+                            {{ 'notification.no-message' | translate }}
+                        </ng-template>
+                        <img *ngIf="isLoadingNotification" class="notification__loading"
+                            src="assets/images/lazy-loading.svg" />
+                    </p>
+                </div>
+                <a class="notification__view-all"
+                    [routerLink]="['/pages/notification']">{{ 'button.viewAll' | translate }}</a>
+            </ng-template>
+        </div>
+        <div>
+            <nz-badge [nzCount]="totalUnreadNotification" nz-popover nzPopoverTrigger="click" nzPopoverPlacement="bottomRight"
+                [nzPopoverContent]="notification" [nzPopoverOverlayStyle]="{left:'8px'}" [nzOverflowCount]="9"
+                [nzStyle]="{top: '5px',right:'-1px'}" (click)="loadNotifications()">
+                <i class="material-icons pointer">
+                    notifications_none
+                </i>
+            </nz-badge>
+            <ng-template #notification>
+                <div infinite-scroll class="notification__content" [infiniteScrollDistance]="2"
+                    [infiniteScrollThrottle]="50" (scrolled)="loadNotifications(false)" [scrollWindow]="false">
+                    <ul *ngIf="notifications$.length" class="notification__list">
+                        <li [class]="(!item.seen)?'notification__item-unseen pointer':'notification__item pointer'"
+                            *ngFor="let item of notifications$" [routerLink]="setRouterLink(item)" (click)="seen(item)">
+                            <div class="notification__title">
+                                <span class="overflow">
+                                    <b>{{item.name}}</b><br>
+                                    <ng-template [ngIf]="item.type === 'created' || item.type === 'happenIncident'">
+                                        <b>{{'common.orderCode' | translate}}</b>: {{item.orderCode}}
+                                    </ng-template>
+                                </span>
+                                <small>{{ item.createdAt | date:'HH:mm dd/MM/yyyy' }}</small>
+                            </div>
+                        </li>
+                    </ul>
+                    <p *ngIf="!notifications$.length" class="notification__not-found">
+                        <ng-template [ngIf]="!isLoadingNotification">
+                            <img src="assets/icon/icon-bell.svg"
+                                [alt]="'notification.no-notification' | translate" /><br />
+                            {{ 'notification.no-notification' | translate }}
+                        </ng-template>
+                        <img *ngIf="isLoadingNotification" class="notification__loading"
+                            src="assets/images/lazy-loading.svg" />
+                    </p>
+                </div>
+                <a class="notification__view-all"
+                    [routerLink]="['/pages/notification']">{{ 'button.viewAll' | translate }}</a>
+            </ng-template>
+        </div>
+        <div>
+            <a nz-dropdown class="page-top__item" [nzDropdownMenu]="profileMenu" [nzPlacement]="'bottomRight'"
+                [routerLink]="['/pages/profile-info/profile']">
+                <nz-avatar nz-avatar nzIcon="user" [nzSrc]="(profile?.avatar)?profile.avatar:''" nzSize="small">
+                </nz-avatar>
+                <span>{{ profile?.fullName }}</span>
+            </a>
+            <nz-dropdown-menu #profileMenu="nzDropdownMenu">
+                <ul nz-menu>
+                    <li nz-menu-item>
+                        <a [routerLink]="['/pages/profile-info/profile']" style="display: flex;">
+                            <i class="material-icons">
+                                person
+                            </i>
+                            &nbsp;
+                            <div>
+                                {{ 'common.profile' | translate }}
+                            </div>
+                        </a>
+                    </li>
+                    <li nz-menu-item>
+                        <a (click)="signout()" style="display: flex;">
+                            <i class="material-icons">
+                                exit_to_app
+                            </i>
+                            &nbsp;
+                            <div>
+                                {{ 'common.signout' | translate }}
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </nz-dropdown-menu>
+        </div>
+        <div>
+            <a nz-dropdown class="page-top__item" [nzDropdownMenu]="languageMenu" [nzPlacement]="'bottomRight'">
+                <i class="material-icons">
+                    language
+                </i>
+            </a>
+            <nz-dropdown-menu #languageMenu="nzDropdownMenu">
+                <ul nz-menu>
+                    <li nz-menu-item>
+                        <a (click)="changeLanguage('vi', 'VN')">{{ 'common.vi' | translate}}</a>
+                    </li>
+                    <li nz-menu-item>
+                        <a (click)="changeLanguage('en', 'US')">{{ 'common.en' | translate}}</a>
+                    </li>
+                </ul>
+            </nz-dropdown-menu>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,91 @@
+<page-wrapper [nzTitle]="pageTitle">
+
+    <ng-template #pageTitle>
+        <div class="title">
+            {{ "warehouse.contact.information" | translate }}
+        </div>
+    </ng-template>
+    <div *ngIf="contact">
+        <nz-skeleton [nzActive]="true" [nzLoading]="loading" [nzTitle]="false" [nzParagraph]="{ rows: 15 }">
+            <span class="row">
+                <span class="col-6">
+                    <span style="font-weight: bold">{{'warehouse.contact.type' | translate}}: </span>
+                    <span>{{"order.type.sharingWarehouse" | translate}}</span></span>
+                <span class="col-6 text-left">
+                    <span style="font-weight: bold">{{'warehouse.contact.status-contact' | translate}}: </span>
+                    <nz-tag [nzColor]="CONTACT_STATUS_COLOR[contact.status]">
+                        {{ 'warehouse.contact-status.' + contact.status | translate }}</nz-tag>
+                </span>
+            </span>
+            <span class="row">
+                <span class="col-6"><span style="font-weight: bold">{{'table.create-date' | translate}}: </span>
+                    <span *ngIf="contact.createdAt">{{contact.createdAt | date: "HH:mm dd/MM/yyyy"}} </span>
+                </span>
+                <span class="col-6 text-left"><span
+                        style="font-weight:bold">{{'warehouse.warehouse-order.operator' | translate}}: </span><span
+                        *ngIf="processedStaff"> {{ processedStaff?.fullName }}</span></span>
+            </span>
+            <div class="row">
+                <span class="col-6"><span style="font-weight: bold">
+                        {{'common.customer' | translate}}: </span>
+                    <span>
+                        <a target="_blank"
+                            routerLink="/pages/customer-management/personal/detail/{{contact.userId}}">{{ contact.renterContact?.name }}</a>
+                    </span>
+                </span>
+                <span class="col-6 text-left">
+                    <span style="font-weight:bold">{{'warehouse.warehouse-order.host' | translate}}: </span><span> <a
+                            target="_blank"
+                            routerLink="/pages/customer-management/personal/detail/{{contact.hostId}}">{{contact.hostContact?.name}}</a></span>
+                </span>
+            </div>
+            <div class="row">
+                <span class="col-6"><span style="font-weight:bold">{{'common.phone' | translate}}: </span>
+                    <span>{{contact.renterContact?.phone}}</span></span>
+                <span class="col-6 text-left"><span style="font-weight:bold">{{'common.phone' | translate}}: </span>
+                    <span>{{contact.hostContact?.phone}}</span>
+                </span>
+            </div>
+            <div class="row">
+                <span class="col-6"><span style="font-weight:bold">{{'common.email' | translate}}: </span>
+                    <span></span></span>
+                <span class="col-6 text-left"><span style="font-weight:bold">{{'common.warehouse' | translate}}:
+                    </span>
+                    <span *ngIf="warehouse">
+                        <a target="_blank"
+                            routerLink="/pages/warehouse/detail/{{contact.warehouseId}}">{{warehouse.name}}</a></span>
+                </span>
+            </div>
+            <div class="row">
+                <span class="col-6 text-left"><span
+                        style="font-weight:bold">{{'warehouse.warehouse-order.note-customer' | translate}}: </span>
+                    <span>{{contact.note}}</span>
+                </span>
+                <span class="col-6"><span
+                        style="font-weight:bold">{{'warehouse.warehouse-order.note-operator' | translate}}: </span>
+                    <span>{{contact.adminNote}}</span>
+                </span>
+            </div>
+            <br>
+            <div class="title">{{'common.detail' | translate | uppercase}}</div>
+            <nz-divider></nz-divider>
+
+            <div class="row">
+                <div class="col-6 bold">{{'filter.address' | translate}}</div>
+                <div class="col-2 bold text-left">{{'warehouse.warehouse-order.rented-area' | translate}}</div>
+                <div class="col-2 bold text-left">{{'common.status' | translate}}</div>
+                <div class="col-2 bold text-left">{{'common.detail' | translate}}</div>
+            </div>
+            <div class="row">
+                <div class="col-6">{{contact.location?.address}}</div>
+                <div class="col-2 text-left">{{contact.rentArea | number}}m2</div>
+                <div class="col-2 text-left">
+                    <span>{{ 'warehouse.contact-status.' + contact.status | translate}}</span>
+                </div>
+                <div class="col-2 text-left"><a>{{'common.detail' | translate}}</a></div>
+            </div>
+            <br>
+            <warehouse-order-history [contact]="contact" #history></warehouse-order-history>
+        </nz-skeleton>
+    </div>
+</page-wrapper>

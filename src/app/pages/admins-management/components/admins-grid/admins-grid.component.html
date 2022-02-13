@@ -1,0 +1,93 @@
+<div class="row">
+
+    <div class="col-3">
+        <nz-form-item>
+            <nz-form-label nzFor="externalCode">{{ "common.phone" | translate }}</nz-form-label>
+            <nz-form-control>
+                <input nz-input [(ngModel)]="queryModel.phone" name="phone"
+                    [placeholder]="('common.phone' | translate)" />
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    <div class="col-3">
+        <nz-form-item>
+            <nz-form-label nzFor="fullName">{{ "common.full-name" | translate }}</nz-form-label>
+            <nz-form-control>
+                <input nz-input [(ngModel)]="queryModel.fullName" name="fullName"
+                    [placeholder]="('common.full-name' | translate)" />
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    <div class="col-3">
+        <nz-form-item>
+            <nz-form-label class="form-label form-label--empty"></nz-form-label>
+            <nz-form-control>
+                <button ad-button nzColor="red" (click)="getData()">
+                    {{ "button.find" | translate }}
+                </button>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+</div>
+<nz-table #table [nzData]="model?.data" [nzFrontPagination]="false" [nzLoading]="loadingGrid" [nzTotal]="model?.total"
+    [(nzPageIndex)]="queryModel.page" [(nzPageSize)]="queryModel.limit" nzShowSizeChanger
+    (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [nzScroll]="{x: '1000px'}" nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th nzLeft="0px">{{'table.admin-code' | translate }}</th>
+            <th>{{'table.create-date' | translate }}</th>
+            <th>{{'common.full-name' | translate }}</th>
+            <th>{{'table.phone-number' | translate }}</th>
+            <th>{{'common.email' | translate }}</th>
+            <th>{{'common.status' | translate }}</th>
+            <th>{{'common.group' | translate }}</th>
+            <th>{{'common.branch' | translate }}</th>
+            <th nzRight="0px" nzWidth="10%">{{'common.action' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of table.data">
+            <td>{{item.code}}</td>
+            <td>{{item.createdAt | date:'HH:mm dd/MM/yyyy'}}</td>
+            <td>{{item.fullName}}</td>
+            <td>{{item.phone}}</td>
+            <td>{{item.email}}</td>
+            <td>
+                <nz-switch [ngModel]="statuses[item._id]" [nzLoading]="loadingStatus" [nzControl]="true"
+                    (click)="onChangeStatus(item._id)"></nz-switch>
+            </td>
+            <td>
+                <ng-template [ngIf]="groups[item.groupId]">{{groups[item.groupId].name}}</ng-template>
+            </td>
+            <td>
+                <ng-template [ngIf]="branches[item.branchId]">{{branches[item.branchId].name}}</ng-template>
+            </td>
+            <td nzRight="0px">
+                <ng-container>
+                    <button nz-dropdown ad-button nzType="dashed" [nzDropdownMenu]="menu"
+                        [nzPlacement]="'bottomCenter'">
+                        {{'common.action' | translate}}
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                            <li nz-menu-item>
+                                <a (click)="handlePassword(item._id)">{{'button.change-password' | translate}}</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a (click)="handleModify(item._id)">{{'button.update' | translate}}</a>
+                            </li>
+                            <li nz-menu-item *ngIf='item.status !== 4'>
+                                <a (click)="handleDelete(item._id)">{{'common.delete' | translate}}</a>
+                            </li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{'table.show' | translate}} {{range[0]}}-{{range[1]}}. {{'table.total' | translate}} {{total}}
+    {{'table.result' | translate | lowercase}}
+</ng-template>

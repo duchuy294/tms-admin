@@ -1,0 +1,114 @@
+<div class="detail__container">
+    <nz-skeleton [nzAvatar]="true" [nzActive]="true" [nzLoading]="loading" [nzParagraph]="{ rows: 3 }">
+        <div style="display: flex">
+            <img class="detail__avatar" [src]="servicer?.images[0]" width="100px" height="100px">
+            <div class="detail">
+                <span class="detail__name">{{servicer?.fullName | uppercase}}</span><br>
+                {{servicer?.createdAt | date:"HH:mm dd/MM/yyyy"}}<br>
+                <div>
+                    <nz-rate [ngModel]="servicerRating" [nzCharacter]="characterIcon" nzAllowHalf nzDisabled>
+                    </nz-rate>
+                    {{ '(' + (notRated ? ('common.not-rated' | translate ) : servicer.rate ) + ')' }}
+                </div>
+                <ng-template #characterIcon>
+                    <i nz-icon nzType="star" nzTheme="fill"></i>
+                </ng-template>
+                <div>{{ '#' + servicer.code }}</div>
+                <div>{{ servicer.phone + ' | ' + servicer.email }}</div>
+            </div>
+        </div>
+    </nz-skeleton>
+    <div *ngIf="(processingOrdersOfServicer && processingOrdersOfServicer.length) ||
+           (incidentOrdersOfServicer && incidentOrdersOfServicer.length) || collectionDebt">
+        <nz-divider></nz-divider>
+        <div *ngIf="collectionDebt">
+            <p class="info__left">
+                <b> {{'common.collection-money' | translate }}:</b>
+                <span class="info__right" style="color: red">
+                    {{ collectionDebt | number}} đ
+                    <br />
+                    <span class="servicer__time"
+                        style="color: black">({{ servicer.collectionTime | fromNow | timeAgo }})</span>
+                </span>
+            </p>
+        </div>
+        <nz-skeleton [nzAvatar]="true" [nzActive]="true" [nzLoading]="loadingOrdersOfServicer"
+            [nzParagraph]="{ rows: 3 }">
+            <div class="row" *ngIf="incidentOrdersOfServicer && incidentOrdersOfServicer.length"
+                style="margin-top: 10px">
+                <div class="col-4">
+                    <p class="info__left">
+                        <b> {{'order.incidentName' | translate }}:</b>
+                    </p>
+                </div>
+                <div class="col-8">
+                    <span class="info__right">
+                        <span *ngFor="let item of incidentOrdersOfServicer; let i = index">
+                            <a class="code-order-style" target="_blank" routerLink="/pages/order/{{item._id}}">
+                                #{{ item.code }}
+                            </a>
+                            <span style="color: #01ADF9;"
+                                *ngIf="i != incidentOrdersOfServicer.length - 1">,&nbsp;</span>
+                        </span>
+                        <div class="incident__time">({{ servicer.incidentTime | fromNow | timeAgo }})
+                        </div>
+                    </span>
+                </div>
+            </div>
+            <div class="row" *ngIf="processingOrdersOfServicer && processingOrdersOfServicer.length"
+                style="margin-top: 10px">
+                <div class="col-4">
+                    <p class="info__left">
+                        <b> {{'order.processingOrder' | translate }}:</b>
+                    </p>
+                </div>
+                <div class="col-8">
+                    <span class="info__right">
+                        <span *ngFor="let item of processingOrdersOfServicer; let i = index">
+                            <a class="code-order-style" target="_blank" routerLink="/pages/order/{{item._id}}">
+                                #{{ item.code }}
+                            </a>
+                            <span class="code-order-style"
+                                *ngIf="i != processingOrdersOfServicer.length - 1">,&nbsp;</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </nz-skeleton>
+    </div>
+    <div *ngIf="(servicer.teams && servicer.teams.length) || (servicer.vehicles && servicer.vehicles.length)">
+        <nz-divider></nz-divider>
+        <div class="row" *ngIf="servicer.teams && servicer.teams.length">
+            <div class="col-3">
+                <p class="info__leftMargin">
+                    <b> {{ 'table.team-servicer-name' | translate }}:</b>
+                </p>
+            </div>
+            <div class="col-9">
+                <span class="info__rightMargin" *ngFor="let item of servicer.teams">
+                    <a class="border-style link" target="_blank"
+                        routerLink="/pages/servicer-management/team/detail/{{item._id}}">
+                        {{ item.name }}</a> &nbsp;
+                </span>
+            </div>
+        </div>
+        <nz-skeleton [nzAvatar]="true" [nzActive]="true" [nzLoading]="loadingVechile" [nzParagraph]="{ rows: 3 }">
+            <div class="row" *ngIf="servicer.vehicles && servicer.vehicles.length > 0">
+                <div class="col-3">
+                    <p class="info__leftMargin">
+                        <b> {{ 'common.vehicle' | translate }}:</b>
+                    </p>
+                </div>
+                <div class="col-9" *ngIf="vehicleName">
+                    <span class="info__rightMargin" *ngFor="let item of servicer.vehicles">
+                        <a class="border-style" *ngIf="item.typeId && servicer.vehicle && vehicleName[item.typeId]"
+                            [style.background-color]="item._id === servicer.vehicle._id ? '#00F1F9' : 'white'"
+                            [style.border]="item._id === servicer.vehicle._id ? 'none' : '1px solid #707070'">
+                            {{ vehicleName[item.typeId][lang] + ' | ' + item.name + ' | ' + item.number }} </a>
+                        &nbsp;
+                    </span>
+                </div>
+            </div>
+        </nz-skeleton>
+    </div>
+</div>

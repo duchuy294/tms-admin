@@ -1,0 +1,370 @@
+<form nz-form nzLayout="vertical" #form="ngForm">
+    <div class="row">
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="area" nzRequired>
+                    {{ "warehouse.warehouse.area" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <nz-input-group nzSuffix="m2">
+                        <nz-input-number [(ngModel)]="model.area" [nzMin]="0" [nzMax]="maxMeasurement" name="area"
+                            #area="ngModel" required>
+                        </nz-input-number>
+                    </nz-input-group>
+                    <nz-form-explain *ngIf="
+                            (area.dirty || area.touched) &&
+                            area.errors?.required
+                        ">
+                        {{ "validations-form.content.required" | translate }}
+                    </nz-form-explain>
+                    <nz-form-explain *ngIf="!inRange(model.area, 0, maxMeasurement, false)" style="color: #f5222d">
+                        {{
+                            "warehouse.warehouse-service-utility.validation-value-out-of-range"
+                                | translate
+                        }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-2">
+            <nz-form-item>
+                <nz-form-label class="form-label form-label--empty"></nz-form-label>
+                <nz-form-control>
+                    <nz-input-group nzSuffix="m">
+                        <nz-input-number [(ngModel)]="sizeLength" [nzMin]="0" [nzMax]="maxMeasurement" name="size-width"
+                            [nzPlaceHolder]="
+                                'warehouse.warehouse-service-utility.length'
+                                    | translate
+                            ">
+                        </nz-input-number>
+                    </nz-input-group>
+                    <nz-form-explain *ngIf="!inRange(sizeLength, 0, maxMeasurement, false)" style="color: #f5222d">
+                        {{
+                            "warehouse.warehouse-service-utility.validation-value-out-of-range"
+                                | translate
+                        }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div>
+            <nz-form-item>
+                <nz-form-label class="form-label form-label--empty"></nz-form-label>
+                <nz-form-control>
+                    x
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-2">
+            <nz-form-item>
+                <nz-form-label class="form-label form-label--empty"></nz-form-label>
+                <nz-form-control>
+                    <nz-input-group nzSuffix="m">
+                        <nz-input-number [(ngModel)]="sizeWidth" [nzMin]="0" [nzMax]="maxMeasurement" name="size-length"
+                            [nzPlaceHolder]="
+                                'warehouse.warehouse-service-utility.width'
+                                    | translate
+                            ">
+                        </nz-input-number>
+                    </nz-input-group>
+                    <nz-form-explain *ngIf="!inRange(sizeWidth, 0, maxMeasurement, false)" style="color: #f5222d">
+                        {{
+                            "warehouse.warehouse-service-utility.validation-value-out-of-range"
+                                | translate
+                        }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzRequired>
+                    {{ "warehouse.warehouse.lease-area" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <nz-input-group nzSuffix="m2">
+                        <nz-input-number [(ngModel)]="model.availableArea" [nzMin]="0" [nzMax]="maxMeasurement"
+                            name="availableArea" #availableArea="ngModel" required>
+                        </nz-input-number>
+                    </nz-input-group>
+                    <nz-form-explain *ngIf="
+                            (availableArea.dirty || availableArea.touched) &&
+                            availableArea.errors?.required
+                        ">
+                        {{ "validations-form.content.required" | translate }}
+                    </nz-form-explain>
+                    <nz-form-explain *ngIf="validateArea()" style="color: #f5222d">
+                        {{
+                            "warehouse.warehouse-service-utility.validation-available-area"
+                                | translate
+                        }}
+                    </nz-form-explain>
+                    <nz-form-explain *ngIf="
+                            !inRange(
+                                model.availableArea,
+                                0,
+                                maxMeasurement,
+                                false
+                            )
+                        " style="color: #f5222d">
+                        {{
+                            "warehouse.warehouse-service-utility.validation-value-out-of-range"
+                                | translate
+                        }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <nz-form-item>
+        <nz-form-label>
+            {{ "warehouse.services" | translate }}
+        </nz-form-label>
+        <nz-form-control>
+            <div class="row">
+                <div class="col-4" *ngFor="let item of services">
+                    <label nz-checkbox [nzValue]="item._id" [(ngModel)]="modelServices[item._id].checked"
+                        [name]="'checkbox_' + item._id" (ngModelChange)="
+                            onServiceChecboxChanges($event, item._id)
+                        ">{{ item.name }}</label>
+                    <br />
+                    <nz-input-group *ngIf="modelServices[item._id]?.checked" class="match-width" [nzSuffix]="
+                            'common.currency-unit' | translate | uppercase
+                        ">
+                        <input nz-input [(ngModel)]="modelServices[item._id].price" [textMask]="{ mask: numberMask }"
+                            [name]="'price_' + item._id" #services="ngModel" required />
+                    </nz-input-group>
+                    <nz-form-explain *ngIf="
+                            modelServices[item._id]?.checked &&
+                            modelServices[item._id]?.price &&
+                            !inRange(
+                                modelServices[item._id]?.price,
+                                0,
+                                maxServicePrice
+                            )
+                        " style="color: #f5222d">
+                        {{
+                            "warehouse.warehouse-service-utility.validation-price-out-of-range"
+                                | translate
+                        }}
+                    </nz-form-explain>
+                </div>
+            </div>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>
+            {{ "warehouse.utilities" | translate }}
+        </nz-form-label>
+        <nz-form-control>
+            <nz-checkbox-wrapper class="match-width" (nzOnChange)="onUtilityChanges($event)">
+                <div class="row">
+                    <div class="col-4 item" *ngFor="let item of utilities">
+                        <label nz-checkbox [nzValue]="item._id"
+                            [nzChecked]="model?.utilityIds?.includes(item._id)">{{ item.name }}</label>
+                    </div>
+                </div>
+            </nz-checkbox-wrapper>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>
+            {{ "warehouse.warehouse.orientation" | translate }}
+        </nz-form-label>
+        <nz-form-control>
+            <nz-checkbox-wrapper class="match-width" (nzOnChange)="onDirectionChanges($event)">
+                <div class="row">
+                    <div class="col-4 item" *ngFor="let item of directions">
+                        <label nz-checkbox [nzValue]="item"
+                            [nzChecked]="model?.directions?.includes(item)">{{ "direction." + item | translate }}</label>
+                    </div>
+                </div>
+            </nz-checkbox-wrapper>
+        </nz-form-control>
+    </nz-form-item>
+    <div class="title">
+        <nz-form-label nzNoColon="true">
+            {{
+                "warehouse.warehouse-service-utility.price"
+                    | translate
+                    | uppercase
+            }}
+        </nz-form-label>
+    </div>
+    <p>{{ "warehouse.warehouse-service-utility.note" | translate }}</p>
+    <nz-form-item>
+        <nz-form-label nzRequired>
+            {{
+                "warehouse.warehouse-service-utility.warehouse-rental-price"
+                    | translate
+            }}
+        </nz-form-label>
+        <nz-form-control>
+            <nz-input-group class="col-3" [nzSuffix]="'common.currency-unit' | translate | uppercase">
+                <input nz-input [(ngModel)]="model.price" [textMask]="{ mask: numberMask }" name="price"
+                    #price="ngModel" required />
+            </nz-input-group>
+            <nz-form-explain *ngIf="(price.dirty || price.touched) && price.errors?.required">
+                {{ "validations-form.content.required" | translate }}
+            </nz-form-explain>
+            <nz-form-explain *ngIf="!inRange(model.price, 0, maxPrice)" style="color: #f5222d">
+                {{
+                    "warehouse.warehouse-service-utility.validation-price-out-of-range"
+                        | translate
+                }}
+            </nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>
+            {{
+                "warehouse.warehouse-service-utility.price-by-timeline"
+                    | translate
+            }}
+        </nz-form-label>
+        <nz-form-control>
+            <div class="row">
+                <div class="col-4" *ngFor="let item of priceByTimelines">
+                    <label nz-checkbox [nzValue]="item._id" [(ngModel)]="modelPriceByTimelines[item._id].checked"
+                        [name]="'checkbox_' + item._id" (ngModelChange)="
+                            onPriceChecboxChanges($event, item._id)
+                        ">{{ item.name }}</label>
+                    <br />
+                    <nz-input-group *ngIf="modelPriceByTimelines[item._id]?.checked" class="match-width" [nzSuffix]="
+                            'common.currency-unit' | translate | uppercase
+                        ">
+                        <input nz-input [(ngModel)]="modelPriceByTimelines[item._id].price"
+                            [textMask]="{ mask: numberMask }" [name]="'price_' + item._id" />
+                    </nz-input-group>
+                    <nz-form-explain *ngIf="
+                            modelPriceByTimelines[item._id]?.checked &&
+                            modelPriceByTimelines[item._id]?.price &&
+                            !inRange(
+                                modelPriceByTimelines[item._id]?.price,
+                                0,
+                                maxPrice
+                            )
+                        " style="color: #f5222d">
+                        {{
+                            "warehouse.warehouse-service-utility.validation-price-out-of-range"
+                                | translate
+                        }}
+                    </nz-form-explain>
+                </div>
+            </div>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <div class="title">
+            <nz-form-label nzNoColon="true" nzRequired="true">
+                {{ "warehouse.warehouse.manager" | translate | uppercase }}
+            </nz-form-label>
+        </div>
+    </nz-form-item>
+    <div class="row">
+        <div class="col-6">
+            <nz-form-item>
+                <nz-form-label>{{
+                    "warehouse.warehouse-service-utility.customer-code"
+                        | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <div class="formControlWithAction">
+                        <input nz-input placeholder="ABCD1234" [(ngModel)]="managerCode" name="manager" />
+                        <button ad-button nzColor="red" (click)="addManager()">
+                            {{ "button.add" | translate }}
+                        </button>
+                    </div>
+                </nz-form-control>
+                <nz-form-explain *ngIf="showManagerExplain && !managerData.length" style="color: #f5222d">
+                    {{
+                        "warehouse.warehouse-service-utility.validation-manager-required"
+                            | translate
+                    }}
+                </nz-form-explain>
+            </nz-form-item>
+        </div>
+    </div>
+    <nz-table #managerTable [nzData]="managerData" nzSize="small" nzFrontPagination="false" [nzScroll]="{ x: '800px' }">
+        <thead>
+            <tr>
+                <th [nzWidth]="'15%'">
+                    {{
+                        "warehouse.warehouse-service-utility.customer-code"
+                            | translate
+                    }}
+                </th>
+                <th [nzWidth]="'15%'">{{ "common.createdAt" | translate }}</th>
+                <th [nzWidth]="'40%'">{{ "common.full-name" | translate }}</th>
+                <th [nzWidth]="'20%'">{{ "common.phone" | translate }}</th>
+                <th [nzWidth]="'10%'">{{ "common.action" | translate }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of managerTable.data">
+                <td>{{ data.code }}</td>
+                <td>{{ data.createdAt | date: "HH:mm dd/MM/yyyy" }}</td>
+                <td>{{ data?.fullName }}</td>
+                <td>{{ data.phone }}</td>
+                <td>
+                    <button ad-button nzColor="red" nzType="dashed" (click)="deleteManager()">
+                        {{ "common.delete" | translate }}
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+    <br />
+    <div class="title">
+        <nz-form-label nzNoColon="true">
+            {{ "customer.staff-in-charge" | translate | uppercase }}
+        </nz-form-label>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <nz-form-item>
+                <nz-form-label>{{
+                    "warehouse.warehouse-service-utility.staff-code" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <div class="formControlWithAction">
+                        <input nz-input placeholder="ABCD1234" [(ngModel)]="staffCode" name="staff" />
+                        <button ad-button nzColor="red" (click)="addStaff()">
+                            {{ "button.add" | translate }}
+                        </button>
+                    </div>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <nz-table #staffTable [nzData]="staffData" nzSize="small" nzFrontPagination="false" [nzScroll]="{ x: '800px' }">
+        <thead>
+            <tr>
+                <th [nzWidth]="'15%'">
+                    {{
+                        "warehouse.warehouse-service-utility.customer-code"
+                            | translate
+                    }}
+                </th>
+                <th [nzWidth]="'15%'">{{ "common.createdAt" | translate }}</th>
+                <th [nzWidth]="'40%'">{{ "common.full-name" | translate }}</th>
+                <th [nzWidth]="'20%'">{{ "common.phone" | translate }}</th>
+                <th [nzWidth]="'10%'">{{ "common.action" | translate }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of staffTable.data">
+                <td>{{ data.code }}</td>
+                <td>{{ data.createdAt | date: "HH:mm dd/MM/yyyy" }}</td>
+                <td>{{ data?.fullName }}</td>
+                <td>{{ data.phone }}</td>
+                <td>
+                    <button ad-button nzColor="red" nzType="dashed" (click)="deleteStaff(data._id)">
+                        {{ "common.delete" | translate }}
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</form>
+<spinner-processing-modal [visible]="isLoading"></spinner-processing-modal>

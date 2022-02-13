@@ -1,0 +1,65 @@
+<page-wrapper [nzTitle]="'general-menu.user-level' | translate">
+    <div class="row">
+        <div class="col">
+            <h2 class="page-title">{{'customer.list-user-level'|translate}}</h2>
+        </div>
+        <div class="col" style="text-align:right; ">
+            <button ad-button nzColor="red" (click)="addUserLevel()">
+                {{ 'common.add' | translate }}
+            </button>
+        </div>
+    </div>
+    <nz-table #table [nzData]="tableData.data" [nzFrontPagination]="false" nzShowSizeChanger [nzLoading]="loading"
+        [nzTotal]="tableData.total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+        (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+        [nzScroll]="{ x: '1300px' }" nzShowQuickJumper [nzShowTotal]="totalTemplate">
+        <thead>
+            <tr>
+                <th [nzWidth]="'120px'">{{'common.images'|translate}}</th>
+                <th [nzWidth]="'120px'">{{'common.code'|translate}}</th>
+                <th [nzWidth]="'160px'">{{'customer.customerLevel'|translate}}</th>
+                <th [nzWidth]="'200px'">{{'customer.loyaltyPoint'|translate}}</th>
+                <th [nzWidth]="'220px'">{{'common.status'|translate}}</th>
+                <th [nzWidth]="'120px'">{{'common.default'|translate}}</th>
+                <th [nzWidth]="'100px'" nzRight="0px">{{'common.action'|translate}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of table.data">
+                <td><img [src]="data.image" width="50" /></td>
+                <td>{{ data.code }}</td>
+                <td>{{ data.name }}</td>
+                <td>{{ data.minPoint > -1 ? data.minPoint : '' }}</td>
+                <td>
+                    {{ data.status && 'form.user-status.' + data.status | translate }}
+                </td>
+                <td>
+                    <label *ngIf="data.default" nz-checkbox nzDisabled [ngModel]="true"></label>
+                </td>
+                <td nzRight="0px">
+                    <nz-dropdown>
+                        <button nz-dropdown ad-button nzType="dashed">
+                            {{'common.action'|translate}}
+                        </button>
+                        <ul nz-menu nzSelectable>
+                            <li nz-menu-item>
+                                <a (click)="onEdit(data._id)">{{'button.modify'|translate}}</a>
+                            </li>
+                            <li *ngIf="data.status === 2" nz-menu-item>
+                                <a (click)="onSetDefault(data._id)">{{'common.default'|translate}}</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a (click)="onDelete(data._id)">{{'common.delete'|translate}}</a>
+                            </li>
+                        </ul>
+                    </nz-dropdown>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+    <ng-template #totalTemplate let-range="range" let-total>
+        {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{ 'table.total' | translate }} {{ total }}
+        {{ 'table.result' | translate | lowercase}}
+    </ng-template>
+    <create-user-level [model]="userLevel" [(visibleModal)]="visibleModal" (update)="onUpdate()"></create-user-level>
+</page-wrapper>

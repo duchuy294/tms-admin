@@ -1,0 +1,95 @@
+<page-wrapper [nzTitle]="pageTitle">
+    <partner-process-filters-detail (onSearch)="onSearch($event)"></partner-process-filters-detail>
+    <div class="row" *ngIf="tableData">
+        <div class="col-12">
+            <div class="total">
+                {{'partnerProcess.totalOrder' | translate }}: <strong>{{tableData?.total || 0}}</strong>
+                ({{'partnerProcess.orderOfDay' | translate}} <strong
+                    style="color:#24A111">{{tableData.new || 0}}</strong> |
+                {{'partnerProcess.orderOld' | translate}} <strong
+                    style="color:#f00">{{tableData?.total - tableData.new}}</strong>)
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="tableData?.progress?.length > 0">
+        <div class="row">
+            <div class="col-12">
+                <div style="padding-top: 30px;">
+                    <nz-timeline>
+                        <nz-timeline-item *ngFor="let item  of tableData?.progress" nzColor="blue">
+                            <strong
+                                style="padding-right: 10px;">{{ convertInt(item.hour) < 10 ? '0'+item.hour : item.hour }}:00
+                            </strong>
+                            <nz-tag [nzColor]="'#2FB400'">{{roundNumber(((item.completed*100)/tableData.total))}} %
+                            </nz-tag>
+                            <p>{{'partnerProcess.completionRate' | translate}} {{item.completed+'/'+tableData.total}}
+                                <a (click)="showDetail(item.orderCodes, item.hour)"
+                                    style="color: #FF6A1A;">({{'common.detail' | translate}})</a></p>
+                        </nz-timeline-item>
+                    </nz-timeline>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <nz-modal #modal nzWidth="800px" [(nzVisible)]="visibleModal"
+        [nzTitle]="('partnerProcess.activities' | translate) + ' (' + (convertInt(currentTime) < 10 ? '0'+currentTime : currentTime) + ':00 ' + dateCurrent + ')'"
+        [nzContent]="modalContent" [nzFooter]="modalFooter" [nzMaskClosable]="false" [nzClosable]="false">
+        <ng-template #modalContent>
+            <div class="conten-package">
+                <div><strong>{{'partnerProcess.totalOrder' | translate}} {{': '}} {{totalOrder || 0}}</strong>
+                </div>
+                <nz-table style="margin-top: 15px;" #ordersTable [nzData]="tableModals" [nzPageSize]="10"
+                    [nzLoading]="loading" nzSize="small" nzBordered>
+                    <thead>
+                        <tr>
+                            <th>{{ "common.index" | translate }}</th>
+                            <th>{{ "order.code" | translate }} / {{ "common.soCode" | translate }}</th>
+                            <th nzWidth="55%">{{ "common.address" | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="
+                                let item of ordersTable.data;
+                                index as index
+                            ">
+                            <td nzAlign="center" nzWidth="55%">
+                                {{
+                                (ordersTable.nzPageIndex - 1) *
+                                ordersTable.nzPageSize +
+                                index +
+                                1
+                                }}
+                            </td>
+                            <td>
+                                <a [routerLink]="'/pages/order/'+item?.orderId" target="_blank"
+                                    *ngIf="item?.code === item?.soCode; else soLink">{{ item?.code }}
+                                </a>
+                                <ng-template #soLink>
+                                    <a [routerLink]="['/pages/order/']" [queryParams]="{code: item?.soCode}"
+                                        target="_blank">{{ item?.soCode }}
+                                    </a>
+                                </ng-template>
+                                <span *ngIf="item?.code !== item?.soCode">({{item?.countPoint}}
+                                    {{'partnerProcess.package' | translate}})</span>
+                            </td>
+                            <td>{{ item?.point?.address }}</td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </div>
+        </ng-template>
+        <ng-template #modalFooter>
+            <div class="grid__footer" style="width: 20%; margin: 0 auto;">
+                <div class="buttonActions" style="margin-top: 15px; margin-bottom: 15px;">
+                    <button ad-button nzUpper nzColor="default" (click)="visibleModal =  false" [disabled]="loading">
+                        {{ "button.close" | translate }}
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+    </nz-modal>
+</page-wrapper>
+<ng-template #pageTitle>
+    {{ "partnerProcess.titleDetail" | translate }}
+</ng-template>

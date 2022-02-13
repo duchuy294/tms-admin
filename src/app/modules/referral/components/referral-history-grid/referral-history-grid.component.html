@@ -1,0 +1,54 @@
+<nz-table #table [nzData]="tableData.data" [nzFrontPagination]="false" nzShowSizeChanger [nzLoading]="loading"
+    [nzTotal]="tableData.total" [(nzPageIndex)]="model.page" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [nzScroll]="{x:'1300px'}" [(nzPageSize)]="model.limit" (nzPageIndexChange)="loadDataByPage($event)"
+    nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th [nzWidth]="'11%'" nzLeft="0px">{{ 'marketing.referral-history.transaction-code' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.createdAt' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.method' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.target' | translate }}</th>
+            <th [nzWidth]="'15%'">{{ 'marketing.referral-history.receiver' | translate }}</th>
+            <th [nzWidth]="'15%'">{{ 'common.reward' | translate }}</th>
+            <th [nzWidth]="'14%'">{{ 'marketing.referral-history.bonus' | translate }}</th>
+            <th [nzWidth]="'15%'">{{ 'marketing.referral-history.type-presenter' | translate }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of table.data">
+            <td nzLeft="0px">{{data.code}}</td>
+            <td>{{data.createdAt | date:'HH:mm dd/MM/yyyy'}}</td>
+            <td>{{'marketing.referral-history.type-' + data.type | translate}}</td>
+            <td>{{'common.userType.' + data.userType | translate}}</td>
+            <td>
+                <div *ngIf="data.userType === 'user'">
+                    <a
+                        routerLink="/pages/customer-management/personal/detail/{{data.userId}}">{{users[data.userId]}}</a>
+                </div>
+                <div *ngIf="data.userType === 'servicer'">
+                    <a
+                        routerLink="/pages/servicer-management/servicer/detail/{{data.userId}}">{{users[data.userId]}}</a>
+                </div>
+            </td>
+            <td>
+                <div *ngFor="let rewardId of data.redeemedRewardIds">
+                    <a [routerLink]="['/pages/marketing/reward-management']">{{rewards[rewardId]}}</a>
+                </div>
+            </td>
+            <td>{{data.bonus | number}}</td>
+            <td>
+                <div *ngIf="data.userType === 'user'">
+                    <a
+                        routerLink="/pages/customer-management/personal/detail/{{data.referralId}}">{{users[data.referralId]}}</a>
+                </div>
+                <div *ngIf="data.userType === 'servicer'">
+                    <a
+                        routerLink="/pages/servicer-management/servicer/detail/{{data.referralId}}">{{users[data.referralId]}}</a>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-total>
+    {{'table.total' | translate}} {{ total }} {{'table.result' | translate | lowercase}}
+</ng-template>

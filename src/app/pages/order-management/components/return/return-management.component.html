@@ -1,0 +1,86 @@
+<button ad-button nzColor="red" (click)="displayFilter = !displayFilter">
+    {{ "tab.filter" | translate }}
+</button>
+&nbsp;
+<button *ngIf="canOpenReceiveReturnedProductsModal" ad-button nzColor="primary" (click)="showModalReceive()">
+    {{ "service.return-pending.receive" | translate }}
+</button>
+<return-filter (search)="search($event)" [display]="displayFilter" [query]="query"></return-filter>
+<order-grid [(model)]="query" [actions]="actions" #orderGrid [hiddenFields]="['processingStaff']"></order-grid>
+
+<nz-modal #modalQuickAssign nzWidth="700px" [(nzVisible)]="visibleModal"
+    [nzTitle]="'service.return-pending.receive' | translate" [nzContent]="modalContent" [nzFooter]="modalFooter"
+    [nzMaskClosable]="false" [nzClosable]="closeAble" (nzAfterClose)="closePopup()">
+    <ng-template #modalContent>
+        <div class="conten-package">
+            <div style="margin-bottom: 15px;" class="row">
+                <div class="title col-4">
+                    {{ "common.scanPackageCode" | translate }} hoặc SO:
+                </div>
+                <div class=" col-8">
+                    <nz-input-group [nzSuffix]="suffixTemplateInfo" [nzPrefix]="prefixTemplateUser">
+                        <input #singleScanPack [disabled]="loading" type="text" nz-input
+                            [placeholder]="'actions.scanPackage' | translate" (keyup)="handleScan($event)" />
+                    </nz-input-group>
+                    <ng-template #prefixTemplateUser><i nz-icon nzType="scan"></i></ng-template>
+                    <ng-template #suffixTemplateInfo><i nz-icon nz-tooltip
+                            [nzTooltipTitle]="'actions.scanPackage' | translate" nzType="info-circle"></i>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="buttonActions-package" style="margin-top: 15px;">
+                <span class="total">
+                    {{ "order.modal.total-package" | translate }}:
+                    <strong>{{ packages?.length || 0 }}</strong>
+                </span>
+            </div>
+            <nz-table style="margin-top: 15px;" #packagesTable [nzData]="shownPackages" [nzPageSize]="10"
+                [nzLoading]="loading" nzSize="small" nzBordered>
+                <thead>
+                    <tr>
+                        <th>{{ "common.index" | translate }}</th>
+                        <th>{{ "common.packageNo" | translate }}</th>
+                        <th>{{ "common.orderCode" | translate }}</th>
+                        <th>{{ "common.status" | translate }}</th>
+                        <th>{{ "common.remove" | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of packagesTable.data; index as index"
+                        [style.color]="item.valid ? 'inherit' : 'red'">
+                        <td nzAlign="center" style="color: black;">
+                            {{
+                            (packagesTable.nzPageIndex - 1) *
+                            packagesTable.nzPageSize +
+                            index +
+                            1
+                            }}
+                        </td>
+                        <td>{{ item.packageNo }}</td>
+                        <td>{{ item.soCode }}</td>
+                        <td nzAlign="center">
+                            <i *ngIf="item.valid" nz-icon nzType="check" style="color: #21a525"></i>
+                            <i *ngIf="!item.valid" nz-icon nzType="close"></i>
+                        </td>
+                        <td nzAlign="center" (click)="removePackage(item)">
+                            <i nz-icon nzType="delete" nzTheme="outline" style="color: black; cursor: pointer;"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="grid__footer" style="width: 50%; margin: 0 auto;">
+            <div class="buttonActions" style="margin-top: 15px; margin-bottom: 15px;">
+                <button ad-button nzUpper nzColor="primary" (click)="receiveHandle()" [nzLoading]="loading"
+                    [disabled]="loading || packages?.length === 0">
+                    {{ "service.return-pending.receive" | translate }}
+                </button>
+                <button ad-button nzUpper nzColor="default" (click)="hideModalReceive()" [disabled]="loading">
+                    {{ "button.cancel" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

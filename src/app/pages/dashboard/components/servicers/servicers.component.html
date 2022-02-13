@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <dashboard-summary [model]="dashboardSummaryData"></dashboard-summary>
+        </div>
+        <div class="col-12">{{'common.code' | translate}} ({{locations.length}}/{{numberOfServicers}})</div>
+    </div>
+
+    <ng-template ngFor let-group [ngForOf]="groups | orderBy:'name'">
+        <div class="row no-gutters" *ngIf="group.members && group.members.length > 0">
+            <div class="col-11 active">
+                {{group.name}} ({{group.members.length}}/{{group.numberOfMembers}})
+            </div>
+            <div class="col-1" (click)="updateCollapse(group._id)">
+                <i class="fa fa-2x pointer {{collapseItems.includes(group._id)? 'fa-angle-down': 'fa-angle-up'}}"></i>
+            </div>
+        </div>
+        <div class="scrollable row no-gutters" *ngIf="!collapseItems.includes(group._id)">
+            <ng-template ngFor let-item [ngForOf]="group.members | orderBy:'state' | reverse">
+                <div class="col-3 pointer {{item === selected? 'active-border': ''}}" (click)="select(item)">
+                    {{item.code}}
+                    <div *ngIf="!item.state" class="font-size-sm red-text">({{'common.offline' | translate}})</div>
+                </div>
+                <div class="col-6"><a class="link" target="_blank"
+                        routerLink="/pages/servicer-management/servicer/detail/{{item._id}}">{{item.fullName}}</a>
+                    <div *ngIf="collectionDebtWallets[item._id]" class="red-text font-size-sm">{{collectionDebtWallets[item._id][0].collectionDebt
+                        | number}}</div>
+                </div>
+                <div class="col-3"><img *ngIf="item.type != 2" class="width-25" [ngClass]="{offline: !item.state}"
+                        src="{{'/assets/icon/' + item.vehicle?.typeId + (doingServicers.includes(item._id)? '_dang_thuc_hien': '_xe_ranh') + '.png'}}" />
+                    <img *ngIf="item.type === 2" class="width-25" [ngClass]="{offline: !item.state}"
+                        src="/assets/icon/enterprise.png" />
+                    <img *ngIf="incidentsByServicer[item._id]" class="small-icon" src="/assets/icon/icon-suco.png" />
+                </div>
+            </ng-template>
+        </div>
+    </ng-template>
+</div>

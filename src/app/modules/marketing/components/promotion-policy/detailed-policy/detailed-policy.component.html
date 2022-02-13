@@ -1,0 +1,739 @@
+<page-wrapper [nzTitle]="data?.name">
+    <div class="detailPageWrapper">
+        <div class="leftWrapper">
+            <nz-tabset [(nzSelectedIndex)]="selectedTabIndex">
+                <nz-tab [nzTitle]="'common.customer' | translate">
+                    <div style="padding: 10px">
+                        <div class="row headerTitle">
+                            <div class="title">
+                                <div class="titleLeft">
+                                    {{ 'marketing.promotion-policy-detail.appliedCode' | translate | uppercase }}
+                                </div>
+                                <div class="titleButton">
+                                    <button ad-button nzUpper nzColor="red" style="margin: auto 5px; border-radius: 5px"
+                                        (click)="handleCreatePromotionCode()">
+                                        {{ 'button.add' | translate | uppercase }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div *ngFor="let item of promoCodeList">
+                                <div class="codeWrapper" [ngClass]="'codeWrapper' + item.status"
+                                    (click)="onClickUpdatePromoCode(item)">
+                                    {{ item.code | uppercase }}
+                                    <img src="/assets/icon/edit_pencil_with_circle.png" alt="edit" height="25"
+                                        width="25" />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div #priceFormTitle class="title">
+                                <div class="titleLeft">
+                                    {{ 'marketing.promotion-policy-detail.priceForm' | translate | uppercase }}
+                                </div>
+                                <div class="titleButton">
+                                    <button ad-button nzUpper nzColor="red" style="margin: auto 5px; border-radius: 5px"
+                                        (click)="handleAddConditions('','','','priceForm',priceFormConditionOptions)">
+                                        {{ 'button.add' | translate | uppercase }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div style="width: 100%" *ngIf="promotionPolicyController && promotionPolicyController.priceForms && 
+                                (promotionPolicyController.priceForms | keys).length > 0">
+                                <div class="row conditionItem">
+                                    <div class="col-6">
+                                        <div style="width: 100%">
+                                            {{ 'common.condition' | translate }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div style="width: 100%">
+                                            {{ 'marketing.promotion-policy.appliedPriceForm' | translate }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngFor="let item of promotionPolicyController.priceForms | keys">
+                                    <div class="row conditionItem">
+                                        <div class="col-6">
+                                            <nz-input-group
+                                                (click)="handleEditConditions(item, priceFormConditionOptions, 'priceForm')"
+                                                [nzSuffix]="suffixTemplate">
+                                                <input nz-input [ngModel]="item.value.name" disabled />
+                                                <ng-template #suffixTemplate>
+                                                    <img src="/assets/icon/edit_pencil.png" class="inputIcon" />
+                                                </ng-template>
+                                            </nz-input-group>
+                                        </div>
+                                        <div class="col-4">
+                                            <nz-select [(ngModel)]="item.value.priceFormId" style="width: 100%;"
+                                                nzPlaceHolder="{{'marketing.promotion-policy.choosePriceForm' | translate}}"
+                                                nzAllowClear>
+                                                <nz-option *ngFor="let item of priceForm" [nzValue]="item._id"
+                                                    [nzLabel]="item.name"></nz-option>
+                                            </nz-select>
+                                        </div>
+                                        <div class="col-2">
+                                            <button ad-button nzUpper
+                                                style="margin: 0px 5px; border-radius: 10px; right: 5px"
+                                                (click)="removeOneConditionSet(item.key, 'priceForm','')">
+                                                {{ 'button.remove' | translate }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div #customerTopUpTitle class="title">
+                                <div class="titleLeft">
+                                    {{ 'marketing.promotion-policy-detail.deposit' | translate | uppercase }}
+                                </div>
+                                <div class="titleRight">
+                                    <nz-select style="width: 100%;" nzPlaceHolder="{{'common.wallet' | translate}}"
+                                        [(ngModel)]="userTopUpWalletType">
+                                        <nz-option *ngFor="let item of ['main', 'sub']" [nzValue]="item"
+                                            [nzLabel]="'common.wallet-' + item| translate"></nz-option>
+                                    </nz-select>
+                                </div>
+                            </div>
+                        </div>
+                        <hr name="customerDeposit" />
+                        <div class="row">
+                            <div class="col-12">
+                                <nz-radio-group [(ngModel)]="userTopUpRadioValue" style="width: 100%">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label class="radioLabel" nz-radio
+                                                nzValue="byCustomerTopUpAmount">{{'marketing.promotion-policy.byDepositAmount' | translate }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="userTopUpRadioValue === 'byCustomerTopUpAmount'">
+                                        <div class="col-6">
+                                            <div style="width: 100%">
+                                                {{ 'common.condition' | translate }}
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div style="width: 100%">
+                                                {{ 'common.promote' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="promotionPolicyController && promotionPolicyController.deposits && promotionPolicyController.deposits.amount && 
+                                        (promotionPolicyController.deposits.amount | keys).length > 0">
+                                        <div *ngFor="let item of promotionPolicyController.deposits.amount | keys">
+                                            <div class="row conditionItem" *ngIf="item.value.userType === 'user'">
+                                                <div class="col-6">
+                                                    <nz-input-group
+                                                        (click)="handleEditConditions(item, customerTopUpConditionOptions, 'deposit', 'amount', 'user')"
+                                                        [nzSuffix]="suffixTemplate">
+                                                        <input nz-input [ngModel]="item.value.name" disabled />
+                                                        <ng-template #suffixTemplate><img
+                                                                src="/assets/icon/edit_pencil.png" nz-icon
+                                                                class="inputIcon" /></ng-template>
+                                                    </nz-input-group>
+                                                </div>
+                                                <div class="col-4">
+                                                    <nz-input-group nzSuffix="VNĐ">
+                                                        <input nz-input [(ngModel)]="item.value.amount"
+                                                            [textMask]="{mask: currencyMask}" />
+                                                    </nz-input-group>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button ad-button nzUpper
+                                                        style="margin: 0px 5px; border-radius: 10px; right: 5px"
+                                                        (click)="removeOneConditionSet(item.key,'deposit','amount')">
+                                                        {{ 'button.remove' | translate }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12" *ngIf="userTopUpRadioValue === 'byCustomerTopUpAmount'">
+                                            <button #customerTopUpAmountAddButton ad-button nzUpper nzColor="red"
+                                                style="margin: 10px 5px; border-radius: 10px"
+                                                (click)="handleAddConditions('user', 'amount', userTopUpWalletType, 'deposit', customerTopUpConditionOptions)">
+                                                {{ 'button.add' | translate | uppercase }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label class="radioLabel" nz-radio nzValue="byCustomerTopUpPercent">{{
+                                                    'marketing.promotion-policy.byDepositRatio' | translate }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="userTopUpRadioValue === 'byCustomerTopUpPercent'">
+                                        <div class="col-6">
+                                            <div style="width: 100%">
+                                                {{ 'common.condition' | translate }}
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div style="width: 100%">
+                                                {{ 'common.promote' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="promotionPolicyController && promotionPolicyController.deposits && promotionPolicyController.deposits.percent && 
+                                        (promotionPolicyController.deposits.percent | keys).length > 0">
+                                        <div *ngFor="let item of promotionPolicyController.deposits.percent | keys">
+                                            <div class="row conditionItem" *ngIf="item.value.userType === 'user'">
+                                                <div class="col-6">
+                                                    <nz-input-group
+                                                        (click)="handleEditConditions(item, customerTopUpConditionOptions, 'deposit','percent','user')"
+                                                        [nzSuffix]="suffixTemplate">
+                                                        <input nz-input [ngModel]="item.value.name" disabled />
+                                                        <ng-template #suffixTemplate><img
+                                                                src="/assets/icon/edit_pencil.png" nz-icon
+                                                                class="inputIcon" /></ng-template>
+                                                    </nz-input-group>
+                                                </div>
+                                                <div class="col-4">
+                                                    <nz-input-group nzSuffix="%">
+                                                        <input nz-input [(ngModel)]="item.value.percent"
+                                                            [textMask]="{mask: percentageMask}" />
+                                                    </nz-input-group>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button ad-button nzUpper
+                                                        style="margin: 0px 5px; border-radius: 10px; right: 5px"
+                                                        (click)="removeOneConditionSet(item.key, 'deposit', 'percent')">
+                                                        {{ 'button.remove' | translate }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12" *ngIf="userTopUpRadioValue === 'byCustomerTopUpPercent'">
+                                            <button #customerTopUpAddPercentAddButton ad-button nzUpper nzColor="red"
+                                                style="margin: 10px 5px; border-radius: 10px"
+                                                (click)="handleAddConditions('user', 'percent', userTopUpWalletType, 'deposit', customerTopUpConditionOptions)">
+                                                {{ 'button.add' | translate | uppercase }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </nz-radio-group>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div #customerPrpmotionTitle class="title">
+                                <div class="titleLeft">
+                                    {{ 'marketing.promotion-policy-detail.promotion' | translate | uppercase }}
+                                </div>
+                                <div class="titleRight">
+                                    <nz-select style="width: 100%;" nzPlaceHolder="{{'common.wallet' | translate}}"
+                                        [(ngModel)]="userPromotionWalletType">
+                                        <nz-option *ngFor="let item of ['main', 'sub']" [nzValue]="item"
+                                            [nzLabel]="'common.wallet-' + item | translate"></nz-option>
+                                    </nz-select>
+                                </div>
+                            </div>
+                        </div>
+                        <hr name="customerPromotion" />
+                        <div class="row">
+                            <div class="col-12">
+                                <nz-radio-group [(ngModel)]="userPromotionRadioValue" style="width: 100%">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label class="radioLabel" nz-radio
+                                                nzValue="byCustomerPromotionAmount">{{'marketing.promotion-policy.byOrderValue' | translate }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="userPromotionRadioValue === 'byCustomerPromotionAmount'">
+                                        <div class="col-6">
+                                            <div style="width: 100%">
+                                                {{ 'common.condition' | translate }}
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div style="width: 100%">
+                                                {{ 'common.promote' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="promotionPolicyController && promotionPolicyController.promotions && promotionPolicyController.promotions.amount 
+                                        && (promotionPolicyController.promotions.amount | keys).length > 0">
+                                        <div *ngFor="let item of promotionPolicyController.promotions.amount | keys">
+                                            <div class="row conditionItem" *ngIf="item.value.userType === 'user'">
+                                                <div class="col-6">
+                                                    <nz-input-group [nzSuffix]="suffixTemplate"
+                                                        (click)="handleEditConditions(item, customerTopUpConditionOptions, 'promotion', 'amount', 'user')">
+                                                        <input nz-input [ngModel]="item.value.name" disabled />
+                                                        <ng-template #suffixTemplate><img
+                                                                src="/assets/icon/edit_pencil.png" nz-icon
+                                                                class="inputIcon" /></ng-template>
+                                                    </nz-input-group>
+                                                </div>
+                                                <div class="col-4">
+                                                    <nz-input-group nzSuffix="VNĐ">
+                                                        <input nz-input [(ngModel)]="item.value.amount"
+                                                            [textMask]="{mask: currencyMask}" />
+                                                    </nz-input-group>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button ad-button nzUpper
+                                                        style="margin: 0px 5px; border-radius: 10px; right: 5px"
+                                                        (click)="removeOneConditionSet(item.key, 'promotion', 'amount')">
+                                                        {{ 'button.remove' | translate }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12"
+                                            *ngIf="userPromotionRadioValue === 'byCustomerPromotionAmount'">
+                                            <button #customerPromotionAmountAddButton ad-button nzUpper nzColor="red"
+                                                style="margin: 10px 5px; border-radius: 10px"
+                                                (click)="handleAddConditions('user', 'amount', userPromotionWalletType, 'promotion', bonusForCustomerConditionOptions)">
+                                                {{ 'button.add' | translate | uppercase }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label class="radioLabel" nz-radio
+                                                nzValue="byCustomerPromotionPercent">{{
+                                                    'marketing.promotion-policy.byOrderValueProportion' | translate }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="userPromotionRadioValue === 'byCustomerPromotionPercent'">
+                                        <div class="col-6">
+                                            <div style="width: 100%">
+                                                {{ 'common.condition' | translate }}
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div style="width: 100%">
+                                                {{ 'common.promote' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="promotionPolicyController &&  promotionPolicyController.promotions && promotionPolicyController.promotions.percent 
+                                    && (promotionPolicyController.promotions.percent | keys).length > 0">
+                                        <div *ngFor="let item of promotionPolicyController.promotions.percent | keys">
+                                            <div class="row conditionItem" *ngIf="item.value.userType === 'user'">
+                                                <div class="col-6">
+                                                    <nz-input-group
+                                                        (click)="handleEditConditions(item, bonusForCustomerConditionOptions, 'promotion', 'percent', 'user')"
+                                                        [nzSuffix]="suffixTemplate">
+                                                        <input nz-input [ngModel]="item.value.name" disabled />
+                                                        <ng-template #suffixTemplate><img
+                                                                src="/assets/icon/edit_pencil.png" nz-icon
+                                                                class="inputIcon" /></ng-template>
+                                                    </nz-input-group>
+                                                </div>
+                                                <div class="col-4">
+                                                    <nz-input-group nzSuffix="%">
+                                                        <input nz-input [(ngModel)]="item.value.percent"
+                                                            [textMask]="{mask: percentageMask}" />
+                                                    </nz-input-group>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button ad-button nzUpper
+                                                        style="margin: 0px 5px; border-radius: 10px; right: 5px"
+                                                        (click)="removeOneConditionSet(item.key, 'promotion', 'percent')">
+                                                        {{ 'button.remove' | translate }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12"
+                                            *ngIf="userPromotionRadioValue === 'byCustomerPromotionPercent'">
+                                            <button #customerPromotionPercentAddButton ad-button nzUpper nzColor="red"
+                                                style="margin: 10px 5px; border-radius: 10px"
+                                                (click)="handleAddConditions( 'user', 'percent', userPromotionWalletType, 'promotion', bonusForCustomerConditionOptions)">
+                                                {{ 'button.add' | translate | uppercase }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </nz-radio-group>
+                            </div>
+                        </div>
+                    </div>
+                </nz-tab>
+                <nz-tab [nzTitle]="'common.servicer' | translate">
+                    <div style="padding: 10px">
+                        <div class="row">
+                            <div #servicerTopUpTitle class="title">
+                                <div class="titleLeft">
+                                    {{ 'marketing.promotion-policy-detail.deposit' | translate | uppercase }}
+                                </div>
+                                <div class="titleRight">
+                                    <nz-select style="width: 100%;" nzPlaceHolder="{{'common.wallet' | translate}}"
+                                        [(ngModel)]="servicerTopUpWalletType">
+                                        <nz-option *ngFor="let item of ['main', 'sub']" [nzValue]="item"
+                                            [nzLabel]="'common.wallet-' + item | translate"></nz-option>
+                                    </nz-select>
+                                </div>
+                            </div>
+                        </div>
+                        <hr name="servicerDeposit" />
+                        <div class="row">
+                            <div class="col-12">
+                                <nz-radio-group [(ngModel)]="servicerTopUpRadioValue" style="width: 100%">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label class="radioLabel" nz-radio
+                                                nzValue="byServicerTopUpAmount">{{'marketing.promotion-policy.byDepositAmount' | translate }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="servicerTopUpRadioValue === 'byServicerTopUpAmount'">
+                                        <div class="col-6">
+                                            <div style="width: 100%">
+                                                {{ 'common.condition' | translate }}
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div style="width: 100%">
+                                                {{ 'common.promote' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="promotionPolicyController && promotionPolicyController.deposits &&promotionPolicyController.deposits.amount 
+                                        && (promotionPolicyController.deposits.amount | keys).length > 0">
+                                        <div *ngFor="let item of promotionPolicyController.deposits.amount | keys">
+                                            <div class="row conditionItem" *ngIf="item.value.userType === 'servicer'">
+                                                <div class="col-6">
+                                                    <nz-input-group
+                                                        (click)="handleEditConditions( item, bonusForCustomerConditionOptions, 'deposit', 'amount', 'servicer')"
+                                                        [nzSuffix]="suffixTemplate">
+                                                        <input nz-input [ngModel]="item.value.name" disabled />
+                                                        <ng-template #suffixTemplate><img
+                                                                src="/assets/icon/edit_pencil.png" nz-icon
+                                                                class="inputIcon" /></ng-template>
+                                                    </nz-input-group>
+                                                </div>
+                                                <div class="col-4">
+                                                    <nz-input-group nzSuffix="VNĐ">
+                                                        <input nz-input [(ngModel)]="item.value.amount"
+                                                            [textMask]="{mask: currencyMask}" />
+                                                    </nz-input-group>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button ad-button nzUpper
+                                                        style="margin: 0px 5px; border-radius: 10px; right: 5px"
+                                                        (click)=" removeOneConditionSet(item.key,'deposit','amount')">
+                                                        {{ 'button.remove' | translate }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12" *ngIf="servicerTopUpRadioValue ==='byServicerTopUpAmount'">
+                                            <button #servicerTopUpAmountAddButton ad-button nzUpper nzColor="red"
+                                                style="margin: 10px 5px; border-radius: 10px"
+                                                (click)="handleAddConditions( 'servicer', 'amount', servicerTopUpWalletType, 'deposit', partnerTopUpConditionOptions)">
+                                                {{ 'button.add' | translate | uppercase }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label class="radioLabel" nz-radio nzValue="byServicerTopUpPercent">{{
+                                                    'marketing.promotion-policy.byDepositRatio' | translate }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="servicerTopUpRadioValue === 'byServicerTopUpPercent'">
+                                        <div class="col-6">
+                                            <div style="width: 100%">
+                                                {{ 'common.condition' | translate }}
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div style="width: 100%">
+                                                {{ 'common.promote' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="promotionPolicyController && promotionPolicyController.deposits && promotionPolicyController.deposits.percent 
+                                        && (promotionPolicyController.deposits.percent | keys).length > 0">
+                                        <div *ngFor="let item of promotionPolicyController.deposits.percent | keys">
+                                            <div class="row conditionItem" *ngIf="item.value.userType === 'servicer'">
+                                                <div class="col-6">
+                                                    <nz-input-group
+                                                        (click)="handleEditConditions(item, partnerTopUpConditionOptions, 'deposit', 'percent', 'servicer')"
+                                                        [nzSuffix]="suffixTemplate">
+                                                        <input nz-input [ngModel]="item.value.name" disabled />
+                                                        <ng-template #suffixTemplate><img
+                                                                src="/assets/icon/edit_pencil.png" nz-icon
+                                                                class="inputIcon" /></ng-template>
+                                                    </nz-input-group>
+                                                </div>
+                                                <div class="col-4">
+                                                    <nz-input-group nzSuffix="%">
+                                                        <input nz-input [(ngModel)]="item.value.percent"
+                                                            [textMask]="{mask: percentageMask}" />
+                                                    </nz-input-group>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button ad-button nzUpper
+                                                        style="margin: 0px 5px; border-radius: 10px; right: 5px"
+                                                        (click)="removeOneConditionSet(item.key, 'deposit', 'percent')">
+                                                        {{ 'button.remove' | translate }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12"
+                                            *ngIf="servicerTopUpRadioValue === 'byServicerTopUpPercent'">
+                                            <button #servicerTopUpPercentAddButton ad-button nzUpper nzColor="red"
+                                                style="margin: 10px 5px; border-radius: 10px"
+                                                (click)="handleAddConditions('servicer', 'percent', servicerTopUpWalletType, 'deposit', partnerTopUpConditionOptions)">
+                                                {{ 'button.add' | translate | uppercase }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </nz-radio-group>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="title">
+                                <div class="titleLeft">
+                                    {{ 'marketing.promotion-policy-detail.promotion' | translate | uppercase }}
+                                </div>
+                                <div class="titleRight">
+                                    <nz-select style="width: 100%;" nzPlaceHolder="{{'common.wallet' | translate}}"
+                                        [(ngModel)]="servicerPromotionWalletType">
+                                        <nz-option *ngFor="let item of ['main', 'sub']" [nzValue]="item"
+                                            [nzLabel]="'common.wallet-' + item | translate"></nz-option>
+                                    </nz-select>
+                                </div>
+                            </div>
+                        </div>
+                        <hr name="servicerPromotion" />
+                        <div class="row">
+                            <div class="col-12">
+                                <nz-radio-group [(ngModel)]="servicerPromotionRadioValue" style="width: 100%">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label class="radioLabel" nz-radio nzValue="byServicerPromotionAmount">
+                                                {{'marketing.promotion-policy.byOrderValue' | translate }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="servicerPromotionRadioValue ==='byServicerPromotionAmount'">
+                                        <div class="col-6">
+                                            <div style="width: 100%">
+                                                {{ 'common.condition' | translate }}
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div style="width: 100%">
+                                                {{ 'common.promote' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="promotionPolicyController && promotionPolicyController.promotions && promotionPolicyController.promotions.amount 
+                                        && (promotionPolicyController.promotions.amount | keys).length > 0">
+                                        <div *ngFor="let item of promotionPolicyController.promotions.amount | keys">
+                                            <div class="row conditionItem" *ngIf="item.value.userType === 'servicer'">
+                                                <div class="col-6">
+                                                    <nz-input-group
+                                                        (click)="handleEditConditions(item, partnerTopUpConditionOptions, 'promotion', 'amount', 'servicer') "
+                                                        [nzSuffix]="suffixTemplate">
+                                                        <input nz-input [ngModel]="item.value.name" disabled />
+                                                        <ng-template #suffixTemplate><img
+                                                                src="/assets/icon/edit_pencil.png" nz-icon
+                                                                class="inputIcon" /></ng-template>
+                                                    </nz-input-group>
+                                                </div>
+                                                <div class="col-4">
+                                                    <nz-input-group nzSuffix="VNĐ">
+                                                        <input nz-input [(ngModel)]="item.value.amount"
+                                                            [textMask]="{mask: currencyMask}" />
+                                                    </nz-input-group>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button ad-button nzUpper
+                                                        style="margin: 0px 5px; border-radius: 10px; right: 5px"
+                                                        (click)="removeOneConditionSet(item.key, 'promotion', 'amount')">
+                                                        {{ 'button.remove' | translate }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12"
+                                            *ngIf="servicerPromotionRadioValue === 'byServicerPromotionAmount'">
+                                            <button #servicerPromotionAmountAddButton ad-button nzUpper nzColor="red"
+                                                style="margin: 10px 5px; border-radius: 10px"
+                                                (click)=" handleAddConditions('servicer', 'amount', servicerPromotionWalletType, 'promotion', bonusForPartnerConditionOptions)">
+                                                {{ 'button.add' | translate | uppercase }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label class="radioLabel" nz-radio
+                                                nzValue="byServicerPromotionPercent">{{'marketing.promotion-policy.byOrderValueProportion' | translate }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row"
+                                        *ngIf="servicerPromotionRadioValue === 'byServicerPromotionPercent'">
+                                        <div class="col-6">
+                                            <div style="width: 100%">
+                                                {{ 'common.condition' | translate }}
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div style="width: 100%">
+                                                {{ 'common.promote' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="promotionPolicyController && promotionPolicyController.promotions && promotionPolicyController.promotions.percent && 
+                                        (promotionPolicyController.promotions.percent | keys).length > 0">
+                                        <div *ngFor="let item of promotionPolicyController.promotions.percent | keys">
+                                            <div class="row conditionItem" *ngIf="item.value.userType === 'servicer'">
+                                                <div class="col-6">
+                                                    <nz-input-group
+                                                        (click)="handleEditConditions(item, bonusForPartnerConditionOptions, 'promotion', 'percent', 'servicer')"
+                                                        [nzSuffix]="suffixTemplate">
+                                                        <input nz-input [ngModel]="item.value.name" disabled />
+                                                        <ng-template #suffixTemplate><img
+                                                                src="/assets/icon/edit_pencil.png" nz-icon
+                                                                class="inputIcon" /></ng-template>
+                                                    </nz-input-group>
+                                                </div>
+                                                <div class="col-4">
+                                                    <nz-input-group nzSuffix="%">
+                                                        <input nz-input [(ngModel)]="item.value.percent"
+                                                            [textMask]="{mask: percentageMask}" />
+                                                    </nz-input-group>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button ad-button nzUpper
+                                                        style="margin: 0px 5px; border-radius: 10px; right: 5px"
+                                                        (click)="removeOneConditionSet(item.key, 'promotion', 'percent')">
+                                                        {{ 'button.remove' | translate }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12"
+                                            *ngIf="servicerPromotionRadioValue === 'byServicerPromotionPercent'">
+                                            <button #servicerPromotionPercentAddButton ad-button nzUpper nzColor="red"
+                                                style="margin: 10px 5px; border-radius: 10px"
+                                                (click)="
+                                                    handleAddConditions('servicer','percent',servicerPromotionWalletType,'promotion',bonusForPartnerConditionOptions)">
+                                                {{ 'button.add' | translate | uppercase }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </nz-radio-group>
+                            </div>
+                        </div>
+                    </div>
+                </nz-tab>
+            </nz-tabset>
+        </div>
+        <div class="rightWrapper">
+            <page-wrapper nzTitle="{{
+                    'marketing.promotion-policy.programDetail' | translate
+                }}">
+                <div style="min-height: 400px">
+                    <div class="row contentLine">
+                        <div class="col-12">
+                            <div class="leftAligned">
+                                <strong>{{ 'table.promotion-code' | translate }}:</strong>
+                            </div>
+                            <div class="rightAligned">
+                                {{ data.code }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row contentLine">
+                        <div class="col-12">
+                            <div class="leftAligned">
+                                <strong>{{ 'table.promotion-name' | translate }}:</strong>
+                            </div>
+                            <div class="rightAligned">
+                                {{ data.name }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row contentLine">
+                        <div class="col-12">
+                            <div class="leftAligned">
+                                <strong>{{ 'table.priority-level' | translate }}:</strong>
+                            </div>
+                            <div class="rightAligned">
+                                {{ data.priority }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row contentLine">
+                        <div class="col-12">
+                            <div class="leftAligned">
+                                <strong>{{ 'table.duration' | translate }}:</strong>
+                            </div>
+                            <div class="rightAligned">
+                                {{ (data.effectedAt | date: 'dd/MM/yyyy') + ' - ' + (data.expiredAt | date: 'dd/MM/yyyy') }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row contentLine">
+                        <div class="col-12">
+                            <div class="leftAligned">
+                                <strong>{{ 'table.status' | translate }}:</strong>
+                            </div>
+                            <div class="rightAligned">
+                                {{ 'marketing.promotion-policy-status.' + data.status | translate }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row contentLine">
+                        <div class="col-12">
+                            <div class="leftAligned">
+                                <strong>{{ 'marketing.promotion-policy.content' | translate }}:</strong>
+                            </div>
+                            <div class="rightAligned">
+                                {{ data.content }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="max-width: 600px; margin: 0 auto">
+                    <div class="buttonContainer">
+                        <button ad-button nzUpper nzColor="primary" (click)="onClickModify()"
+                            style="margin: auto 5px; border-radius: 10px">
+                            {{ 'button.modifyInfo' | translate }}
+                        </button>
+                        <button ad-button nzUpper nzColor="primary" (click)="onClickUpdatePromotionPolicy()"
+                            style="margin: auto 5px; border-radius: 10px">
+                            {{ 'button.update' | translate }}
+                        </button>
+                    </div>
+                </div>
+            </page-wrapper>
+        </div>
+    </div>
+    <create-promotion-modal [visible]="visibleModal" (handleVisible)="handleVisibleModal($event)"
+        (onFinished)="handleAfterModified()" type="modify" [id]="policyId"></create-promotion-modal>
+    <create-promocode-modal [promoCodeObject]="currentPromoCode" [visible]="visiblePromoCodeModal"
+        (handleVisible)="handleVisiblePromoCodeModal($event)" [policyId]="policyId"
+        (handleAfterCreated)="handleAfterCreatePromoCode()"
+        [duration]="{ effectedAt: data.effectedAt, expiredAt: data.expiredAt }"></create-promocode-modal>
+    <add-conditions-modal [visible]="visibleAddConditionsModal"
+        (handleVisible)="handleVisibleAddConditionsModal($event)" [trackingDetail]="addConditionsTracking"
+        [conditionOptions]="conditionOptionsForAddConditionModal" [(conditionSet)]="currentConditionSet"
+        (conditionSetChange)="addOneConditionSet($event)">
+    </add-conditions-modal>
+</page-wrapper>

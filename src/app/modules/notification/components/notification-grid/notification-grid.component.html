@@ -1,0 +1,45 @@
+<nz-alert class="alert__container" nzType="info" [nzMessage]="selectTemplate"></nz-alert>
+<nz-table #table [nzData]="tableData.data" [nzFrontPagination]="false" nzShowSizeChanger [nzLoading]="loading"
+    [nzTotal]="tableData.total" [(nzPageIndex)]="model.page" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [nzScroll]="{x:'1100px'}" [(nzPageSize)]="model.limit" (nzPageIndexChange)="loadDataByPage($event)"
+    nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th nzShowCheckbox="true" [(nzChecked)]="isAllDisplayDataChecked" [nzIndeterminate]="isIndeterminate"
+                (nzCheckedChange)="checkAll($event)" nzWidth="5%"></th>
+            <th nzWidth="15%">{{'notification.type.self' | translate}}</th>
+            <th nzWidth="50%">{{'notification.content' | translate}}</th>
+            <th nzWidth="10%">{{'common.orderCode' | translate}}</th>
+            <th nzWidth="10%">{{'table.time' | translate}}</th>
+            <th nzWidth="10%">{{'common.action' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of table.data" [class]="(!data.seen)?'unread-item':''">
+            <td nzShowCheckbox="true" [(nzChecked)]="mapOfCheckedId[data._id]" (nzCheckedChange)="refreshStatus()"></td>
+            <td>{{'notification.type.' + data.type | translate}}</td>
+            <td>{{data.name}}</td>
+            <td>{{data.orderCode}}</td>
+            <td>{{data.createdAt | date:'HH:mm dd/MM/yyyy'}}</td>
+            <td nzRight="0px" [class]="(!data.seen)?'unread-item':''">
+                <button ad-button nzType="dashed" [routerLink]="setRouterLink(data)" (click)="seen(data._id)">
+                    {{"common.detail" | translate}}
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-total>
+    {{'table.total' | translate}} {{ total }} {{'common.notifications' | translate | lowercase}}
+</ng-template>
+<ng-template #selectTemplate>
+    {{'common.selected' | translate}} <span class="alert__total">
+        {{(totalSelected) ? totalSelected : 0}}
+    </span> {{'common.items' | translate | lowercase}}
+    <span class="alert__highlight"><span (click)="checkAll(false)">{{'notification.action.unmark'|translate}}</span> |
+        <span (click)="seenMany()">{{'notification.action.read'|translate}}</span>
+    </span>
+    <span class="alert__view-all" (click)="seenAll()">
+        {{'notification.action.mark-all-as-read' | translate}}
+    </span>
+</ng-template>

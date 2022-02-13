@@ -1,0 +1,8 @@
+<nz-modal class="processing-modal" [nzWidth]="142" [(nzVisible)]="visible" [nzContent]="modalContent" [nzTitle]="null"
+    [nzFooter]="null" [nzClosable]="false">
+    <ng-template #modalContent>
+        <span class="loadingText">{{ modelText || ('common.processing' | translate) }}</span>
+        <ng-content>
+        </ng-content>
+    </ng-template>
+</nz-modal>

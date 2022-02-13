@@ -1,0 +1,117 @@
+<form nz-form nzLayout="vertical" #form="ngForm">
+    <div class="row justify-content-start" style="margin-bottom: 10px">
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="code">{{ "finance.session-cod.code" | translate }}/{{'order.external-code' | translate}}
+                </nz-form-label>
+                <nz-form-control>
+                    <input nz-input [(ngModel)]="queryModel.code" name="code" #code="ngModel"
+                        [placeholder]="('actions.enter' | translate)+' '+('finance.session-cod.code' | translate)+'/'+('order.external-code' | translate)" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="externalCode">{{'common.soCode' | translate }}/{{'common.packageNo' | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <input nz-input [(ngModel)]="queryModel.soOrPackage" name="externalCode" #externalCode="ngModel"
+                        [placeholder]="('actions.enter' | translate)+' '+('common.soCode' | translate)+'/'+('common.packageNo' | translate)" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="servicer">{{ "common.customer" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <search-and-suggest-account-component [mode]="'multiple'" [(ngModel)]="selectedCustomer"
+                        [selectedId]="_customer" ngDefaultControl [ngModelOptions]="{ standalone: true }"
+                        #servicer="ngModel" [allowCustomer]="true" [allowServicer]="false" [valueType]="'_id'"
+                        [customerSearchCondition]="customerSearchCondition" [valueType]="'_id'" [placeHolder]="
+                                ('actions.enter' | translate) +
+                                ' ' +
+                                ('common.id' | translate | uppercase) +
+                                '/' +
+                                ('common.name' | translate) +
+                                '/' +
+                                ('common.phone' | translate)
+                            ">
+                    </search-and-suggest-account-component>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="">{{
+                        "common.status" | translate
+                    }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select style="width: 100%" [(ngModel)]="queryModel.status" name="status" nzShowSearch
+                        nzPlaceHolder="{{ 'common.all' | translate }}" nzAllowClear>
+                        <nz-option [nzLabel]="'common.all' | translate" [nzValue]="''">
+                        </nz-option>
+                        <nz-option *ngFor="let item of handoverSessions | keyvalue"
+                            [nzLabel]=" ('handoverSessions.statusLabel.' + item.key) | translate " [nzValue]="item.key">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="startTime">{{
+                    "common.createdAt" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-range-picker style="width:100%" [nzShowTime]="false" [nzRanges]="ranges1" nzShowTime
+                        nzFormat="dd/MM/yyyy" [(ngModel)]="createdAt" name="startTime" [nzPlaceHolder]="[
+                            'filter.fromDate' | translate,
+                            'filter.toDate' | translate
+                        ]" nzAllowClear class="ant-calendar-picker-full-width">
+                    </nz-range-picker>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="receivedDateFirst">{{
+                    "handoverSessions.receivedDateFirst" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-range-picker style="width:100%" [nzShowTime]="false" [nzRanges]="ranges1" nzShowTime
+                        nzFormat="dd/MM/yyyy" [(ngModel)]="receivedDateFirst" name="receivedDateFirst" [nzPlaceHolder]="[
+                            'filter.fromDate' | translate,
+                            'filter.toDate' | translate
+                        ]" nzAllowClear class="ant-calendar-picker-full-width">
+                    </nz-range-picker>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="receivedDateLast">{{
+                    "handoverSessions.receivedDateLast" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-range-picker style="width:100%" [nzShowTime]="false" [nzRanges]="ranges1" nzShowTime
+                        nzFormat="dd/MM/yyyy" [(ngModel)]="receivedDateLast" name="receivedDateLast" [nzPlaceHolder]="[
+                            'filter.fromDate' | translate,
+                            'filter.toDate' | translate
+                        ]" nzAllowClear class="ant-calendar-picker-full-width">
+                    </nz-range-picker>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-label></nz-form-label>
+            <nz-form-control>
+                <button ad-button nzColor="red" class="btn btn-warning"
+                    (click)="search()">{{ "actions.search" | translate }}</button>
+                &nbsp;
+                <button (click)="reset()" ad-button nzColor="#fffff"
+                    class="btn btn-warning">{{ "button.reset" | translate }}</button>
+            </nz-form-control>
+        </div>
+    </div>
+</form>

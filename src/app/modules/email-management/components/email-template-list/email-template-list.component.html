@@ -1,0 +1,21 @@
+<div class="grid__container">
+    <div class="grid__header">
+        <div>
+            <button class="grid__action__left" ad-button nzColor="red" (click)="toggleFilter()">
+                {{'filter.filter'|translate}}
+            </button>
+            <button class="grid__action__right" ad-button nzColor="primary" (click)="handleVisible(true)">
+                {{'button.add'|translate}}
+            </button>
+        </div>
+    </div>
+    <filter-email-template (onSearch)="search($event)" (onReset)="search($event)"
+        [style.display]="showFilter?'block':'none'">
+    </filter-email-template>
+    <br>
+    <email-template-grid [(model)]="modelQuery" (detail)="edit($event)" #emailTemplateGrid>
+    </email-template-grid>
+</div>
+<create-email-template [model]="model" [visible]="visibleModel" (handleVisible)="handleVisible($event)"
+    [loading]="loadingModel" (handleLoading)="handleLoading($event)" (submit)="submit($event)" #createEmailTemplate>
+</create-email-template>

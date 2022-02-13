@@ -1,0 +1,211 @@
+<nz-modal #modalQuickAssign nzWidth="700px" [(nzVisible)]="visibleModal"
+    [nzTitle]="(scanBySO? 'actions.quick3PLAssignBySO': 'actions.quick3PLAssign') | translate"
+    [nzContent]="modalContent" [nzFooter]="modalFooter" [nzMaskClosable]="false" [nzClosable]="closeAble"
+    (nzAfterClose)="closePopup()">
+    <ng-template #modalContent>
+        <div class="conten-package">
+            <div style="margin-bottom: 15px;" nz-row>
+                <div class="title" nz-col nzSpan="6">
+                    {{ (scanBySO? "common.scanSO": "common.scanPackageCode") | translate }}:
+                </div>
+                <div nz-col nzSpan="18">
+                    <nz-input-group [nzSuffix]="suffixTemplateInfo" [nzPrefix]="prefixTemplateUser">
+                        <input #singleScanPack [disabled]="loading" type="text" nz-input
+                            [placeholder]="(scanBySO?  'actions.scanSO': 'actions.scanPackage') | translate"
+                            (keyup)="handleScan($event)" />
+                    </nz-input-group>
+                    <ng-template #prefixTemplateUser><i nz-icon nzType="scan"></i></ng-template>
+                    <ng-template #suffixTemplateInfo><i nz-icon nz-tooltip
+                            [nzTooltipTitle]="(scanBySO?  'actions.scanSO':'actions.scanPackage') | translate"
+                            nzType="info-circle"></i>
+                    </ng-template>
+                </div>
+            </div>
+            <div *ngIf="currentUser?.roles.includes(AdminPermission.IMPORT_SO) || !scanBySO" style="margin: 15px 0px"
+                nz-row>
+                <div class="title" nz-col nzSpan="6">
+                    {{ "actions.importPackage" | translate }}:
+                </div>
+                <div nz-col nzSpan="18">
+                    <nz-upload #fileUpload class="file-upload" [nzBeforeUpload]="beforeUpload"
+                        [nzShowUploadList]="false" [nzDisabled]="loading"
+                        nzAccept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <button nz-button>
+                            <i nz-icon nzType="upload"></i>{{ "uploader.choose-file" | translate }}
+                        </button>
+                    </nz-upload>&nbsp;
+                    <span>
+                        {{
+                        uploading
+                        ? ("uploader.uploading-file" | translate)
+                        : ("uploader.unselected-file" | translate)
+                        }}
+                        <i *ngIf="uploading" nz-icon [nzType]="'loading'"></i>
+                    </span>
+                    <span class="download-sample-file">
+                        <a href="/assets/downloads/XFA_Template.xlsx" download><img src="/assets/icon/download-icon.svg"
+                                alt="" />
+                            {{
+                            "common.download-sample-file" | translate
+                            }}</a>
+                    </span>
+                </div>
+            </div>
+            <div style="margin-bottom: 15px;" nz-row>
+                <div class="title" nz-col nzSpan="6">
+                    3PL
+                </div>
+                <nz-form-control nz-col nzSpan="18">
+                    <search-and-suggest-account-component mode="default" [(ngModel)]="selectedCustomer"
+                        [firstOptionData]="firstOptionData" [firstOption]="true" ngDefaultControl
+                        [ngModelOptions]="{ standalone: true }" #servicer="ngModel" [allowCustomer]="true"
+                        [allowServicer]="false" [customerSearchCondition]="customerSearchCondition" [valueType]="'_id'"
+                        [placeHolder]="
+                                ('actions.enter' | translate) +
+                                ' ' +
+                                ('common.id' | translate | uppercase) +
+                                '/' +
+                                ('common.name' | translate) +
+                                '/' +
+                                ('common.phone' | translate)
+                            ">
+                    </search-and-suggest-account-component>
+                </nz-form-control>
+            </div>
+            <nz-tabset>
+                <nz-tab
+                    [nzTitle]="('common.soCode' | translate) + ' (' + (shownPackagesSo ? shownPackagesSo?.length : 0) + ')'"
+                    *ngIf="scanBySO">
+                    <div class="buttonActions-package" style="margin-top: 15px;">
+                        <span class="total">
+                            {{ "common.totalSo" | translate }}:
+                            <strong>{{ shownPackagesSo?.length || 0 }}</strong>
+                        </span>
+                        <span class="total">
+                            {{ "handoverSessions3PL.toltalPackage" | translate }}:
+                            <strong>{{ totalPackages(shownPackagesSo) }}</strong>
+                        </span>
+                        <span class="total" style="color: green;">
+                            {{ "common.totalValidPackage" | translate }}:
+                            <strong>{{ shownPackagesSo?.length - totalInvalidPackage(shownPackagesSo)
+                                }}</strong>
+                        </span>
+                        <span class="total" style="color: red;">
+                            {{ "common.totalInValidPackage" | translate }}:
+                            <strong>{{ totalInvalidPackage(shownPackagesSo) }}</strong>
+                        </span>
+                    </div>
+                    <nz-table style="margin-top: 15px;" #packagesSoTable [nzData]="shownPackagesSo" [nzPageSize]="10"
+                        [nzLoading]="loading" nzSize="small" nzBordered>
+                        <thead>
+                            <tr>
+                                <th>{{ "common.index" | translate }}</th>
+                                <th>{{ "common.soCode" | translate }}</th>
+                                <th>{{ "common.valid" | translate }}</th>
+                                <th>{{ "common.invalid" | translate }}</th>
+                                <th>{{ "handoverSessions3PL.toltalPackage" | translate }}</th>
+                                <th>{{ "common.remove" | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of packagesSoTable.data; index as index ">
+                                <td nzAlign="center" style="color: black;">
+                                    {{
+                                    (packagesSoTable.nzPageIndex - 1) *
+                                    packagesSoTable.nzPageSize +
+                                    index +
+                                    1
+                                    }}
+                                </td>
+                                <td [style]="item?.inValid > 0 ? 'color: red;' : 'color: green;' ">{{ item.soCode }}
+                                </td>
+                                <td>{{ item?.totalPackage - item?.inValid }}</td>
+                                <td>{{ item?.inValid || 0 }}</td>
+                                <td>{{ item?.totalPackage || 0 }}</td>
+                                <td nzAlign="center" (click)="removePackageSo(item.soCode)">
+                                    <i nz-icon nzType="delete" nzTheme="outline"
+                                        style="color: black; cursor: pointer;"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </nz-table>
+                </nz-tab>
+                <nz-tab [nzTitle]="'common.packageNo' | translate">
+                    <div class="buttonActions-package" style="margin-top: 15px;">
+                        <span class="total">
+                            {{ "order.total" | translate }}:
+                            <strong>{{ packages.length }}</strong>
+                        </span>
+                        <nz-checkbox-wrapper (nzOnChange)="choosePackageFilter($event)">
+                            <span>
+                                <label nz-checkbox [(ngModel)]="checkValid" [nzValue]="true">{{ "common.valid" |
+                                    translate
+                                    }}:</label>
+                                <b class="valid">{{ totalValidPackage }}</b>
+                            </span>
+                            <span>
+                                <label nz-checkbox [(ngModel)]="checkInalid" [nzValue]="false">{{ "common.invalid" |
+                                    translate }}:</label>
+                                <b class="invalid">{{
+                                    packages.length - totalValidPackage
+                                    }}</b>
+                            </span>
+                        </nz-checkbox-wrapper>
+                    </div>
+                    <nz-table style="margin-top: 15px;" #packagesTable [nzData]="shownPackages" [nzPageSize]="10"
+                        [nzLoading]="loading" nzSize="small" nzBordered>
+                        <thead>
+                            <tr>
+                                <th>{{ "common.index" | translate }}</th>
+                                <th>{{ "common.packageNo" | translate }}</th>
+                                <th>{{ "common.orderCode" | translate }}</th>
+                                <th>{{ "common.status" | translate }}</th>
+                                <th>{{ "common.remove" | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="
+                                let item of packagesTable.data;
+                                index as index
+                            " [style.color]="item.valid ? 'inherit' : 'red'">
+                                <td nzAlign="center" style="color: black;">
+                                    {{
+                                    (packagesTable.nzPageIndex - 1) *
+                                    packagesTable.nzPageSize +
+                                    index +
+                                    1
+                                    }}
+                                </td>
+                                <td>{{ item.packageNo }}</td>
+                                <td>{{ item.soCode }}</td>
+                                <td nzAlign="center">
+                                    <i *ngIf="item.valid" nz-icon nzType="check" style="color: #21a525"></i>
+                                    <i *ngIf="!item.valid" nz-icon nzType="close"></i>
+                                </td>
+                                <td nzAlign="center" (click)="removePackage(item)">
+                                    <i nz-icon nzType="delete" nzTheme="outline"
+                                        style="color: black; cursor: pointer;"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </nz-table>
+                </nz-tab>
+
+            </nz-tabset>
+
+        </div>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="grid__footer" style="width: 50%; margin: 0 auto;">
+            <div class="buttonActions" style="margin-top: 15px; margin-bottom: 15px;">
+                <button ad-button nzUpper nzColor="primary" (click)="assignHandle()" [nzLoading]="assigning"
+                    [disabled]="totalInvalidPackage(shownPackagesSo) > 0 || loading">
+                    {{ "actions.quick3PLAssign" | translate }}
+                </button>
+                <button ad-button nzUpper nzColor="default" (click)="handleVisibleModal()" [disabled]="loading">
+                    {{ "button.cancel" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

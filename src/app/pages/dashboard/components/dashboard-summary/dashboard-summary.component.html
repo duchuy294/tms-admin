@@ -1,0 +1,34 @@
+<div class="container dashboard-summary">
+    <div class="row">
+        <div class="col-12 total-collectiondebt">
+            <div class="value">{{model.collectionDebt | number}}</div>
+            <div>{{'common.collection-money-total' | translate}}</div>
+        </div>
+    </div>
+    <div class="row border-radus-box">
+        <div class="col-6">
+            <div class="value">{{model.acceptedOrders}}</div>
+            <div>{{'common.acceptedOrders' | translate}}</div>
+        </div>
+        <div class="col-6">
+            <div class="value">{{model.doingOrders}}</div>
+            <div>{{'common.doingOrders' | translate}}</div>
+        </div>
+        <div class="col-6">
+            <div class="value">{{model.freeServicers}}</div>
+            <div>{{'common.freeServicer' | translate}}</div>
+        </div>
+        <div class="col-6">
+            <div class="value">{{model.returnOrders}}</div>
+            <div>{{'common.returnOrders' | translate}}</div>
+        </div>
+        <div class="col-6">
+            <div class="value">{{model.incidents}}</div>
+            <div>{{'order.incident' | translate}}</div>
+        </div>
+        <div class="col-6">
+            <div class="value">{{model.offline}}</div>
+            <div>{{'common.offline' | translate}}</div>
+        </div>
+    </div>
+</div>

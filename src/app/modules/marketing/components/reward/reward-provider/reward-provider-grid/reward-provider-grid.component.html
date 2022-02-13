@@ -1,0 +1,49 @@
+<nz-table #table [nzData]="model?.data" [nzFrontPagination]="false" [nzLoading]="loadingGrid" [nzTotal]="model?.total"
+    [(nzPageIndex)]="queryModel.page" [(nzPageSize)]="queryModel.limit" nzShowSizeChanger
+    (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)" [nzBordered]="true"
+    [nzSize]="'small'" [nzScroll]="{x: '1400px'}" nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th>{{'common.code' | translate }}</th>
+            <th>{{'common.createdAt' | translate }}</th>
+            <th>{{'common.name' | translate }}</th>
+            <th>{{'common.status' | translate }}</th>
+            <th nzRight="0px">{{'common.action' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of table.data">
+            <td>
+                <a routerLink="/pages/marketing/reward-provide/{{item._id}}">{{item.code}}</a>
+            </td>
+            <td>{{item.createdAt | date:'HH:mm dd/MM/yyyy'}}</td>
+            <td>{{item.name}}</td>
+            <td>{{'common.status' + item.status | translate}}</td>
+            <td>
+                <ng-container>
+                    <button nz-dropdown ad-button nzType="dashed" [nzDropdownMenu]="menu"
+                        [nzPlacement]="'bottomCenter'">
+                        {{'common.action' | translate}}
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                            <li nz-menu-item>
+                                <a (click)="handleEdit(item._id)">{{'button.edit' | translate}}</a>
+                            </li>
+                            <li nz-menu-item *ngIf='item.status !== 4'>
+                                <a (click)="handleDelete(item)">{{'common.delete' | translate}}</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a (click)="handleView(item)">{{'button.view'| translate}}</a>
+                            </li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{'table.show' | translate}} {{range[0]}}-{{range[1]}}. {{'table.total' | translate}} {{total}}
+    {{'table.result' | translate | lowercase}}
+</ng-template>

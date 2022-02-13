@@ -1,0 +1,8 @@
+<div class="messenger-bar">
+    <div *ngFor="let type of types" class="hide-bar messenger-tab">
+        <messenger-tab *ngIf="conversations && conversations[type]" [conversation]="conversations[type]"
+            [order]="(order && order.code)?order.code:''" [blockMessage]="blockMessages[type]" [name]="nameList"
+            #messengerTab>
+        </messenger-tab>
+    </div>
+</div>

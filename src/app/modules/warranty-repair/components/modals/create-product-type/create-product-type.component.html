@@ -1,0 +1,99 @@
+<nz-modal nzWidth="550px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+    <ng-template #modalTitle>
+        {{
+            modelQuery?._id
+                ? ("warranty-repair.edit-product" | translate)
+                : ("warranty-repair.create-product" | translate)
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #productForm="ngForm">
+            <div class="row">
+                <div class="col-9">
+                    <nz-form-item>
+                        <nz-form-label nzFor="name" nzRequired>{{
+                            "common.name" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <input type="text" nz-input [(ngModel)]="modelQuery.name" name="name" #name="ngModel"
+                                required />
+                            <nz-form-explain *ngIf="
+                                    (name.dirty || name.touched) &&
+                                    name.errors?.required
+                                ">
+                                {{
+                                    "validations-form.condition-set-name.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-3">
+                    <nz-form-item>
+                        <nz-form-label nzFor="priority">{{
+                            "common.orderNo" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-input-number [(ngModel)]="modelQuery.priority" [nzMin]="0" [nzStep]="1" name="prioryty">
+                            </nz-input-number>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+
+            <nz-form-item>
+                <nz-form-label nzFor="brand">{{
+                    "warranty-repair.brand" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <div class="formControlWithAction">
+                        <nz-select [(ngModel)]="brand" name="brand" nzShowSearch="true"
+                            nzPlaceHolder="Chọn thương hiệu">
+                            <nz-option *ngFor="let item of brands" [nzLabel]="item.name" [nzValue]="item._id"
+                                [nzDisabled]="
+                                    brandsSelected && !!brandsSelected[item._id]
+                                ">
+                            </nz-option>
+                        </nz-select>
+                        <button style="width: 120px" ad-button nzColor="red" (click)="addBrand()">
+                            {{ "actions.add" | translate }}
+                        </button>
+                    </div>
+                    <div>
+                        <nz-tag style="margin-bottom: 5px;" *ngFor="let item of brandsSelected | keys" nzColor="#2db7f5"
+                            nzMode="closeable" (nzAfterClose)="removeBrand(item.key)">
+                            {{ item.value.name }}
+                        </nz-tag>
+                    </div>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzFor="image" nzRequired>{{
+                    "common.avatar" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-file-uploader [nzFileList]="image" [nzShowButton]="!modelQuery.image"
+                        [nzData]="{ path: 'product-type' }" (nzChange)="updateContentImg($event)">
+                    </nz-file-uploader>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div style="max-width: 360px; margin: 0 auto">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" (click)="onCreateProduct()">
+                    {{
+                        (modelQuery?._id ? "button.update" : "button.add")
+                            | translate
+                    }}
+                </button>
+                <button ad-button nzUpper nzType="default" (click)="handleVisibleModal(false)">
+                    {{ "actions.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

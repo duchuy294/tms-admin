@@ -1,0 +1,37 @@
+<nz-table #table [nzData]="warehouseOrderData.data" [nzFrontPagination]="false" nzShowSizeChanger [nzLoading]="loading"
+    [nzTotal]="warehouseOrderData.total" [(nzPageIndex)]="model.page" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [nzScroll]="{x:'800px'}" [(nzPageSize)]="model.limit" (nzPageIndexChange)="loadDataByPage($event)" nzShowQuickJumper
+    [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th [nzWidth]="'15%'" nzLeft="0px">{{ 'common.orderCode' | translate }}</th>
+            <th [nzWidth]="'15%'">{{ 'common.createdAt' | translate }}</th>
+            <th [nzWidth]="'20%'">{{ 'warehouse.order.renter' | translate }}</th>
+            <th [nzWidth]="'15%'">{{ 'warehouse.order.rent-area' | translate }}</th>
+            <th [nzWidth]="'15%'">{{ 'table.time' | translate }}</th>
+            <th [nzWidth]="'20%'">{{ 'common.status' | translate }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of table.data">
+            <td nzLeft="0px">
+                <a target="_blank" routerLink="/pages/order/{{data?._id}}">{{data?.code}}</a>
+            </td>
+            <td>{{data?.createdAt | date:'HH:mm dd/MM/yyyy'}}</td>
+            <td>
+                <a routerLink="/pages/customer-management/personal/detail/{{data?.userId}}">
+                    {{users[data?.userId]?.fullName}}
+                </a>
+            </td>
+            <td>{{data?.rentArea | number}}m<sup>2</sup></td>
+            <td>
+                {{data?.detail?.points[0]?.services[0]?.startedAt | date:'dd/MM/yyyy'}} <br>
+                {{data?.detail?.points[0]?.services[0]?.finishedAt | date:'dd/MM/yyyy'}}
+            </td>
+            <td> {{ 'order.statusCode.' + data?.status  | translate }}</td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-total>
+    {{'table.total' | translate}} {{ total }} {{'table.result' | translate | lowercase}}
+</ng-template>

@@ -1,0 +1,81 @@
+<nz-modal nzWidth="550px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+    <ng-template #modalTitle>
+        {{ "collectionTab.detailTitleConfirmModal" | translate }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+            <p>
+                <strong>{{
+                    "collectionTab.amountTextForm" | translate
+                }}</strong>
+            </p>
+            <p>{{ model.paid | number }}đ</p>
+            <nz-form-item>
+                <nz-form-label nzRequired nzFor="confirmedPaid">{{ "collectionTab.amountLabelForm" | translate }}
+                </nz-form-label>
+                <nz-form-control [nzErrorTip]="
+                        'collectionTab.formError.amount.required' | translate
+                    ">
+                    <nz-input-number [(ngModel)]="model.confirmedPaid" [nzMin]="1" [nzStep]="1"
+                        formControlName="confirmedPaid" [nzFormatter]="formatterVND" style="width: 100%"
+                        [nzParser]="parserVND" [nzDisabled]="model.status === requestCodEnum.holding">
+                    </nz-input-number>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzFor="code">{{
+                    "collectionTab.bank" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select [ngModel]="model.bank" [ngModelOptions]="{ standalone: true }"
+                        [disabled]="model.status === requestCodEnum.holding">
+                        <nz-option *ngFor="let bank of banks" [nzValue]="bank.code" [nzLabel]="bank.name"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="model.status !== requestCodEnum.holding">
+                <nz-form-control>
+                    <label nz-checkbox [(ngModel)]="hideTransCode" formControlName="noTransCode" [nzValue]="true"
+                        (ngModelChange)="requiredCode($event)">{{ "collectionTab.noTransCode" | translate }}</label>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="!hideTransCode">
+                <nz-form-label nzRequired nzFor="code">{{
+                    "collectionTab.transactionCode" | translate
+                }}</nz-form-label>
+                <nz-form-control [nzErrorTip]="
+                        'collectionTab.formError.code.required' | translate
+                    ">
+                    <input type="text" nz-input formControlName="code" maxlength="30" [placeholder]="
+                            'collectionTab.transactionCode' | translate
+                        " [(ngModel)]="model.transCode" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzFor="code">{{
+                    "common.note" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <textarea rows="4" maxlength="500" nz-input formControlName="note" [(ngModel)]="model.note"
+                        [placeholder]="
+                            'collectionTab.notePlaceholder' | translate
+                        " [disabled]="model.status === requestCodEnum.holding"></textarea>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" (click)="submitForm()" [nzLoading]="loading"
+                    *ngIf="visibleAction">
+                    {{ "button.confirm" | translate }}
+                </button>
+                <button ad-button nzUpper nzColor="gray" (click)="handleVisibleModal(false)">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

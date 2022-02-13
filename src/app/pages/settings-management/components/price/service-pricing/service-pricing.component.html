@@ -1,0 +1,10 @@
+<nz-tabset nzTabPosition="left">
+    <nz-tab nzTitle="{{'price.tabs.delivery' | translate}}">
+        <service-pricing-grid [servicePricings]="deliveryServicePricings" [type]="ServicePricingType.DELIVERY">
+        </service-pricing-grid>
+    </nz-tab>
+    <nz-tab nzTitle="{{'price.tabs.installation' | translate}}">
+        <service-pricing-grid [servicePricings]="installationServicePricings" [type]="ServicePricingType.INSTSLLATION">
+        </service-pricing-grid>
+    </nz-tab>
+</nz-tabset>

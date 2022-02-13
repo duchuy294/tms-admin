@@ -1,0 +1,42 @@
+@import 'utils.less';
+
+  ::ng-deep {
+    .ant-tabs {
+      overflow: unset;
+    }
+    .ant-tag {
+      margin-bottom: 5px;
+      
+    }
+    .store-type {
+      &__list {
+        list-style-type: none;
+        padding: 0;
+        margin: 20px 0;
+      }
+      &__item {
+        margin-bottom: 30px;
+      }
+      &__title {
+        overflow: hidden;
+        position: relative;
+        font-weight: normal;
+        font-size: 14px;
+        padding-left: 25px;
+        margin-bottom: 15px;
+        .action-right {
+          float: right;
+        }
+        &::before {
+          content: "";
+          position: absolute;
+          width: 15px;
+          height: 15px;
+          top: 0;
+          left: 0;
+          background-color: #C9C9C9;
+          .border-radius(50%);
+        }
+      }
+    }
+  }

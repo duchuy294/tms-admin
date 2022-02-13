@@ -1,0 +1,36 @@
+@import 'utils.less';
+
+.statistic {
+    &__filter {
+        width: 100%;
+        text-align: left;
+    }
+
+    &__summary {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            display: inline-block;
+            .em(padding, 20px);
+            .em(margin-right, 30px);
+
+            span {
+                display: block;
+                .em(font-size, 17px);
+            }
+
+            strong {
+                .em(font-size, 25px);
+                font-weight: 400;
+            }
+        }
+    }
+
+    &__filter-item {
+        width: 120px;
+        display: inline-block;
+        margin-right: 5px;
+    }
+}

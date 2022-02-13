@@ -1,0 +1,93 @@
+<form nz-form nzLayout="vertical" #filterNewsListForm="ngForm">
+    <div class="row">
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label>
+                    {{ "marketing.news.name" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <input nz-input [(ngModel)]="queryModel.title" name="title"
+                        [placeholder]="'common.title' | translate" required />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label>
+                    {{ "common.category" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <nz-select [(ngModel)]="queryModel.catId" name="catId"
+                        [nzPlaceHolder]="'common.category' | translate">
+                        <nz-option [nzLabel]="'common.all' | translate" [nzValue]="null">
+                        </nz-option>
+                        <nz-option *ngFor="let item of categoryOptionList" [nzLabel]="item.name" [nzValue]="item._id">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label>
+                    {{ "common.status" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <nz-select [(ngModel)]="queryModel.status" name="status"
+                        [nzPlaceHolder]="'common.status' | translate">
+                        <nz-option [nzLabel]="'common.all' | translate" [nzValue]="null">
+                        </nz-option>
+                        <nz-option [nzLabel]="
+                                'marketing.news.status-active' | translate
+                            " [nzValue]="true">
+                        </nz-option>
+                        <nz-option [nzLabel]="
+                                'marketing.news.status-inactive' | translate
+                            " [nzValue]="false">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label nzFor="startTime">{{
+                    "filter.fromDate" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-date-picker [(ngModel)]="startTime" name="startTime"
+                        [nzPlaceHolder]="'placeholder.selectDate' | translate">
+                    </nz-date-picker>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label nzFor="endTime">{{
+                    "filter.toDate" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-date-picker [(ngModel)]="endTime" name="endTime"
+                        [nzPlaceHolder]="'placeholder.selectDate' | translate">
+                    </nz-date-picker>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label class="form-label form-label--empty"></nz-form-label>
+                <nz-form-control>
+                    <button ad-button nzColor="red" (click)="search()">
+                        {{ "button.find" | translate }}
+                    </button>
+                    &nbsp;
+                    <button ad-button (click)="reset()">
+                        {{ "button.reset" | translate }}
+                    </button>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+</form>

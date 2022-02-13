@@ -1,0 +1,30 @@
+<div class="normal-maps">
+    <div class="row">
+        <div class="col">
+            <input #start type="text" class="form-control" placeholder="Choose starting point, or click on the map..."
+                (focus)="position = 0">
+        </div>
+        <div class="col">
+            <input #end type="text" class="form-control" placeholder="Choose destination..." (focus)="position = 1">
+        </div>
+    </div>
+
+    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false"
+        (mapClick)="mapClicked($event)">
+
+        <agm-marker *ngFor="let m of markers; let i = index" (markerClick)="clickedMarker(m.label, i)"
+            [latitude]="m.lat" [longitude]="m.lng" [label]="m.label" [markerDraggable]="m.draggable"
+            (dragEnd)="markerDragEnd(m, $event)">
+            <agm-info-window>
+                <strong>{{m.infoWindow}}</strong>
+            </agm-info-window>
+        </agm-marker>
+
+        <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination"></agm-direction>
+
+    </agm-map>
+
+    <label> {{'maps.distance' | translate}}: {{distance}}</label>
+    <br>
+    <label> {{'common.time' | translate}}: {{duration}}</label>
+</div>

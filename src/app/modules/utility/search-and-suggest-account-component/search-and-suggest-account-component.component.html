@@ -1,0 +1,16 @@
+<nz-select #select [nzMode]="mode" name="selectAccount" [(ngModel)]="model" style="width: 100%"
+    [nzPlaceHolder]="placeHolder" nzAllowClear nzShowSearch [nzServerSearch]="true"
+    (nzOnSearch)="onSearchAccount($event)" required [nzDisabled]="disabled">
+    <nz-option *ngIf="firstOption" [nzValue]="firstOptionData.value" [nzLabel]="firstOptionData.text">
+    </nz-option>
+    <ng-container *ngFor="let item of accountOptionList">
+        <nz-option *ngIf="!isSearching" [nzValue]="selectValue(item)"
+            [nzLabel]="(item.phone | uppercase) + ' - ' + item.fullName + (getGroup(item))">
+        </nz-option>
+    </ng-container>
+    <nz-option *ngIf="isSearching" nzDisabled nzCustomContent>
+        <i nz-icon nzType="loading" nzTheme="outline" style="vertical-align: baseline"></i>
+        &nbsp;
+        {{'common.searching' | translate}}
+    </nz-option>
+</nz-select>

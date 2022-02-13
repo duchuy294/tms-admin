@@ -1,0 +1,135 @@
+<div class="row" style="margin-bottom: 10px;">
+    <div class="col">
+        <div class="titleCode"
+            style="padding: 25px 0px 25px 15px; font-weight: bold; background-color: white; font-size: 1.5em;">
+            <span>#{{tableData?.code}}</span>
+            <a routerLink="/pages/order/handover-sessions" ad-button nzColor="blue"
+                style="float: right; margin-right: 8px;"><i nz-icon nzType="left"></i>
+                {{ 'button.back' | translate }}</a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-8">
+        <page-wrapper [nzTitle]="pageTitle">
+            <nz-table nz-table #table [nzData]="tableData?.packages" nzShowSizeChanger [nzLoading]="loading"
+                [nzTotal]="tableData?.package?.length" [nzShowTotal]="totalTemplate">
+                <thead>
+                    <tr>
+                        <th nzWidth="60px">{{ "common.index" | translate }}</th>
+                        <th nzWidth="100px">{{'common.soCode' | translate }}</th>
+                        <th nzWidth="100px">{{'common.packageNo' | translate }}</th>
+                        <th nzWidth="150px">{{'common.status' | translate }}</th>
+                        <th nzWidth="100px">{{'handoverSessions.receivedDate' | translate }}</th>
+                        <th nzWidth="100px">{{'table.processing-staff' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of table.data; let ind = index">
+                        <td>{{ind+1}}</td>
+                        <td>{{codeSoPackage(item.externalCode, 0)}}</td>
+                        <td>{{codeSoPackage(item.externalCode, 1)}}</td>
+                        <td>
+                            <nz-tag *ngIf="item.handoveredAt > 0 else notRecived" [nzColor]="'#24A111'">
+                                {{'handoverSessions.statusPackageLabel.received' | translate}}
+                            </nz-tag>
+                            <ng-template #notRecived>
+                                <nz-tag [nzColor]="'#FF0000'">
+                                    {{'handoverSessions.statusPackageLabel.notReceived' | translate}}
+                                </nz-tag>
+                            </ng-template>
+                        </td>
+                        <td>{{item.handoveredAt ? (item.handoveredAt | date:'HH:mm dd/MM/yyyy') : null}}</td>
+                        <td>{{ users && users[item.handovererId] ? users[item.handovererId][0].fullName: ''}}</td>
+
+                    </tr>
+                </tbody>
+            </nz-table>
+            <ng-template #totalTemplate let-total let-range="range">
+                {{'table.show' | translate}} {{range[0]}}-{{range[1]}}. {{'table.total' | translate}} {{ total }}
+                {{'table.result' | translate | lowercase}}
+            </ng-template>
+        </page-wrapper>
+        <ng-template #pageTitle>
+            {{ "handoverSessions.titleDetail" | translate }}
+        </ng-template>
+
+    </div>
+    <div class="col-4">
+        <div class="right">
+            <page-wrapper [nzTitle]="pageTitleRight">
+                <div class="content" *ngIf="tableData">
+                    <table style="width:100%" class="tableRight">
+                        <tr>
+                            <td>{{'finance.session-cod.code' | translate }}</td>
+                            <td style="text-align: right;">
+                                {{tableData.code}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'common.status' | translate }}</td>
+                            <td style="text-align: right;">
+                                <nz-tag *ngIf="handoverSessions[tableData.status]" style="margin:0"
+                                    [nzColor]="handoverSessions[tableData.status].color">
+                                    {{'handoverSessions.statusLabel.' + tableData.status | translate}}
+                                </nz-tag>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'common.createdAt' | translate }}</td>
+                            <td style="text-align: right;">
+                                {{tableData.createdAt | date:'HH:mm dd/MM/yyyy'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'order.external-code' | translate }}</td>
+                            <td style="text-align: right;">
+                                {{tableData.externalCode}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'common.customer' | translate }}</td>
+                            <td style="text-align: right;">
+                                {{customer?.fullName || null}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'handoverSessions.packageReceived' | translate }}</td>
+                            <td style="text-align: right;">
+                                {{tableData.completed}}/{{tableData.packageQuantity}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'handoverSessions.receivedDateFirst' | translate }}</td>
+                            <td style="text-align: right;">
+                                {{tableData.firstScanAt | date:'HH:mm dd/MM/yyyy'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'handoverSessions.receivedDateLast' | translate }}</td>
+                            <td style="text-align: right;">
+                                {{tableData.lastScanAt | date:'HH:mm dd/MM/yyyy'}}
+                            </td>
+                        </tr>
+                        <tr *ngIf="tableData.reason">
+                            <td>{{'reason' | translate }}</td>
+                            <td style="text-align: right; width:70%;word-break: break-word;">
+                                {{tableData.reason}}
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="bttom" style="padding-top: 20px;" *ngIf="checkRecived()">
+                        <button nz-button (click)="openModal()"
+                            nzType="primary">{{'handoverSessions.buttonSuccess' | translate}}</button>
+                    </div>
+                </div>
+            </page-wrapper>
+            <ng-template #pageTitleRight>
+                {{ "handoverSessions.titleRight" | translate }}
+            </ng-template>
+        </div>
+    </div>
+</div>
+
+<handover-sessions-complete-modal [model]="tableData" [visibleModal]="visibleModal" (onClose)="onComplete($event)">
+</handover-sessions-complete-modal>

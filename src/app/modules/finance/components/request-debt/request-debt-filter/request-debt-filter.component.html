@@ -1,0 +1,65 @@
+<div style="margin: 10px 0;">
+    <form nz-form nzLayout="vertical" #form="ngForm" *ngIf="display">
+        <div class="row">
+            <div class="col-3">
+                <nz-form-item>
+                    <nz-form-label nzFor="servicer">{{ "common.servicer" | translate }}
+                    </nz-form-label>
+                    <nz-form-control>
+                        <search-and-suggest-account-component mode="multiple" [(ngModel)]="selectedServicer"
+                            [selectedId]="_selectedServicer" ngDefaultControl [ngModelOptions]="{ standalone: true }"
+                            #servicer="ngModel" [allowCustomer]="false" [allowServicer]="true"
+                            [servicerSearchCondition]="servicerSearchCondition" [valueType]="'_id'" [placeHolder]="
+                                ('actions.enter' | translate) +
+                                ' ' +
+                                ('common.id' | translate | uppercase) +
+                                '/' +
+                                ('common.name' | translate) +
+                                '/' +
+                                ('common.phone' | translate)
+                            ">
+                        </search-and-suggest-account-component>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-3">
+                <nz-form-item>
+                    <nz-form-label nzFor="">{{
+                        "collectionTab.debtStatus" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>
+                        <nz-select style="width: 100%" [(ngModel)]="queryModel.hasConfirmedCOD" name="status"
+                            nzShowSearch nzPlaceHolder="{{ 'common.all' | translate }}" nzAllowClear>
+                            <nz-option [nzLabel]="'common.all' | translate" [nzValue]="''">
+                            </nz-option>
+                            <nz-option [nzLabel]="
+                                    'collectionTab.debtStatusOption.1'
+                                        | translate
+                                " [nzValue]="1">
+                            </nz-option>
+                            <nz-option [nzLabel]="
+                                    'collectionTab.debtStatusOption.0'
+                                        | translate
+                                " [nzValue]="0">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-3">
+                <nz-form-item>
+                    <nz-form-label nzFor="" class="form-label--empty"></nz-form-label>
+                    <nz-form-control>
+                        <button ad-button nzColor="red" (click)="searchEvent()">
+                            {{ "button.search" | translate }}
+                        </button>
+                        &nbsp;
+                        <button ad-button nzColor="white" (click)="reset()">
+                            {{ "button.reset" | translate }}
+                        </button>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </form>
+</div>

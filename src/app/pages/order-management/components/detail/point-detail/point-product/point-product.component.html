@@ -1,0 +1,69 @@
+<div *ngIf="checkDisplayingInformationProducts">
+    <nz-divider></nz-divider>
+    <div class="titleDetail">
+        {{'order.title-point.' + point.type | translate | uppercase}}
+    </div>
+    <div *ngIf="point.type === PointType.Delivery; else PickUpReturnPoint" class="wrapperTable">
+        <table style="width: 100%;">
+            <tr class="headerPorducts">
+                <td colspan="7">{{'order.external-code' | translate}} <span
+                        class="externalColor">{{point.externalCode}}</span></td>
+            </tr>
+            <tr>
+                <th>{{'order.product' | translate}}</th>
+                <th>{{'order.serialNumber.title' | translate}}</th>
+                <th>{{'order.serialNumber.SKU' | translate}}</th>
+                <th>{{'order.size' | translate}}</th>
+                <th class="textRight">{{'order.volume' | translate}}</th>
+                <th class="textRight">{{'order.serialNumber.quantity' | translate}}</th>
+                <th class="textRight">{{'price.unit' | translate}}</th>
+            </tr>
+            <tr *ngFor="let product of point.products">
+                <td>{{product.name}}</td>
+                <td>{{product.serial}}</td>
+                <td>{{product.sku}}</td>
+                <td><span
+                        *ngIf="product?.size">{{product?.size?.length+'x'+product?.size?.width+'x'+product?.size?.height}}</span>
+                </td>
+                <td class="textRight"><span *ngIf="product?.size">{{product?.size?.volume}}</span>
+                </td>
+                <td class="textRight">{{product.quantity}}</td>
+                <td class="textRight">{{product.unit}}</td>
+            </tr>
+        </table>
+    </div>
+    <ng-template #PickUpReturnPoint>
+        <div class="wrapperTable" style="padding-bottom: 15px;">
+            <div *ngFor="let point of getProductsForType(point.type)">
+                <table style="width: 100%;">
+                    <tr class="headerPorducts">
+                        <td colspan="6">{{'order.external-code' | translate}} <span
+                                class="externalColor">{{point.externalCode}}</span></td>
+                    </tr>
+                    <tr>
+                        <th>{{'order.product' | translate}}</th>
+                        <th>{{'order.serialNumber.title' | translate}}</th>
+                        <th>{{'order.serialNumber.SKU' | translate}}</th>
+                        <th>{{'order.size' | translate}}</th>
+                        <th class="textRight">{{'order.volume' | translate}}</th>
+                        <th class="textRight">{{'order.serialNumber.quantity' | translate}}</th>
+                        <th class="textRight">{{'price.unit' | translate}}</th>
+                    </tr>
+                    <tr *ngFor="let product of point.products">
+                        <td>{{product.name}}</td>
+                        <td>{{product.serial}}</td>
+                        <td>{{product.sku}}</td>
+                        <td><span
+                                *ngIf="product?.size">{{product?.size?.length+'x'+product?.size?.width+'x'+product?.size?.height}}</span>
+                        </td>
+                        <td class="textRight"><span *ngIf="product?.size">{{product?.size?.volume}}</span>
+                        </td>
+                        <td class="textRight">{{product.quantity}}</td>
+                        <td class="textRight">{{product.unit}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </ng-template>
+</div>

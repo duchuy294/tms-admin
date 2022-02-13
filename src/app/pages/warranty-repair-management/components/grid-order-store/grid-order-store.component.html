@@ -1,0 +1,28 @@
+<nz-table #table [nzData]="tableData.data" [nzFrontPagination]="false" nzShowSizeChanger [nzLoading]="loading"
+    [nzTotal]="tableData.total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+    (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)">
+    <thead>
+        <tr>
+            <th>{{ 'common.orderCode' | translate }}</th>
+            <th>{{ 'table.create-date' | translate }}</th>
+            <th>{{ 'common.type' | translate }}</th>
+            <th>{{ 'common.customer' | translate }}</th>
+            <th>{{ 'common.status' | translate }}</th>
+            <th>{{ 'order.cost' | translate }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of table.data">
+            <td>{{ data.code }}</td>
+            <td>
+                {{ data.createdAt | date: "HH:mm" }}<br />{{
+                    data.createdAt | date: "dd/MM/yyyy"
+                }}
+            </td>
+            <td>{{ data.typeLabel }}</td>
+            <td>{{ data.customerName }}</td>
+            <td>{{ data.statusLabel }}</td>
+            <td>{{ data.totalCost | number }}đ</td>
+        </tr>
+    </tbody>
+</nz-table>

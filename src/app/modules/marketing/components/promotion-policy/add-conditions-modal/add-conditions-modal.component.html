@@ -1,0 +1,97 @@
+<nz-modal nzWidth="900px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="onCancelModal()">
+    <ng-template #modalTitle>
+        {{
+            ((modalType === "create" ? "actions.add" : "button.edit")
+                | translate) +
+                " " +
+                ("common.condition" | translate) | uppercase
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #addConditionsForm="ngForm">
+            <div class="row">
+                <div class="col-12">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{
+                                ("common.name" | translate) +
+                                    " " +
+                                    ("common.condition" | translate | lowercase)
+                            }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <input nz-input name="conditionSetName" [(ngModel)]="conditionSet.name" required
+                                #nameValue="ngModel" />
+                            <nz-form-explain *ngIf="
+                                    (nameValue.dirty || nameValue.touched) &&
+                                    nameValue.errors?.required
+                                ">
+                                {{
+                                    "validations-form.condition-set-name.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8">
+                    <nz-select style="width: 100%;" nzPlaceHolder="{{
+                            'marketing.promotion-policy.chooseCondition'
+                                | translate
+                        }}" nzAllowClear [(ngModel)]="selectedCondition" name="selectCondition">
+                        <nz-option *ngFor="let item of conditionOptions" [nzValue]="item" [nzLabel]="
+                                'marketing.promotion-policy-condition-promotion-code.' +
+                                    item | translate
+                            ">
+                        </nz-option>
+                    </nz-select>
+                </div>
+                <div class="col-2">
+                    <button ad-button nzColor="red" style="width: 110px; margin: auto 5px; border-radius: 5px"
+                        (click)="addOneCondition(selectedCondition)">
+                        {{ "button.add" | translate }}
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button ad-button nzColor="red" style="width: 110px; margin: auto 5px; border-radius: 5px"
+                        (click)="addAllCondition()">
+                        {{ "button.addAll" | translate }}
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6" *ngFor="let item of conditionList | keys">
+                    <condition-item [conditionName]="item.key" [title]="
+                            'marketing.promotion-policy-condition-promotion-code.' +
+                                item.key | translate
+                        " [data]="conditionItemInputData[item.key]" [type]="conditionType[item.key]"
+                        (onAdd)="onAddingConditionChildren($event)" (onRemove)="removeCondition($event)"
+                        [(conditionData)]="conditionItemOutputData">
+                    </condition-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div style="max-width: 600px; margin: 0 auto">
+            <div class="buttonContainer">
+                <button ad-button nzUpper nzColor="primary" (click)="onConfirmModal()"
+                    style="min-width: 150px; border-radius: 5px">
+                    {{
+                        (modalType === "create"
+                            ? "button.add"
+                            : "button.update"
+                        ) | translate
+                    }}
+                </button>
+                <button ad-button nzUpper nzColor="gray" (click)="onCancelModal()"
+                    style="min-width: 150px; border-radius: 5px">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

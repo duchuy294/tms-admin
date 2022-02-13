@@ -1,0 +1,94 @@
+<div class="detail__container">
+    <nz-skeleton [nzAvatar]="true" [nzActive]="true" [nzLoading]="loading" [nzParagraph]="{ rows: 3 }">
+        <div style="display: flex">
+            <img class="detail__avatar" [src]="model?.images[0]" width="100px" height="100px">
+            <div class="detail">
+                <span class="detail__name">{{model?.name | uppercase}}</span><br>
+                {{model?.createdAt | date:"HH:mm dd/MM/yyyy"}}<br>
+                #{{model?.code}}<br>
+                {{model?.phone}}{{(model?.email) ? " | "+model.email : ""}}<br>
+            </div>
+        </div>
+    </nz-skeleton>
+    <nz-divider></nz-divider>
+    <nz-skeleton [nzActive]="true" [nzLoading]="loading" [nzParagraph]="{ rows: 10 }" [nzTitle]="false">
+        <p class="info__left">
+            <b>{{"warehouse.warehouse.type" | translate}}:</b>
+            <span class="info__right">
+                <nz-tag [nzColor]="'#12CAD1'" *ngFor="let item of warehouseTypes">
+                    {{item.name}}</nz-tag>
+            </span>
+        </p>
+        <p class="info__left">
+            <b>{{"common.status" | translate}}:</b>
+            <span class="info__right">
+                {{"common.status"+model?.status | translate}}
+            </span>
+        </p>
+        <p class="info__left">
+            <b>{{"warehouse.warehouse.area" | translate}}:</b>
+            <span class="info__right">
+                {{model?.area}}m<sup>2</sup><br>
+            </span>
+        </p>
+        <p class="info__left" *ngIf="model?.size?.width && model?.size?.height">
+            &nbsp;
+            <span class="info__right">
+                <span>{{model?.size?.height}}m x {{model?.size?.width}}m</span>
+            </span>
+        </p>
+        <p class="info__left">
+            <b>{{"warehouse.warehouse.lease-area" | translate}}:</b>
+            <span class="info__right">
+                {{model?.availableArea}}m<sup>2</sup>
+            </span>
+        </p>
+        <p class="info__left">
+            <b>{{"warehouse.services" | translate}}:</b>
+            <span class="info__right">
+                <nz-tag [nzColor]="'#12CAD1'" *ngFor="let item of services">
+                    {{item.name}}</nz-tag>
+            </span>
+        </p>
+        <p class="info__left">
+            <b>{{"warehouse.utilities" | translate}}:</b>
+            <span class="info__right">
+                <nz-tag [nzColor]="'#12CAD1'" *ngFor="let item of utilities">
+                    {{item.name}}</nz-tag>
+            </span>
+        </p>
+        <p class="info__left">
+            <b>{{"warehouse.warehouse.orientation" | translate}}:</b>
+            <span class="info__right">
+                {{directions}}
+            </span>
+        </p>
+        <p class="info__left">
+            <b>{{"common.address" | translate}}:</b>
+            <span class="info__right">
+                {{model?.address | address}}
+            </span>
+        </p>
+        <p class="info__left">
+            <b>{{"warehouse.warehouse.manager" | translate}}:</b>
+            <span class="info__right">
+                <a target="_blank"
+                    routerLink="/pages/customer-management/personal/detail/{{model?.userId}}">{{manager?.fullName}}</a>
+            </span>
+        </p>
+        <div class="info__button__container">
+            <div class="info__button">
+                <button ad-button nzUpper nzColor="primary" nzSize="large"
+                    (click)="handleModalVisible()"><span><b>{{"button.modifyInfo"|translate}}</b></span></button>
+            </div>
+            <div class="info__button">
+                <button ad-button nzUpper nzColor="primary" nzSize="large"
+                    (click)="handleAreaVisible()"><span><b>{{"warehouse.check-area"|translate}}</b></span></button>
+            </div>
+        </div>
+    </nz-skeleton>
+</div>
+<create-modify-warehouse-modal [modifyingModel]="model" [visible]="modalVisible"
+    (handleVisible)="handleModalVisible($event)" (afterSubmit)="handleAfterSubmit()">
+</create-modify-warehouse-modal>
+<warehouse-area-modal [visible]="areaVisible" (handleVisible)="handleAreaVisible($event)"></warehouse-area-modal>

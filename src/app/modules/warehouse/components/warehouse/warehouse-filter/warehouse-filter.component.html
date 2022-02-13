@@ -1,0 +1,147 @@
+<form nz-form nzLayout="vertical">
+    <div class="row">
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label>{{
+                    "warehouse.warehouse.name" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input name="name" [(ngModel)]="model.name" nz-input />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label>{{ "common.phone" | translate }}</nz-form-label>
+                <nz-form-control>
+                    <input name="phone" [(ngModel)]="model.phone" nz-input />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label>{{ "common.status" | translate }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select name="status" nzMode="multiple" [(ngModel)]="model.status"
+                        [nzPlaceHolder]="'common.all' | translate" [nzAllowClear]="true">
+                        <nz-option *ngFor="let item of statusList" [nzLabel]="'common.status' + item | translate"
+                            [nzValue]="item">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label>{{ "common.city" | translate }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select name="city" [(ngModel)]="model.city" (ngModelChange)="onCityChange($event)"
+                        [nzPlaceHolder]="'common.all' | translate" [nzAllowClear]="true">
+                        <nz-option *ngFor="let item of cities" [nzLabel]="item.name" [nzValue]="item"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label>{{
+                    "common.district" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select name="district" [(ngModel)]="model.district" [nzPlaceHolder]="'common.all' | translate"
+                        [nzAllowClear]="true">
+                        <nz-option *ngFor="let item of districts" [nzLabel]="item.name" [nzValue]="item.name">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label>{{
+                    "warehouse.warehouse.type" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select name="type" nzMode="multiple" [(ngModel)]="model.typeId"
+                        [nzPlaceHolder]="'common.all' | translate" [nzAllowClear]="true">
+                        <nz-option *ngFor="let item of typeList" [nzLabel]="item.name" [nzValue]="item._id">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label>{{
+                    "warehouse.services" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select name="service" nzMode="multiple" [(ngModel)]="model.serviceId"
+                        [nzPlaceHolder]="'common.all' | translate" [nzAllowClear]="true">
+                        <nz-option *ngFor="let item of serviceList" [nzLabel]="item.name" [nzValue]="item._id">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label>{{
+                    "warehouse.direction" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select name="direction" nzMode="multiple" [(ngModel)]="model.direction"
+                        [nzPlaceHolder]="'common.all' | translate" [nzAllowClear]="true">
+                        <nz-option *ngFor="let item of directionList" [nzLabel]="'direction.' + item | translate"
+                            [nzValue]="item">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label>{{
+                    "warehouse.warehouse.lease-area" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input name="leaseArea" [(ngModel)]="model.availableAreaMin" nz-input />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label>{{
+                    "common.createdAt" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-range-picker [nzShowTime]="false" [nzRanges]="ranges" nzShowTime nzFormat="dd/MM/yyyy"
+                        [(ngModel)]="createdAt" name="startTime" [nzPlaceHolder]="[
+                            'filter.fromDate' | translate,
+                            'filter.toDate' | translate
+                        ]">
+                    </nz-range-picker>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4"></div>
+        <div class="col-4">
+            <nz-form-label class="form-label form-label--empty"></nz-form-label>
+            <nz-form-control>
+                <button ad-button nzColor="red" (click)="searchFilter()">
+                    {{ "button.find" | translate }}
+                </button>
+                &nbsp;
+                <button ad-button nzColor="white" (click)="resetFilter()">
+                    {{ "button.remove" | translate }}
+                </button>
+            </nz-form-control>
+        </div>
+    </div>
+</form>

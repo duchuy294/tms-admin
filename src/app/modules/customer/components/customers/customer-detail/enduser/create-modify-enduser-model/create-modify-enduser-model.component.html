@@ -1,0 +1,89 @@
+<nz-modal nzWidth="600px" [(nzVisible)]="visible" [nzTitle]="modelTitle" [nzContent]="modelContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="cancle()">
+    <ng-template #modelTitle>
+        {{ (modifyingModel ? "end-user.edit" : "end-user.create") | translate }}
+    </ng-template>
+    <ng-template #modelContent>
+        <form nz-form nzLayout="vertical" #createModifyForm="ngForm">
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "common.full-name" | translate }}
+                        </nz-form-label>
+                        <nz-form-control [ngClass]="{
+                                'has-error':
+                                    (name.dirty || name.touched) && name.errors
+                            }">
+                            <input name="name" [(ngModel)]="model.name" #name="ngModel" nz-input required />
+                            <nz-form-explain *ngIf="
+                                    (name.dirty || name.touched) &&
+                                    name.errors?.required
+                                ">{{
+                                    "end-user.validations.required-full-name"
+                                        | translate
+                                }}</nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "common.phone" | translate }}
+                        </nz-form-label>
+                        <nz-form-control [ngClass]="{
+                                'has-error':
+                                    (phone.dirty || phone.touched) &&
+                                    phone.errors
+                            }">
+                            <input type="text" nz-input name="phone" [(ngModel)]="model.phone" #phone="ngModel" required
+                                minlength="8" maxlength="14" />
+                            <nz-form-explain *ngIf="
+                                    (phone.dirty || phone.touched) &&
+                                    phone.errors?.required
+                                ">
+                                {{
+                                    "validations-form.phone.required"
+                                        | translate
+                                }}</nz-form-explain>
+                            <nz-form-explain *ngIf="
+                                    (phone.dirty || phone.touched) &&
+                                    phone.errors?.minlength
+                                ">
+                                {{
+                                    "validations-form.phone.minlength"
+                                        | translate: { min: 8 }
+                                }}
+                            </nz-form-explain>
+                            <nz-form-explain *ngIf="
+                                    (phone.dirty || phone.touched) &&
+                                    phone.errors?.maxlength
+                                ">
+                                {{
+                                    "validations-form.phone.maxlength"
+                                        | translate: { max: 14 }
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div style="width: 350px; margin: 0 auto;">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" (click)="submit()">
+                    {{
+                        (modifyingModel ? "button.edit" : "button.create")
+                            | translate
+                    }}
+                </button>
+                <button ad-button nzUpper nzColor="gray" (click)="cancle()">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

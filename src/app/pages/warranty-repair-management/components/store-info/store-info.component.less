@@ -1,0 +1,54 @@
+@import "utils.less";
+:host {
+    ::ng-deep {
+        .store-info {
+            font-size: 100%;
+            &__container {
+                .em(padding, 20px);
+            }
+            &__header {
+                .flex-display();
+                margin-bottom: 20px;
+                h2 {
+                    text-transform: uppercase;
+                    margin-bottom: 10px;
+                    .em(font-size, 17px);
+                }
+                span {
+                    display: block;
+                    margin-bottom: 5px;
+                }
+            }
+            &__image {
+                max-width: 260px;
+                .flex(0 0 auto);
+                margin-right: 10px;
+                img {
+                    max-width: 100%;
+                }
+            }
+            &__description {
+                margin-bottom: 20px;
+            }
+            &__wallet {
+                background-color: #fcf3ea;
+                .border-radius(10px);
+                .em(padding, 20px);
+            }
+            ul {
+                padding: 0;
+                margin: 0;
+                list-style-type: none;
+                li {
+                    margin-bottom: 8px;
+                    label {
+                        font-weight: 500;
+                    }
+                    span {
+                        float: right;
+                    }
+                }
+            }
+        }
+    }
+}

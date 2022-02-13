@@ -1,0 +1,57 @@
+<nz-table #table (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [(nzPageIndex)]="queryModel.page" [(nzPageSize)]="queryModel.limit" [nzData]="tableData.data"
+    [nzFrontPagination]="false" [nzLoading]="loadingGrid" [nzScroll]="{ x: '1200px' }" [nzTotal]="tableData.total"
+    nzShowSizeChanger nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th [nzWidth]="'10%'">{{ 'common.code' | translate }}</th>
+            <th [nzWidth]="'15%'">{{ 'common.createdAt' | translate }}</th>
+            <th [nzWidth]="'15%'">{{ 'telecom.sms-log.smsProvider' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.type' | translate }}</th>
+            <th [nzWidth]="'15%'">{{ 'User' }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.status' | translate }}</th>
+            <th [nzWidth]="'15%'">{{ 'common.staff' | translate }}</th>
+            <th [nzWidth]="'10%'" nzRight="0px">{{'common.action' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of table.data">
+            <td>{{ item.code }}</td>
+            <td>{{ item.createdAt | date:'h:mm:ss a dd/MM/yyyy' }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.type ? ('telecom.providers.type-' + item.type | translate) : '' }}</td>
+            <td>{{ item.u }}</td>
+            <td>
+                <nz-switch [ngModel]="statuses[item._id]" [nzLoading]="loadingStatus" [nzControl]="true"
+                    (click)="onChangeStatus(item._id)"></nz-switch>
+            </td>
+            <td>{{ item.updatedBy ? (adminUpdatedBy[item.updatedBy]?.fullName) : '' }}</td>
+            <td nzRight="0px">
+                <ng-container>
+                    <button nz-dropdown ad-button nzType="dashed" [nzDropdownMenu]="menu"
+                        [nzPlacement]="'bottomCenter'">
+                        {{'common.action' | translate}}
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                            <li nz-menu-item>
+                                <a
+                                    (click)="onClickChangePassword(item._id)">{{'button.change-password' | translate}}</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a (click)="onClickEdit(item._id)">{{'button.update' | translate}}</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a (click)="onClickDelete(item._id)">{{'common.delete' | translate}}</a>
+                            </li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{'table.total' | translate}} {{ total }}
+    {{'table.result' | translate | lowercase}}
+</ng-template>

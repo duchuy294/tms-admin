@@ -1,0 +1,22 @@
+<div class="title">
+    {{ "common.orderCode" | translate}}: <span>#{{ order?.code | uppercase }}</span>
+</div>
+
+<div class="row">
+    <div class="col-8 content-left">
+        <warehouse-order-detail-information [currentUser]="currentUser" #detailInformation [order]="order"
+            [loading]="loading" (noteAdmin)="displayNoteAdmin()">
+        </warehouse-order-detail-information>
+    </div>
+    <div class="col-4 content-right">
+        <warehouse-order-detail-services [currentUser]="currentUser" [order]="order" [loading]="loading"
+            (setActionType)="setActionType($event)">
+        </warehouse-order-detail-services>
+    </div>
+    <operator-note [order]="order" [visible]="visibleNoteForm" (handleVisible)="handleVisible($event)"
+        [loading]="loadingNoteForm" (handleLoading)="handleLoading($event)" (submit)="submit($event)"
+        #warehouseOrderOperatorNote></operator-note>
+    <warehouse-order-action-modal [realCost]="order?.cost" [orderId]="orderId" [visible]="actionFormVisible"
+        [action]="actionType" (handleVisible)="handleActionFormVisible($event)" (afterSubmit)="handleAfterAction()">
+    </warehouse-order-action-modal>
+</div>

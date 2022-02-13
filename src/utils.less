@@ -1,0 +1,397 @@
+// Variables
+@background-color: #ffffff;
+@primary-color : #ED1C24;
+@shadow-color : #E3E3E3;
+
+// ------------------------
+.clearfix() {
+    zoom: 1;
+
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+        visibility: hidden;
+        font-size: 0;
+        height: 0;
+    }
+}
+
+.position(@position: relative, @top: 0, @bottom: unset, @left: unset, @right: unset, @zIndex: 0) {
+    position: @position;
+    top: @top;
+    bottom: @bottom;
+    left: @left;
+    right: @right;
+    z-index: @zIndex;
+}
+
+.style-text(@font: normal 14px, @color: @color, @textShadow: inherit) {
+    color: @color;
+    font: @font;
+    text-shadow: @textShadow;
+}
+
+.style-text-transform(@textTransform: uppercase, @font: normal 14px, @color: @color, @textShadow: inherit) {
+    .style-text(@font, @color, @textShadow);
+    text-transform: @textTransform;
+}
+
+.border-radius(@px: 0) {
+    -webkit-border-radius: @px;
+    -moz-border-radius: @px;
+    border-radius: @px;
+}
+
+.box-shadow(@px: none) {
+    -webkit-box-shadow: @px;
+    -moz-box-shadow: @px;
+    box-shadow: @px;
+}
+
+.box-sizing(@type: border-box) {
+    -webkit-box-sizing: @type;
+    -moz-box-sizing: @type;
+    box-sizing: @type;
+}
+
+.border-radius-custom (@topleft: 5px, @topright: 5px, @bottomleft: 5px, @bottomright: 5px) {
+    -webkit-border-radius: @topleft @topright @bottomright @bottomleft;
+    -moz-border-radius: @topleft @topright @bottomright @bottomleft;
+    border-radius: @topleft @topright @bottomright @bottomleft;
+}
+
+.box-shadow-full (@x: 0px, @y: 3px, @blur: 5px, @alpha: 0.5) {
+    -webkit-box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+    -moz-box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+    box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+}
+
+.text-overflow(@to: ellipsis) {
+    text-overflow: @to;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.transition (@prop: all, @time: 1s, @ease: linear, @delay: 0s) {
+    -webkit-transition: @prop @time @ease @delay;
+    -moz-transition: @prop @time @ease @delay;
+    -o-transition: @prop @time @ease @delay;
+    -ms-transition: @prop @time @ease @delay;
+    transition: @prop @time @ease @delay;
+}
+
+.transform-all (@rotate: 90deg, @scale: 1, @skew: 1deg, @translate: 10px) {
+    -webkit-transform: rotate(@rotate) scale(@scale) skew(@skew) translate(@translate);
+    -moz-transform: rotate(@rotate) scale(@scale) skew(@skew) translate(@translate);
+    -o-transform: rotate(@rotate) scale(@scale) skew(@skew) translate(@translate);
+    -ms-transform: rotate(@rotate) scale(@scale) skew(@skew) translate(@translate);
+    transform: rotate(@rotate) scale(@scale) skew(@skew) translate(@translate);
+}
+
+.gradient (@origin: left, @start: #ffffff, @stop: #000000) {
+    background-color: @start;
+    background-image: -webkit-linear-gradient(@origin, @start, @stop);
+    background-image: -moz-linear-gradient(@origin, @start, @stop);
+    background-image: -o-linear-gradient(@origin, @start, @stop);
+    background-image: -ms-linear-gradient(@origin, @start, @stop);
+    background-image: linear-gradient(@origin, @start, @stop);
+}
+
+.opacity(@opacity: 0.5) {
+    -moz-opacity: @opacity;
+    -khtml-opacity: @opacity;
+    -webkit-opacity: @opacity;
+    opacity: @opacity;
+    @opperc: @opacity * 100;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=@{opperc})";
+    filter: "alpha(opacity=@{opperc})";
+}
+
+.transition-duration(@duration: 0.2s) {
+    -moz-transition-duration: @duration;
+    -webkit-transition-duration: @duration;
+    -o-transition-duration: @duration;
+    transition-duration: @duration;
+}
+
+.transform(...) {
+    -webkit-transform: @arguments;
+    -moz-transform: @arguments;
+    -o-transform: @arguments;
+    -ms-transform: @arguments;
+    transform: @arguments;
+}
+
+.rotation(@deg: 5deg) {
+    .transform(rotate(@deg));
+}
+
+.translate(...) {
+    .transform(@arguments);
+}
+
+.translateCenter() {
+    top: 50%;
+    left: 50%;
+    .transform(translate(-50%, -50%));
+}
+
+.translateX(@translateX: 50%) {
+    left: @translateX;
+    .transform(translateX(-@translateX));
+}
+
+.translateY(@translateY: 50%, @plus: 0) {
+    top: @translateY;
+    .transform(translateY(-(@translateY+ @plus)));
+}
+
+.scale(@ratio: 1.5) {
+    .transform(scale(@ratio));
+}
+
+.place-holder(@content) {
+    &.placeholder {
+        @content();
+    }
+
+    &:-moz-placeholder {
+        @content();
+    }
+
+    &::-moz-placeholder {
+        @content();
+    }
+
+    &:-ms-input-placehoder {
+        @content();
+    }
+
+    &::-webkit-input-placeholder {
+        @content();
+    }
+}
+
+.hightlight-focus(@color) {
+    box-shadow: 0px 0px 5px @color;
+    border-color: @color;
+    background-color: white !important;
+    font-weight: bold;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.base64(@data) {
+    background-image: url(data:image/gif;base64,{data});
+}
+
+// --------------------------------------------------
+// Flexbox LESS mixins
+// The spec: http://www.w3.org/TR/css3-flexbox
+// --------------------------------------------------
+
+// Flexbox display
+// flex or inline-flex
+.flex-display(@display: flex) {
+    display:~"-webkit-@{display}";
+    display:~"-ms-@{display}box"; // IE10 uses -ms-flexbox
+    display:~"-ms-@{display}"; // IE11
+    display: @display;
+}
+
+// The 'flex' shorthand
+// - applies to: flex items
+// <positive-number>, initial, auto, or none
+.flex(@columns: initial) {
+    -webkit-flex: @columns;
+    -ms-flex: @columns;
+    flex: @columns;
+}
+
+// Flex Flow Direction
+// - applies to: flex containers
+// row | row-reverse | column | column-reverse
+.flex-direction(@direction: row) {
+    -webkit-flex-direction: @direction;
+    -ms-flex-direction: @direction;
+    flex-direction: @direction;
+}
+
+// Flex Line Wrapping
+// - applies to: flex containers
+// nowrap | wrap | wrap-reverse
+.flex-wrap(@wrap: nowrap) {
+    -webkit-flex-wrap: @wrap;
+    -ms-flex-wrap: @wrap;
+    flex-wrap: @wrap;
+}
+
+// Flex Direction and Wrap
+// - applies to: flex containers
+// <flex-direction> || <flex-wrap>
+.flex-flow(@flow) {
+    -webkit-flex-flow: @flow;
+    -ms-flex-flow: @flow;
+    flex-flow: @flow;
+}
+
+// Display Order
+// - applies to: flex items
+// <integer>
+.flex-order(@order: 0) {
+    -webkit-order: @order;
+    -ms-order: @order;
+    order: @order;
+}
+
+// Flex grow factor
+// - applies to: flex items
+// <number>
+.flex-grow(@grow: 0) {
+    -webkit-flex-grow: @grow;
+    -ms-flex-grow: @grow;
+    flex-grow: @grow;
+}
+
+// Flex shrink
+// - applies to: flex item shrink factor
+// <number>
+.flex-shrink(@shrink: 1) {
+    -webkit-flex-shrink: @shrink;
+    -ms-flex-shrink: @shrink;
+    flex-shrink: @shrink;
+}
+
+// Flex basis
+// - the initial main size of the flex item
+// - applies to: flex items
+// <width>
+.flex-basis(@width: auto) {
+    -webkit-flex-basis: @width;
+    -ms-flex-basis: @width;
+    flex-basis: @width;
+}
+
+// Axis Alignment
+// - applies to: flex containers
+// flex-start | flex-end | center | space-between | space-around
+.justify-content(@justify: flex-start) {
+    -webkit-justify-content: @justify;
+    -ms-justify-content: @justify;
+    justify-content: @justify;
+}
+
+// Packing Flex Lines
+// - applies to: multi-line flex containers
+// flex-start | flex-end | center | space-between | space-around | stretch
+.align-content(@align: stretch) {
+    -webkit-align-content: @align;
+    -ms-align-content: @align;
+    align-content: @align;
+}
+
+// Cross-axis Alignment
+// - applies to: flex containers
+// flex-start | flex-end | center | baseline | stretch
+.align-items(@align: stretch) {
+    -webkit-align-items: @align;
+    -ms-align-items: @align;
+    align-items: @align;
+}
+
+.align-self(@align: auto) {
+    -webkit-align-self: @align;
+    -ms-align-self: @align;
+    align-self: @align;
+}
+
+@basefont: 16px; // in pixels
+
+.em(@selector, @target: @basefont, @context: @basefont ) {
+    @{selector}: (@target / @context) + 0em;
+}
+
+/* ANIMATIONS */
+@-webkit-keyframes pulse {
+    40% {
+        -webkit-transform: scale(2);
+        -moz-transform: scale(2);
+        transform: scale(2);
+    }
+
+    100% {
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+@-moz-keyframes pulse {
+    40% {
+        -webkit-transform: scale(2);
+        -moz-transform: scale(2);
+        transform: scale(2);
+    }
+
+    100% {
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+    40% {
+        -webkit-transform: scale(2);
+        -moz-transform: scale(2);
+        transform: scale(2);
+    }
+
+    100% {
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+.pulseAnim() {
+    -webkit-animation: pulse 1s ease 1s 3;
+    -moz-animation: pulse 1s ease 1s 3;
+    animation: pulse 1s ease 1s 3;
+}
+
+::ng-deep {
+    .locationSelect {
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
+        background-color: #fff;
+        display: block;
+        line-height: 30px;
+        padding-left: 10px;
+        color: rgba(0, 0, 0, .65) !important;
+        position: relative;
+
+        &::after {
+            position: absolute;
+            right: 11px;
+            width: 9px;
+            height: 14px;
+            content: '';
+            background: url(/assets/icon/down.png) no-repeat;
+            background-size: 100%;
+            top: 11px;
+        }
+    }
+
+    .ant-calendar-picker-full-width {
+        .ant-calendar-picker {
+            width: 100% !important;
+        }
+    }
+}

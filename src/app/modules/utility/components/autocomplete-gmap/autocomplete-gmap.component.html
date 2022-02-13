@@ -1,0 +1,4 @@
+<input *ngIf="appliedBorder" nz-input class="input-form" type="text" name="address1" [(ngModel)]="address"
+    (ngModelChange)="handleModelChange($event)" [placeholder]="placeHolder" [required]="required" #autocomplete />
+<input *ngIf="!appliedBorder" nz-input type="text" name="address2" [(ngModel)]="address"
+    (ngModelChange)="handleModelChange($event)" [placeholder]="placeHolder" [required]="required" #autocomplete />

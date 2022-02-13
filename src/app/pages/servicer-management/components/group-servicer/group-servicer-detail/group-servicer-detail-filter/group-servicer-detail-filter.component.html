@@ -1,0 +1,36 @@
+<form nz-from #form="ngForm">
+    <div class="row">
+        <div class="col-4">
+            <nz-form-label nzFor="createdAt">{{'common.createdAt' | translate}}</nz-form-label>
+            <nz-form-control>
+                <nz-range-picker [nzShowTime]="false" [nzRanges]="ranges1" nzShow nzFormat="dd/MM/yyyy"
+                    [(ngModel)]="createdAt" name="createdAt"
+                    [nzPlaceHolder]="['filter.fromDate' | translate, 'filter.toDate' | translate]" nzAllowClear>
+                </nz-range-picker>
+            </nz-form-control>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label nzFor="status">{{ 'common.status' | translate }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select nzMode="multiple" [(ngModel)]="modelQuery.status"
+                        [nzPlaceHolder]="'filter.all' | translate" name="status" nzAllowClear>
+                        <nz-option *ngFor="let item of statuses" [nzLabel]="'common.status' + item | translate"
+                            [nzValue]="item">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label class="form-label form-label--empty"></nz-form-label>
+                <nz-form-control>
+                    <button ad-button nzColor="red" (click)="search()">{{ 'button.find' | translate }}</button>
+                    &nbsp;
+                    <button ad-button (click)="reset()">{{ 'button.reset' | translate }}</button>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+</form>

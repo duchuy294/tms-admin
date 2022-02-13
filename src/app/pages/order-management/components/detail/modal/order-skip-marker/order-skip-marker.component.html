@@ -1,0 +1,15 @@
+<div class="padding-10">
+    <div class="form-group">
+        <h4>{{'order.modal.skip-marker' | translate}}</h4>
+        <label>{{'order.modal.select-skip-marker' | translate}}</label>
+        <select class="form-control" [(ngModel)]="id">
+            <option *ngFor="let item of deliveryPoints" [ngValue]="item._id">{{item.name}}</option>
+        </select>
+        <label>{{'order.modal.reason-skip-marker' | translate}}</label>
+        <textarea class="form-control" rows="5" [(ngModel)]="note"></textarea>
+    </div>
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-sm btn-warning margin-5" (click)="confirm()">{{'button.yes' | translate}}</button>
+        <button class="btn btn-sm btn-secondary margin-5" (click)="activeModal.close('Close click')">{{'button.cancel' | translate}}</button>
+    </div>
+</div>

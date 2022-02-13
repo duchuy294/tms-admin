@@ -1,0 +1,20 @@
+<nz-modal nzWidth="1400px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+
+    <ng-template #modalTitle>{{ 'finance.history' | translate }}</ng-template>
+
+    <ng-template #modalContent>
+        <customer-transaction-grid [userIds]="customerIds">
+        </customer-transaction-grid>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="default" (click)="handleVisibleModal(false)">
+                    {{ 'button.close' | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

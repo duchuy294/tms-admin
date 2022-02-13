@@ -1,0 +1,10 @@
+<div class="history">
+    <h2 class="page-heading" *ngIf="!hideTitle">{{'order.history' | translate}}</h2>
+    <ul>
+        <li *ngFor="let item of actions">
+            <span class="font-italic">{{item.createdAt | date:'HH:mm dd/MM/yyyy'}}</span>:
+            <br *ngIf="linebreak">
+            <span>{{item.name}}</span>
+        </li>
+    </ul>
+</div>

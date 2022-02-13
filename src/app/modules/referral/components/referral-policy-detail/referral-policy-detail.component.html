@@ -1,0 +1,16 @@
+<page-wrapper [nzTitle]="pageTitle">
+    <div class="row">
+        <div class=col-8>
+            <referral-history></referral-history>
+        </div>
+        <div class=col-4>
+            <referral-detail [model]="model" (modify)="modifyReferralPolicy()"></referral-detail>
+        </div>
+    </div>
+</page-wrapper>
+<ng-template #pageTitle>
+    {{ 'marketing.referral-history.list' | translate }}
+</ng-template>
+<create-modify-referral-policy-modal [referralPolicyModel]="model" [visible]="createModifyReferralPolicyModalVisible"
+    (handleVisible)="handleCreateModifyReferralPolicyModalVisible($event)" (afterSubmit)="afterModified()">
+</create-modify-referral-policy-modal>

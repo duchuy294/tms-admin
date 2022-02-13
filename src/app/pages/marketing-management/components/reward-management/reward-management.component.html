@@ -1,0 +1,16 @@
+<page-wrapper [nzTitle]="'general-menu.reward-management' | translate">
+    <nz-tabset [(nzSelectedIndex)]="selectedTabIndex" [nzType]="'card'">
+        <nz-tab [nzTitle]="'common.redeemedRewardHistory' | translate">
+            <redeemed-reward #redeemedRewardList></redeemed-reward>
+        </nz-tab>
+        <nz-tab [nzTitle]="'common.reward' | translate">
+            <reward-list (afterSendReward)="reloadRedeemedReward()"></reward-list>
+        </nz-tab>
+        <nz-tab [nzTitle]="'common.rewardCategory' | translate">
+            <reward-category-list></reward-category-list>
+        </nz-tab>
+        <nz-tab [nzTitle]="'common.rewardProvider' | translate">
+            <reward-provider-list></reward-provider-list>
+        </nz-tab>
+    </nz-tabset>
+</page-wrapper>

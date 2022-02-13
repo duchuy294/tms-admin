@@ -1,0 +1,79 @@
+<form nz-form nzLayout="vertical" #filterNotificationForm="ngForm">
+    <div class="row">
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label nzFor="type">{{
+                    "notification.type.self" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select nzMode="multiple" [(ngModel)]="modelQuery.type"
+                        [nzPlaceHolder]="'filter.all' | translate" name="type" nzAllowClear>
+                        <nz-option *ngFor="let item of types" [nzLabel]="'notification.type.' + item | translate"
+                            [nzValue]="item">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label nzFor="seen">{{
+                    "common.status" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select [(ngModel)]="modelQuery.seen" [nzPlaceHolder]="'filter.all' | translate" name="seen"
+                        nzAllowClear>
+                        <nz-option nzLabel="{{
+                                'notification.status.read' | translate
+                            }}" nzValue="true">
+                        </nz-option>
+                        <nz-option nzLabel="{{
+                                'notification.status.unread' | translate
+                            }}" nzValue="false">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label nzFor="startTime">{{
+                    "filter.fromDate" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-date-picker [(ngModel)]="startTime" name="startTime"
+                        [nzPlaceHolder]="'placeholder.selectDate' | translate">
+                    </nz-date-picker>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label nzFor="endTime">{{
+                    "filter.toDate" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-date-picker [(ngModel)]="endTime" name="endTime"
+                        [nzPlaceHolder]="'placeholder.selectDate' | translate">
+                    </nz-date-picker>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label class="form-label form-label--empty"></nz-form-label>
+                <nz-form-control>
+                    <button ad-button nzColor="red" (click)="search()">
+                        {{ "button.find" | translate }}
+                    </button>
+                    &nbsp;
+                    <button ad-button (click)="reset()">
+                        {{ "button.reset" | translate }}
+                    </button>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+</form>

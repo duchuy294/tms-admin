@@ -1,0 +1,72 @@
+<div style="margin: 10px 0">
+    <form nz-form nzLayout="vertical" *ngIf="display">
+        <div class="row">
+            <div class="col-4">
+                <nz-form-item>
+                    <nz-form-label>
+                        {{ "filter.program" | translate }}
+                    </nz-form-label>
+                    <nz-form-control>
+                        <input nz-input name="name" [(ngModel)]="queryModel.name" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-4">
+                <nz-form-item>
+                    <nz-form-label>
+                        {{ "filter.fromDate" | translate }}
+                    </nz-form-label>
+                    <nz-form-control>
+                        <nz-date-picker nzFormat="dd/MM/yyyy" name="startTime" [(ngModel)]="startTime"
+                            [ngStyle]="{ width: '100%' }" nzPlaceHolder="{{ 'filter.fromDate' | translate }}">
+                        </nz-date-picker>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-4">
+                <nz-form-item>
+                    <nz-form-label>
+                        {{ "filter.toDate" | translate }}
+                    </nz-form-label>
+                    <nz-form-control>
+                        <nz-date-picker nzFormat="dd/MM/yyyy" name="endTime" [(ngModel)]="endTime"
+                            [ngStyle]="{ width: '100%' }" nzPlaceHolder="{{ 'filter.toDate' | translate }}">
+                        </nz-date-picker>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <nz-form-item>
+                    <nz-form-label>
+                        {{ "common.status" | translate }}
+                    </nz-form-label>
+                    <nz-form-control>
+                        <nz-select style="width: 100%;" name="status" [(ngModel)]="queryModel.status"
+                            nzPlaceHolder="{{ 'filter.all' | translate }}" nzAllowClear>
+                            <nz-option *ngFor="let item of status" [nzValue]="item" [nzLabel]="
+                                    'marketing.promotion-policy-status.' + item
+                                        | translate
+                                "></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-4">
+                <nz-form-item>
+                    <nz-form-label class="form-label--empty"> </nz-form-label>
+                    <nz-form-control>
+                        <button ad-button nzColor="red" (click)="onSearch()">
+                            {{ "button.find" | translate }}
+                        </button>
+                        &nbsp;
+                        <button ad-button nzColor="white" (click)="onReset()">
+                            {{ "button.remove" | translate }}
+                        </button>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </form>
+</div>

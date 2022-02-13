@@ -1,0 +1,77 @@
+<nz-modal nzWidth="600px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="cancel()">
+    <ng-template #modalTitle>
+        {{
+            (modifyingModel
+                ? "warehouse.utility.edit"
+                : "warehouse.utility.create"
+            ) | translate
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #createModifyForm="ngForm">
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "warehouse.utility.name" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <input name="name" [(ngModel)]="model.name" #utilityName="ngModel" nz-input required />
+                            <nz-form-explain *ngIf="
+                                    (utilityName.dirty ||
+                                        utilityName.touched) &&
+                                    utilityName.errors?.required
+                                ">
+                                {{
+                                    "warehouse.validations.utility-name-required"
+                                        | translate
+                                }}</nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-4" *ngIf="!model._id">
+                    <nz-form-item>
+                        <nz-form-label>
+                            {{ "common.status" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-select name="status" [(ngModel)]="model.status">
+                                <nz-option *ngFor="let item of statusList" [nzLabel]="
+                                        'common.status' + item | translate
+                                    " [nzValue]="item">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label>
+                            {{ "common.description" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <textarea name="description" [(ngModel)]="model.note" rows="4" nz-input></textarea>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="footer">
+            <button ad-button nzUpper nzColor="primary" (click)="submit()">
+                {{
+                    (modifyingModel ? "button.edit" : "button.create")
+                        | translate
+                }}
+            </button>
+            <button ad-button nzUpper nzColor="gray" (click)="cancel()">
+                {{ "button.close" | translate }}
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

@@ -1,0 +1,137 @@
+<div class="statistic__filter">
+    <div class="statistic__filter-item">
+        <nz-select [(ngModel)]="userType" style="width: 100%" (ngModelChange)="onChangeAccountType($event)">
+            <nz-option [nzLabel]="'common.userType.user' | translate" nzValue="user">
+            </nz-option>
+            <nz-option [nzLabel]="'common.userType.servicer' | translate" nzValue="servicer">
+            </nz-option>
+        </nz-select>
+    </div>
+    <div class="statistic__filter-item">
+        <nz-select [(ngModel)]="userSelected" style="width: 100%" [nzPlaceHolder]="'common.code'|translate" nzAllowClear
+            nzShowSearch [nzServerSearch]="true" (ngModelChange)="onChangeMember($event)"
+            (nzOnSearch)="onSearchMember($event)">
+            <ng-container *ngFor="let member of optionList">
+                <nz-option *ngIf="!isSearching" [nzValue]="member._id" [nzLabel]="member.fullName"></nz-option>
+            </ng-container>
+            <nz-option *ngIf="isSearching" nzDisabled nzCustomContent>
+                <i nz-icon nzType="loading"></i>{{'common.searching' | translate}}
+            </nz-option>
+        </nz-select>
+    </div>
+    <div class="statistic__filter-item">
+        <nz-select [(ngModel)]="overViewQueryModel.groupId" style="width: 100%"
+            [nzPlaceHolder]="'common.group'|translate" (ngModelChange)="loadReportOverview()">
+            <nz-option [nzLabel]="'filter.all' | translate" [nzValue]="''">
+            </nz-option>
+            <nz-option *ngFor="let item of servicerGroups" [nzLabel]="item.name" [nzValue]="item._id">
+            </nz-option>
+        </nz-select>
+    </div>
+    <div class="statistic__filter-item">
+        <nz-select [(ngModel)]="overViewQueryModel.serviceType" style="width: 100%"
+            [nzPlaceHolder]="'order.services'|translate" (ngModelChange)="loadReportOverview()">
+            <nz-option [nzLabel]="'filter.all' | translate" [nzValue]="''">
+            </nz-option>
+            <nz-option *ngFor="let item of serviceTypes" [nzLabel]="'order.type.' + item | translate" [nzValue]="item">
+            </nz-option>
+        </nz-select>
+    </div>
+    <ng-template [ngIf]="overViewQueryModel.dateType == 'week'">
+        <div class="statistic__filter-item">
+            <nz-week-picker nzFormat="yyyy-ww" [(ngModel)]="weekFrom"
+                [nzPlaceHolder]="'date.placeholder.week'|translate" (ngModelChange)="loadReportOverview()">
+            </nz-week-picker>
+        </div>
+        <div class="statistic__filter-item">
+            <nz-week-picker nzFormat="yyyy-ww" [(ngModel)]="weekTo" [nzPlaceHolder]="'date.placeholder.week'|translate"
+                (ngModelChange)="loadReportOverview()">
+            </nz-week-picker>
+        </div>
+    </ng-template>
+    <ng-template [ngIf]="overViewQueryModel.dateType == 'month' || overViewQueryModel.dateType == 'year'">
+        <div class="statistic__filter-item">
+            <nz-month-picker [(ngModel)]="monthFrom"
+                [nzFormat]="overViewQueryModel.dateType == 'month' ? 'MM/yyyy' : 'yyyy'" [nzPlaceHolder]="(overViewQueryModel.dateType == 'month' ? 'date.placeholder.month' :
+                'date.placeholder.year') | translate" (ngModelChange)="onChangeMonthFrom($event)">
+            </nz-month-picker>
+        </div>
+        <div class="statistic__filter-item">
+            <nz-month-picker [(ngModel)]="monthTo"
+                [nzFormat]="overViewQueryModel.dateType == 'month' ? 'MM/yyyy' : 'yyyy'" [nzPlaceHolder]="(overViewQueryModel.dateType == 'month' ? 'date.placeholder.month' :
+                'date.placeholder.year') | translate" (ngModelChange)="onChangeMonthTo($event)"></nz-month-picker>
+        </div>
+    </ng-template>
+    <ng-template [ngIf]="overViewQueryModel.dateType == 'quarter'">
+        <div class="statistic__filter-item">
+            <nz-select [(ngModel)]="overViewQueryModel.quarterFrom" (ngModelChange)="loadReportOverview()"
+                style="width: 100%">
+                <nz-option nzValue="1" [nzLabel]="'date.quarter.1'|translate"></nz-option>
+                <nz-option nzValue="2" [nzLabel]="'date.quarter.2'|translate"></nz-option>
+                <nz-option nzValue="3" [nzLabel]="'date.quarter.3'|translate"></nz-option>
+                <nz-option nzValue="4" [nzLabel]="'date.quarter.4'|translate"></nz-option>
+            </nz-select>
+        </div>
+        <div class="statistic__filter-item">
+            <nz-month-picker nzFormat="yyyy" [(ngModel)]="yearFrom" (ngModelChange)="loadReportOverview()"
+                [nzPlaceHolder]="'date.placeholder.year' | translate" (ngModelChange)="onChangeMonthFrom($event)">
+            </nz-month-picker>
+        </div>
+        <div class="statistic__filter-item">
+            <nz-select [(ngModel)]="overViewQueryModel.quarterTo" (ngModelChange)="loadReportOverview()"
+                style="width: 100%">
+                <nz-option nzValue="1" [nzLabel]="'date.quarter.1'|translate"></nz-option>
+                <nz-option nzValue="2" [nzLabel]="'date.quarter.2'|translate"></nz-option>
+                <nz-option nzValue="3" [nzLabel]="'date.quarter.3'|translate"></nz-option>
+                <nz-option nzValue="4" [nzLabel]="'date.quarter.4'|translate"></nz-option>
+            </nz-select>
+        </div>
+        <div class="statistic__filter-item">
+            <nz-month-picker nzFormat="yyyy" [(ngModel)]="yearTo" (ngModelChange)="loadReportOverview()"
+                [nzPlaceHolder]="'date.placeholder.year' | translate" (ngModelChange)="onChangeMonthTo($event)">
+            </nz-month-picker>
+        </div>
+    </ng-template>
+    <ng-template [ngIf]="overViewQueryModel.dateType == 'day'">
+        <div class="statistic__filter-item">
+            <nz-date-picker [(ngModel)]="from" nzFormat="dd/MM/yyyy" nzPlaceHolder="Chọn ngày"
+                (ngModelChange)="loadReportOverview()">
+            </nz-date-picker>
+        </div>
+        <div class="statistic__filter-item">
+            <nz-date-picker [(ngModel)]="to" nzFormat="dd/MM/yyyy" nzPlaceHolder="Chọn ngày"
+                (ngModelChange)="loadReportOverview()">
+            </nz-date-picker>
+        </div>
+    </ng-template>
+    <div class="statistic__filter-item">
+        <nz-select [(ngModel)]="overViewQueryModel.dateType" style="width: 100%" (ngModelChange)="loadReportOverview()">
+            <nz-option *ngFor="let item of filterTypes" [nzLabel]="'filter.dateTypes.' + item | translate"
+                [nzValue]="item">
+            </nz-option>
+        </nz-select>
+    </div>
+</div>
+<ul class="statistic__summary">
+    <li>
+        <span>{{'statistics.order-report-overview.total-order'|translate}}</span>
+        <strong>{{totalOrders | number}}</strong>
+    </li>
+    <li>
+        <span>{{'statistics.order-report-overview.total-income'|translate}}</span>
+        <strong>{{totalRevenue | number}}đ</strong>
+    </li>
+    <li>
+        <span>{{'statistics.order-report-overview.total-profit'|translate}}</span>
+        <strong>{{totalProfit | number}}đ</strong>
+    </li>
+</ul>
+<div class="statistic__chart">
+    <div *ngIf="chartOptions !== null">
+        <highcharts-chart [Highcharts]="Highcharts" [constructorType]="chartConstructor" [options]="chartOptions"
+            [(update)]="updateFlag" [oneToOne]="oneToOneFlag" [runOutsideAngular]="runOutsideAngular"
+            (chartInstance)="logChartInstance($event)" style="width: 100%; height: 600px; display: block;">
+        </highcharts-chart>
+    </div>
+</div>
+<spinner-processing-modal [visible]="isLoading"></spinner-processing-modal>

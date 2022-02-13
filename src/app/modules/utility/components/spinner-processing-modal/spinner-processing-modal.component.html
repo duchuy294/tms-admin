@@ -1,0 +1,19 @@
+<nz-modal class="processing-modal" [nzWidth]="0" [(nzVisible)]="visible" [nzContent]="modalContent" [nzTitle]="null"
+    [nzFooter]="null" [nzClosable]="false">
+    <ng-template #modalContent>
+        <div id="myModal" class="modal" [style.display]="visible ? 'block' : 'none'">
+            <div class="modal-content">
+                <div class="lds-roller" [style.display]="visible">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

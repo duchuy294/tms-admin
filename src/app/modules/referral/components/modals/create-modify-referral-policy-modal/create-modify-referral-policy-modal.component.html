@@ -1,0 +1,129 @@
+<nz-modal nzWidth="800px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="cancel()">
+    <ng-template #modalTitle>
+        {{
+            ((referralPolicyModel ? "actions.edit" : "actions.add")
+                | translate) +
+                " " +
+                ("referralPolicy.referral-policy" | translate)
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #createModifyForm="ngForm">
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "common.policy-name" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <input name="name" [(ngModel)]="model.name" #policyName="ngModel" nz-input required />
+                            <nz-form-explain *ngIf="
+                                    (policyName.dirty || policyName.touched) &&
+                                    policyName.errors?.required
+                                ">
+                                {{
+                                    "validations-form.policyName.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <nz-form-label>
+                        {{ "common.description-explaination" | translate }}
+                    </nz-form-label>
+                    <nz-form-control>
+                        <textarea name="description" [(ngModel)]="model.description" rows="4" nz-input></textarea>
+                    </nz-form-control>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col">
+                    <nz-tabset [(nzSelectedIndex)]="selectedUserServicerTabIndex" [nzType]="'card'" [nzSize]="'large'">
+                        <nz-tab [nzTitle]="'common.customer' | translate">
+                            <nz-tabset [(nzSelectedIndex)]="selectedContentTabIndex">
+                                <nz-tab [nzTitle]="'common.article' | translate">
+                                    <article-content-tab #userArticleContent name="userArticle"
+                                        [(content)]="model.userContent" [(sharing)]="model.userSharingContent">
+                                    </article-content-tab>
+                                </nz-tab>
+                                <nz-tab [nzTitle]="
+                                        'common.the-referral' | translate
+                                    ">
+                                    <referral-content-tab name="userReferral" [(model)]="model.userPresentee"
+                                        (checkbox)="
+                                            handleUserReferralCheckbox($event)
+                                        ">
+                                    </referral-content-tab>
+                                </nz-tab>
+                                <nz-tab [nzTitle]="
+                                        'common.the-referrer' | translate
+                                    ">
+                                    <referrer-content-tab name="userReferrer" [(model)]="model.userPresenter"
+                                        (checkbox)="
+                                            handleUserReferrerCheckbox($event)
+                                        " #userReferrer>
+                                    </referrer-content-tab>
+                                </nz-tab>
+                            </nz-tabset>
+                        </nz-tab>
+                        <nz-tab [nzTitle]="'common.servicer' | translate">
+                            <nz-tabset [(nzSelectedIndex)]="selectedContentTabIndex">
+                                <nz-tab [nzTitle]="'common.article' | translate">
+                                    <article-content-tab #servicerArticleContent name="servicerArticle"
+                                        [(content)]="model.servicerContent" [(sharing)]="
+                                            model.servicerSharingContent
+                                        ">
+                                    </article-content-tab>
+                                </nz-tab>
+                                <nz-tab [nzTitle]="
+                                        'common.the-referral' | translate
+                                    ">
+                                    <referral-content-tab name="servicerReferral" [(model)]="model.servicerPresentee"
+                                        (checkbox)="
+                                            handleServicerReferralCheckbox(
+                                                $event
+                                            )
+                                        ">
+                                    </referral-content-tab>
+                                </nz-tab>
+                                <nz-tab [nzTitle]="
+                                        'common.the-referrer' | translate
+                                    ">
+                                    <referrer-content-tab name="servicerReferrer" [(model)]="model.servicerPresenter"
+                                        (checkbox)="
+                                            handleServicerReferrerCheckbox(
+                                                $event
+                                            )
+                                        " #servicerReferrer>
+                                    </referrer-content-tab>
+                                </nz-tab>
+                            </nz-tabset>
+                        </nz-tab>
+                    </nz-tabset>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div style="width: 350px; margin: 0 auto;">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" (click)="submit()">
+                    {{
+                        (referralPolicyModel ? "button.edit" : "button.create")
+                            | translate
+                    }}
+                </button>
+                <button ad-button nzUpper nzColor="gray" (click)="cancel()">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

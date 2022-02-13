@@ -1,0 +1,195 @@
+<nz-modal nzWidth="550px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+    <ng-template #modalTitle>
+        {{
+            (modelQuery?._id ? "email.account.edit" : "email.account.create")
+                | translate
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #emailAccountForm="ngForm">
+            <nz-form-item>
+                <nz-form-label nzFor="email" nzRequired>{{
+                    "common.email" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input type="text" nz-input [(ngModel)]="modelQuery.email" name="email" #email="ngModel" required />
+                    <nz-form-explain *ngIf="
+                            (email.dirty || email.touched) &&
+                            email.errors?.required
+                        ">
+                        {{ "validations-form.email.required" | translate }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <div class="row" *ngIf="!modelQuery?._id">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nzFor="password" nzRequired>{{
+                            "common.password" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <input [type]="passwordVisible ? 'text' : 'password'" nz-input
+                                [(ngModel)]="modelQuery.password" name="password" #password="ngModel" required
+                                minlength="8" />
+                            <nz-form-explain *ngIf="
+                                    (password.dirty || password.touched) &&
+                                    password.errors?.required
+                                ">
+                                {{
+                                    "validations-form.password.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                            <nz-form-explain *ngIf="
+                                    (password.dirty || password.touched) &&
+                                    password.errors?.minlength
+                                ">
+                                {{
+                                    "validations-form.password.minlength"
+                                        | translate: { min: 8 }
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nzFor="confirmPassword" nzRequired>{{ "common.confirm" | translate }}
+                        </nz-form-label>
+                        <nz-form-control [ngClass]="{
+                                'has-error':
+                                    modelQuery?.password &&
+                                    _confirmPassword &&
+                                    _confirmPassword !== modelQuery?.password
+                            }">
+                            <input [type]="passwordVisible ? 'text' : 'password'" nz-input name="confirmPassword"
+                                [(ngModel)]="_confirmPassword" #confirmPassword="ngModel" required />
+                            <nz-form-explain *ngIf="
+                                    (confirmPassword.dirty ||
+                                        confirmPassword.touched) &&
+                                    confirmPassword.errors?.required
+                                ">
+                                {{
+                                    "validations-form.password.confirm-required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                            <nz-form-explain *ngIf="
+                                    modelQuery?.password &&
+                                    _confirmPassword &&
+                                    _confirmPassword !== modelQuery?.password
+                                ">
+                                {{
+                                    "validations-form.password.confirm"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-1">
+                    <nz-form-item>
+                        <nz-form-label class="form-label form-label--empty"></nz-form-label>
+                        <button ad-button class="vertical-center" nzSize="small" nzShape="circle"
+                            (click)="passwordVisible = !passwordVisible">
+                            <i nz-icon [nzType]="
+                                    passwordVisible ? 'eye-invisible' : 'eye'
+                                " nzTheme="outline"></i>
+                        </button>
+                    </nz-form-item>
+                </div>
+            </div>
+            <nz-form-item>
+                <nz-form-label nzFor="name" nzRequired>{{
+                    "common.name" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input type="text" nz-input [(ngModel)]="modelQuery.name" name="name" #name="ngModel" required />
+                    <nz-form-explain *ngIf="
+                            (name.dirty || name.touched) &&
+                            name.errors?.required
+                        ">
+                        {{
+                            "validations-form.condition-set-name.required"
+                                | translate
+                        }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nzFor="host" nzRequired>{{
+                            "common.host" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <input type="text" nz-input [(ngModel)]="modelQuery.host" name="host" #host="ngModel"
+                                required />
+                            <nz-form-explain *ngIf="
+                                    (host.dirty || host.touched) &&
+                                    host.errors?.required
+                                ">
+                                {{
+                                    "validations-form.host.required" | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzFor="port" nzRequired>{{
+                            "common.port" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <input type="number" nz-input [(ngModel)]="modelQuery.port" name="port" #port="ngModel"
+                                required />
+                            <nz-form-explain *ngIf="
+                                    (port.dirty || port.touched) &&
+                                    port.errors?.required
+                                ">
+                                {{
+                                    "validations-form.port.required" | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <nz-form-item>
+                <nz-form-label nzFor="type" nzRequired>{{
+                    "common.type" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select style="width:100%" [(ngModel)]="modelQuery.type" name="type" required #type="ngModel">
+                        <nz-option *ngFor="let item of types" [nzLabel]="'email.account.type-' + item | translate"
+                            [nzValue]="item" [nzDisabled]="modelQuery?._id">
+                        </nz-option>
+                    </nz-select>
+                    <nz-form-explain *ngIf="
+                            (type.dirty || type.touched) &&
+                            type.errors?.required
+                        ">
+                        {{ "validations-form.type.selected" | translate }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" [nzLoading]="loadingModal" (click)="onCreateEmailAccount()">
+                    {{
+                        (modelQuery?._id ? "button.update" : "button.add")
+                            | translate
+                    }}
+                </button>
+                <button ad-button nzUpper nzColor="default" (click)="handleVisibleModal(false)">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

@@ -1,0 +1,21 @@
+<div class="grid__container">
+    <div style="display: flex; width: 100%;">
+        <div style="font-size: 1.5em">
+            {{ ('common.wards-list'| translate) }}
+        </div>
+        <div style="display: flex; position: absolute; right: 0px">
+            <nz-input-group nzSuffixIcon="anticon anticon-search">
+                <input name="searchBox" type="text" [(ngModel)]="wardsName" (ngModelChange)="onWardsNameChange($event)"
+                    nz-input [placeholder]="'common.wards-name' | translate">
+            </nz-input-group>
+            &nbsp;
+            <button ad-button nzUpper nzColor="primary" (click)="addWards()">{{ 'button.add' | translate }}</button>
+        </div>
+    </div>
+    <br>
+    <wards-grid #wardsGrid (delete)="confirmDelete($event)" (edit)="editWards($event)">
+    </wards-grid>
+</div>
+<add-edit-wards-modal [wardsModel]="wardsToEdit" [visible]="addEditWardsModalVisible"
+    (handleVisible)="handleAddEditWardsModal($event)" (afterSubmit)="handleAfterSubmit()">
+</add-edit-wards-modal>

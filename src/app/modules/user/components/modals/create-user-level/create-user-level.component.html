@@ -1,0 +1,170 @@
+<nz-modal nzWidth="850px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal()">
+    <ng-template #modalTitle>
+        {{
+            (!model?._id
+                ? "form.user-level.create-level"
+                : "form.user-level.edit-level"
+            ) | translate
+        }}
+    </ng-template>
+
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #userLevelForm="ngForm">
+            <div class="row">
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "form.user-level.user-type" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-select style="width: 100%" [(ngModel)]="userType" name="userType"
+                                [nzDisabled]="model?._id" required>
+                                <nz-option [nzLabel]="
+                                        'form.user-level.auto-level' | translate
+                                    " [nzValue]="0">
+                                </nz-option>
+                                <nz-option [nzLabel]="
+                                        'form.user-level.special-level'
+                                            | translate
+                                    " [nzValue]="1">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div *ngIf="!userType" class=" col-4">
+                    <nz-form-item>
+                        <nz-form-label class="form-label--empty">
+                        </nz-form-label>
+                        <nz-form-control>
+                            {{ "form.user-level.min-point" | translate }}
+                            <nz-input-number nzMin="0" [(ngModel)]="modelQuery.minPoint" name="minPoint" required
+                                #minPoint="ngModel"></nz-input-number>
+                            <nz-form-explain *ngIf="
+                                    (minPoint.dirty || minPoint.touched) &&
+                                    minPoint.errors?.required
+                                ">
+                                {{
+                                    "validations-form.minPoint.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "form.user-level.level-name" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <input nz-input [(ngModel)]="modelQuery.name" name="name" required #name="ngModel" />
+                            <nz-form-explain *ngIf="
+                                    (name.dirty || name.touched) &&
+                                    name.errors?.required
+                                ">
+                                {{
+                                    "validations-form.level-name.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "form.user-level.status" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-select style="width: 100%" [(ngModel)]="modelQuery.status" name="status" required
+                                [nzDisabled]="statusDisabled" #status="ngModel">
+                                <nz-option *ngFor="let item of statuses" [nzLabel]="
+                                        'form.user-status.' + item | translate
+                                    " [nzValue]="item">
+                                </nz-option>
+                            </nz-select>
+                            <nz-form-explain *ngIf="
+                                    (status.dirty || status.touched) &&
+                                    status.errors?.required
+                                ">
+                                {{
+                                    "validations-form.user-status.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "form.user-level.detail" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <ck-editor name="content" [(ngModel)]="model.content" #content="ngModel" required>
+                            </ck-editor>
+                            <nz-form-explain *ngIf="
+                                    (content.dirty || content.touched) &&
+                                    content.errors?.required
+                                ">
+                                {{
+                                    "validations-form.content.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "form.user-level.avatar" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-file-uploader [nzFileList]="image" [nzData]="{ path: 'user-level/avatar' }"
+                                (nzChange)="updateContentImg($event, 'image')" [nzShowButton]="!model.image">
+                            </nz-file-uploader>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label>
+                            {{ "form.user-level.image" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-file-uploader [nzFileList]="coverImage" [nzData]="{ path: 'user-level/image' }"
+                                (nzChange)="
+                                    updateContentImg($event, 'coverImage')
+                                " [nzShowButton]="!model.coverImage">
+                            </nz-file-uploader>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div style="width: 380px; margin: 0 auto;">
+            <div class="buttonActions">
+                <button (click)="onCreate()" ad-button nzUpper nzColor="primary">
+                    {{
+                        (model?._id ? "button.edit" : "button.add") | translate
+                    }}
+                </button>
+                <button ad-button nzUpper (click)="handleVisibleModal()" nzColor="gray">
+                    {{ "actions.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

@@ -1,0 +1,93 @@
+<form nz-form nzLayout="vertical" #filterOrderCustomer="ngForm" *ngIf="display">
+    <div class="row">
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="servicer">{{
+                    "common.servicer" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <search-and-suggest-account-component mode="multiple" [(ngModel)]="selectedServicer"
+                        ngDefaultControl [ngModelOptions]="{ standalone: true }" #servicer="ngModel"
+                        [allowCustomer]="false" [allowServicer]="true"
+                        [servicerSearchCondition]="servicerSearchCondition" [valueType]="'_id'" [placeHolder]="
+                            ('actions.enter' | translate) +
+                            ' ' +
+                            ('common.id' | translate | uppercase) +
+                            '/' +
+                            ('common.name' | translate) +
+                            '/' +
+                            ('common.phone' | translate)
+                        ">
+                    </search-and-suggest-account-component>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="status">{{
+                    "common.status" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select nzMode="multiple" [(ngModel)]="model.status" [nzPlaceHolder]="'filter.all' | translate"
+                        name="status" nzAllowClear>
+                        <nz-option *ngFor="let item of statuses" [nzLabel]="'order.statusCode.' + item | translate"
+                            [nzValue]="item">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="searchTime">{{
+                    "common.createdAt" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-range-picker [nzShowTime]="false" [nzRanges]="ranges1" nzShowTime nzFormat="dd/MM/yyyy"
+                        [(ngModel)]="searchTime" name="searchTime" [nzPlaceHolder]="[
+                            'filter.fromDate' | translate,
+                            'filter.toDate' | translate
+                        ]">
+                    </nz-range-picker>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3" *ngIf="isEnterprise">
+            <nz-form-item>
+                <nz-form-label nzFor="customer">{{ "common.staff" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <search-and-suggest-account-component mode="multiple" [(ngModel)]="selectedCustomer"
+                        ngDefaultControl [ngModelOptions]="{ standalone: true }" #user="ngModel" [allowCustomer]="true"
+                        [allowServicer]="false" [customerSearchCondition]="customerSearchCondition" [valueType]="'_id'"
+                        [placeHolder]="
+                            ('actions.enter' | translate) +
+                            ' ' +
+                            ('common.id' | translate | uppercase) +
+                            '/' +
+                            ('common.name' | translate) +
+                            '/' +
+                            ('common.phone' | translate)
+                        ">
+                    </search-and-suggest-account-component>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label class="form-label form-label--empty"></nz-form-label>
+                <nz-form-control>
+                    <button ad-button nzColor="red" (click)="searchEvent()">
+                        {{ "button.search" | translate }}
+                    </button>
+                    &nbsp;
+                    <button ad-button (click)="reset()">
+                        {{ "button.clear" | translate }}
+                    </button>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+</form>

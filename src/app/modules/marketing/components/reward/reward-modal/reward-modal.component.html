@@ -1,0 +1,91 @@
+<nz-modal nzWidth="800px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+    <ng-template #modalTitle>
+        <span>{{ name }}</span>
+    </ng-template>
+
+    <ng-template #modalContent>
+        <div class="row">
+            <div class="col-4" *ngIf="!provider">
+                <nz-form-item>
+                    <nz-form-label nzFor="providerId">{{ "common.rewardProvider" | translate }}
+                    </nz-form-label>
+                    <nz-form-control>
+                        <nz-select [(ngModel)]="query.rewardProviderId" name="providerId" style="width: 100%;"
+                            [nzShowSearch]="true" (nzOnSearch)="loadProviders($event)" [nzAllowClear]="true">
+                            <nz-option [nzLabel]="'common.all' | translate" [nzValue]=""></nz-option>
+                            <nz-option *ngFor="let item of providers" [nzLabel]="item.name" [nzValue]="item._id">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-4" *ngIf="!category">
+                <nz-form-item>
+                    <nz-form-label nzFor="categoryIds">{{ "common.rewardCategory" | translate }}
+                    </nz-form-label>
+                    <nz-form-control>
+                        <nz-select [(ngModel)]="query.rewardCatIds" name="categoryIds" [nzShowSearch]="true"
+                            [nzAllowClear]="true" style="width: 100%;">
+                            <nz-option *ngFor="let item of categories" [nzLabel]="item.name" [nzValue]="item._id">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-4">
+                <nz-form-item>
+                    <nz-form-label>{{
+                        "filter.fromDate" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>
+                        <nz-date-picker name="fromDate" [(ngModel)]="fromDate"
+                            (ngModelChange)="onChangeStartDate($event)" [ngStyle]="{ width: '100%' }"
+                            nzPlaceHolder="{{ 'filter.fromDate' | translate }}"></nz-date-picker>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-4">
+                <nz-form-item>
+                    <nz-form-label>{{
+                        "filter.toDate" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>
+                        <nz-date-picker name="toDate" [(ngModel)]="toDate" (ngModelChange)="onChangeFromDate($event)"
+                            [ngStyle]="{ width: '100%' }" nzPlaceHolder="{{ 'filter.toDate' | translate }}" required>
+                        </nz-date-picker>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-2 mrg-bt-10">
+                <button ad-button nzColor="red" (click)="query.page = 1; loadData()">
+                    {{ "button.search" | translate }}
+                </button>
+            </div>
+
+            <div class="col-12">
+                <reward-grid [rewards]="rewardPaging.data"></reward-grid>
+            </div>
+            <div class="col-12">
+                <nz-pagination [(nzPageIndex)]="query.page" [nzTotal]="rewardPaging.total" [(nzPageSize)]="query.limit"
+                    [nzShowSizeChanger]="true" [nzPageSizeOptions]="[20, 40, 60]" (nzPageIndexChange)="loadData()"
+                    (nzPageSizeChange)="loadData()">
+                </nz-pagination>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div style="width: 350px; margin: 0 auto;">
+            <div style="text-align: center">
+                <button style="width: 100%" ad-button nzUpper nzColor="default" (click)="handleVisibleModal(false)">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

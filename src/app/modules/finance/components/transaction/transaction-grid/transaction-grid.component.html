@@ -1,0 +1,70 @@
+<nz-table #table (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [(nzPageIndex)]="queryModel.page" [(nzPageSize)]="queryModel.limit" [nzData]="tableData.data"
+    [nzFrontPagination]="false" [nzLoading]="loadingGrid" [nzScroll]="{ x: '900px' }" [nzTotal]="tableData.total"
+    nzShowSizeChanger nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th [nzWidth]="'8%'">{{ 'table.exchange-code' | translate }}</th>
+            <th [nzWidth]="'8%'">{{ 'common.date' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.target' | translate }}</th>
+            <th [nzWidth]="'8%'">{{ 'common.from' | translate }}</th>
+            <th [nzWidth]="'8%'">{{ 'common.wallet' | translate }}</th>
+            <th [nzWidth]="'8%'">{{ 'common.to' | translate }}</th>
+            <th [nzWidth]="'8%'">{{ 'table.money' | translate }}</th>
+            <th [nzWidth]="'8%'">{{ 'table.action' | translate }}</th>
+            <th [nzWidth]="'8%'">{{ 'common.orderCode' | translate }}</th>
+            <th [nzWidth]="'8%'">{{ 'table.status' | translate }}</th>
+            <th [nzWidth]="'8%'">{{ 'table.command-transfer' | translate }}</th>
+            <th [nzWidth]="'10%'">
+                {{ 'table.performerName' | translate }}
+                <span>/</span>
+                <div>{{ 'table.verifierName' | translate }} </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of table.data">
+            <td>
+                <label class="link" (click)="showDetail(item)">{{ item.code }}</label>
+            </td>
+            <td>{{ item.createdAt | date:'HH:mm dd/MM/yyyy' }}</td>
+            <td>
+                <div>{{ 'common.userType.' + item.userType | translate }}</div>
+                <a *ngIf="item.userType === 'user' && userGroups[item.userId]" target="_blank"
+                    routerLink="/pages/customer-management/personal/detail/{{item.userId}}">{{ userGroups[item.userId][0]?.fullName }}</a>
+                <a *ngIf="item.userType === 'servicer' && servicerGroups[item.userId]" target="_blank"
+                    routerLink="/pages/servicer-management/servicer/detail/{{item.userId}}">{{ servicerGroups[item.userId][0]?.fullName }}</a>
+                <br>
+                {{ userGroups[item.userId] ? '(' + userGroups[item.userId][0].code + ')' : 
+                (servicerGroups[item.userId]? '(' + servicerGroups[item.userId][0].code + ')': '') }}
+            </td>
+            <td>
+                <div *ngIf="item.from" class="btn {{item.from}}">{{ 'common.wallet-' + item.from | translate }}</div>
+            </td>
+            <td>
+                <div class="btn {{item.type}}">{{ 'common.wallet-' + item.type | translate }}</div>
+            </td>
+            <td>
+                <div *ngIf="item.to" class="btn {{item.to}}">{{ 'common.wallet-' + item.to | translate }}</div>
+            </td>
+            <td>{{ item.value | number }}</td>
+            <td>{{ item.actionName }}</td>
+            <td>
+                <a target="_blank" routerLink="/pages/order/{{item.orderId}}" width="100px"> {{ item.orderCode}}</a>
+            </td>
+            <td>{{ item.statusName}}</td>
+            <td>{{ item.requestCode}}</td>
+            <td>
+                <span *ngIf="accountGroups[item.performerId]">{{ accountGroups[item.performerId][0]?.fullName}}</span>
+                <span *ngIf="accountGroups[item.verifierId]">/</span>
+                <div>
+                    <span *ngIf="accountGroups[item.verifierId]">{{ accountGroups[item.verifierId][0]?.fullName}}</span>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{ 'table.total' | translate }} {{ total }}
+    {{ 'table.result' | translate | lowercase}}
+</ng-template>

@@ -1,0 +1,14 @@
+<nz-select #select [nzMode]="mode" name="select" [(ngModel)]="_model" style="width: 100%" [nzPlaceHolder]="('common.code' | translate) + '/' + ('warehouse.warehouse.name' |
+    translate) + '/' + ('common.phone' | translate)" nzAllowClear nzShowSearch [nzServerSearch]="true"
+    (nzOnSearch)="onSearch($event)" [nzDisabled]="disabled">
+    <ng-container *ngFor="let item of warehouseList">
+        <nz-option *ngIf="!isSearching" [nzValue]="selectValue(item)"
+            [nzLabel]="(item.code | uppercase) + ' - ' + item.name + (item.phone ? ' - ' + item.phone : '')">
+        </nz-option>
+    </ng-container>
+    <nz-option *ngIf="isSearching" nzDisabled nzCustomContent>
+        <i nz-icon nzType="loading" nzTheme="outline" style="vertical-align: baseline"></i>
+        &nbsp;
+        {{'common.searching' | translate}}
+    </nz-option>
+</nz-select>

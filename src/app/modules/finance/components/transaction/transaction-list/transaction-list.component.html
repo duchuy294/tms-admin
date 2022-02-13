@@ -1,0 +1,111 @@
+<div class="row justify-content-between" style="margin-bottom: 10px">
+    <div class="col-4">
+        <button ad-button nzColor="red" class="btn btn-warning" (click)="displayFilter = !displayFilter">{{ "tab.filter"
+            | translate }}</button>
+    </div>
+    <div class="form-inline justify-content-end col-8">
+        <div class="form-groups">
+            <button ad-button nzColor="primary" class="btn btn-warning" (click)="showAdjustDepositModal()">
+                {{ "finance.transaction-adjust-deposit.create" | translate }}
+            </button>
+            &nbsp;
+            <button ad-button nzColor="primary" class="btn btn-warning" (click)="showTopUpModal()">
+                {{ "finance.transaction-top-up.create" | translate }}
+            </button>
+            &nbsp;
+            <button ad-button nzColor="primary" class="btn btn-warning" (click)="showBonusModal()">
+                {{ "finance.transaction-bonus.create" | translate }}
+            </button>
+            &nbsp;
+            <button ad-button nzColor="primary" class="btn btn-warning" (click)="showForfeitModal()">
+                {{ "finance.transaction-forfeit.create" | translate }}
+            </button>
+        </div>
+    </div>
+</div>
+<transaction-filter (search)="search($event)" (export)="export($event)" [display]="displayFilter">
+</transaction-filter>
+<transaction-grid #grid></transaction-grid>
+<nz-modal name="promotionModal" nzWidth="650px" [(nzVisible)]="visibleBonusModal" [nzTitle]="modalTitle"
+    [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleBonusModal()">
+    <ng-template #modalTitle>
+        {{ 'finance.transaction-action.promotion' | translate }}
+    </ng-template>
+    <ng-template #modalContent>
+        <bonus-forfeit (onConfirm)="onBonusConfirmHandle($event)" [type]="bonusType" #bonusForm></bonus-forfeit>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="buttonActions">
+            <button [nzLoading]="!!bonusForm?.submitting" ad-button nzUpper nzColor="primary"
+                (click)="onBonusConfirm()">
+                {{ "button.yes" | translate }}
+            </button>
+            <button ad-button nzUpper nzType="default" (click)="handleVisibleBonusModal()">
+                {{ "button.cancel" | translate }}
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>
+<nz-modal name="forfeitModal" nzWidth="650px" [(nzVisible)]="visibleBonusFeiModal" [nzTitle]="feitModalTitle"
+    [nzContent]="feitModalContent" [nzFooter]="feitModalFooter" (nzOnCancel)="handleVisibleBonusFeiModal()">
+    <ng-template #feitModalTitle>
+        {{ 'finance.transaction-action.fine' | translate }}
+    </ng-template>
+    <ng-template #feitModalContent>
+        <bonus-forfeit (onConfirm)="onBonusConfirmHandle($event)" [type]="bonusType" #bonusFeiForm></bonus-forfeit>
+    </ng-template>
+
+    <ng-template #feitModalFooter>
+        <div class="buttonActions">
+            <button [nzLoading]="!!bonusFeiForm?.submitting" ad-button nzUpper nzColor="primary"
+                (click)="onBonusFeitConfirm()">
+                {{ "button.yes" | translate }}
+            </button>
+            <button ad-button nzUpper nzType="default" (click)="handleVisibleBonusFeiModal()">
+                {{ "button.cancel" | translate }}
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>
+<nz-modal name="topupModal" nzWidth="650px" [(nzVisible)]="visibleTopUpModal" [nzTitle]="topUpModalTitle"
+    [nzContent]="topUpmodalContent" [nzFooter]="topUpModalFooter" (nzOnCancel)="handleVisibleTopUpModal()">
+    <ng-template #topUpModalTitle>
+        {{ 'finance.transaction-action.deposit' | translate }}
+    </ng-template>
+    <ng-template #topUpmodalContent>
+        <top-up #topUpForm (onConfirm)="onTopUpConfirmHandle($event)"></top-up>
+    </ng-template>
+
+    <ng-template #topUpModalFooter>
+        <div class="buttonActions">
+            <button nzUpper ad-button nzColor="primary" nzType="primary" (click)="onTopUpConfirm()">
+                {{ "button.yes" | translate }}
+            </button>
+            <button nzUpper ad-button nzType="default" (click)="handleVisibleTopUpModal()">
+                {{ "button.cancel" | translate }}
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>
+<nz-modal name="depositModal" nzWidth="650px" [(nzVisible)]="visibleAdjustDepositModal"
+    [nzTitle]="adjustDepositModalTitle" [nzContent]="adjustDepositModalContent" [nzFooter]="adjustDepositModalFooter"
+    (nzOnCancel)="onAdjustDepositReset()">
+    <ng-template #adjustDepositModalTitle>
+        {{ 'finance.transaction-action.adjust-deposit' | translate }}
+    </ng-template>
+    <ng-template #adjustDepositModalContent>
+        <adjust-deposit #adjustDepositForm></adjust-deposit>
+    </ng-template>
+    <ng-template #adjustDepositModalFooter>
+        <div class="buttonActions">
+            <button nzUpper ad-button nzColor="primary" nzType="primary" (click)="onAdjustDepositConfirm()">
+                {{ "button.yes" | translate }}
+            </button>
+            <button nzUpper ad-button nzType="default" (click)="onAdjustDepositReset()">
+                {{ "button.cancel" | translate }}
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="exporting"></spinner-processing-modal>

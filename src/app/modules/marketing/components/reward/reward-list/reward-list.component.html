@@ -1,0 +1,126 @@
+<div class="row">
+    <div class="col-12 text-right mrg-bt-20">
+        <button ad-button nzColor="red" (click)="openModifyModal()">{{'button.add' | translate}}</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-2">
+        <nz-form-item>
+            <nz-form-label>{{'common.code' | translate}}</nz-form-label>
+            <nz-form-control>
+                <input type="text" name="code" nz-input [(ngModel)]="query.code" />
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div class="col-2">
+        <nz-form-item>
+            <nz-form-label>{{'common.name' | translate}}</nz-form-label>
+            <nz-form-control>
+                <input type="text" name="name" nz-input [(ngModel)]="query.name" />
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div class="col-2">
+        <nz-form-item>
+            <nz-form-label nzFor="providerId">{{'common.rewardProvider' | translate}}
+            </nz-form-label>
+            <nz-form-control>
+                <nz-select [(ngModel)]="query.rewardProviderId" name="providerId" style="width: 100%;"
+                    [nzShowSearch]="true" (nzOnSearch)="loadProviders($event)" [nzAllowClear]="true">
+                    <nz-option *ngFor="let item of providers" [nzLabel]="item.name" [nzValue]="item._id">
+                    </nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div class="col-2">
+        <nz-form-item>
+            <nz-form-label nzFor="categoryIds">{{'common.rewardCategory' | translate}}
+            </nz-form-label>
+            <nz-form-control>
+                <nz-select [(ngModel)]="query.rewardCatIds" name="categoryIds" [nzShowSearch]="true"
+                    [nzAllowClear]="true" style="width: 100%;">
+                    <nz-option *ngFor="let item of categories" [nzLabel]="item.name" [nzValue]="item._id">
+                    </nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-2">
+        <nz-form-item>
+            <nz-form-label>{{'common.rewardType' | translate}}</nz-form-label>
+            <nz-form-control>
+                <nz-select [(ngModel)]="query.type" name="type" style="width: 100%;" [nzAllowClear]="true">
+                    <nz-option *ngFor="let item of ['promoCode', 'voucher', 'item']"
+                        [nzLabel]="'rewardType.' + item | translate" [nzValue]="item">
+                    </nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div class="col-2">
+        <nz-form-item>
+            <nz-form-label>{{'common.status' | translate}}</nz-form-label>
+            <nz-form-control>
+                <nz-select [(ngModel)]="query.status" name="status" style="width: 100%;" [nzAllowClear]="true">
+                    <nz-option *ngFor="let item of [1, 2, 4]" [nzLabel]="'common.status' + item | translate"
+                        [nzValue]="item">
+                    </nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div class="col-2">
+        <nz-form-item>
+            <nz-form-label>{{'filter.fromDate' | translate}}</nz-form-label>
+            <nz-form-control>
+                <nz-date-picker nzFormat="dd/MM/yyyy" name="startTime" [(ngModel)]="query.startTime"
+                    [ngStyle]="{ width: '100%' }" nzPlaceHolder="{{'filter.fromDate' | translate}}"></nz-date-picker>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div class="col-2">
+        <nz-form-item>
+            <nz-form-label>{{'filter.toDate' | translate}}</nz-form-label>
+            <nz-form-control>
+                <nz-date-picker nzFormat="dd/MM/yyyy" name="endTime" [(ngModel)]="query.endTime"
+                    [ngStyle]="{ width: '100%' }" nzPlaceHolder="{{'filter.toDate' | translate}}">
+                </nz-date-picker>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div class="col-2 mrg-bt-10">
+        <nz-form-label class="form-label--empty"></nz-form-label>
+        <nz-form-control>
+            <button ad-button nzColor="red"
+                (click)="query.page = 1; loadData()">{{'button.search' | translate}}</button>
+        </nz-form-control>
+
+    </div>
+
+    <div class="col-12 mrg-bt-10">
+        <reward-grid [adminUpdatedBy]="adminUpdatedBy" [rewards]="rewardPaging.data" [actions]="actions"></reward-grid>
+    </div>
+    <div class="col-12">
+        <nz-pagination [(nzPageIndex)]="query.page" [nzTotal]="rewardPaging.total" [(nzPageSize)]="query.limit"
+            [nzShowSizeChanger]="true" [nzPageSizeOptions]="[20, 40, 60]" (nzPageIndexChange)="loadData()"
+            (nzPageSizeChange)="loadData()">
+        </nz-pagination>
+    </div>
+</div>
+<reward-modify [model]="currentModel" (updated)="rewardChange()" [visibleModal]="visibleModal"
+    (handleVisible)="handleVisible($event)">
+</reward-modify>
+<send-reward-modal [rewardModel]="rewardToSend" [visible]="sendRewardModalVisible"
+    (handleVisible)="handleSendRewardModalVisible($event)" (afterSubmit)="handleAfterSendReward()">
+</send-reward-modal>

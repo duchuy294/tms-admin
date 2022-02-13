@@ -1,0 +1,147 @@
+<nz-modal nzWidth="550px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+    <ng-template #modalTitle>
+        {{
+            (modelQuery?._id ? "finance.bank.edit" : "finance.bank.create")
+                | translate
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #bankForm="ngForm">
+            <nz-form-item>
+                <nz-form-label nzFor="name" nzRequired>{{
+                    "common.name" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input type="text" nz-input [(ngModel)]="modelQuery.name" name="name" #name="ngModel" required />
+                    <nz-form-explain *ngIf="
+                            (name.dirty || name.touched) &&
+                            name.errors?.required
+                        ">
+                        {{ "validations-form.bank.required" | translate }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <div class="row">
+                <div class="col-9">
+                    <nz-form-item>
+                        <nz-form-label nzFor="shortName">{{
+                            "finance.bank.short-name" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <input type="text" nz-input [(ngModel)]="modelQuery.shortName" name="shortName"
+                                #shortName="ngModel" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-3">
+                    <nz-form-item>
+                        <nz-form-label nzFor="keyword">{{
+                            "finance.bank.keyword" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <input type="text" nz-input [(ngModel)]="modelQuery.keyword" name="keyword"
+                                #keyword="ngModel" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <nz-form-item>
+                <nz-form-label nzFor="image" nzRequired>{{
+                    "common.avatar" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-file-uploader [nzFileList]="image" [nzShowButton]="!modelQuery.image"
+                        [nzData]="{ path: 'bank' }" (nzChange)="updateContentImg($event)" [nzFileType]="fileType">
+                    </nz-file-uploader>
+                </nz-form-control>
+            </nz-form-item>
+            <hr />
+            <address *ngIf="visibleModal" [(model)]="modelQuery.address" #address></address>
+            <hr />
+            <nz-form-item>
+                <nz-form-label nzFor="phone" nzRequired>{{
+                    "common.phone" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input type="text" nz-input [(ngModel)]="modelQuery.phone" name="phone" #phone="ngModel" required
+                        minlength="8" maxlength="15" pattern="[0-9]*" />
+                    <nz-form-explain *ngIf="
+                            (phone.dirty || phone.touched) &&
+                            phone.errors?.required
+                        ">
+                        {{ "validations-form.phone.required" | translate }}
+                    </nz-form-explain>
+                    <nz-form-explain *ngIf="
+                            (phone.dirty || phone.touched) &&
+                            phone.errors?.pattern
+                        ">
+                        {{ "validations-form.phone.number" | translate }}
+                    </nz-form-explain>
+                    <nz-form-explain *ngIf="
+                            (phone.dirty || phone.touched) &&
+                            phone.errors?.minlength
+                        ">
+                        {{
+                            "validations-form.phone.minlength"
+                                | translate: { min: 8 }
+                        }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzFor="fax">{{
+                    "common.fax" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input type="text" nz-input [(ngModel)]="modelQuery.fax" name="fax" #fax="ngModel"
+                        pattern="[0-9]*" />
+                    <nz-form-explain *ngIf="
+                            (fax.dirty || fax.touched) && fax.errors?.pattern
+                        ">
+                        {{ "validations-form.fax.number" | translate }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzFor="email">{{
+                    "common.email" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input nz-input [(ngModel)]="modelQuery.email" name="email" type="email" #email="ngModel" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzFor="website">{{
+                    "common.website" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input type="text" nz-input [(ngModel)]="modelQuery.website" name="website" #website="ngModel" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzFor="note">{{
+                    "common.note" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input type="text" nz-input [(ngModel)]="modelQuery.note" name="note" #note="ngModel" />
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" (click)="onCreateBank()" [nzLoading]="loadingModal">
+                    {{
+                        (modelQuery?._id ? "button.update" : "button.add")
+                            | translate
+                    }}
+                </button>
+                <button ad-button nzUpper nzColor="default" (click)="handleVisibleModal(false)">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

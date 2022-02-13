@@ -1,0 +1,15 @@
+<div class="grid__container">
+    <div class="grid__header">
+        <button class="grid__action__left" ad-button nzColor="red" (click)="toggleFilter()">
+            {{'button.filter' | translate}}
+        </button>
+    </div>
+    <warehouse-order-filter *ngIf="filterVisible" (onSearch)="search($event)">
+    </warehouse-order-filter>
+    <order-status-filter #status [data]="statuses" [(model)]="modelQuery" (onSelect)="selectStatus()">
+    </order-status-filter>
+    <warehouse-order-statistic [data]="statisticData"></warehouse-order-statistic>
+    <div style="clear:both"></div>
+    <warehouse-order-grid #grid [(model)]="modelQuery" (onProcess)="processOrder($event)">
+    </warehouse-order-grid>
+</div>

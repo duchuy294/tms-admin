@@ -1,0 +1,15 @@
+<div class="title">
+    {{ "warehouse.contact.code" | translate}}: <span>#{{ contact?.code | uppercase }}</span>
+</div>
+
+<div class="row">
+    <div class="col-8 content-left">
+        <warehouse-contact-detail-information [contact]="contact" [loading]="loading" #information>
+        </warehouse-contact-detail-information>
+    </div>
+    <div class="col-4 content-right">
+        <warehouse-contact-detail-services [currentUser]="currentUser" [contact]=" contact" [loading]="loading"
+            (reload)="reloadData()">
+        </warehouse-contact-detail-services>
+    </div>
+</div>

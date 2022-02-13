@@ -1,0 +1,19 @@
+<page-wrapper [nzTitle]="'common.privilege' | translate">
+    <nz-form-label>{{ 'common.group' | translate }}</nz-form-label>
+    <nz-select nzShowSearch [(ngModel)]="group" style="min-width: 200px">
+        <nz-option *ngFor="let group of groups" [nzValue]="group" [nzLabel]="group.name"></nz-option>
+    </nz-select>
+    <nz-divider></nz-divider>
+    <nz-checkbox-wrapper (nzOnChange)="save($event)">
+        <div *ngFor="let item of menuItems">
+            <label nz-checkbox [ngModel]="group.menuItemIds.includes(item._id)"
+                [nzValue]="item._id">{{ item.title[lang] }}</label>
+            <div class="pd-left-30" *ngIf="item.children && item.children.length">
+                <div *ngFor="let child of item.children">
+                    <label nz-checkbox [ngModel]="group.menuItemIds.includes(child._id)"
+                        [nzValue]="child._id">{{ child.title[lang] }}</label>
+                </div>
+            </div>
+        </div>
+    </nz-checkbox-wrapper>
+</page-wrapper>

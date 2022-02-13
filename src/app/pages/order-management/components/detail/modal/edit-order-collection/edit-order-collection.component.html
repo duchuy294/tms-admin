@@ -1,0 +1,18 @@
+<div class="padding-10">
+    <div class="form-group">
+        <h4>{{'order.modal.edit-order-collection' | translate}}</h4>
+        <label>{{'order.modal.edit-marker"' | translate}}</label>
+        <select class="form-control">
+            <option>Điểm giao số 1</option>
+            <option>Điểm giao số 2</option>
+        </select>
+        <label>{{'order.modal.input-new-money"' | translate}}</label>
+        <input type="text" class="form-control" placeholder="{{'order.modal.input-new-money-placeholder' | translate}}" />
+        <label>{{'order.modal.edit-reason"' | translate}}</label>
+        <textarea class="form-control" rows="5"></textarea>
+    </div>
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-sm btn-warning">{{'button.yes' | translate}}</button>
+        <button class="btn btn-sm btn-secondary" (click)="activeModal.close('Close click')">{{'button.cancel' | translate}}</button>
+    </div>
+</div>

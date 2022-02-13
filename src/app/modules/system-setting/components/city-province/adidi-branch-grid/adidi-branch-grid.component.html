@@ -1,0 +1,51 @@
+<nz-table #table (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [(nzPageIndex)]="queryModel.page" [(nzPageSize)]="queryModel.limit" [nzData]="tableData.data"
+    [nzFrontPagination]="false" [nzLoading]="loadingGrid" [nzScroll]="{ x: '1200px' }" [nzTotal]="tableData.total"
+    nzShowSizeChanger nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th [nzWidth]="'23%'">{{ ('common.name' | translate) + ' ' + ('common.branch' | translate | lowercase) }}
+            </th>
+            <th [nzWidth]="'35%'">{{ 'common.address' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.createdAt' | translate }}</th>
+            <th [nzWidth]="'7%'">{{ 'common.ordinalValue' | translate }}</th>
+            <th [nzWidth]="'15%'">{{ 'common.staff' | translate }}</th>
+            <th [nzWidth]="'10%'" nzRight="0px">{{'common.action' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of table.data">
+            <td>{{ item.name }}</td>
+            <td>{{ item.address.street +
+                    (item.address.ward ? (' ' + districtListName[item.address.ward] || null) : '') +
+                    (item.address.district ? (' ' + districtListName[item.address.district] || null) : '') +
+                    (item.address.city ? (' ' + cityListName[item.address.city] || null) : '') }}
+            </td>
+            <td>{{ item.createdAt | date:'h:mm:ss a dd/MM/yyyy' }}</td>
+            <td>{{ item.order }}</td>
+            <td>{{ item.updatedBy ? (adminUpdatedBy[item.updatedBy]?.fullName) : '' }}</td>
+            <td nzRight="0px">
+                <ng-container>
+                    <button nz-dropdown ad-button nzType="dashed" [nzDropdownMenu]="menu"
+                        [nzPlacement]="'bottomCenter'">
+                        {{'common.action' | translate}}
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                            <li nz-menu-item>
+                                <a (click)="handleEdit(item._id)">{{'button.edit' | translate}}</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a (click)="handleDelete(item._id)">{{'button.delete' | translate}}</a>
+                            </li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{ 'table.total' | translate }} {{ total }}
+    {{ 'table.result' | translate | lowercase}}
+</ng-template>

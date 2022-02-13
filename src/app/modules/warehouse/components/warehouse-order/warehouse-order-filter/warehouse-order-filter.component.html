@@ -1,0 +1,112 @@
+<form nz-form nzLayout="vertical" #form="ngForm">
+    <div class="row">
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label nzFor="code">{{ "common.orderCode" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <input nz-input [(ngModel)]="modelQuery.code" name="code" #code="ngModel"
+                        [placeholder]="'common.orderCode' | translate" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label nzFor="renter">{{ "warehouse.order.renter" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <search-and-suggest-account-component mode="multiple" [(ngModel)]="selectedRenter" ngDefaultControl
+                        [ngModelOptions]="{ standalone: true }" [allowCustomer]="true" [allowServicer]="false"
+                        [customerSearchCondition]="customerSearchCondition" [valueType]="'_id'" [placeHolder]="
+                            ('actions.enter' | translate) +
+                            ' ' +
+                            ('common.id' | translate | uppercase) +
+                            '/' +
+                            ('common.name' | translate) +
+                            '/' +
+                            ('common.phone' | translate)
+                        ">
+                    </search-and-suggest-account-component>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label nzFor="lessor">{{ "warehouse.order.lessor" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <search-and-suggest-account-component mode="multiple" [(ngModel)]="selectedLessor" ngDefaultControl
+                        [ngModelOptions]="{ standalone: true }" [allowCustomer]="true" [allowServicer]="false"
+                        [customerSearchCondition]="customerSearchCondition" [valueType]="'_id'" [placeHolder]="
+                            ('actions.enter' | translate) +
+                            ' ' +
+                            ('common.id' | translate | uppercase) +
+                            '/' +
+                            ('common.name' | translate) +
+                            '/' +
+                            ('common.phone' | translate)
+                        ">
+                    </search-and-suggest-account-component>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label nzFor="code">{{ "warehouse.order.warehouse" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <autosuggest-warehouse [(model)]="selectedWarehouse" mode="multiple" [valueType]="'_id'">
+                    </autosuggest-warehouse>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label nzFor="status">{{
+                    "common.status" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select nzMode="multiple" [(ngModel)]="modelQuery.status"
+                        [nzPlaceHolder]="'filter.all' | translate" name="status" nzAllowClear>
+                        <nz-option *ngFor="let item of statuses" [nzLabel]="'order.statusCode.' + item | translate"
+                            [nzValue]="item">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label nzFor="createdAt">{{
+                    "common.createdAt" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-range-picker [nzShowTime]="false" [nzRanges]="ranges1" nzShowTime nzFormat="dd/MM/yyyy"
+                        [(ngModel)]="createdAt" name="createdAt" [nzPlaceHolder]="[
+                            'filter.fromDate' | translate,
+                            'filter.toDate' | translate
+                        ]" nzAllowClear>
+                    </nz-range-picker>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label class="form-label form-label--empty"></nz-form-label>
+                <nz-form-control>
+                    <button ad-button nzColor="red" (click)="search()">
+                        {{ "button.find" | translate }}
+                    </button>
+                    &nbsp;
+                    <button ad-button (click)="reset()">
+                        {{ "button.reset" | translate }}
+                    </button>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+</form>

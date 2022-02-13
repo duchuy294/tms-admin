@@ -1,0 +1,59 @@
+<page-wrapper [nzTitle]="'general-menu.priceManagement' | translate">
+    <div class="row">
+        <div class="col" style="text-align:right; ">
+            <button ad-button nzColor="red" (click)="create()">
+                {{ 'common.add' | translate }}
+            </button>
+        </div>
+    </div>
+    <br />
+    <div>
+        <nz-table #table [nzData]="tableData.data" [nzFrontPagination]="false" nzShowSizeChanger [nzLoading]="loading"
+            [nzTotal]="tableData.total" [(nzPageIndex)]="modelQuery.page" [(nzPageSize)]="modelQuery.limit"
+            (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)">
+            <thead>
+                <tr>
+                    <th [nzWidth]="'20%'">{{'common.code' | translate}}</th>
+                    <th [nzWidth]="'30%'">{{'common.name' | translate}}</th>
+                    <th [nzWidth]="'20%'">{{'common.updatedDate' | translate}}</th>
+                    <th [nzWidth]="'20%'">{{'common.default' | translate}}</th>
+                    <th [nzWidth]="'10%'">{{'common.action' | translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of table.data">
+                    <td>{{ data.code }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>{{data.updatedAt | date:'HH:mm dd/MM/yyyy'}}</td>
+                    <td>
+                        <label *ngIf="data.default" nz-checkbox nzDisabled [ngModel]="true"></label>
+                    </td>
+                    <td nzRight="0px">
+                        <nz-dropdown>
+                            <button nz-dropdown ad-button nzType="dashed">
+                                {{'common.action' | translate}}
+                            </button>
+                            <ul nz-menu nzSelectable>
+                                <li nz-menu-item>
+                                    <a
+                                        routerLink="/pages/settings/price/{{data._id}}">{{'common.detail' | translate}}</a>
+                                </li>
+                                <li nz-menu-item *ngIf="data.default">
+                                    <a (click)="create(data._id)">{{'common.copy' | translate}}</a>
+                                </li>
+                                <li *ngIf="!data.default" nz-menu-item>
+                                    <a (click)="onSetDefault(data._id)">{{'common.default' | translate}}</a>
+                                </li>
+                            </ul>
+                        </nz-dropdown>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</page-wrapper>
+
+<price-modify [flagCopyPrice]="flagCopy" [refId]="refId" [modifyingModel]="modifyingModel"
+    [visible]="createModifyModalVisible" (handleVisible)="handleModelVisible($event)"
+    (afterSubmit)="handleAfterSubmit()">
+</price-modify>

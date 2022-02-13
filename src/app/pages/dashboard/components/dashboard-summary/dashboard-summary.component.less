@@ -1,0 +1,28 @@
+@import 'utils.less';
+
+:host {
+  ::ng-deep {
+    .dashboard-summary {
+      text-align: center;
+      color: #fff;
+    }
+
+    .value {
+      font-size: 2rem;
+      font-weight: bold
+    }
+
+    .total-collectiondebt {
+      .border-radius(10px);
+      background-color: @primary-color;
+      .em(margin-bottom, 8px);
+      .em(padding, 20px);
+    }
+
+    .border-radus-box {
+      padding: 20px 0;
+      .border-radius(10px);
+      background-color: #383636;
+    }
+  }
+}

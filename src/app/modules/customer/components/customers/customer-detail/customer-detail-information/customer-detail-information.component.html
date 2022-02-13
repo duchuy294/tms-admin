@@ -1,0 +1,90 @@
+<div style="display: flex;">
+    <div>
+        <img class="thumb" [src]="avatarUrl">
+    </div>
+    <div style="display: flex; flex-direction: column; text-align: left; margin-left: 5%; width: 100%">
+        <div style="font-size: 1.5em" class="upperCaseTitle">{{ model?.fullName | uppercase }}</div>
+        <div>{{ model.createdAt | date: 'HH:mm dd/MM/yyyy' }}</div>
+        <div>
+            <nz-rate [ngModel]="customerRating" [nzCharacter]="characterIcon" nzAllowHalf nzDisabled>
+            </nz-rate>
+            {{ (notRated ? '('+('common.not-rated' | translate)+')' : '(' + model.rate + ')') }}
+            <a style="float: right" class="detail-link" (click)="showRating()">{{ ('table.detail' | translate) }}</a>
+        </div>
+        <ng-template #characterIcon>
+            <i nz-icon nzType="star" nzTheme="fill"></i>
+        </ng-template>
+        <div>{{ '#' + model.code }}</div>
+        <div>{{model.phone}} {{model.email? ' | ' + model.email : ''}}</div>
+    </div>
+</div>
+<nz-divider style="margin: 12px 0"></nz-divider>
+<div class="d-flex justify-content-between">
+    <label class="upperCaseTitle">{{'common.user-type' | translate}}:</label>
+    <label>{{'user-type.' + model.type | translate}}</label>
+</div>
+<div class="d-flex justify-content-between">
+    <label class="upperCaseTitle">{{'table.status' | translate}}:</label>
+    <label>{{'common.status' + model.status | translate}}</label>
+</div>
+<div *ngIf="isStaff" class="d-flex justify-content-between">
+    <label class="upperCaseTitle">{{'customer.enterprise-name' | translate}}:</label>
+    <a class="enteprise-name" target="_blank"
+        routerLink="/pages/customer-management/personal/detail/{{model.enterpriseId}}">{{ nameEnterprise.fullName }}</a>
+</div>
+<div class="d-flex justify-content-between">
+    <label class="upperCaseTitle">{{'customer.customerLevel' | translate}}:</label>
+    <label>{{userLevel.name}}</label>
+</div>
+<div *ngIf="!isStaff" class="d-flex justify-content-between">
+    <label class="upperCaseTitle">{{'customer.loyaltyPoint' | translate}}:</label>
+    <label>{{model.loyaltyPoint ? model.loyaltyPoint : 0}}</label>
+</div>
+<div *ngIf="!isStaff" class="d-flex justify-content-between">
+    <label class="upperCaseTitle">{{'customer.collection-amount' | translate}}:</label>
+    <div *ngIf="model.maxCollection">
+        <span>{{ 'customer.under-collection-amount' | translate }} </span>
+        <label>{{model.maxCollection | number}}</label>
+    </div>
+</div>
+<div class="d-flex justify-content-between" *ngIf="!isOperator && !isStaff && model.referralId">
+    <label class="upperCaseTitle"> {{'marketing.referral-code' | translate}} </label>
+    <a class="referral-code" target="_blank"
+        routerLink="/pages/customer-management/personal/detail/{{model.referralId}}">{{ model.referralCode }}</a>
+</div>
+<div *ngIf="!isStaff" class="d-flex justify-content-between">
+    <label class="upperCaseTitle">{{'customer.note' | translate}}:</label>
+    <label>{{model.note ? model.note: ''}}</label>
+</div>
+<hr>
+<div class="cost-area">
+    <div class="d-flex justify-content-between">
+        <label class="upperCaseTitle">{{'customer.unsubmitted-collectionDebt' | translate}}:</label>
+        <label style="color:red; font-weight:bold">
+            <a style="cursor: pointer" (click)="showCollectionDebt()">{{wallet.collectionDebt | number}}
+                {{ wallet.currency }} </a>
+        </label>
+    </div>
+    <div class="d-flex justify-content-between">
+        <label class="upperCaseTitle">{{'customer.mainBalance' | translate}}:</label>
+        <label>{{wallet.mainBalance | number}} {{wallet.currency}}</label>
+    </div>
+    <div class="d-flex justify-content-between">
+        <label class="upperCaseTitle">{{'customer.subBalance' | translate}}:</label>
+        <label>{{wallet.subBalance | number}} {{wallet.currency}}</label>
+    </div>
+    <div class="d-flex justify-content-between">
+        <label class="upperCaseTitle">{{'customer.depositBalance' | translate}}:</label>
+        <label>{{wallet.depositBalance | number}} {{wallet.currency}}</label>
+    </div>
+</div>
+<br />
+<div class="d-flex justify-content-between">
+    <div class="buttonActions">
+        <button ad-button nzColor="primary" (click)="showModify()">
+            {{'button.modifyInfo' | translate}}</button>
+        <button ad-button nzColor="gray" (click)="showTransaction()">
+            {{'finance.history' | translate}}
+        </button>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+<nz-modal nzWidth="550px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)" nzMaskClosable="false">
+    <ng-template #modalTitle>
+        {{
+            (model?._id ? "hook.hook-type.edit" : "hook.hook-type.create")
+                | translate
+        }}
+    </ng-template>
+
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #hookLinkForm="ngForm">
+            <nz-form-item>
+                <nz-form-label nzFor="types" nzRequired>{{
+                    "common.type" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select style="width:100%" [(ngModel)]="modelQuery.types" name="types" required #type="ngModel"
+                        nzMode="multiple" nzAllowClear>
+                        <nz-option *ngFor="let item of types" [nzLabel]="
+                                'hook.hook-type-type.' + item | translate
+                            " [nzValue]="item">
+                        </nz-option>
+                    </nz-select>
+                    <nz-form-explain *ngIf="
+                            (type.dirty || type.touched) &&
+                            type.errors?.required
+                        ">
+                        {{ "validations-form.type.selected" | translate }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzFor="target" nzRequired>{{
+                    "common.target" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-radio-group [(ngModel)]="selectedTarget" (ngModelChange)="handleRadioChange()" name="target"
+                        style="display:flex">
+                        <label class="col-6" nz-radio nzValue="customer">{{
+                            "common.customer" | translate
+                        }}</label>
+                        <label class="col-6" nz-radio nzValue="servicer">{{
+                            "common.servicer" | translate
+                        }}</label>
+                    </nz-radio-group>
+                    <div>{{ "hook.link.input-id" | translate }}:</div>
+                    <search-and-suggest-account-component [(ngModel)]="selectedUser" ngDefaultControl
+                        [ngModelOptions]="{ standalone: true }" #userValue="ngModel"
+                        [allowCustomer]="selectedTarget === 'customer'" [allowServicer]="selectedTarget === 'servicer'"
+                        [placeHolder]="
+                            ('common.code' | translate) +
+                            '/' +
+                            ('common.name' | translate) +
+                            '/' +
+                            ('common.phone' | translate)
+                        " valueType="_id" required>
+                    </search-and-suggest-account-component>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzFor="link" nzRequired>{{ "hook.link.link" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <input type="text" nz-input [(ngModel)]="modelQuery.link" name="link" #link="ngModel" required />
+                    <nz-form-explain *ngIf="
+                            (link.dirty || link.touched) &&
+                            link.errors?.required
+                        ">
+                        {{ "validations-form.link.required" | translate }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" [nzLoading]="loading" (click)="onCreateHookLink()">
+                    {{
+                        (model?._id ? "button.update" : "button.add")
+                            | translate
+                    }}
+                </button>
+                <button ad-button nzUpper nzColor="default" (click)="handleVisibleModal(false)">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

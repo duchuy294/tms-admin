@@ -1,0 +1,119 @@
+@import './../../../../../utils.less';
+
+@hover-item-color: rgb(253, 232, 222);
+
+:host ::ng-deep {
+    .page-top {
+        &__right {
+            float: right;
+            .flex-display();
+            .align-items(center);
+            height: 100%;
+
+            i {
+                font-size: 24px;
+                padding-top: 4px;
+            }
+
+            >div {
+                .flex-display();
+                .justify-content(center);
+                margin-left: 5px;
+                padding: 0 10px;
+            }
+        }
+
+        &__item {
+            display: inline;
+        }
+    }
+
+    .logo-title {
+        font-size: inherit !important;
+        font-weight: 600;
+        position: relative;
+        color: @primary-color !important;
+    }
+
+    .ant-avatar-icon {
+        margin-right: 8px;
+    }
+}
+
+.overflow {
+    width: 300px;
+    word-wrap: break-word;
+}
+
+.notification {
+    &__content {
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: 200px;
+        width: 320px;
+    }
+
+    &__not-found {
+        text-align: center;
+        padding: 60px 0;
+        height: 200px;
+        width: 320px;
+        margin-bottom: 0;
+        margin-top: 10px;
+        .box-sizing(border-box);
+        position: absolute;
+        top: 0%;
+        bottom: 50%;
+        background-color: rgba(255, 255, 255, 0.4);
+    }
+
+    &__list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    &__item {
+        padding: 8px;
+        .flex-display();
+
+        &:focus {
+            outline: none;
+        }
+
+        &:hover {
+            background-color: @hover-item-color
+        }
+
+        &-unseen {
+            background-color: #FFF9F6;
+            padding: 8px;
+            .flex-display();
+
+            &:focus {
+                outline: none;
+            }
+
+            &:hover {
+                background-color: @hover-item-color
+            }
+        }
+    }
+
+    &__title {
+        span {
+            display: block;
+        }
+    }
+
+    &__view-all {
+        display: block;
+        padding: 8px;
+        border-top: 1px solid rgba(172, 173, 173, .2);
+        text-align: center;
+    }
+
+    &__loading {
+        padding-top: 25px;
+    }
+}

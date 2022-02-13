@@ -1,0 +1,348 @@
+<nz-modal nzWidth="900px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="onCancelModal()">
+    <ng-template #modalTitle>
+        {{ (!model?._id ? "button.create" : "button.modify") | translate }}
+        {{ " " }}
+        {{ "marketing.promotion-policy.promotion-code" | translate }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #createPromoCodeForm="ngForm">
+            <div class="row">
+                <div class="col-8">
+                    <div class="row">
+                        <div class="col-12">
+                            <nz-form-item>
+                                <nz-form-label nzRequired>
+                                    {{ "common.name" | translate }}
+                                </nz-form-label>
+                                <nz-form-control>
+                                    <input nz-input name="name" [(ngModel)]="model.name" required
+                                        #nameValue="ngModel" />
+                                    <nz-form-explain *ngIf="
+                                            (nameValue.dirty ||
+                                                nameValue.touched) &&
+                                            nameValue.errors?.required
+                                        ">
+                                        {{
+                                            "validations-form.promoCode.required"
+                                                | translate
+                                        }}
+                                    </nz-form-explain>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-6">
+                            <nz-form-item>
+                                <nz-form-label nzRequired>
+                                    {{
+                                        "marketing.promotion-policy.promotion-code"
+                                            | translate
+                                    }}
+                                </nz-form-label>
+                                <nz-form-control>
+                                    <input nz-input name="code" [(ngModel)]="model.code" required #codeValue="ngModel"
+                                        style="text-transform:uppercase" />
+                                    <nz-form-explain *ngIf="
+                                            (codeValue.dirty ||
+                                                codeValue.touched) &&
+                                            codeValue.errors?.required
+                                        ">
+                                        {{
+                                            "validations-form.promoCode.required"
+                                                | translate
+                                        }}
+                                    </nz-form-explain>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-6">
+                            <nz-form-item>
+                                <nz-form-label>
+                                    {{ "common.status" | translate }}
+                                </nz-form-label>
+                                <nz-form-control>
+                                    <nz-select name="status" style="width: 100%;" [(ngModel)]="model.status"
+                                        [nzPlaceHolder]="
+                                            'common.status' | translate
+                                        " nzAllowClear #statusValue="ngModel" required>
+                                        <nz-option *ngFor="let item of status" [nzValue]="item" [nzLabel]="
+                                                'marketing.promotion-policy-status.' +
+                                                    item | translate
+                                            ">
+                                        </nz-option>
+                                    </nz-select>
+                                    <nz-form-explain *ngIf="
+                                            (statusValue.dirty ||
+                                                statusValue.touched) &&
+                                            statusValue.errors?.required
+                                        ">
+                                        {{
+                                            "validations-form.status.required"
+                                                | translate
+                                        }}
+                                    </nz-form-explain>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <nz-form-item>
+                                <nz-form-label nzRequired>
+                                    {{
+                                        "marketing.promotion-policy.affected-at"
+                                            | translate
+                                    }}
+                                </nz-form-label>
+                                <nz-form-control>
+                                    <nz-date-picker nzFormat="dd/MM/yyyy" [(ngModel)]="dateInput1" (ngModelChange)="
+                                            changeAffectedDate($event)
+                                        " [ngStyle]="{ width: '100%' }" name="effectedAtPicker">
+                                    </nz-date-picker>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-6">
+                            <nz-form-item>
+                                <nz-form-label nzRequired>
+                                    {{
+                                        "marketing.promotion-policy.expired-at"
+                                            | translate
+                                    }}
+                                </nz-form-label>
+                                <nz-form-control>
+                                    <nz-date-picker nzFormat="dd/MM/yyyy" [(ngModel)]="dateInput2" (ngModelChange)="
+                                            changeExpiredDate($event)
+                                        " [ngStyle]="{ width: '100%' }" name="expiredAtPicker">
+                                    </nz-date-picker>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "common.avatar" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-file-uploader [nzFileList]="avatar" [nzData]="{ path: 'store/images' }"
+                                [nzShowButton]="!model.image" (nzChange)="updateContentImg($event)" #image>
+                            </nz-file-uploader>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <nz-form-item>
+                        <nz-form-label>
+                            {{ "common.description" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <textarea nz-input [(ngModel)]="model.note" name="note" #noteValue="ngModel" [placeholder]="
+                                    ('common.content' | translate) +
+                                    ' ' +
+                                    ('common.description'
+                                        | translate
+                                        | lowercase)
+                                "></textarea>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="grayTitle">
+                        {{
+                            "marketing.promotion-policy.promoPolicyDetail"
+                                | translate
+                                | uppercase
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12" style="margin: 7px 0">
+                    <span style="font-weight: 400">{{
+                        "marketing.promotion-policy.promotionFixedByOrderValue"
+                            | translate
+                    }}</span>
+                    <span style="font-weight: 400; color: lightgray">({{
+                            "marketing.promotion-policy.withoutAdditionalCost"
+                                | translate
+                                | lowercase
+                        }})</span>
+                </div>
+                <div class="col-12" style="margin: 7px 0">
+                    <nz-radio-group [(ngModel)]="model.discType" style="width: 100%" name="discType">
+                        <label nz-radio nzValue="amount" style="width: 32%">{{
+                            "marketing.promotion-policy.discountByAmount"
+                                | translate
+                        }}</label>
+                        <label nz-radio nzValue="percent" style="width: 32%">{{
+                                "marketing.promotion-policy.discountByPercent"
+                                    | translate
+                            }}
+                        </label>
+                        <label nz-radio nzValue="samePrice" style="width: 32%">{{
+                                "marketing.promotion-policy.discountSamePrice"
+                                    | translate
+                            }}
+                        </label>
+                    </nz-radio-group>
+                </div>
+                <div style="width: 32%">
+                    <nz-input-group nzSuffix="VNĐ" class="col-11" style="margin: 7px 15px">
+                        <input nz-input [(ngModel)]="model.discAmount" [textMask]="{ mask: numberMask }"
+                            name="discAmount" [attr.disabled]="model.discType != 'amount' || null"
+                            [disabled]="model.discType != 'amount'" />
+                    </nz-input-group>
+                </div>
+                <div style="width: 32%">
+                    <nz-input-group nzSuffix="%" class="col-11" style="margin: 7px 15px">
+                        <input nz-input [(ngModel)]="model.discPercent" name="discPercent" [attr.disabled]="
+                                model.discType != 'percent' || null
+                            " [disabled]="model.discType != 'percent'" />
+                    </nz-input-group>
+                    <div class="col-12" style="margin: 7px 0">
+                        {{
+                            "marketing.promotion-policy.maximumAmount"
+                                | translate
+                        }}
+                    </div>
+                    <nz-input-group nzSuffix="VNĐ" class="col-11" style="margin: 7px 15px">
+                        <input nz-input [(ngModel)]="model.discMaximumAmount" [textMask]="{ mask: numberMask }"
+                            name="discMaximumAmount" [attr.disabled]="
+                                model.discType != 'percent' || null
+                            " [disabled]="model.discType != 'percent'" />
+                    </nz-input-group>
+                </div>
+                <div style="width: 32%">
+                    <nz-input-group nzSuffix="VNĐ" class="col-11" style="margin: 7px 15px">
+                        <input nz-input [(ngModel)]="model.discSamePrice" [textMask]="{ mask: numberMask }"
+                            name="discSamePrice" [attr.disabled]="
+                                model.discType != 'samePrice' || null
+                            " [disabled]="model.discType != 'samePrice'" />
+                    </nz-input-group>
+                </div>
+                <div class="col-12" style="margin: 7px 0">
+                    {{
+                        "marketing.promotion-policy.diffAmountByServicer"
+                            | translate
+                    }}
+                </div>
+                <div style="width: 32%">
+                    <nz-input-group nzSuffix="%" class="col-11" style="margin: 7px 15px">
+                        <input nz-input [(ngModel)]="model.diffPercentByServicer" name="diffPercentByServicer" />
+                    </nz-input-group>
+                </div>
+            </div>
+            <br />
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="grayTitle">
+                        {{
+                            "marketing.promotion-policy.amount"
+                                | translate
+                                | uppercase
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label>
+                            {{
+                                "marketing.promotion-policy.promoCodeQuantity"
+                                    | translate
+                            }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-input-number style="width: 100%" [nzMin]="0" [(ngModel)]="model.quantity"
+                                name="quantity" #quantityValue="ngModel" required></nz-input-number>
+                            <nz-form-explain *ngIf="
+                                    (quantityValue.dirty ||
+                                        quantityValue.touched) &&
+                                    quantityValue.errors?.required
+                                ">
+                                {{
+                                    "validations-form.quantity.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-12">
+                    <div class="grayTitle">
+                        {{
+                            "marketing.promotion-policy.appliedCondition"
+                                | translate
+                                | uppercase
+                        }}
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-5">
+                    <nz-select style="width: 100%;" nzPlaceHolder="{{
+                            'marketing.promotion-policy.chooseCondition'
+                                | translate
+                        }}" nzAllowClear [(ngModel)]="selectedCondition" name="selectCondition">
+                        <nz-option *ngFor="let item of conditionList" [nzValue]="item" [nzLabel]="
+                                'marketing.promotion-policy-condition-promotion-code.' +
+                                    item | translate
+                            ">
+                        </nz-option>
+                    </nz-select>
+                </div>
+                <div class="col-7">
+                    <button ad-button nzColor="red" style="width: 120px; margin: auto 5px; border-radius: 5px"
+                        (click)="addOneCondition(selectedCondition)">
+                        {{ "button.add" | translate }}
+                    </button>
+                    <button ad-button nzColor="red" style="width: 120px; margin: auto 5px; border-radius: 5px"
+                        (click)="addAllCondition()">
+                        {{ "button.addAll" | translate }}
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4" *ngFor="let item of conditions | keys">
+                    <condition-item [conditionName]="item.key" [title]="
+                            'marketing.promotion-policy-condition-promotion-code.' +
+                                item.key | translate
+                        " [data]="conditionInputData[item.key]" [type]="conditionType[item.key]"
+                        (onAdd)="onAddingConditionChildren($event)" (onRemove)="removeCondition($event)"
+                        [(conditionData)]="conditionOutputData">
+                    </condition-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div style="max-width: 600px; margin: 0 auto">
+            <div class="buttonContainer">
+                <button ad-button nzUpper nzColor="primary" (click)="onConfirmModal()"
+                    style="min-width: 150px; border-radius: 5px">
+                    {{
+                        (!model?._id ? "button.create" : "button.modify")
+                            | translate
+                    }}
+                </button>
+                <button ad-button nzUpper nzColor="gray" (click)="onCancelModal()"
+                    style="min-width: 150px; border-radius: 5px">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="loading"></spinner-processing-modal>

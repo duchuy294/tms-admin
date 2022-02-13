@@ -1,0 +1,45 @@
+<div class="modal-cs">
+    <div class="modal-content">
+        <div class="modal-header justify-content-between">
+            <div>
+                <h4>{{'profile-info.update' | translate }}</h4>
+            </div>
+
+        </div>
+        <div class="modal-body row">
+            <div class="col-2">
+                <label>{{'common.full-name' | translate }}:</label>
+                <div class="form-group">
+                    <input class="form-control" type="text" [(ngModel)]="model.fullName">
+                </div>
+            </div>
+            <div class="col-6">
+                <label>{{'common.email' | translate }}:</label>
+                <label *ngIf="errorModel.email != ''" class="text-danger">{{errorModel.email}}</label>
+                <div class="form-group">
+                    <input class="form-control" type="email" [(ngModel)]="model.email">
+                </div>
+            </div>
+            <div class="col-6">
+                <label>{{'common.phone-number' | translate }}:</label>
+                <label *ngIf="errorModel.phone != ''" class="text-danger">{{errorModel.phone}}</label>
+                <div class="form-group">
+                    <input class="form-control" type="tel" [(ngModel)]="model.phone">
+                </div>
+            </div>
+            <div class="col-6">
+                <label>{{'common.address' | translate }}:</label>
+                <div class="form-group">
+                    <input class="form-control" type="text" [(ngModel)]="model.address">
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer ">
+            <button type="button" class="btn btn-primary" (click)="resetData()"> {{'button.reset' | translate}}</button>
+            <button type="button" class="btn btn-danger" (click)="updateProfile()">
+                {{'button.yes' | translate}}</button>
+            <button type="button" class="btn btn-secondary" (click)="close()"> {{'button.cancel' | translate}}</button>
+        </div>
+    </div>
+</div>

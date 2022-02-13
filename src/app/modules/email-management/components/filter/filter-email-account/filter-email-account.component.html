@@ -1,0 +1,95 @@
+<form nz-form nzLayout="vertical" #filterEmailAccountForm="ngForm">
+    <div class="row">
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="name">{{
+                    "common.name" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input type="text" nz-input [(ngModel)]="modelQuery.name" name="name" id="name" #name="ngModel" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="email">{{
+                    "common.email" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input type="text" nz-input [(ngModel)]="modelQuery.email" name="email" id="email"
+                        #email="ngModel" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="type">{{
+                    "common.type" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select [(ngModel)]="modelQuery.type" [nzPlaceHolder]="'filter.all' | translate" name="type"
+                        nzAllowClear>
+                        <nz-option *ngFor="let item of types" [nzLabel]="'email.account.type-' + item | translate"
+                            [nzValue]="item">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="host">{{
+                    "common.host" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input type="text" nz-input [(ngModel)]="modelQuery.host" name="host" id="host" #host="ngModel" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="port">{{
+                    "common.port" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input type="number" nz-input [(ngModel)]="modelQuery.port" name="port" id="port" #port="ngModel" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="status">{{
+                    "common.status" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select [(ngModel)]="modelQuery.status" [nzPlaceHolder]="'filter.all' | translate" name="status"
+                        nzAllowClear>
+                        <nz-option *ngFor="let item of statuses" [nzLabel]="'common.status' + item | translate"
+                            [nzValue]="item">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label class="form-label form-label--empty"></nz-form-label>
+                <nz-form-control>
+                    <div class="button__right">
+                        <button ad-button nzColor="red" (click)="search()">
+                            {{ "button.find" | translate }}
+                        </button>
+                        &nbsp;
+                        <button ad-button (click)="reset()">
+                            {{ "button.remove" | translate }}
+                        </button>
+                    </div>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,61 @@
+<nz-table #table [nzData]="(stores$ | async)?.data" [nzFrontPagination]="false" nzShowSizeChanger
+    [nzLoading]="loading$ | async" [nzTotal]="(stores$ | async)?.total" [(nzPageIndex)]="pageIndex"
+    [(nzPageSize)]="pageSize" (nzPageIndexChange)="loadDataByPage($event)"
+    (nzPageSizeChange)="loadDataByPageSize($event)" [nzScroll]="{ x: '1300px' }">
+    <thead>
+        <tr>
+            <th [nzWidth]="'120px'">{{'common.code'|translate}}</th>
+            <th [nzWidth]="'120px'">{{'common.createdAt'|translate}}</th>
+            <th [nzWidth]="'160px'">{{'warranty-repair.service-center.type'|translate}}</th>
+            <th [nzWidth]="'200px'">{{'warranty-repair.service-center.name'|translate}}</th>
+            <th [nzWidth]="'140px'">{{'common.phone'|translate}}</th>
+            <th [nzWidth]="'160px'">{{'warranty-repair.service-center.join-adidi'|translate}}</th>
+            <th [nzWidth]="'130px'">{{'common.status'|translate}}</th>
+            <th [nzWidth]="'140px'">{{'warranty-repair.service-center.number-of-orders'|translate}}</th>
+            <th [nzWidth]="'140px'">{{'warranty-repair.service-center.number-of-staffs'|translate}}</th>
+            <th [nzWidth]="'100px'" nzRight="0px">{{'common.action'|translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of table.data">
+            <td>{{ data.code }}</td>
+            <td>
+                {{ data.createdAt | date: "HH:mm" }}
+                <br />
+                {{ data.createdAt | date: "dd/MM/yyyy" }}
+            </td>
+            <td>
+                {{ (data.authorizedBy && data.authorizedBy.length > 0 ? "warranty-repair.service-center.genuine"  : "warranty-repair.service-center.not-genuine" ) | translate }}
+            </td>
+            <td>{{ data.name }}</td>
+            <td>{{ data.phone }}</td>
+            <td>{{ (data.isMember ? "warranty-repair.service-center.status-joined" : "warranty-repair.service-center.status-not-join") | translate }}
+            </td>
+            <td>
+                {{ data.status && "common.status" + data.status| translate }}
+            </td>
+            <td>{{ data.totalOrders || 0 }}</td>
+            <td>{{ data.totalStaffs || 0 }}</td>
+            <td nzRight="0px">
+                <nz-dropdown>
+                    <button nz-dropdown ad-button nzType="dashed">
+                        {{'common.action'|translate}}
+                    </button>
+                    <ul nz-menu nzSelectable>
+                        <li nz-menu-item>
+                            <a [routerLink]="['./', data._id]">{{'warranty-repair.action.view-order'|translate}}</a>
+                        </li>
+                        <li nz-menu-item>
+                            <a
+                                (click)="showDetail(data._id)">{{'warranty-repair.action.modify-service-center'|translate}}</a>
+                        </li>
+                        <li nz-menu-item>
+                            <a
+                                (click)="delete(data._id)">{{'warranty-repair.action.delete-service-center'|translate}}</a>
+                        </li>
+                    </ul>
+                </nz-dropdown>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>

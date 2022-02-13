@@ -1,0 +1,38 @@
+<div class="padding-10">
+    <div class="form-group bg-white padding-10">
+        <div class="row">
+            <div class="col-lg-4">
+                <label>{{'term-and-condition.modal.title' | translate}}:</label>
+                <span *ngIf="error.title" class="text-danger">{{error.title}}</span>
+                <input type="text" class="form-control" [(ngModel)]="model.title" />
+            </div>
+
+            <div class="col-lg-4">
+                <label>{{'term-and-condition.modal.type' | translate}}:</label>
+                <span *ngIf="error.type" class="text-danger">{{error.type}}</span>
+                <select class="form-control" [(ngModel)]="model.userType">
+                    <option value="user">{{'common.user' | translate}}</option>
+                    <option value="servicer">{{'common.servicer' | translate}}</option>
+                </select>
+            </div>
+
+            <div class="col-lg-4">
+                <label>{{'term-and-condition.modal.order' | translate}}:</label>
+                <span *ngIf="error.order" class="text-danger">{{error.order}}</span>
+                <input type="number" class="form-control" [(ngModel)]="model.order" />
+            </div>
+
+            <div class="col-lg-12">
+                <label>{{'term-and-condition.modal.content' | translate}}:</label>
+                <span *ngIf="error.content" class="text-danger">{{error.content}}</span>
+                <ck-editor name="editor1" [(ngModel)]="model.content" skin="moono-lisa" [fullPage]="true"></ck-editor>
+            </div>
+            <div class="col-12 mrg-top-10">
+                <button type="button" class="btn btn-primary btn-sm"
+                    (click)="close()">{{'button.cancel'| translate}}</button>
+                <button type="button" class="btn btn-danger btn-sm"
+                    (click)="confirm()">{{'button.yes'| translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,123 @@
+<nz-modal nzWidth="1000px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContentCancel"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+    <ng-template #modalTitle>
+        {{ "actions.quickCancelOrder" | translate }}
+    </ng-template>
+    <ng-template #modalContentCancel>
+        <div class="row">
+            <div class="col-2">
+                <strong>{{ "order.downloadListSo" | translate }}:</strong>
+            </div>
+            <div class="col-10">
+                <nz-form-control>
+                    <nz-upload #fileUpload class="file-upload" [nzBeforeUpload]="beforeUpload"
+                        [nzShowUploadList]="false" [nzDisabled]="loading"
+                        nzAccept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <button nz-button>
+                            <i nz-icon nzType="upload"></i>{{ "uploader.choose-file" | translate }}
+                        </button>
+                    </nz-upload>
+                    <span class="download-sample-file">
+                        <a href="/assets/downloads/cancel-order.xlsx" download><img src="/assets/icon/download-icon.svg"
+                                alt="" />
+                            {{ "common.download-sample-file" | translate }}</a>
+                    </span>
+                </nz-form-control>
+            </div>
+        </div>
+        <div class="row" style="padding-top: 10px;">
+            <div class="col-2">
+                <strong>{{ "order.reason-cancel" | translate }}:</strong>
+            </div>
+            <div class="col-10">
+                <textarea nz-input [placeholder]="'order.enterReason' | translate"
+                    [(ngModel)]="cancelReason"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="buttonActions-package" style="margin-top: 15px;">
+                    <span class="total">
+                        {{ "statistics.common.total-order" | translate }}:
+                        <strong>{{ allData.length }}</strong>
+                    </span>
+                    <nz-checkbox-wrapper (nzOnChange)="choosePackageFilter($event)">
+                        <span>
+                            <label nz-checkbox [(ngModel)]="checkValid"
+                                [nzValue]="true">{{ "common.valid" | translate }}:</label>
+                            <b class="valid">{{ totalValid }}</b>
+                        </span>
+                        <span>
+                            <label nz-checkbox [(ngModel)]="checkInalid"
+                                [nzValue]="false">{{ "common.invalid" | translate }}:</label>
+                            <b class="invalid">{{
+                                allData.length - totalValid
+                            }}</b>
+                        </span>
+                    </nz-checkbox-wrapper>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <nz-table style="margin-top: 15px;" #tableData [nzData]="showData" [nzPageSize]="10"
+                    [nzLoading]="loading" nzSize="small" nzBordered>
+                    <thead>
+                        <tr>
+                            <th>{{ "common.index" | translate }}</th>
+                            <th>{{ "common.orderCode" | translate }}</th>
+                            <th>
+                                {{
+                                    "common.packageNo" | translate
+                                }}
+                            </th>
+                            <th>
+                                {{
+                                    "order.order-status" | translate
+                                }}
+                            </th>
+                            <th>{{ "common.status" | translate }}</th>
+                            <th>{{ "common.delete" | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of tableData.data; index as index"
+                            [style.color]="item.valid ? 'inherit' : 'red'">
+                            <td nzAlign="center" style="color: black;">
+                                {{
+                                    (tableData.nzPageIndex - 1) *
+                                        tableData.nzPageSize +
+                                        index +
+                                        1
+                                }}
+                            </td>
+                            <td>{{item.orderCode}}</td>
+                            <td>{{item.externalCode}}</td>
+                            <td>{{item.statusLabel}}</td>
+                            <td nzAlign="center">
+                                <i *ngIf="item.valid" nz-icon nzType="check" style="color: #21a525"></i>
+                                <i *ngIf="!item.valid" nz-icon nzType="close"></i>
+                            </td>
+                            <td nzAlign="center">
+                                <a (click)="delete(item._id)"><i nz-icon nzType="delete" style="color: #f00"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div style="text-align: center;">
+                <button ad-button nzUpper nzColor="primary" [disabled]="loading" [disabled]="totalInValid > 0"
+                    (click)="submitOrderCancel()">
+                    {{ "actions.cancelOrder" | translate }}
+                </button>
+                <button ad-button nzUpper nzColor="gray" (click)="handleVisibleModal(false)">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

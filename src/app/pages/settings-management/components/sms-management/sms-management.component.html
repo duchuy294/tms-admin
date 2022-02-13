@@ -1,0 +1,13 @@
+<page-wrapper [nzTitle]="'general-menu.sms' | translate">
+    <nz-tabset [(nzSelectedIndex)]="selectedTabIndex" [nzType]="'card'">
+        <nz-tab [nzTitle]="'general-menu.smsLogs' | translate">
+            <sms-log-list></sms-log-list>
+        </nz-tab>
+        <nz-tab [nzTitle]="'general-menu.smsProvider' | translate">
+            <provider-list></provider-list>
+        </nz-tab>
+        <nz-tab [nzTitle]="'general-menu.smsTemplate' | translate">
+            <sms-template-list></sms-template-list>
+        </nz-tab>
+    </nz-tabset>
+</page-wrapper>

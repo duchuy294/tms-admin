@@ -1,0 +1,36 @@
+<nz-table #table [nzData]="tableData.data" [nzFrontPagination]="false" nzShowSizeChanger [nzLoading]="loading"
+    [nzTotal]="tableData.total" [(nzPageIndex)]="modelQuery.page" [(nzPageSize)]="modelQuery.limit"
+    (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [nzScroll]="{ x: '1200px' }" nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th [nzWidth]="'10%'">{{'order.code' | translate }}</th>
+            <th [nzWidth]="'15%'">{{'common.createdAt' | translate}}</th>
+            <th [nzWidth]="'15%'">{{'order.services' | translate}}</th>
+            <th [nzWidth]="'20%'">{{'order.order-status' | translate}}</th>
+            <th [nzWidth]="'20%'">{{'table.services' | translate }}</th>
+            <th [nzWidth]="'20%'">{{'common.collection-money' | translate }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of table.data">
+            <td>
+                <a target="_blank" routerLink="/pages/order/{{data._id}}"> {{data.code}}</a>
+            </td>
+            <td>{{ data.createdAt | date:'HH:mm dd/MM/yyyy' }}</td>
+            <td>{{ 'order.type.' + data.serviceType | translate }}</td>
+            <td>{{ data.statusLabel}}</td>
+            <td>{{ orderService.getServiceNames(data.costDetail) }}</td>
+            <td>
+                {{ order.cod ? order.cod.total - order.cod.remaining : 0 | number }}
+                /
+                {{ order.cod ? order.cod.total : 0 | number:'1.0-2' }}
+                ({{ orderService.getCompletedCollectionRatio(data) | percent }})
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{ 'table.total' | translate }} {{ total }}
+    {{ 'table.result' | translate | lowercase}}
+</ng-template>

@@ -1,0 +1,146 @@
+<div class="row" style="margin-bottom: 10px;">
+    <div class="col">
+        <div class="titleCode"
+            style="padding: 25px 0px 25px 15px; font-weight: bold; background-color: white; font-size: 1.5em;">
+            <span>#{{tableData?.code}}</span>
+            <a routerLink="/pages/order/handover-sessions-3pl" ad-button nzColor="blue"
+                style="float: right; margin-right: 8px;"><i nz-icon nzType="left"></i>
+                {{ 'button.back' | translate }}</a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-8">
+
+        <page-wrapper [nzTitle]="pageTitle">
+            <nz-table nz-table #table [nzData]="tableData?.saleOrders" nzShowSizeChanger [nzLoading]="loading"
+                [nzTotal]="detail.length" [nzShowTotal]="totalTemplate">
+                <thead>
+                    <tr>
+                        <th nzWidth="60px">{{ "common.index" | translate }}</th>
+                        <th nzWidth="100px">{{'common.soCode' | translate }}</th>
+                        <th nzWidth="100px">{{'handoverSessions3PL.toltalPackage' | translate }}</th>
+                        <th nzWidth="100px">{{'common.status' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of table.data; let ind = index">
+                        <td>{{ind+1}}</td>
+                        <td>{{item.SO}}</td>
+                        <td>{{item.packageQty}}</td>
+                        <td>{{item.userConfirmed ? ('handoverSessions3PL.statusLabel.3' | translate):
+                            ('handoverSessions3PL.unconfimred' | translate)}}</td>
+                    </tr>
+                </tbody>
+            </nz-table>
+            <ng-template #totalTemplate let-total let-range="range">
+                {{'table.show' | translate}} {{range[0]}}-{{range[1]}}. {{'table.total' | translate}} {{ total }}
+                {{'table.result' | translate | lowercase}}
+            </ng-template>
+        </page-wrapper>
+        <ng-template #pageTitle>
+            {{ "handoverSessions3PL.soList" | translate }}
+        </ng-template>
+
+    </div>
+    <div class="col-4">
+        <div class="right">
+            <page-wrapper [nzTitle]="pageTitleRight">
+                <div class="content" *ngIf="tableData">
+                    <table style="width:100%" class="tableRight">
+                        <tr>
+                            <td>{{'finance.session-cod.code' | translate }}</td>
+                            <td style="text-align: right;">
+                                {{tableData.code}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'common.status' | translate }}</td>
+                            <td style="text-align: right;">
+                                <nz-tag *ngIf="handoverSessions[tableData.status]" style="margin:0"
+                                    [nzColor]="handoverSessions[tableData.status].color">
+                                    {{'handoverSessions3PL.statusLabel.' + tableData.status | translate}}
+                                </nz-tag>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'common.createdAt' | translate }}</td>
+                            <td style="text-align: right;">
+                                {{tableData.createdAt | date:'HH:mm dd/MM/yyyy'}}
+                            </td>
+                        </tr>
+                        <tr *ngIf="tableData.status === handoverSessionsStatus.completed">
+                            <td>{{'handoverSessions3PL.receivedDate' | translate }}</td>
+                            <td style="text-align: right;">
+                                <span>
+                                    {{tableData.completedAt | date:'HH:mm dd/MM/yyyy'}}</span>
+                            </td>
+                        </tr>
+                        <tr *ngIf="tableData.status === handoverSessionsStatus.adminConfirm">
+                            <td>{{'handoverSessions3PL.handedOverDate' | translate }}</td>
+                            <td style="text-align: right;">
+                                <span>
+                                    {{tableData.confirmedAt | date:'HH:mm dd/MM/yyyy'}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3PL</td>
+                            <td style="text-align: right;">
+                                {{customer?.fullName || null}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'handoverSessions3PL.toltalSO' | translate }}</td>
+                            <td style="text-align: right;">
+                                {{tableData?.saleOrderQuantity || null}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'handoverSessions3PL.toltalSOReceived' | translate }}</td>
+                            <td style="text-align: right;">
+                                {{soRecived(tableData)}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'handoverSessions3PL.toltalPackage' | translate }}</td>
+                            <td style="text-align: right;">
+                                {{tableData?.packageQuantity || null}}
+                            </td>
+                        </tr>
+                        <tr *ngIf="tableData.completedNoted || tableData.confirmedNote">
+                            <td>{{'handoverSessions3PL.noteReceived' | translate }}</td>
+                            <td style="text-align: right;">
+                                <span>
+                                    {{tableData.completedNoted || tableData.confirmedNote}}</span>
+                            </td>
+                        </tr>
+                        <tr *ngIf="tableData.status === handoverSessionsStatus.cancel">
+                            <td>{{'handoverSessions3PL.noteCancle' | translate }}</td>
+                            <td style="text-align: right;">
+                                <span>
+                                    {{tableData.cancelReason}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'handoverSessions3PL.createdBy' | translate }}</td>
+                            <td style="text-align: right;">
+                                {{ users && users[tableData.processedBy] ? users[tableData.processedBy][0].fullName:
+                                ''}}
+                            </td>
+                        </tr>
+                        <tr *ngIf="tableData.confirmedBy">
+                            <td>{{'handoverSessions3PL.confirmedBy' | translate }}</td>
+                            <td style="text-align: right;">
+                                {{ users && users[tableData.confirmedBy] ? users[tableData.confirmedBy][0].fullName:
+                                ''}}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </page-wrapper>
+            <ng-template #pageTitleRight>
+                {{ "handoverSessions.titleRight" | translate }}
+            </ng-template>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+<form nz-form nzLayout="vertical" #form="ngForm">
+    <div class="row justify-content-start" style="margin-bottom: 10px">
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="from">{{ "filter.group" | translate }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select [(ngModel)]="queryModel.groupId" ngDefaultControl [ngModelOptions]="{ standalone: true }"
+                        #source="ngModel">
+                        <nz-option nzValue="" [nzLabel]="'common.all' | translate"></nz-option>
+                        <nz-option *ngFor="let item of groups" [nzValue]="item._id" [nzLabel]="item.name"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="servicer">{{ "common.servicer" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <search-and-suggest-account-component [mode]="'multiple'" [(ngModel)]="selectedServicer"
+                        ngDefaultControl [ngModelOptions]="{ standalone: true }" #servicer="ngModel"
+                        [allowCustomer]="false" [allowServicer]="true" [valueType]="'_id'"
+                        [servicerSearchCondition]="servicerSearchCondition" [valueType]="'_id'" [placeHolder]="
+                                ('actions.enter' | translate) +
+                                ' ' +
+                                ('common.id' | translate | uppercase) +
+                                '/' +
+                                ('common.name' | translate) +
+                                '/' +
+                                ('common.phone' | translate)
+                            ">
+                    </search-and-suggest-account-component>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="from">{{ "common.successRate" | translate }} (%)</nz-form-label>
+                <nz-form-control>
+                    <nz-input-number style="width: 100%" [nzMin]="0" [nzMax]="100"
+                        [(ngModel)]="queryModel.successRatioFrom" name="from" #form="ngModel"
+                        style="width: 45%; margin-right: 5%;" [nzPlaceHolder]="'0'">
+                    </nz-input-number>
+                    <nz-input-number [nzMin]="0" [nzMax]="100" [(ngModel)]="queryModel.successRatioTo" name="to"
+                        #form="ngModel" style="width: 45%" [nzPlaceHolder]="'100'">
+                    </nz-input-number>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-label></nz-form-label>
+            <nz-form-control>
+                <button ad-button nzColor="red" class="btn btn-warning"
+                    (click)="search()">{{ "actions.search" | translate }}</button>
+                &nbsp;
+                <button ad-button nzColor="primary" (click)="export()">
+                    {{ "actions.export" | translate }}
+                </button>
+                &nbsp;
+                <button (click)="reset()" ad-button nzColor="#fffff"
+                    class="btn btn-warning">{{ "button.reset" | translate }}</button>
+            </nz-form-control>
+        </div>
+    </div>
+</form>

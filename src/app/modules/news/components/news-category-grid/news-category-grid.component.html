@@ -1,0 +1,42 @@
+<nz-table #table [nzData]="tableData.data" [nzFrontPagination]="false" nzShowSizeChanger [nzLoading]="loading"
+    [nzTotal]="tableData.total" [(nzPageIndex)]="modelQuery.page" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [nzScroll]="{x:'1000px'}" [(nzPageSize)]="modelQuery.limit" (nzPageIndexChange)="loadDataByPage($event)"
+    nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th [nzWidth]="'10%'">{{ 'common.createdAt' | translate }}</th>
+            <th [nzWidth]="'30%'">{{ 'marketing.news-category.name' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.target' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.status' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.orderNo' | translate }}</th>
+            <th [nzWidth]="'20%'">{{ 'common.staff' | translate }}</th>
+            <th [nzWidth]="'10%'" nzRight="0px">{{'common.action' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of table.data">
+            <td>{{data.createdAt | date:'HH:mm dd/MM/yyyy'}}</td>
+            <td>{{data.name}}</td>
+            <td>
+                <div *ngFor="let target of data.targets">
+                    {{'common.userType.'+target|translate}}
+                </div>
+            </td>
+            <td>
+                <nz-switch [ngModel]="data.status" [nzLoading]="loadingStatus" [nzControl]="true"
+                    (click)="onChangeStatus(data)"></nz-switch>
+            </td>
+            <td>{{data.order}}</td>
+            <td>{{updatedBy[data.updatedBy]?.fullName}}</td>
+            <td nzRight="0px">
+                <button ad-button nzType="dashed" (click)="edit(data._id)">
+                    {{'button.edit' | translate}}
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{'table.total' | translate}} {{ total }}
+    {{'table.result' | translate | lowercase}}
+</ng-template>

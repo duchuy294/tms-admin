@@ -1,0 +1,2578 @@
+{
+    "actions": {
+        "accept": "Accept",
+        "add": "Add",
+        "cancel": "Cancel",
+        "cancelOrder": "cancel order",
+        "check-cod": "Check collection money",
+        "close": "Close",
+        "continue": "Continue",
+        "create-end-user": "Create end user",
+        "edit": "Edit",
+        "enter": "Enter",
+        "enterCodeTransaction": "Enter code transaction",
+        "export": "Export",
+        "exportDistance": "Export distance",
+        "exportForSo": "Xuất dữ liệu theo SO",
+        "exportForUser": "Export for user",
+        "importCod": "Upload list COD",
+        "importPackage": "Import package list",
+        "importSO": "Import SO list",
+        "process": "Process",
+        "punish": "Punish",
+        "quick3PLAssign": "Quick assign 3PL",
+        "quick3PLAssignBySO": "Quick assign 3PL by SO",
+        "quickAssign": "Quick assign",
+        "quickAssignBySO": "Quick assign by SO",
+        "quickCancelOrder": "Quick cancel order",
+        "reject": "Reject",
+        "remove": "Remove",
+        "reply": "Reply",
+        "reward": "Reward",
+        "save": "Save",
+        "scanPackage": "Scan package code",
+        "scanSO": "Scan SO",
+        "search": "Search",
+        "select": "Chọn",
+        "topup": "Top-up",
+        "update": "Update",
+        "withdraw": "Withdrawal"
+    },
+    "afterReversionStatus": "Status after reversion",
+    "assign3PL": "Assign 3PL",
+    "bank": {
+        "account-number": "Account number",
+        "agency": "Agency",
+        "bank": "Bank",
+        "customer-name": "Account owner"
+    },
+    "button": {
+        "add": "Add",
+        "add-member": "Add member",
+        "add-team": "Add team",
+        "addAll": "Add all",
+        "agree": "Agree",
+        "assignOrder": "Assign order",
+        "back": "Back",
+        "cancel": "Cancel",
+        "cancelOrder": "Cancel order",
+        "change-password": "Change password",
+        "clear": "Clear",
+        "close": "Close",
+        "confirm": "Confirm",
+        "create": "Create",
+        "create-customer": "Create customer",
+        "create-group": "Create group",
+        "create-price": "Create price",
+        "create-servicer": "Create servicer",
+        "create-team": "Create team",
+        "create-team-servicer": "Create servicer team",
+        "delete": "Delete",
+        "deleteAll": "Delete all",
+        "edit": "Edit",
+        "export": "Export",
+        "export-detail": "Export",
+        "filter": "Filter",
+        "find": "Find",
+        "modify": "Modify",
+        "modifyInfo": "Modify information",
+        "no": "No",
+        "packageList": "Package list",
+        "payment": "Payment",
+        "process": "Process",
+        "processed-timeout": "Processed timeout",
+        "processing-timeout": "Processing timeout",
+        "remove": "Remove",
+        "reply": "Reply",
+        "reset": "Reset",
+        "search": "Search",
+        "select": "Select",
+        "send": "Send",
+        "send-gift": "Gift",
+        "update": "Update",
+        "updatePackage": "Update total package",
+        "view": "View",
+        "view-location": "View location",
+        "viewAll": "View all",
+        "yes": "Yes"
+    },
+    "cancelOrdersFastly": "Cancel orders fastly",
+    "collectionDebt": {
+        "history": "Collection debt history",
+        "unsubmittedMoney": "Unsubmitted collection money"
+    },
+    "collectionFilterType": {
+        "all": "All",
+        "finishedOrder": "Finished order",
+        "finishedSubmit": "Finished submission",
+        "unfinishedOrder": "Unfinished order",
+        "unfinishedSubmit": "Unfinished submission"
+    },
+    "collectionTab": {
+        "amount": "Amount",
+        "amountDebt": "Amount",
+        "amountLabelForm": "Amount actually deposited",
+        "amountLabelTable": "Amount actually deposited VNĐ",
+        "amountTextConfirm": "Confirm amount",
+        "amountTextForm": "Amount paid by the partner",
+        "bank": "Ngân hàng",
+        "buttonTextQuickConfirm": "Quick confirmation",
+        "code": "Code",
+        "collectionManager": "Collection Manager",
+        "collectionTransferSession": "Collection transfer session",
+        "confirmationMethod": {
+            "auto": "Auto",
+            "manual": "Manual"
+        },
+        "confirmationMethodText": "Confirmation Method",
+        "dateConfirm": "Date of confirmation",
+        "debt": "Debt",
+        "debtLimit": "Limit",
+        "debtStatus": "Debt status",
+        "debtStatusOption": {
+            "0": "There is no debt",
+            "1": "There is debt"
+        },
+        "deleteDebt": "Delete debt",
+        "detailTitleConfirmModal": "Verify request",
+        "detailTitleModal": "Transaction",
+        "downloadFile": "Download file",
+        "downloadList": "Tải danh sách",
+        "enterTransCode": "Enter transaction code",
+        "filterCode": "Code",
+        "formError": {
+            "amount": {
+                "required": "Please enter the amount actually paid"
+            },
+            "code": {
+                "required": "Please enter transaction code"
+            },
+            "confirmPaid": {
+                "invalid": "The amount actually filed must be greater than or equal to the amount filed by the partner"
+            },
+            "fileImport": {
+                "invalid": "File import invalid"
+            }
+        },
+        "noTransCode": "No transaction code",
+        "noteLabel": "Notes/Reason",
+        "notePlaceholder": "Enter a note",
+        "noteRequired": "Please enter a note",
+        "orderStatus": {
+            "notSubmitted": "Not yet submitted",
+            "submitted": "Submitted",
+            "waitConfirm": "Wait for confirmation"
+        },
+        "provisionalDebt": "Provisional debt",
+        "reason": "Reason",
+        "reasonOption": {
+            "1": "Wrong amount of notice",
+            "2": "Another reason"
+        },
+        "reasonPlaceholder": "Enter another reason",
+        "rejectLabelForm": "Reason for reject",
+        "status": "Transaction status",
+        "statusLabel": {
+            "cancel": "Cancel",
+            "holding": "No Transaction Code",
+            "processing": "Processing",
+            "reject": "Reject",
+            "request": "Request",
+            "success": "Success"
+        },
+        "titleDetail": "Money transfer session details",
+        "titleQuickConfirm": "Collection confirmation",
+        "titleReject": "Reject Cod transfer",
+        "totalDebt": "Total debt",
+        "totalSessionCod": "Total transfer cod",
+        "transactionCode": "Transaction code bank",
+        "typeConfirm": "Confirm type",
+        "valid": "Hợp lệ"
+    },
+    "common": {
+        "Latitude": "Latitude",
+        "Longitude": "Longitude",
+        "Number-of-points": "Number of points",
+        "above": "above",
+        "acceptedOrders": "Accepted orders",
+        "action": "Action",
+        "add": "Add",
+        "address": "Address",
+        "address-map": "Address Map",
+        "address-warehouse": "Warehouse's address",
+        "adidi": "SUPRA",
+        "administrative-staff": "Administrative staff",
+        "all": "All",
+        "arrivedAt": "Arrived at",
+        "article": "Article",
+        "assign-orders": "Assign order",
+        "avatar": "Avatar",
+        "awarded": "Awarded",
+        "bank": "Bank",
+        "branch": "Branch",
+        "brand": "Brand",
+        "brief-introduction": "Brief introduction",
+        "category": "Category",
+        "city": "City/Province",
+        "code": "Code",
+        "collapse": "Collapse",
+        "collection-money": "Collection money",
+        "collection-money-total": "Total collection money",
+        "commission": "Commission",
+        "condition": "Condition",
+        "confirm": "Confirm",
+        "confirm-password": "Confirm password",
+        "confirmActivate": "Do you want to activate?",
+        "confirmChange": "Confirm change",
+        "confirmDeactivate": "Do you want to deactivate?",
+        "confirmDelete": "Do you want to delete?",
+        "confirmImport": "Do you want to import data?",
+        "contact": "Contact",
+        "contactAddress": "Contact address",
+        "content": "Content",
+        "contentImage": "Content image",
+        "contract-number": "Contract number",
+        "convertToDelivery": "Convert to Delivery",
+        "copy": "Copy",
+        "createdAt": "Created at",
+        "createdBy": "Created by",
+        "currency-unit": "VND",
+        "customer": "Customer",
+        "customer-type": "Customer type",
+        "date": "Date",
+        "default": "Default",
+        "delete": "Delete",
+        "deliveryType": "Delivery Type",
+        "delvery-km": "Delivery KM",
+        "depositMethod": "Topup method",
+        "depositMethods": {
+            "bank": "By bank",
+            "cash": "By cash",
+            "main": "By main balance"
+        },
+        "description": "Description",
+        "description-explaination": "Description",
+        "detail": "Detail",
+        "district": "District",
+        "district-list": "List of districts",
+        "district-name": "District name",
+        "doingOrders": "Performing orders",
+        "download-sample-file": "Download the sample file",
+        "dueDate": "Due date",
+        "edit-order": "Edit order",
+        "editLimitOrders": "Edit limit orders",
+        "effectedAt": "Effected date",
+        "email": "Email",
+        "en": "🇬🇧 English",
+        "end": "End",
+        "enterMap": "Entering address",
+        "enterpriseCode": "Enterprise code",
+        "existed-packages": "The package code has been scanned into the list",
+        "expectedInstallTime": "Expected install time",
+        "expectedPickupTime": "Expected pickup time",
+        "expiredAt": "Expired date",
+        "failed": "Failed",
+        "fax": "Fax",
+        "fee": "Fee",
+        "fetchdata": "Loading...",
+        "file-reader-not-support": "FileReader are not supported in this browser",
+        "finishedWorkAt": "Finished at",
+        "freeServicer": "Free",
+        "from": "From",
+        "full-name": "Full name",
+        "group": "Group",
+        "group-list": "Group servicer list",
+        "history": "History",
+        "host": "Host",
+        "hours": "hours",
+        "hub": "Hub",
+        "hubInfo": "Hub info",
+        "icon": "Icon",
+        "id": "Id",
+        "images": "Images",
+        "import": "Import data",
+        "income": "Income",
+        "index": "Index",
+        "information": "Information",
+        "input-package-code": "Please enter the package code to scan",
+        "invalid": "Invalid",
+        "invalid-data": "Invalid data",
+        "invalid-file": "Invalid file",
+        "invalid-format-file": "File format is not support",
+        "invalid-size-file": "File size is greater than allowed size (20 MB)",
+        "items": "Item(s)",
+        "limitOrders": "Limit orders",
+        "link": "Link",
+        "list": "List",
+        "loading": "Loading",
+        "loyaltyPointPolicy": "Loyalty point policy",
+        "maintenanceSchedule": "Maintenance Schedule",
+        "mapAddress": "Address (map)",
+        "matches-words": "Matches words",
+        "members": "Members",
+        "menu": "Menu",
+        "method": "Method",
+        "moreDetails": "View more",
+        "name": "Name",
+        "no": "No",
+        "no-data": "No data",
+        "no-file-content": "There is no content in the file {{fileName}}",
+        "noData": "No data",
+        "none": "None",
+        "not-rated": "No rate",
+        "note": "Note",
+        "notifications": "Notifications",
+        "offline": "Offline",
+        "online": "Online",
+        "order": "Order 1",
+        "orderCode": "Order code",
+        "orderNo": "No.",
+        "orderNumber": "Order number",
+        "orderType": "Order type",
+        "ordinalValue": "Ordinal",
+        "other-option": "Others",
+        "overview": "Overview",
+        "packageIsExited": "Package is exited",
+        "packageNo": "Package code",
+        "paidCost": "Paid cost",
+        "parent": "Parent",
+        "partnerNote": "Partner's note",
+        "party-A": "Party A ",
+        "party-B": "Party B",
+        "password": "Password",
+        "perform": "Perform",
+        "phone": "Phone",
+        "point": "Point",
+        "pointDetail": {
+            "expectedTime": "Expected delivery time",
+            "pendingReason": "Pending reason"
+        },
+        "policy": "Policy",
+        "policy-name": "Policy name",
+        "port": "Port",
+        "prepaid": "Prepaid",
+        "priceForm": "Price form",
+        "privilege": "Privilege",
+        "processing": "Processing...",
+        "product": "Product",
+        "product-status": "Product status",
+        "profile": "Profile",
+        "profit": "Profit",
+        "promote": "Promote",
+        "promotion": "Promotion",
+        "province": "Province/City",
+        "province-city": "Province/City",
+        "province-name": "Province/City name",
+        "rating-of": "Rating about",
+        "receiver": "Receiver",
+        "redeemedRewardHistory": "Redeemed reward history",
+        "region": "Region",
+        "region-name": "Region name",
+        "remove": "Remove",
+        "report": "Report",
+        "report-download": "Download report",
+        "report-description": "Report description",
+        "report-so": "Report SO",
+        "report-so-description": "Allows to export detailed reports by SO ",
+        "report-type": "Report type",
+        "response": "Response",
+        "responseRate": "Rate",
+        "responseRateCode": "Rating code",
+        "return-warehouse": "Return warehouse",
+        "return-warehouse-list": "List of return warehouses",
+        "return-warehouse-name": "Return warehouse name",
+        "returnOrders": "Return",
+        "reward": "Reward",
+        "rewardAndCondition": "Reward and Condition",
+        "rewardCategory": "Reward category",
+        "rewardInformation": "Reward information",
+        "rewardProvider": "Reward provider",
+        "rewardType": "Reward type",
+        "save": "Save",
+        "scanPackageCode": "Scan package code",
+        "scanReceivedPhysical": "Scan Received Physical",
+        "scanSO": "Scan SO",
+        "schedule-appointment": "Schedule appoint",
+        "searching": "Searching...",
+        "selected": "Selected",
+        "sentAt": "Sent date",
+        "service": "Service",
+        "servicer": "Partner",
+        "servicer-list": "Servicer list",
+        "servicer-type": "Partner type",
+        "servicerIncome": "Partner's income",
+        "shipping-km": "KM shipping",
+        "signCustomer": "Sign of customer",
+        "signature": "Signature",
+        "signout": "Signout",
+        "soCode": "SO Code",
+        "staff": "Staff",
+        "start": "Start",
+        "status": "Status",
+        "status1": "Inactive",
+        "status2": "Active",
+        "status3": "Locked",
+        "status4": "Deleted",
+        "successRate": "Success rate",
+        "successfully": "Successfully",
+        "sucessful-delete": "Delete successfuly",
+        "summary": "Summary",
+        "support-customer": "Customer care",
+        "target": "Target",
+        "team": "Team",
+        "the-referral": "Referral",
+        "the-referrer": "Referrer",
+        "time": "Time",
+        "title": "Title",
+        "to": "To",
+        "total": "Total",
+        "totalCost": "Total cost",
+        "totalInValidPackage": "Total Invalid order",
+        "totalReceipt": "Total receipt",
+        "totalSo": "Total So",
+        "totalValidPackage": "Total valid order",
+        "type": "Type",
+        "unable-read-file": "Unable to read the file",
+        "unsucessful-delete": "Delete unsuccessfuly",
+        "updatedBy": "Updated by",
+        "updatedDate": "Updated date",
+        "used": "Used",
+        "user": "User",
+        "user-type": "User type",
+        "userLevel": "User level",
+        "userTotalCost": "Total of user cost",
+        "userType": {
+            "servicer": "Partner",
+            "user": "User"
+        },
+        "using-date": "Using date",
+        "valid": "Valid",
+        "vehicle": "Vehicle",
+        "vi": "🇻🇳 Tiếng Việt",
+        "wallet": "Balance",
+        "wallet-bank": "Bank",
+        "wallet-cash": "Cash",
+        "wallet-collectionDebt": "Collection debt",
+        "wallet-deposit": "Deposit",
+        "wallet-main": "Main balance",
+        "wallet-owner": "SUPRA",
+        "wallet-sub": "Sub balance",
+        "wallet-vnpay": "VNPay",
+        "ward": "Ward",
+        "wards": "Wards",
+        "warehouse": "Warehouse",
+        "website": "Website"
+    },
+    "compareCOD": "Compare COD",
+    "condition": {
+        "select": "Select condtion",
+        "title": {
+            "numberOfOrder": "Number of orders"
+        }
+    },
+    "customer": {
+        "account-name": "Account name",
+        "account-number": "Account number",
+        "bank": "Bank",
+        "bank-agency": "Bank agency",
+        "brief-introduction": "Brief introduction",
+        "certificate-image": "Business certificate images",
+        "collection-amount": "Collection amount",
+        "contract-image": "Contract image",
+        "customerLevel": "Customer level",
+        "delete-complete": "Delete the customer successfully",
+        "delete-fail": "There was an error when deleting the customer",
+        "depositBalance": "Deposit balance",
+        "enterprise": "Enterprise",
+        "enterprise-name": "Enterprise",
+        "id-staff": "Staff id",
+        "list-staff": "List of staffs",
+        "list-user-level": "List of user levels",
+        "loyaltyPoint": "Loyalty point",
+        "mainBalance": "Main balance",
+        "note": "Introduction",
+        "placeholder": {
+            "account-name": "Please enter account name",
+            "account-number": "Please enter account number",
+            "bank": "Please select a bank",
+            "bank-agency": "Please enter bank agency",
+            "brief-introduction": "Please enter brief introduction",
+            "confirm-password": "Please confirm password",
+            "contract-number": "Please enter contract number",
+            "email": "Please enter email",
+            "enterprise-name": "Please enter enterprise name",
+            "maintenance-days": "Select maintenance days here",
+            "maintenance-services": "Select maintenance services here",
+            "max-collection": "To",
+            "min-collection": "From",
+            "password": "Please enter password",
+            "phone": "Please enter phone number",
+            "select-enterprise": "Select enteprise"
+        },
+        "staff-in-charge": "Processing staff",
+        "statistic": {
+            "sum-of-customer": "Sum of customer",
+            "sum-of-enterprise": "Sum of enterprise",
+            "sum-of-order": "Sum of order",
+            "sum-of-successfulOrder": "Sum of successful order"
+        },
+        "subBalance": "Sub balance",
+        "under-collection-amount": "Under",
+        "unsubmitted-collectionDebt": "Unsubmitted collection debt"
+    },
+    "customer-type": {
+        "1": "Truck"
+    },
+    "dashboard": {
+        "all-group": "All group",
+        "incident-order": "Incident order",
+        "status": {
+            "idle": "Idle",
+            "in-debt": "In debt",
+            "incident": "Incident",
+            "processing": "Processing"
+        }
+    },
+    "date": {
+        "later-period": "Later period",
+        "placeholder": {
+            "month": "Select month",
+            "week": "Select week",
+            "year": "Select year"
+        },
+        "previous-period": "Previous period",
+        "quarter": {
+            "1": "1st quarter",
+            "2": "2nd quarter",
+            "3": "3rd quarter",
+            "4": "4th quarter"
+        },
+        "validation": {
+            "end-month-required": "Please select end month",
+            "end-year-required": "Please select end year",
+            "start-end-quarter-required": "Please select start or end quarter",
+            "start-month-required": "Please select start month",
+            "start-year-required": "Please select start year"
+        }
+    },
+    "daysInWeek": {
+        "2": "Monday",
+        "3": "Tuesday",
+        "4": "Wednesday",
+        "5": "Thursday",
+        "6": "Friday",
+        "7": "Saturday",
+        "8": "Sunday"
+    },
+    "direction": {
+        "east": "East",
+        "north": "North",
+        "northEast": "Northeast",
+        "northWest": "Northwest",
+        "south": "South",
+        "southEast": "Southeast",
+        "southWest": "Southwest",
+        "west": "West"
+    },
+    "email": {
+        "account": {
+            "change-password": "Change password",
+            "create": "Create email account",
+            "edit": "Edit email account",
+            "list": "List of email accounts",
+            "new-password": "New password",
+            "old-password": "Old password",
+            "status-activate-complete": "Activate successfully",
+            "status-activate-fail": "There was an error when activating the email account",
+            "status-change-password-complete": "Change password successfully",
+            "status-deactivate-complete": "Deactivate successfully",
+            "status-deactivate-fail": "There was an error when deactivating the email account",
+            "status-delete-complete": "Delete the email account successfully",
+            "status-delete-fail": "There was an error when deleting the email account",
+            "type-automatic": "Automatic",
+            "type-system": "System"
+        },
+        "template": {
+            "create": "Create email template",
+            "edit": "Edit email template",
+            "list": "List of email templates",
+            "status-activate-complete": "Activate successfully",
+            "status-activate-fail": "There was an error when activating the email template",
+            "status-create-complete": "Create successfully",
+            "status-deactivate-complete": "Deactivate successfully",
+            "status-deactivate-fail": "There was an error when deactivating the email template",
+            "status-delete-complete": "Delete the email template successfully",
+            "status-delete-fail": "There was an error when deleting the email template",
+            "status-edit-complete": "Edit successfully",
+            "type-receiveResponse": "Receive response",
+            "type-replyResponse": "Reply response"
+        }
+    },
+    "end-user": {
+        "create": "Create end user",
+        "edit": "Edit end user",
+        "import": "Import",
+        "management": "End user Management",
+        "name": "End user",
+        "sub-end-user": {
+            "create": "Create delivery point",
+            "edit": "Edit delivery point",
+            "manage": "Manage delivery points",
+            "receiver": "Receiver"
+        },
+        "validations": {
+            "required-address": "Please enter address",
+            "required-full-name": "Please enter full name"
+        }
+    },
+    "errorCodes": {
+        "401": "Unauthentication.",
+        "403": "Unauthorization",
+        "500": "System error",
+        "common": "System error",
+        "request": "Request error"
+    },
+    "filter": {
+        "action": "Action",
+        "address": "Address",
+        "all": "All",
+        "assignDate": "Assign date",
+        "city": "City/Province",
+        "code": "Code",
+        "collectionStatus": "Collection status",
+        "createNew": "Create",
+        "customer": "Customer",
+        "customer-code": "Customer code",
+        "customer-level": "Customer level",
+        "dateTypes": {
+            "day": "Day",
+            "month": "Month",
+            "quarter": "Quarter",
+            "week": "Week",
+            "year": "Year"
+        },
+        "deliveryPoint": "Delivery point",
+        "district": "District",
+        "filter": "Filter",
+        "finishDate": "Finish date",
+        "finishedEnd": "To finished date",
+        "fromDate": "From date",
+        "group": "Group",
+        "groupAdmin": "Admin group",
+        "installationPoint": "Installation point",
+        "location": "Location",
+        "notificationType": "Notification type",
+        "phone": "Phone",
+        "placeholderCustomer": "Enter customer's name...",
+        "program": "Program",
+        "providers": "Provider",
+        "referralpolicy": "Referral policy",
+        "responseRate": "Rate",
+        "service": "Service",
+        "servicer": "Partner",
+        "smsProvider": "SMS Provider",
+        "smsType": "SMS Type",
+        "source": "Source",
+        "staff": "Staff",
+        "staff-code": "Staff code",
+        "staff-orderCode": "Staff/Order code",
+        "status": "Status",
+        "team": "Team",
+        "timePeriod": "Time eriod",
+        "toDate": "To date",
+        "type": "Type",
+        "userCode": "Customer's code",
+        "userServicerCode": "Customer/Servicer code",
+        "userType": "User type",
+        "ward": "Ward"
+    },
+    "finance": {
+        "bank": {
+            "create": "Create bank",
+            "edit": "Edit bank",
+            "keyword": "Keyword",
+            "list": "List of banks",
+            "search": "Search bank",
+            "short-name": "Trading name",
+            "status-create-complete": "Create successfully",
+            "status-delete-complete": "Delete the bank successfully",
+            "status-edit-complete": "Edit successfully"
+        },
+        "history": "Transaction history",
+        "paymentMethod": {
+            "cash": "Cash",
+            "wallet": "Balance"
+        },
+        "paymentMethodTitle": "Payment method",
+        "session-cod": {
+            "code": "Sessions code",
+            "confirm-transfer": "Confirm transfer",
+            "confirm-transfer-content": "Do you want to confirm the transfer for this COD session?",
+            "create": "Create sessions",
+            "create-btn": "Create sessions",
+            "created-by": "Created by",
+            "delete": "Delete session cod",
+            "delete-content": "Are you sure you want to delete this COD session?",
+            "delete-order": "Delete an order in the session",
+            "delete-order-content": "Do you want to remove the order from this COD session?",
+            "delivery-date": "Delivery date",
+            "detail": "Session cod detail",
+            "export-order": "EXPORT EXCEL",
+            "filterDescription": "(All orders with COD successfully delivered are less than or equal to the selected date)",
+            "filterPlaceholderList": "Enter the customer",
+            "leftList": "Customers available",
+            "rightList": "Customers selected to create session",
+            "status": {
+                "1": "Not delivered",
+                "2": "Delivered",
+                "4": "Deleted"
+            },
+            "title": "Manage collections sessions",
+            "titleList": "Customers",
+            "total-cod": "Total COD",
+            "total-order": "Total order",
+            "transfer-by": "Transfer by",
+            "transfer-date": "Transfer date"
+        },
+        "systemBankAccount": {
+            "create": "Create system bank account",
+            "edit": "Edit system bank account",
+            "list": "List of system bank accounts",
+            "status-create-complete": "Create successfully",
+            "status-delete-complete": "Delete the system bank account successfully",
+            "status-delete-fail": "There was an error when deleting the system bank account",
+            "status-edit-complete": "Edit successfully"
+        },
+        "transaction-action": {
+            "adjust-deposit": "Adjust deposit",
+            "adjust-order": "Adjust order",
+            "all": "All",
+            "collection-money": "Collection money",
+            "commission": "Commission",
+            "deposit": "Deposit",
+            "fine": "Fine",
+            "payment": "Payment",
+            "promotion": "Promotion",
+            "referral-bonus": "Referral bonus",
+            "refund": "Refund",
+            "withdraw": "Withdraw"
+        },
+        "transaction-adjust-deposit": {
+            "adjustDepositOfEnterpriseStaff": "Enterprise's staff is not depositable",
+            "bankMethod": "Bank",
+            "cashMethod": "Cash",
+            "create": "Adjust deposit",
+            "failed": "Failed",
+            "moneyAmount": "Amount",
+            "successfully": "Successfully",
+            "topupMethod": "Top up method",
+            "withdrawMethod": "Withdraw method"
+        },
+        "transaction-bonus": {
+            "create": "Promote",
+            "walletType": "Balance type"
+        },
+        "transaction-bonus-forfeit": {
+            "every-customer": "All customers",
+            "every-servicer": "All partners",
+            "individual": "Individual",
+            "no-target-validations": "Please select a target"
+        },
+        "transaction-forfeit": {
+            "create": "Fine"
+        },
+        "transaction-status": {
+            "all": "All",
+            "processing": "Processing",
+            "reject": "Reject",
+            "request": "Request",
+            "success": "Success"
+        },
+        "transaction-title": "Transaction",
+        "transaction-top-up": {
+            "bank": "Bank",
+            "branch": "SUPRA branch",
+            "create": "Deposit",
+            "money": "Money",
+            "remark": "Remark",
+            "type": "Deposit method"
+        },
+        "transaction-top-up-detail": {
+            "code": "Code",
+            "id": "Servicer ID",
+            "money": "Money",
+            "name": "Servicer name",
+            "remark": "Remark",
+            "staff-action": "Executor",
+            "time": "Time"
+        },
+        "transaction-userType": {
+            "name": "Target",
+            "owner": "SUPRA",
+            "servicer": "Partner",
+            "user": "Customer"
+        },
+        "transaction-walletType": {
+            "bank": "Bank",
+            "cash": "Cash",
+            "collection": "Collection",
+            "deposit": "Deposit",
+            "main": "Main balance",
+            "minRemaining": "Min Remaining",
+            "postpaid-allowed": "Postpaid allowed",
+            "sub": "Sub balance",
+            "withdrawLimit": "Withdraw Limit"
+        }
+    },
+    "financewallet": {
+        "postpaid-allowed": {
+            "activate-failed": "Activate postpaid unsuccessfully",
+            "activate-success": "Activate postpaid successfully",
+            "deactivate-failed": "Deactivate postpaid unsuccessfully",
+            "deactivate-success": "Deactivate postpaid successfully"
+        },
+        "remainingEdit": {
+            "title": "Edit remaining",
+            "title-minRemaining": "Min remaining",
+            "withdraw-max": "Max",
+            "withdraw-min": "Min",
+            "withdraw-title": "Withdraw limit"
+        },
+        "statistics": {
+            "total-collection": "Total collection debt",
+            "total-deposit": "Total deposit balance",
+            "total-main": "Total main balance",
+            "total-sub": "Total sub balance"
+        }
+    },
+    "form": {
+        "categories": {
+            "delete-content": "Are you sure you want to delete this category?",
+            "delete-title": "Delete category",
+            "nameEn": "Name (en)",
+            "nameVi": "Name (vi)",
+            "order": "Order",
+            "placeholderName": "Enter name here",
+            "titleCreate": "CREATE CATEGORIES",
+            "titleEdit": "EDIT CATEGORIES",
+            "validations-name": "Please input category name",
+            "validations-order": "Please input category order"
+        },
+        "create-store": {
+            "create": "Create store",
+            "isMember-0": "No",
+            "isMember-1": "Yes",
+            "update": "Update"
+        },
+        "placeholderLimitOrders": "Enter limit order here",
+        "user-level": {
+            "auto-level": "Auto upgrade",
+            "avatar": "Avatar",
+            "create-level": "Create level",
+            "detail": "Detail",
+            "edit-level": "Update level",
+            "image": "Image",
+            "level-name": "Level name",
+            "min-point": "Upgrade point",
+            "special-level": "Special level",
+            "status": "Status",
+            "user-type": "User type"
+        },
+        "user-status": {
+            "1": "New",
+            "2": "Active",
+            "3": "Suspended",
+            "4": "Deleted"
+        },
+        "vehicle": {
+            "cod": "Marker COD",
+            "grooving": "Marker grooving",
+            "imageNormal": "Normal image",
+            "imageSelected": "Selected image",
+            "incident": "Marker incident",
+            "markerLarge": "Large marker",
+            "markerNormal": "Normal marker",
+            "nameEn": "Name (en)",
+            "nameVi": "Name (vi)",
+            "offline": "Marker offline",
+            "placeholderCapacity": "Enter capacity here",
+            "placeholderName": "Enter vehicle name here",
+            "placeholderOrder": "Enter order here",
+            "processing": "Marker processing",
+            "return": "Marker return",
+            "titleCreate": "CREATE VEHICLE",
+            "titleEdit": "EDIT VEHICLE"
+        },
+        "vehicle-validations": {
+            "imageMarkerLarge": "Please choose normal vehicle image",
+            "imageMarkerNormal": "Please choose selected vehicle image",
+            "imageNormal": "Please choose normal vehicle marker image",
+            "imageSelected": "Please choose large vehicle marker image",
+            "markerCod": "Please choose cod vehicle marker image",
+            "markerGrooving": "Please choose grooving vehicle marker image",
+            "markerIncident": "Please choose incident vehicle marker image",
+            "markerOffline": "Please choose offline vehicle marker image",
+            "markerProcessing": "Please choose processing vehicle marker image",
+            "markerReturn": "Please choose return vehicle marker image",
+            "name": "Please enter vehicle name",
+            "order": "Please enter vehicle's order here"
+        }
+    },
+    "general-menu": {
+        "account-balance": "Account balance",
+        "adidi-branch": "SUPRA branch",
+        "categories": "Categories",
+        "city-province": "Province/City",
+        "customer": "Customer",
+        "district": "District",
+        "hook": "Hook",
+        "hookLink": "Hook link",
+        "hookType": "Hook type",
+        "limit-orders": "Limit orders",
+        "loyalty-point": "Loyalty point",
+        "order-acceptance": "Order acceptance",
+        "policy": "Policy",
+        "priceManagement": "Price",
+        "promotion-policy": "Promotion policy",
+        "referral-policy": "Referral policy",
+        "region": "Region",
+        "return-warehouse": "Return warehouse",
+        "reward-management": "Reward",
+        "serviceCollection": "Collection debt",
+        "sms": "SMS",
+        "smsLogs": "SMS History",
+        "smsProvider": "SMS provider",
+        "smsTemplate": "SMS Template",
+        "user-level": "User level",
+        "vehicle": "Vehicle",
+        "wards": "Wards",
+        "wards-list": "Wards list",
+        "wards-name": "Wards name",
+        "warehouse": "Warehouse",
+        "warehouse-list": "Warehouse list",
+        "warehouse-setting": "Warehouse setting"
+    },
+    "handoverSessions": {
+        "buttonSuccess": "Completed",
+        "handoverSessionCode": "Handover session code",
+        "packageReceived": "Package received",
+        "receivePhysical": "Scan handover",
+        "receivedDate": "Receiving time",
+        "receivedDateFirst": "First received ",
+        "receivedDateLast": "Last received",
+        "statusLabel": {
+            "1": "New",
+            "2": "Processing",
+            "3": "Partial completed",
+            "4": "Completed"
+        },
+        "statusPackageLabel": {
+            "notReceived": "Not received",
+            "received": "Received"
+        },
+        "title": "Handover session",
+        "titleDetail": "PACKAGE LIST",
+        "titleModal": "PARTIAL COMPLETED",
+        "titleRight": "HANDOVER SESSION INFORMATION"
+    },
+    "handoverSessions3PL": {
+        "adminConfirm": "Handed over",
+        "buttonCancle": "Cancel",
+        "buttonConfirm": "Handover confirmation",
+        "confirmCancle": "Confirm",
+        "confirmedBy": "Confirmed by",
+        "contentConfirm": "Do you want to confirm the handover session?",
+        "contentConfirmCancle": "Do you want to cancel the handover session?",
+        "createdAt": "Handover created",
+        "createdBy": "Created by",
+        "errorSOValid": "So not valid",
+        "handedOverDate": "Handed over date",
+        "messageScan": "Message",
+        "noteCancle": "Cancle note",
+        "noteReceived": "Received note",
+        "receivedDate": "Received date",
+        "soList": "SO List",
+        "statusLabel": {
+            "1": "Not received",
+            "2": "Handed over",
+            "3": "3PL received",
+            "4": "Cancel",
+            "5": "Received part",
+            "6": "Complete part"
+        },
+        "title": "Handover session 3PL",
+        "titleCancle": "Cancel handover session 3PL",
+        "toltalPackage": "Total package",
+        "toltalSO": "Total SO",
+        "toltalSOReceived": "Toltal SO received",
+        "unconfimred": "Unconfimred"
+    },
+    "hook": {
+        "hook-type": {
+            "create": "Create hook type",
+            "edit": "Edit hook type",
+            "list": "List of hook types",
+            "requiredFields": "Required fields"
+        },
+        "hook-type-status": {
+            "activate-complete": "Activate successfully",
+            "activate-fail": "There was an error when activating the hook type",
+            "create-complete": "Create successfully",
+            "deactivate-complete": "Deactivate successfully",
+            "deactivate-fail": "There was an error when deactivating the hook type",
+            "delete-complete": "Delete the hook type successfully",
+            "delete-fail": "There was an error when deleting the hook type",
+            "edit-complete": "Edit successfully"
+        },
+        "hook-type-type": {
+            "order_status": "Order status"
+        },
+        "link": {
+            "customer-partner": "Customer / Partner",
+            "input-id": "Input ID",
+            "link": "Link",
+            "list": "List of hook links"
+        },
+        "link-status": {
+            "create-complete": "Create successfully",
+            "delete-complete": "Delete the hook type successfully",
+            "delete-fail": "There was an error when deleting the hook type",
+            "edit-complete": "Edit successfully"
+        },
+        "link-type": {
+            "order_status": "Order status"
+        }
+    },
+    "importSO": "Assign order SO file excel",
+    "incident": {
+        "failed": "Failed",
+        "images": "Incident images",
+        "reason-failed": "Failing reason",
+        "status": {
+            "0": "New",
+            "1": "Processing",
+            "2": "Sucessfully",
+            "3": "Failed"
+        },
+        "successfully": "Successfully"
+    },
+    "label": {
+        "account-information": "Account information",
+        "finance": "Finance",
+        "service": "Service"
+    },
+    "location-placeholder": {
+        "city": "Select city",
+        "district": "Select district",
+        "province-city": "Select province/city",
+        "street": "Enter address",
+        "ward": "Enter ward"
+    },
+    "login": {
+        "delivery-setting": "Delivery - Setting",
+        "error": "Wrong phone/password!",
+        "password": "Password",
+        "phone": "Phone",
+        "sign_in": "Sign in",
+        "success": "Login successfully",
+        "warrantyRepair-sharingWarehouse": "Warranty repair - Sharing warehouse"
+    },
+    "maps": {
+        "disable-dragging": "Disable dragging",
+        "disable-map": "Disable map",
+        "distance": "Distance",
+        "enable-dragging": "Enable dragging",
+        "enable-map": "Enable map"
+    },
+    "marketing": {
+        "loyalty-point": {
+            "expiration": "Expiratation Date",
+            "loyalty-point": "Point",
+            "modal-point-number": "Point",
+            "modal-title-modify": "Modify Loyalty Point",
+            "modify-point": "Modify point",
+            "one-point": "1 point",
+            "orderCode": "Transaction Code",
+            "orderId": "Order ID",
+            "orderType": "Type",
+            "partnerCode-customerCode": "Partner / Customer Code",
+            "point-values": "Point values",
+            "receiverCode": "Receiver Code",
+            "staff": "Staff ID"
+        },
+        "loyalty-point-type": {
+            "adjustDecrease": "Adjust points to decrease",
+            "adjustIncrease": "Adjust points to increase",
+            "order": "Orders",
+            "redeem": "Redeem rewards"
+        },
+        "news": {
+            "add-news": "Create news",
+            "featured": "Featured",
+            "featured-category": "Featured category",
+            "featured-news": "Featured news",
+            "list": "News list",
+            "list-receiver": "Receiver",
+            "name": "News title",
+            "send-news-noti": "Send notification",
+            "status-activate-complete": "Activate successfully",
+            "status-activate-fail": "There was an error when activating news",
+            "status-active": "Active",
+            "status-deactivate-complete": "Deactivate successfully",
+            "status-deactivate-fail": "There was an error when deactivating news",
+            "status-inactive": "Inactive",
+            "tab-banner": "Banner",
+            "tab-news": "News",
+            "tab-news-category": "News category"
+        },
+        "news-category": {
+            "add": "Add category",
+            "create": "Create category",
+            "edit": "Edit category",
+            "list": "News category",
+            "name": "Category",
+            "status-activate-complete": "Activate successfully",
+            "status-activate-fail": "There was an error when activating news category",
+            "status-create-complete": "Create successfully",
+            "status-deactivate-complete": "Deactivate successfully",
+            "status-deactivate-fail": "There was an error when deactivating news category",
+            "status-edit-complete": "Edit successfully"
+        },
+        "news_banner": {
+            "activate-complete": "Activated successfully",
+            "activate-fail": "Activated failed",
+            "add-banner": "Add banner",
+            "banner": "Banner",
+            "deactivate-complete": "Deactivated successfully",
+            "deactivate-fail": "Deactivated failed",
+            "list": "Banner list"
+        },
+        "promotion-policy": {
+            "affected-at": "Effected at",
+            "amount": "Amount",
+            "appliedCondition": "Applied condition",
+            "appliedPriceForm": "Applied price form",
+            "byDepositAmount": "By deposit amount",
+            "byDepositRatio": "By deposit ratio",
+            "byOrderValue": "By order amount",
+            "byOrderValueProportion": "By order cost ratio",
+            "chooseCondition": "Choose condition",
+            "choosePriceForm": "Choose price form",
+            "content": "Content",
+            "diffAmountByServicer": "Diff servicer amount ratio",
+            "discountByAmount": "By amount",
+            "discountByPercent": "By ratio",
+            "discountSamePrice": "Same price",
+            "displayCondition": "Display condition",
+            "expired-at": "Expired at",
+            "maximumAmount": "max amount",
+            "programDetail": "Program detail",
+            "promoCodeQuantity": "Promotion code quantity",
+            "promoPolicyDetail": "Promotion code detail",
+            "promotion-code": "Promotion code",
+            "promotionFixedByOrderValue": "Fixed price",
+            "success-update": "Successful update",
+            "withoutAdditionalCost": "Without additional cost"
+        },
+        "promotion-policy-condition-operator": {
+            "between": "Between",
+            "day": "Day",
+            "days": "",
+            "diff": "Difference",
+            "equal": "Equal",
+            "greater": "Greater",
+            "greaterOrEqual": "Greater or Equal",
+            "less": "Less",
+            "lessOrEqual": "Less or Equal",
+            "money": "Money",
+            "time": "Time"
+        },
+        "promotion-policy-condition-promotion-code": {
+            "baseUserCost": "Cost for orderer",
+            "createdAt": "Register day",
+            "dayPeriod": "Day period",
+            "depositAmount": "Deposit amount",
+            "depositTime": "Deposit time",
+            "displayedAt": "Display at",
+            "incomeAmount": "Income",
+            "limitedQuantityByDay": "Limited quantity by day",
+            "limitedQuantityByDayAndUser": "Limited quantity by customer",
+            "limitedQuantityByMonth": "Limited quantity by month",
+            "limitedQuantityByMonthAndUser": "Limited quantity by month and customer",
+            "limitedQuantityByUser": "Limited quantity by customer",
+            "limitedQuantityByWeek": "Limited quantity by week",
+            "limitedQuantityByWeekAndUser": "Limited quantity by week and customer",
+            "location": "Location",
+            "numberOfOrder": "Number of order",
+            "numberOfWorkingDay": "Number of working day",
+            "orderType": "Order type",
+            "paymentMethod": "Payment method",
+            "service": "Service",
+            "servicerCost": "Order cost",
+            "servicerRating": "Rating",
+            "userCost": "Order cost",
+            "userId": "Customer ID",
+            "userLevel": "User level",
+            "userLevelId": "User level"
+        },
+        "promotion-policy-condition-unit": {
+            "day": "Day",
+            "days": "Time",
+            "money": "Money",
+            "time": "Time"
+        },
+        "promotion-policy-detail": {
+            "appliedCode": "Applied code",
+            "deposit": "Deposit",
+            "detail": "Policy detail",
+            "infor": "Policy information",
+            "priceForm": "Price form",
+            "promotion": "Promotion"
+        },
+        "promotion-policy-promotionHistory": {
+            "countOfCodes": "Number of codes",
+            "countOfUsedCodes": "Number of used codes",
+            "countOfUsers": "Number of customers",
+            "promotionHistoryName": "Promotion history",
+            "sumOfMoney": "Sum of money"
+        },
+        "promotion-policy-status": {
+            "1": "New",
+            "2": "Active",
+            "3": "Suspend",
+            "4": "Deleted"
+        },
+        "promotion-policy-warning": {
+            "invalid-data": "Please check data",
+            "invalid-discAmount": "Invalid discount amount",
+            "invalid-discPercent": "Invalid promotion ratio",
+            "invalid-discSamePrice": "Invalid promotion amount",
+            "invalid-iscMaximumAmount": "Invalid max amount",
+            "missing-image": "Please choose image",
+            "notChosen-condition": "Please choose condition"
+        },
+        "referral-code": "Referral code",
+        "referral-history": {
+            "bonus": "Bonus",
+            "list": "Bonus list",
+            "receiver": "Receiver",
+            "transaction-code": "Transaction code",
+            "type-presentee": "Presentee",
+            "type-presenter": "Presenter"
+        },
+        "referral-policy": {
+            "applied-condition": "Applied condition",
+            "condition-number-order": "Number of orders",
+            "from-number": "From (number of people)",
+            "give-bonus-to-wallet": "Give bonus to balance",
+            "give-reward": "Give reward",
+            "introduction-article": "Introduction article",
+            "money-amount": "Reward",
+            "sharing-content": "Sharing content",
+            "to-number": "To",
+            "validations": {
+                "invalid-data-article": "Invalid data in article",
+                "invalid-data-referrer": "Invalid data in referrer",
+                "invalid-interval": "From (number) must not be greater than to (number)",
+                "max-bonus-item-warning": "It's posible to add at most 5 lines",
+                "negative-number": "Value must be positive integer",
+                "not-a-number": "Value must not be empty"
+            }
+        },
+        "response": {
+            "empty-data": "Title and email are not empty",
+            "no-comment": "No reply",
+            "replyContent": "Reply content",
+            "replyDate": "Reply date",
+            "replyFailed": "Reply failed",
+            "replySuccessfully": "Reply sucessfully",
+            "status-all": "All",
+            "status-new": "Unreplied",
+            "status-replied": "Replied"
+        },
+        "reward": {
+            "create-reward": "Create reward",
+            "find": "Find reward"
+        }
+    },
+    "messenger": {
+        "block-message": {
+            "4": "Order cancelled by customer",
+            "5": "Order cancelled by partner",
+            "6": "Order cancelled by admin",
+            "8": "Order completed",
+            "19": "Failed installation",
+            "22": "Finished with return",
+            "not-receiveOrder": "Partner has not received the order"
+        },
+        "customer-partner": "Customer - Partner",
+        "no-message": "No message"
+    },
+    "notification": {
+        "action": {
+            "mark-all-as-read": "Mark all as read",
+            "read": "Mark as read",
+            "unmark": "Unmark"
+        },
+        "content": "Notification content",
+        "no-message": "No message",
+        "no-notification": "No notification",
+        "self": "Notification",
+        "status": {
+            "read": "Read",
+            "unread": "Unread"
+        },
+        "type": {
+            "confirmCompleteRequest": "Confirm complete request",
+            "created": "New order",
+            "happenIncident": "Incident order",
+            "newMessage": "Message",
+            "newWarehouse": "Warehouse activation request",
+            "response": "Response",
+            "self": "Notification type",
+            "warehouseContactRequest": "Warehouse advisory",
+            "withdrawRequest": "Withdraw request"
+        },
+        "view-detail": "View detail"
+    },
+    "order": {
+        "addonServices": "Addition services",
+        "address": "Address",
+        "admin": "Operator",
+        "adminNote": "Operator's note",
+        "baseUserCost": "Customer cost",
+        "cancel-order": "Cancel an order",
+        "cancel-party": "Order party",
+        "cancel-reason": "Reason of cancellation",
+        "choosing-installation": "Choosing installation service",
+        "choosing-loading": "Choosing cargo handling",
+        "clientHandoverCode": "Handover code",
+        "code": "Order code",
+        "collectionMoney": "Collection money",
+        "cost": "Cost",
+        "create-selectShipper": {
+            "employee": "Employee",
+            "employees": "Employees",
+            "group": "Choose group",
+            "income": "Monthly income",
+            "phone": "Phone",
+            "placeholderEmployee": "Employee name",
+            "team": "Choose team",
+            "title": "Choose order performer"
+        },
+        "customer": "Customer",
+        "customer-confirmed": "Customer confirmed",
+        "detail": "Order detail",
+        "detailPoint": "Detail",
+        "downloadListSo": "Download list SO",
+        "edit-successfully": "Edit point successfly",
+        "enterReason": "Enter reason",
+        "error-admin-note": "Please enter operator's note",
+        "error-cancel-reason": "Please enter cancel reason",
+        "error-reason": "Please enter reason",
+        "error-user-cancel": "Please choosing user cancel",
+        "external-cod": "COD",
+        "external-code": "External code",
+        "fare": "Fare",
+        "fixingIncidentInformation": "Fixing incident information",
+        "history": "Order history",
+        "incident": "Problem",
+        "incidentInformation": "Incident information",
+        "incidentName": "Incident orders",
+        "information-order": "Order Information",
+        "information-point": "Point information of",
+        "information-type-status": {
+            "1": "pickup point",
+            "2": "delivery point",
+            "4": "return point"
+        },
+        "list": "List of orders",
+        "listByStatus": {
+            "3": "List of accepted orders",
+            "7": "List of processing orders",
+            "9": "List of returned orders",
+            "10": "List of incident orders"
+        },
+        "maintenancePeriod": "Maintenance days",
+        "maintenanceServices": "Services",
+        "modal": {
+            "add-stop-point": "Add stoping point",
+            "cancel-order": "Cancel order",
+            "delete-marker": "Cancel point",
+            "direction": "Routes",
+            "edit-marker": "Choose modification point",
+            "edit-order-collection": "Modify collection money",
+            "edit-reason": "Modification reason",
+            "hint-drag-map": "Drag below points to change the routes correctly",
+            "history": "Order history",
+            "input-new-money": "New collection money",
+            "input-new-money-placeholder": "New collection money",
+            "reason-cancel-order": "Cancel order reason",
+            "reason-delete-marker": "Cancel point reason",
+            "reason-refund": "Return reason",
+            "reason-skip-marker": "Skip point reason",
+            "refund": "Return",
+            "select-delete-marker": "Choose cancel point",
+            "select-skip-marker": "Choose skip point",
+            "skip-marker": "Skip point",
+            "total-package": "Total of package"
+        },
+        "moreDetails": "Detail information",
+        "note": "Note",
+        "order": "Order",
+        "order-status": "Order status",
+        "orderer": "Orderer",
+        "package-list-invalid": "Invalid packages",
+        "partner": "Partner",
+        "partner-number": "Partner's number",
+        "point": "Point",
+        "pointDetail": {
+            "incident": "Problem"
+        },
+        "pointStatus": {
+            "0": "Haven't arrived yet",
+            "1": "Delivered",
+            "2": "Installed",
+            "3": "Cancled",
+            "4": "Skip",
+            "5": "Problem",
+            "6": "Accept problem resolving",
+            "7": "Problem resolved",
+            "8": "Arrived",
+            "9": "Returned",
+            "10": "Failed return",
+            "11": "Pick up successfully",
+            "12": "Accept quotation",
+            "13": "Reject quotation",
+            "14": "Scheduled",
+            "15": "Send quotation",
+            "16": "Completed",
+            "17": "Failed",
+            "19": "In-processing",
+            "20": {
+                "1": "Pickup point later",
+                "2": "Delivery point later",
+                "4": "Return point later"
+            },
+            "21": "Pending",
+            "-1": "Delivery failed",
+            "-2": "Install failed",
+            "-3": "Pickup failed"
+        },
+        "points": {
+            "later-reason-status": {
+                "1": "pickup point later",
+                "2": "delivery point later",
+                "4": "return point later"
+            },
+            "number": "Delivery point no. ",
+            "pickup-point-address": "Pickup point address",
+            "reason": "Reason"
+        },
+        "processingOrder": "Processing orders",
+        "product": "Product",
+        "reason-cancel": "Cancellation reason",
+        "receiverCost": "Receiver cost",
+        "requestType": {
+            "consultation": "Consulation",
+            "home-service": "Home service",
+            "store-service": "Store service"
+        },
+        "restricted-delete-content": "Are you sure you want to delete the item that acceptance ? ",
+        "restricted-delete-title": "Confirm delete acceptance",
+        "restricted-timeout": {
+            "delete-content": "Are you sure you want to delete this restricted?",
+            "delete-title": "Delete",
+            "duration": "Timed out (hh:mm:ss)",
+            "modify-customer-error": "Please choose a customer",
+            "modify-duration": "Duration",
+            "modify-hint-customer": "Enter name, phone or customer code",
+            "modify-title-create": "Create",
+            "modify-title-edit": "Update",
+            "title": "Restricted Timeout List"
+        },
+        "serialNumber": {
+            "SKU": "SKU",
+            "input": "Input serial number",
+            "list": "List of serial numbers",
+            "quantity": "Quantity",
+            "title": "Serial number"
+        },
+        "serialNumber-status": {
+            "empty-serialNumber": "Serial number must be not empty",
+            "quantity-error": "Quantity must be larger than 0",
+            "update-complete": "Update products completed"
+        },
+        "service-style0": {
+            "name": "Additional service",
+            "unit": ""
+        },
+        "service-style10": {
+            "name": "Installation cost",
+            "text": "Installation",
+            "unit": "Quantity"
+        },
+        "service-style108": {
+            "name": "Promotion",
+            "unit": ""
+        },
+        "service-style11": {
+            "name": "Additional cost",
+            "text": "Additional services",
+            "unit": "Quantity"
+        },
+        "service-style2": {
+            "name": "Delivery cost",
+            "text": "Delivery",
+            "unit": "km"
+        },
+        "service-style21": {
+            "name": "Collection cost",
+            "text": "Collection",
+            "unit": "Money"
+        },
+        "service-style22": {
+            "name": "Stevedorage ",
+            "text": "Stevedore",
+            "unit": "Way"
+        },
+        "service-style23": {
+            "name": "Come back cost",
+            "text": "Come back pickup point",
+            "unit": ""
+        },
+        "service-style24": {
+            "name": "Stopoint cost",
+            "text": "Stopoint",
+            "unit": ""
+        },
+        "service-style25": {
+            "name": "Return cost",
+            "text": "Return",
+            "unit": "km"
+        },
+        "service-style26": {
+            "name": "Estimated return cost",
+            "text": "Estimated return cost",
+            "unit": "km"
+        },
+        "servicer": "Partner",
+        "services": "Services",
+        "size": "Size (LxWxH)",
+        "status": "Status",
+        "statusCode": {
+            "1": "New",
+            "2": "Finding",
+            "3": "Accepted",
+            "4": "Cancelled by customer",
+            "5": "Cancelled by partner",
+            "6": "Cancelled by operator",
+            "7": "Processing",
+            "8": "Finished",
+            "9": "Returned",
+            "10": "Incident",
+            "11": "Problem resolving",
+            "12": "Waiting to confirm",
+            "14": "Confirm completed",
+            "15": "Cancelled by renter",
+            "16": "Cancelled by lessor",
+            "17": "Processing timeout",
+            "18": "Processed timeout",
+            "19": "Failed installation",
+            "20": "Pending",
+            "21": "Pending and returned",
+            "22": "Finished with return",
+            "-1": "Time out",
+            "10,11": "Incident",
+            "4,5,6": "Cancelled",
+            "all": "All",
+            "cancelled": "Cancelled"
+        },
+        "store": "Store",
+        "time": "Time",
+        "title-point": {
+            "1": "Picked-up products at this point",
+            "2": "Delivery products at this point",
+            "4": "Return products at this point"
+        },
+        "total": "Total order",
+        "totalCost": "Total cost",
+        "type": {
+            "delivery": "Delivery",
+            "deliveryInstallation": "Delivery - Installation",
+            "installation": "Installation",
+            "sharingWarehouse": "Sharing warehouse",
+            "warrantyRepair": "Warranty - Repair"
+        },
+        "user-cancel-selection": "Selecting user cancel",
+        "validate-assign-3PL": "Please choosing assigned 3PL",
+        "validate-assign-partner": "Please choosing assigned parner",
+        "viewMap": "View on map",
+        "viewReaches": "Servicer can see order",
+        "volume": "Volume",
+        "warranty-repair": "Warranty repais",
+        "weight": "Weight"
+    },
+    "orderDeliveryType": {
+        "AHMD2H": "AHMD2H - AhaMove 2H",
+        "D2H": "D2H - Eton 2H",
+        "D4H": "D4H - Eton 4H",
+        "EXP": "EXP - Express",
+        "OTHERS": "Others",
+        "SMD": "SMD - Same day",
+        "STD": "STD - Standard"
+    },
+    "others": "Others",
+    "pages-title": {
+        "statistics": "Statistic"
+    },
+    "paging": {
+        "display": "Display",
+        "displayFrom": "From ",
+        "displayTotal": " per ",
+        "result": "Result"
+    },
+    "parner-process": {
+        "orderSuccess": "Order success",
+        "successRate": "Sucess rate",
+        "title": "Partner process",
+        "totalOrder": "Total order"
+    },
+    "partnerProcess": {
+        "activities": "Partner activities",
+        "completedOrder": "Completed Order",
+        "completionRate": "Completion rate",
+        "orderOfDay": "New orders of day",
+        "orderOld": "Old order",
+        "orderSuccess": "Successful orders",
+        "package": "Package",
+        "successRate": "Success rate",
+        "title": "Partner process",
+        "titleDetail": "Partner process detail",
+        "totalOrder": "Total orders"
+    },
+    "permissions": "Permissions",
+    "permissions-select": "Select permission here",
+    "placeholder": {
+        "order": "Enter order",
+        "selectDate": "Select date"
+    },
+    "price": {
+        "add": "Add",
+        "addGroup": "Add group",
+        "delivery": {
+            "additionService": "Additional services",
+            "collectionValue": "Collection money is at least {{value}} VND",
+            "minimumCollectionFee": "Minimum collection fee"
+        },
+        "delivery-vehicle": {
+            "initCost": "Initial cost",
+            "initDistance": "Initial distance",
+            "nextDistance": "Next KM",
+            "stopointPrice": "Stopoint fee",
+            "type": "Vehicle type"
+        },
+        "group": "Group",
+        "name": "Name",
+        "name-price": "Price name",
+        "note": "Note",
+        "price": "Price",
+        "rate": "Rate",
+        "servicerPrice": "Servicer price",
+        "servicerRate": "Partner collection rate",
+        "tabs": {
+            "additionalCost": "Additional cost",
+            "delivery": "Delivery",
+            "installation": "Installation",
+            "service-pricing": "Service pricing"
+        },
+        "unit": "Unit",
+        "userPrice": "End user price",
+        "userRate": "User collection rate"
+    },
+    "price-form-not-found": "Price form not found!",
+    "profile-info": {
+        "change-password": "Change password",
+        "confirm-new-password": "Confirm new password",
+        "detail": "Detail",
+        "history": "History",
+        "level": "Level",
+        "new-password": "New password",
+        "old-password": "Old password",
+        "password-not-match": "Password is not match",
+        "register-date": "Register date",
+        "title": "Information",
+        "update": "Update",
+        "userName": "User name"
+    },
+    "prompt-enter-name": "Enter name",
+    "reason": "Reason",
+    "receiveReturnedProduct": "Receive returned products",
+    "referralPolicy": {
+        "referral-policy": "Referral policy",
+        "status": {
+            "activate-complete": "Activated succesfully",
+            "activate-fail": "Failed to activate referral policy ",
+            "deactivate-complete": "Deactivated successfully",
+            "deactivate-fail": "Failed to deactivate referral policy "
+        }
+    },
+    "revertOrderStatus": "Revert order status",
+    "rewardType": {
+        "item": "Item",
+        "promoCode": "Promotion code",
+        "voucher": "Voucher"
+    },
+    "service": {
+        "collection": {
+            "payment": "Pay"
+        },
+        "collection-modal": {
+            "error-moneyIsInvalid": "Amount should be greater than 0 and less than {{maxMoney}} VNĐ",
+            "input": "Enter amount",
+            "placeholder": "Enter amount...",
+            "title": "Pay collection debt"
+        },
+        "incident": {
+            "changeServicer": "Switch partner",
+            "requestProcessing": "Request processing",
+            "title": "Resolve problem"
+        },
+        "return": {
+            "getCode": "Get code",
+            "title": "Return management"
+        },
+        "return-pending": {
+            "receive": "Receive returned",
+            "title": "Return - pending management"
+        }
+    },
+    "servicer": {
+        "code": "Partner code",
+        "group": {
+            "title": "Partner group",
+            "total-teams": "Total teams"
+        },
+        "phone": "Partner phone",
+        "servicer": {
+            "collection-money": "Collection money",
+            "enterprise-name": "Enterprise name",
+            "input-money": "Input money",
+            "main-account": "Main balance",
+            "pay-collection": "Pay collection debt",
+            "payment": "Payment",
+            "sub-account": "Sub balance",
+            "total-orders": "Number of orders:",
+            "user-level-to-serve": "User level"
+        },
+        "servicer-image": {
+            "avatar": "Avatar",
+            "business-certificate": "Business certification",
+            "driver-license": "Driver license images",
+            "identity-card": "ID images"
+        },
+        "team": {
+            "title": "Service team",
+            "total-members": "Total members:"
+        },
+        "type": {
+            "1": "Individual",
+            "2": "Enterprice",
+            "3": "Enterprice's staff",
+            "4": "Operator",
+            "5": "Truck"
+        }
+    },
+    "settings": {
+        "admins-level": {
+            "1": "Admin",
+            "2": "Operator",
+            "3": "Office",
+            "4": "HR",
+            "5": "Partner Leader"
+        },
+        "admins-title": "List of operator",
+        "categories": {
+            "create": "Create",
+            "name": "Name",
+            "order": "Order",
+            "title": "Categories"
+        },
+        "createAccount": {
+            "account": "Account",
+            "address": "Address",
+            "edit-sucessful-password": "Edit password successfully",
+            "email": "Email",
+            "enterPassword": "Enter password",
+            "error-blank-password": "Please enter password",
+            "failed-change-password": "Edit password unsuccessfully",
+            "invalid-password": "Password must be at least 8 characters, contains letters and numbers.",
+            "password": "Password",
+            "phoneNumber": "Phone number",
+            "reEnterPassword": "Enter password again",
+            "repassword": "Confirm password",
+            "title": "Create account",
+            "wrongRepassword": "Incorrect password confirmation"
+        },
+        "group-admins": {
+            "create": "Create operator group",
+            "name": "Group name",
+            "permission": "Permission",
+            "title": "Operator group"
+        },
+        "reason-template": {
+            "create": "Create reason template",
+            "edit": "Edit reason template",
+            "name": "Reason",
+            "selectedImage": "Selected image",
+            "title": "Reason template setting"
+        },
+        "reason-template-list": {
+            "cancelByHost": "List of cancel reasons by host",
+            "cancelByRenter": "List of cancel reasons by renter",
+            "cancelDelInsByUser": "List of delivery installation cancel reasons by user",
+            "cancelDeliveryByUser": "List of delivery cancel reasons by user",
+            "cancelInstallationByUser": "List of installation cancel reasons by user",
+            "cancelWarrantyByUser": "List of warranty repair cancel reasons by user",
+            "failureConsult": "List of failure consult reasons by servicer",
+            "failureDelivery": "List of failure delivery reasons by servicer",
+            "failureInstallation": "List of failure installation reasons by servicer",
+            "failurePickup": "List of failure pickup reasons by servicer",
+            "failureReturn": "List of failure return reasons by servicer",
+            "improveForServicer": "List of reasons for servicer improvement",
+            "improveForUser": "List of reasons for user improvement",
+            "laterDelivery": "List of later delivery",
+            "laterPickup": "List of later pickup",
+            "laterReturn": "List of later return",
+            "pendingDelivery": "List of pending delivery",
+            "rejectQuotation": "List of reject quotation reasons by user"
+        },
+        "reason-template-status": {
+            "create-complete": "Create successfully",
+            "delete-complete": "Delete the reason template successfully",
+            "delete-fail": "There was an error when deleting the reason template",
+            "edit-complete": "Edit successfully"
+        },
+        "reason-template-type": {
+            "cancelByHost": "Cancel reason by host",
+            "cancelByRenter": "Cancel reason by renter",
+            "cancelDelInsByUser": "Delivery installation cancel reason by user",
+            "cancelDeliveryByUser": "Delivery cancel reason by user",
+            "cancelInstallationByUser": "Installation cancel reason by user",
+            "cancelWarrantyByUser": "Warranty repair cancel reason by user",
+            "failureConsult": "Failure consult reason by servicer",
+            "failureDelivery": "Failure delivery reason by servicer",
+            "failureInstallation": "Failure installation reason by servicer",
+            "failurePickup": "Failure pickup reason by servicer",
+            "failureReturn": "Failure return reason by servicer",
+            "improveForServicer": "Improvement for servicer",
+            "improveForUser": "Improvement for user",
+            "laterDelivery": "Later delivery",
+            "laterPickup": "Later pickup",
+            "laterReturn": "Later return",
+            "pendingDelivery": "Pending delivery",
+            "rejectQuotation": "Reject quotation reason by user"
+        },
+        "vehicle": {
+            "capacity": "Capacity",
+            "name": "Name",
+            "order": "Order",
+            "root": "Root",
+            "size": "Size",
+            "title": "Vehicles",
+            "type": "Type",
+            "typeMotor": "Motor",
+            "typeTricycles": "Tricycles",
+            "typeTruck": "Truck"
+        }
+    },
+    "statistics": {
+        "chart-name": {
+            "orders": "Orders",
+            "periodic-report": "Periodic report"
+        },
+        "common": {
+            "total-commission-fee": "Total commission fee",
+            "total-cost": "Total cost",
+            "total-order": "Total order"
+        },
+        "dashboard": {
+            "idle-partner": "Idle partners",
+            "offline-partner": "Offline partners",
+            "total-collection-debt": "Total collection debt"
+        },
+        "dashboard-order": {
+            "accepted": "Accepted",
+            "incident": "Incident",
+            "processing": "Processing",
+            "return": "Return"
+        },
+        "order-report-numbers": "Number of orders",
+        "order-report-order-type": {
+            "call": "Call",
+            "cancel": "Cancel",
+            "complete": "Complete",
+            "incident": "Incident",
+            "return": "Return"
+        },
+        "order-report-overview": {
+            "total-income": "Total income",
+            "total-order": "Total order",
+            "total-profit": "Total profit"
+        },
+        "order-store": {
+            "total-commission-fee": "Total commission fee",
+            "total-income": "Total income",
+            "total-order": "Total order",
+            "total-successful-order": "Total successful order"
+        },
+        "referral": {
+            "total-bonus": "Total bonus",
+            "total-presentee": "Total presentee",
+            "total-presenter": "Total presenter",
+            "total-redeemedReward": "Total redeemed reward"
+        },
+        "service-center": {
+            "total-joined-adidi": "Joined SUPRA",
+            "total-repair-order": "Total repair order",
+            "total-service-center": "Total service center",
+            "total-warranty-order": "Total warranty order"
+        },
+        "warehouse": {
+            "total-contact": "Total contact",
+            "total-failed-contact": "Total failure",
+            "total-lease-area": "Total lease area",
+            "total-order": "Total order",
+            "total-success-contact": "Total success",
+            "total-warehouse": "Total warehouse"
+        }
+    },
+    "tab": {
+        "filter": "Filter"
+    },
+    "table": {
+        "action": "Action",
+        "active-vehicle": "Active",
+        "address": "Address",
+        "admin-code": "Code",
+        "apply": "Apply",
+        "capacity": "Capacity",
+        "command-transfer": "Transfer command",
+        "content": "Content",
+        "create-date": "Created date",
+        "customer": "Customer",
+        "customer-level": "Customer level",
+        "delete-vehicle": "Delete",
+        "deposit": "Deposit",
+        "description": "Description",
+        "detail": "Detail",
+        "duration": "Duration",
+        "enterprise-name": "Enterprise name",
+        "exchange-code": "Transaction code",
+        "group-code": "Group code",
+        "group-name": "Group name",
+        "identity-number": "ID",
+        "images-avatar": "Avatar",
+        "images-driver-license": "Driver license images",
+        "images-identity-card": "ID images",
+        "images-vehicle": "Vehicle images",
+        "member": "Member",
+        "money": "Money",
+        "more-action": "More actions",
+        "name": "Name",
+        "name-vehicle": "Name vehicle",
+        "notification-code": "Notification code",
+        "order": "Order",
+        "order-code": "Order code",
+        "password": "Password",
+        "perfomred-partner": "Performed partner",
+        "performerName": "Performer",
+        "permission": "Permission",
+        "phone-number": "Phone number",
+        "priority-level": "Priority",
+        "processing-staff": "Processing staff",
+        "program": "Program",
+        "promotion-code": "Promotion code",
+        "promotion-name": "Promotion name",
+        "rating-advanced-content": "Advance",
+        "rating-content": "Rating content",
+        "referral-policy-code": "Referral policy code",
+        "referral-policy-name": "Referral policy name",
+        "reset-password": "Reset password",
+        "result": "Result(s)",
+        "service": "Service",
+        "service-support": "Support service",
+        "servicer": "Partner",
+        "servicer-code": "Servicer code",
+        "servicer-id": "Partner ID",
+        "services": "Additional services",
+        "show": "Show",
+        "staff": "Staff",
+        "star-numbers": "Star",
+        "status": "Status",
+        "team-code": "Team code",
+        "team-name": "Team name",
+        "team-servicer-name": "Serivce team",
+        "time": "Time",
+        "total": "Total",
+        "total-members": "Total of members",
+        "total-orders": "Total of orders",
+        "total-users": "Total of customers",
+        "user": "Customer",
+        "vehicle": "Vehicle",
+        "vehicle-ensurance-images": "Vehicle ensurance images",
+        "vehicle-images": "Vehicle images",
+        "vehicle-name": "Vehicle name",
+        "vehicle-number": "Vehicle number",
+        "vehicle-registration-cetificate-images": "Vehicle registration images",
+        "verifierName": "Verifier",
+        "view-detail": "View detail"
+    },
+    "telecom": {
+        "provider": "Provider",
+        "provider-name": "Provider name",
+        "providers": {
+            "account": "Account",
+            "confirm-password": "Confirm password",
+            "list": "List of provider",
+            "prefix": "Prefix",
+            "status1": "New",
+            "status2": "Active",
+            "type-SMS": "SMS"
+        },
+        "providers-change-password": {
+            "failed": "Password is changed successfully",
+            "success": "Failed, password is not changed"
+        },
+        "providers-status": {
+            "activate-complete": "Active provider sucessfully",
+            "activate-fail": "Active provider failed",
+            "deactivate-complete": "Deactive provider sucessfully",
+            "deactivate-fail": "Deactive provider failed"
+        },
+        "providers-validations": {
+            "account": {
+                "required": "Please input account name"
+            },
+            "name": {
+                "required": "Please input provider name"
+            },
+            "prefix": {
+                "required": "Please input prefix"
+            },
+            "url": {
+                "required": "Please input url"
+            }
+        },
+        "sms-log": {
+            "bid": "BID",
+            "responseBody": "Response Body",
+            "smsProvider": "Sms provider",
+            "statusCode": {
+                "100": "Information",
+                "200": "Success",
+                "300": "Redirection",
+                "400": "Client Error",
+                "500": "Server Error",
+                "label": "Status Code"
+            }
+        },
+        "sms-template": {
+            "create": "Create sms template",
+            "edit": "Edit sms template",
+            "list": "List of sms templates",
+            "status": {
+                "activate-complete": "Activate successfully",
+                "activate-fail": "There was an error when activating the sms template",
+                "create-complete": "Create successfully",
+                "deactivate-complete": "Deactivate successfully",
+                "deactivate-fail": "There was an error when deactivating the sms template",
+                "delete-complete": "Delete the sms template successfully",
+                "delete-fail": "There was an error when deleting the sms template",
+                "edit-complete": "Edit successfully"
+            }
+        },
+        "sms-type": {
+            "delivery": "Delivery notification",
+            "install": "Installation notification",
+            "otp": "Login one-time password",
+            "reset-password": "Reset password",
+            "withdraw-otp": "Withdraw one-time password"
+        }
+    },
+    "term-and-condition": {
+        "forServicer": "For partner",
+        "forUser": "For customer",
+        "modal": {
+            "content": "Content",
+            "order": "Order",
+            "title": "Title",
+            "type": "Customer type"
+        },
+        "title": "Term and condition"
+    },
+    "updateCOD": "Update COD",
+    "updateOrderLocation": "Update order's location",
+    "updateTotalPackage": "Update total package",
+    "uploader": {
+        "choose-file": "Choose file",
+        "file-format-invalid": "Upload file format invalid",
+        "unselected-file": "Unselected file",
+        "upload-size": "Please upload a file smaller than {{size}}",
+        "uploading-file": "Uploading file",
+        "video-duration": "Upload video has maximum duration {{limit}}s"
+    },
+    "user-type": {
+        "1": "Individual",
+        "2": "Enterprise",
+        "3": "Staff",
+        "4": "Operator"
+    },
+    "validations-form": {
+        "account": {
+            "required": "Please enter account"
+        },
+        "accountNumber": {
+            "number": "Account number is only contain number characters",
+            "required": "Please enter account number"
+        },
+        "address": {
+            "required": "Please enter address"
+        },
+        "agency": {
+            "required": "Please enter agency"
+        },
+        "amount": {
+            "too-large": "The amount is too large"
+        },
+        "avatar": {
+            "required": "Please add avatar"
+        },
+        "bank": {
+            "required": "Please enter bank name",
+            "selected": "Please select bank"
+        },
+        "branchName": {
+            "required": "Please input branch name"
+        },
+        "code": {
+            "required": "Please enter code"
+        },
+        "condition-set-name": {
+            "required": "Please input name"
+        },
+        "content": {
+            "required": "Please input content"
+        },
+        "customer-servicer": {
+            "required": "Please enter information of customer - partner"
+        },
+        "customerName": {
+            "required": "Please enter customer full name"
+        },
+        "description": {
+            "required": "Please enter description"
+        },
+        "districtName": {
+            "required": "Please enter district name"
+        },
+        "effectedAt": {
+            "invalid": "Invalid effected date",
+            "invalidRange": "Invalid range",
+            "promotion-invalid": "The validity period must be within the applicable period of the respective promotion",
+            "required": "Please enter effected date"
+        },
+        "email": {
+            "required": "Please enter email"
+        },
+        "enterpriseName": {
+            "required": "Please enter your enterprise name"
+        },
+        "expiredAt": {
+            "invalid": "Invalid expired date",
+            "invalidRange": "Invalid range",
+            "promotion-invalid": "The validity period must be within the applicable period of the respective promotion",
+            "required": "Please enter expired date"
+        },
+        "fax": {
+            "number": "Fax only contains digits"
+        },
+        "field": {
+            "required": "Please enter required fields"
+        },
+        "fullName": {
+            "required": "Please enter your full name"
+        },
+        "groupServicer": {
+            "required": "Please enter the servicer group"
+        },
+        "host": {
+            "required": "Please enter host"
+        },
+        "image": {
+            "required": "Please upload image",
+            "type": "Image format is not supported"
+        },
+        "level-name": {
+            "required": "Please input customer level"
+        },
+        "limitOrders": {
+            "required": "Limit order is not valid"
+        },
+        "link": {
+            "required": "Please input link"
+        },
+        "maintenance": {
+            "numberOfDays": "Choose at least 1 maintenance day",
+            "services": "Choose at least 1 service"
+        },
+        "mapAddress": {
+            "invalid": "Invalid map address",
+            "required": "Please enter map address"
+        },
+        "maxWithdraw": {
+            "required": "Please enter maximum withdraw amount"
+        },
+        "minPoint": {
+            "required": "Please enter the minimum point Vui lòng nhập điểm lên cấp"
+        },
+        "minRemaining": {
+            "required": "Please enter minimum remaining amount"
+        },
+        "minWithdraw": {
+            "required": "Please enter minimum withdraw amount"
+        },
+        "money": {
+            "required": "Please enter money"
+        },
+        "moneyAmount": {
+            "invalid-thousand": "Amount must be a multiple of thousand",
+            "positiveValue": "Money's value shoud be greater than 0",
+            "required": "Please enter amount",
+            "too-large-amount": "Too large amount"
+        },
+        "name": {
+            "required": "Please enter name"
+        },
+        "noti-content": {
+            "required": "Please enter content"
+        },
+        "orderNo": {
+            "invalid": "Invalid order",
+            "required": "Please enter order"
+        },
+        "password": {
+            "confirm": "Those passwords didn't match",
+            "confirm-required": "Please confirm password",
+            "minlength": "Password must be at least {{min}} characters long",
+            "new-required": "Please enter new password",
+            "old-required": "Please enter old password",
+            "required": "Please enter password"
+        },
+        "phone": {
+            "maxlength": "Phone number must maximum characters are 10",
+            "minlength": "Phone number must be at least {{min}} characters long",
+            "number": "Phone number only contains digits",
+            "required": "Please enter phone number"
+        },
+        "point": {
+            "required": "Please enter point"
+        },
+        "pointValue": {
+            "required": "Please enter point's value"
+        },
+        "policyName": {
+            "required": "Please enter policy name"
+        },
+        "port": {
+            "required": "Please enter port"
+        },
+        "priority": {
+            "required": "Please enter priority"
+        },
+        "programName": {
+            "required": "Please enter program name"
+        },
+        "promoCode": {
+            "required": "Please enter promotion code"
+        },
+        "province-name": {
+            "required": "Please enter province"
+        },
+        "quantity": {
+            "required": "Please enter quantity"
+        },
+        "reason-template": {
+            "required": "Please enter reason"
+        },
+        "region-name": {
+            "required": "Please enter region"
+        },
+        "rewardCategory": {
+            "required": "Please enter name of reward category "
+        },
+        "select-city": {
+            "required": "Please select city"
+        },
+        "select-district": {
+            "required": "Please select district"
+        },
+        "select-province-city": {
+            "required": "Please select province/city"
+        },
+        "selectedImage": {
+            "required": "Please add selected image"
+        },
+        "status": {
+            "required": "Please enter status"
+        },
+        "street": {
+            "required": "Please enter street"
+        },
+        "support-customer": {
+            "required": "Vui lòng chọn đáp ứng khách hàng"
+        },
+        "teamServicer": {
+            "required": "Please enter the servicer team"
+        },
+        "title": {
+            "required": "Please input title"
+        },
+        "user-status": {
+            "required": "Please enter status"
+        },
+        "userCode": {
+            "required": "Please enter user code"
+        },
+        "value": {
+            "required": "Please enter money"
+        },
+        "walletTypes": {
+            "required": "Please enter balance type"
+        },
+        "ward": {
+            "required": "Please enter ward"
+        },
+        "wardsName": {
+            "required": "Please enter ward name"
+        },
+        "warehouseName": {
+            "required": "Please enter warehouse name"
+        }
+    },
+    "vehicle": {
+        "add": "Add vehicle",
+        "in-use": "In-use",
+        "use": "Use"
+    },
+    "warehouse": {
+        "check-area": "Check area",
+        "contact": {
+            "action-note": "Note: Confirming completion will affect the order statistics. Be sure before confirming.",
+            "code": "Contact code",
+            "history": "History of contact",
+            "information": "Contact information",
+            "staff-in-charge": "Processing staff",
+            "status-contact": "Contact status",
+            "tab-title": "Contact",
+            "type": "Contact type",
+            "user": "Contact person"
+        },
+        "contact-action": {
+            "failure": "Contact failure",
+            "success": "Contact success"
+        },
+        "contact-status": {
+            "1": "Waiting for confirm",
+            "2": "Sucess",
+            "3": "Failed",
+            "all": "All",
+            "completed": "Hoàn thành"
+        },
+        "direction": "Direction",
+        "order": {
+            "cancel-party": "Cancel party",
+            "cancel-reason": "Cancel reason",
+            "complete-warning": "Be aware that confirming complete an order may affect the statistics of orders. Be sure before confirming",
+            "lessor": "Lessor",
+            "note-by-operator": "Content",
+            "process": "Process",
+            "processing-staff": "Processing staff",
+            "real-cost": "Số tiền thực trả",
+            "rent-area": "Rent area",
+            "renter": "Renter",
+            "service-fee": "Servicer fee",
+            "tab-title": "Sharing warehouse",
+            "warehouse": "Warehouse"
+        },
+        "order-actions": {
+            "cancel": "Cancel order",
+            "complete": "Complete",
+            "confirmComplete": "Confirm complete",
+            "note": "Note by operator"
+        },
+        "service": {
+            "create": "Create service",
+            "edit": "Edit service",
+            "list": "Warehouse service list",
+            "name": "Service name",
+            "title": "Warehouse service"
+        },
+        "services": "Service",
+        "timeline": {
+            "create": "Create timeline",
+            "day": "Day",
+            "edit": "Edit timeline",
+            "list": "Timeline list",
+            "name": "Timeline name",
+            "number-of-day": "Number of days",
+            "title": "Timeline"
+        },
+        "timelines": "Timeline",
+        "utilities": "Utility",
+        "utility": {
+            "create": "Create utility",
+            "edit": "Edit utility",
+            "list": "Warehouse utility list",
+            "name": "Utility name",
+            "title": "Warehouse utility"
+        },
+        "validations": {
+            "cancel-by-required": "Please select an option",
+            "large-number": "Value is too large",
+            "negative-number": "Value must be positive integer",
+            "number-of-day-required": "Please enter number of days",
+            "service-name-required": "Please enter service name",
+            "summary-required": "Please enter summary",
+            "timeline-name-required": "Please enter timeline name",
+            "utility-name-required": "Please enter utility name"
+        },
+        "warehouse": {
+            "adidi-contract": "Contract with SUPRA",
+            "area": "Warehouse area",
+            "avatar": "Avatar",
+            "cancel-button": "Cancel order",
+            "cancel-by-15": "Renter",
+            "cancel-by-16": "Lessor",
+            "cancel-by-6": "Operator",
+            "code": "Warehouse code",
+            "create": "Create warehouse",
+            "detailed-info": "Detailed information",
+            "edit": "Edit warehouse",
+            "fpff-cert": "FP&FF certification",
+            "layout": "Layout diagram ",
+            "lease-area": "Lease area",
+            "manager": "Manager",
+            "name": "Warehouse name",
+            "number-of-order": "Number of order",
+            "orientation": "Orientation",
+            "phone-host-warehouse": "Number of host'warehouse",
+            "placeholder-type": "Enter warehouse type",
+            "start-time": "Start time",
+            "success-button": "Complete",
+            "summary-intro": "Summary introduction",
+            "tab-information": "Warehouse information",
+            "tab-service-utility": "Services & utilities",
+            "type": "Warehouse type"
+        },
+        "warehouse-order": {
+            "content-edit-operator": "Content of note",
+            "host": "Host",
+            "note-customer": "Customer's note",
+            "note-operator": "Operator's note",
+            "operator": "Operator",
+            "points-information": "Points information",
+            "real-cost": "Real cost",
+            "rented-area": "Rented area",
+            "renting-income": "Renting income",
+            "successful-edit-operator": "Editting operator's note successfully"
+        },
+        "warehouse-order-status": {
+            "0": "Uncompleted",
+            "3": "Canced",
+            "16": "Completed",
+            "18": "Confirmed Completion"
+        },
+        "warehouse-service-utility": {
+            "customer-code": "Customer code",
+            "length": "Length",
+            "note": "The rent is calculated in m2/month",
+            "price": "Price",
+            "price-by-timeline": "Warehouse rental price by timeline",
+            "staff-code": "Staff code",
+            "validation-available-area": "Lease area must be less or equal to warehouse area",
+            "validation-manager-required": "Please enter warehouse manager",
+            "validation-price-out-of-range": "Price is out of range",
+            "validation-unique-manager": "Only one warehouse manager exists",
+            "validation-value-out-of-range": "Value is out of range",
+            "warehouse-rental-price": "Warehouse rental price",
+            "width": "Width"
+        }
+    },
+    "warranty-repair": {
+        "action": {
+            "create-service-center": "Create service center",
+            "delete-service-center": "Delete service center",
+            "modify-service-center": "Modify service center",
+            "view-order": "View order"
+        },
+        "brand": "Brand",
+        "choice": {
+            "delete-all-authorized-brands": "Delete all authorized brands",
+            "delete-all-unauthorized-brands": "Delete all unauthorized brands"
+        },
+        "create-brand": "Create brand",
+        "create-product": "Create product",
+        "edit-brand": "Edit brand",
+        "edit-product": "Edit product",
+        "find-brand": "Find brand",
+        "find-product": "Find product",
+        "manufacturer": "Manufacturer",
+        "not-found": "Not found",
+        "placeholder": {
+            "brand": "Select brand",
+            "manufacturer": "Select manufacturer",
+            "product": "Select product"
+        },
+        "product": "Product",
+        "service-center": {
+            "adidi-contract": "SUPRA contract",
+            "authorized-center": "Authorized center",
+            "business-license": "Business license",
+            "code": "Service center code",
+            "description": "Description",
+            "detail-info": "Detail information",
+            "genuine": "Genuine",
+            "genuine-license": "Genuine license",
+            "information": "Service center information",
+            "join-adidi": "Join SUPRA",
+            "management": "Management",
+            "name": "Service center name",
+            "not-authorized-center": "Not-authorized center",
+            "not-genuine": "Not genuine",
+            "number-of-orders": "Number of orders",
+            "number-of-staffs": "Number of staffs",
+            "service": "Service",
+            "staff": "Staff",
+            "status-joined": "Joined",
+            "status-not-join": "Not joined",
+            "title": "Service center",
+            "type": "Service center type",
+            "working-hours": "Working hours"
+        },
+        "setting": "Warranty - repair settings",
+        "validation": {
+            "authorized-brand-required": "Please select authorized brand",
+            "description-required": "Please enter description",
+            "enterprise-code-required": "Please enter enterprise code",
+            "group-required": "Please select group to add",
+            "invalid-working-hours": "Invalid working hours",
+            "name-required": "Please enter service center name",
+            "not-existed-enterprise-code": "Enterprise code does not exist",
+            "team-required": "Please select team",
+            "team-to-add-required": "Please select team to add",
+            "unauthorized-brand-required": "Please select unauthorized brand",
+            "unselected-staff": "No staff selected"
+        }
+    }
+}

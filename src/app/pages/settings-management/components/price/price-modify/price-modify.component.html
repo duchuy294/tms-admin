@@ -1,0 +1,50 @@
+<nz-modal nzWidth="600px" [nzVisible]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModel(false)">
+    <ng-template #modalTitle>
+        {{
+            flagCopyPrice
+                ? ("common.copy" | translate)
+                : modifyingModel?._id
+                ? modifyingModel?.name
+                : ("button.create-price" | translate)
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #createModifyForm="ngForm">
+            <div class="row">
+                <div class="col-12">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "price.name-price" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <input nz-input name="name" [(ngModel)]="model.name" #name="ngModel" required />
+                            <nz-form-explain *ngIf="
+                                    (name.dirty || name.touched) &&
+                                    name.errors?.required
+                                ">
+                                {{
+                                    "validations-form.name.required" | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div style="width: 350px; margin: 0 auto;">
+            <div class="buttonActions">
+                <button ad-button nzColor="primary" (click)="submit()">
+                    {{ "button.yes" | translate }}
+                </button>
+                <button ad-button nzColor="gray" (click)="cancel()">
+                    {{ "button.cancel" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

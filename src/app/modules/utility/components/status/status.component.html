@@ -1,0 +1,4 @@
+<select [class]="class" [(ngModel)]="_value" (change)="change()">
+    <option *ngIf="hasAll" [ngValue]="''">{{'common.all' | translate}}</option>
+    <option *ngFor="let item of statues" [ngValue]="item">{{'common.status' + item | translate}}</option>
+</select>

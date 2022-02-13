@@ -1,0 +1,45 @@
+<form nz-form nzLayout="vertical" #articleForm="ngForm">
+    <nz-form-item>
+        <div class="title">
+            <nz-form-label nzRequired nzNoColon="true">
+                {{
+                    "marketing.referral-policy.introduction-article"
+                        | translate
+                        | uppercase
+                }}
+            </nz-form-label>
+        </div>
+        <nz-form-control>
+            <ck-editor name="content" [(ngModel)]="_content" #contentValue="ngModel" required>
+            </ck-editor>
+            <nz-form-explain *ngIf="
+                    (contentValue.dirty || contentValue.touched) &&
+                    contentValue.errors?.required
+                ">
+                {{
+                    "validations-form.content.required" | translate
+                }}</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <div class="title">
+            <nz-form-label nzRequired nzNoColon="true">
+                {{
+                    "marketing.referral-policy.sharing-content"
+                        | translate
+                        | uppercase
+                }}
+            </nz-form-label>
+        </div>
+        <nz-form-control>
+            <textarea name="sharing" [(ngModel)]="_sharing" rows="5" required nz-input #sharing="ngModel"></textarea>
+            <nz-form-explain *ngIf="
+                    (sharing.dirty || sharing.touched) &&
+                    sharing.errors?.required
+                ">
+                {{
+                    "validations-form.content.required" | translate
+                }}</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+</form>

@@ -1,0 +1,31 @@
+<div class="store-type-item">
+    <button class="store-type-item__remove" ad-button nzShape="circle" (click)="removeBrand()">
+        <i style="color:red" class="material-icons">
+            close
+        </i>
+    </button>
+    <div class="store-type-item__content">
+        <div class="store-type-item__brand">
+            <span
+                class="store-type-item__brand-title">{{'common.brand' | translate}}</span><span>{{ brand?.name }}</span>
+        </div>
+        <div class="formControlWithAction">
+            <nz-select [(ngModel)]="productType" name="productType" nzPlaceHolder="Chọn sản phẩm" nzShowSearch="true">
+                <nz-option *ngFor="let item of productTypesArr" [nzLabel]="item.name" [nzValue]="item._id"
+                    [nzDisabled]="productIds.includes(item._id)">
+                </nz-option>
+            </nz-select>
+            <button ad-button nzShape="circle" (click)="addProductType()">
+                <i class="material-icons">
+                    add
+                </i>
+            </button>
+        </div>
+    </div>
+    <div class="store-type-item__product-list">
+        <nz-tag style="margin-bottom: 5px;" *ngFor="let item of productIds" nzColor="#12CAD1" nzMode="closeable"
+            (nzAfterClose)="removeProductType(item)">
+            {{ productTypes[item]?.name }}
+        </nz-tag>
+    </div>
+</div>

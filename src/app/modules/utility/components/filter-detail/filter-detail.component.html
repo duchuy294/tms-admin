@@ -1,0 +1,19 @@
+<div class="filter-detail">
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="fromDate">{{'filter.fromDate' | translate }}</label>
+            <input type="date" class="form-control" id="fromDate" [(ngModel)]="model.fromDate">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="toDate">{{'filter.toDate' | translate }}</label>
+            <input type="date" class="form-control" id="toDate" [(ngModel)]="model.toDate">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="status">{{'common.status' | translate }}</label>
+            <status [class]="'form-control'" [(ngModel)]="model.status"></status>
+        </div>
+        <div class="form-group col-md-3">
+            <button type="button" class="btn btn-danger btn-sm" (click)="searchEvent()">{{'button.search' | translate}}</button>
+        </div>
+    </div>
+</div>

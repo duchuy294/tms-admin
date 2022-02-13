@@ -1,0 +1,21 @@
+<div class="grid__container">
+    <div style="display: flex; width: 100%;">
+        <div style="font-size: 1.5em">
+            {{ 'marketing.news-category.list' | translate }}
+        </div>
+        <div style="display: flex; position: absolute; right: 0px">
+            <button class="grid__action__right" ad-button nzColor="primary" (click)="handleVisible(true)">
+                {{'marketing.news-category.add'|translate|uppercase}}
+            </button>
+        </div>
+    </div>
+    <br>
+    <filter-news-category (onSearch)="search($event)" (onReset)="search($event)">
+    </filter-news-category>
+    <news-category-grid [(model)]="modelQuery" (detail)="edit($event)" #newsCategoryGrid>
+    </news-category-grid>
+</div>
+<create-modify-news-category [model]="model" [visible]="visibleModel" (handleVisible)="handleVisible($event)"
+    [loading]="loadingModel" (handleLoading)="handleLoading($event)" (submit)="submit($event)"
+    #createModifyNewsCategory>
+</create-modify-news-category>

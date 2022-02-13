@@ -1,0 +1,46 @@
+<nz-modal nzWidth="900px" [(nzVisible)]="visible" [nzContent]="modalContent" [nzFooter]="modalFooter"
+    (nzOnCancel)="handleVisibleModal(false)">
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #changePasswordEmailAccountForm="ngForm">
+            <nz-table [nzData]="replyList" [nzScroll]="{ x: '800px' }" nzShowPagination="false">
+                <thead>
+                    <tr>
+                        <th [nzWidth]="'17%'">
+                            {{ "marketing.response.replyDate" | translate }}
+                        </th>
+                        <th [nzWidth]="'26%'">
+                            {{ "common.title" | translate }}
+                        </th>
+                        <th [nzWidth]="'40%'">
+                            {{ "marketing.response.replyContent" | translate }}
+                        </th>
+                        <th [nzWidth]="'17%'">
+                            {{ "common.staff" | translate }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of replyList" id="item._id">
+                        <td>
+                            {{ item.repliedAt | date: "h:mm:ss a dd/MM/yyyy" }}
+                        </td>
+                        <td>{{ item.title }}</td>
+                        <td [innerHTML]="item.content"></td>
+                        <td>{{ adminRepliedBy[item.repliedBy]?.fullName }}</td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div style="width: 350px; margin: 0 auto;">
+            <div class="buttonActions">
+                <div class="buttonContainer" style="width: 10%">
+                    <button ad-button nzUpper nzColor=" gray" (click)="handleVisibleModal(false)">
+                        {{ "button.close" | translate }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

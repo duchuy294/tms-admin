@@ -1,0 +1,113 @@
+<div class="row">
+    <div class="col-4">
+        <nz-form-item *ngIf="required">
+            <nz-form-label nzRequired>{{ 'filter.city' | translate }}</nz-form-label>
+            <nz-form-control>
+                <nz-select style="width: 100%" [(ngModel)]="model.cityId" name="cityId" required #cityId="ngModel"
+                    nzShowSearch (ngModelChange)="updateDistricts(); changeModel()">
+                    <nz-option *ngFor="let item of cities" [nzLabel]="item.name" [nzValue]="item._id">
+                    </nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="!required">
+            <nz-form-label>{{ 'filter.city' | translate }}</nz-form-label>
+            <nz-form-control>
+                <nz-select style="width: 100%" [(ngModel)]="model.cityId" name="cityId" #cityId="ngModel" nzShowSearch
+                    (ngModelChange)="updateDistricts(); changeModel()">
+                    <nz-option *ngFor="let item of cities" [nzLabel]="item.name" [nzValue]="item._id">
+                    </nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    <div class="col-4">
+        <nz-form-item *ngIf="required">
+            <nz-form-label nzRequired>{{'filter.district' | translate}}</nz-form-label>
+            <nz-form-control>
+                <nz-select style="width: 100%" [(ngModel)]="model.districtId" name="districtId" #districtId="ngModel"
+                    nzShowSearch required>
+                    <nz-option *ngFor="let item of districts" [nzLabel]="item.name" [nzValue]="item._id">
+                    </nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="!required">
+            <nz-form-label>{{'filter.district' | translate}}</nz-form-label>
+            <nz-form-control>
+                <nz-select style="width: 100%" [(ngModel)]="model.districtId" name="districtId" #districtId="ngModel">
+                    <nz-option *ngFor="let item of districts" [nzLabel]="item.name" [nzValue]="item._id">
+                    </nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    <div class="col-4">
+        <nz-form-item *ngIf="required">
+            <nz-form-label nzRequired>{{'filter.ward' | translate}}</nz-form-label>
+            <nz-form-control [ngClass]="{'has-error': (ward.dirty || ward.touched) && ward.errors }">
+                <input type="text" nz-input name="ward" [(ngModel)]="model.ward" #ward="ngModel" required />
+                <nz-form-explain *ngIf="(ward.dirty || ward.touched) && ward.errors">
+                    {{ 'validations-form.ward.required' | translate }}
+                </nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="!required">
+            <nz-form-label>{{'filter.ward' | translate}}</nz-form-label>
+            <nz-form-control [ngClass]="{'has-error': (ward.dirty || ward.touched) && ward.errors }">
+                <input type="text" nz-input name="ward" [(ngModel)]="model.ward" #ward="ngModel"
+                    [placeholder]="('actions.enter' | translate) + ' ' + ('common.ward' | translate | lowercase)" />
+                <nz-form-explain *ngIf="(ward.dirty || ward.touched) && ward.errors">
+                    {{ 'validations-form.ward.required' | translate }}
+                </nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    <div class="col-4">
+        <nz-form-item *ngIf="required">
+            <nz-form-label nzRequired>{{ 'filter.address' | translate }}</nz-form-label>
+            <nz-form-control [ngClass]="{'has-error': (street.dirty || street.touched) && street.errors }">
+                <input type="text" nz-input [(ngModel)]="model.street" (ngModelChange)="changeModel()" required
+                    #street="ngModel" />
+                <nz-form-explain *ngIf="(street.dirty || street.touched) && street.errors">
+                    {{ 'validations-form.street.required' | translate }}
+                </nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="!required">
+            <nz-form-label>{{ 'filter.address' | translate }}</nz-form-label>
+            <nz-form-control [ngClass]="{'has-error': (street.dirty || street.touched) && street.errors }">
+                <input type="text" nz-input [(ngModel)]="model.street" (ngModelChange)="changeModel()" #street="ngModel"
+                    [placeholder]="('actions.enter' | translate) + ' ' + ('common.address' | translate | lowercase)" />
+                <nz-form-explain *ngIf="(street.dirty || street.touched) && street.errors">
+                    {{ 'validations-form.street.required' | translate }}
+                </nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    <ng-container *ngIf="showLatLngField">
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label [nzRequired]="requireLatLngField ? true : false">{{ 'common.Latitude' | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <input type="text" nz-input [(ngModel)]="model.lat" (ngModelChange)="changeModel()" #lat="ngModel"
+                        [placeholder]="('actions.enter' | translate) + ('common.Latitude' | translate)"
+                        [required]="requireLatLngField ? true : false" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label [nzRequired]="requireLatLngField ? true : false">{{ 'common.Longitude' | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <input type="text" nz-input [(ngModel)]="model.lng" (ngModelChange)="changeModel()" #lng="ngModel"
+                        [placeholder]="('actions.enter' | translate) + ('common.Longitude' | translate)"
+                        [required]="requireLatLngField ? true : false" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </ng-container>
+
+</div>

@@ -1,0 +1,21 @@
+<div class="grid__container">
+    <div style="display: flex; width: 100%;">
+        <div style="font-size: 1.5em">
+            {{ ('common.list' | translate) + ' ' + ('common.city'| translate | lowercase) }}
+        </div>
+        <div style="display: flex; position: absolute; right: 0px">
+            <nz-input-group nzSuffixIcon="anticon anticon-search">
+                <input name="searchBox" type="text" [(ngModel)]="cityName" (ngModelChange)="onCityNameChange($event)"
+                    nz-input [placeholder]="'common.province-name' | translate">
+            </nz-input-group>
+            &nbsp;
+            <button ad-button nzUpper nzColor="primary" (click)="addCity()">{{ 'button.add' | translate }}</button>
+        </div>
+    </div>
+    <br>
+    <city-province-grid #cityGrid (delete)="confirmDelete($event)" (edit)="editCity($event)">
+    </city-province-grid>
+</div>
+<add-city-modal [cityModel]="cityToEdit" [visible]="addCityModalVisible"
+    (handleVisible)="handleAddCityModalVisible($event)" (afterSubmit)="handleAfterSubmit()">
+</add-city-modal>

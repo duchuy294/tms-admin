@@ -1,0 +1,161 @@
+<div class="store-type-item">
+    <button class="store-type-item__remove" ad-button nzShape="circle" (click)="onClickRemove()">
+        <i style="color:red" class="material-icons">
+            close
+        </i>
+    </button>
+    <div class="store-type-item__content">
+        <div class="store-type-item__brand">
+            <span class="store-type-item__brand-title">{{ title }}</span><br />
+        </div>
+        <br />
+        <ng-template [ngIf]="itemType !== 'fixedOperator'">
+            <div class="formControlWithAction" *ngIf="type.typeValue === 'select'">
+                <nz-select [(ngModel)]="selectedItem" name="selectedItem"
+                    nzPlaceHolder="{{ 'Chọn ' + (title | lowercase) }}" nzShowSearch="true">
+                    <nz-option *ngFor="let item of data" [nzLabel]="item.name" [nzValue]="item">
+                    </nz-option>
+                </nz-select>
+                <button ad-button nzShape="circle" (click)="addItem()">
+                    <i class="material-icons">
+                        add
+                    </i>
+                </button>
+            </div>
+            <div class="formControlWithAction" *ngIf="conditionName === 'userId'">
+                <input nz-input name="input" [(ngModel)]="selectedItem"
+                    placeholder="{{ 'Nhập ' + (title | lowercase) }}" #inputValue="ngModel" />
+                <button ad-button nzShape="circle" (click)="inputID()">
+                    <i class="material-icons">
+                        add
+                    </i>
+                </button>
+            </div>
+            <div class="formControlWithAction" *ngIf="type.typeValue === 'location'">
+                <nz-select [(ngModel)]="selectedItem" name="selectedItem"
+                    nzPlaceHolder="{{ 'Chọn ' + (title | lowercase) }}" nzShowSearch="true">
+                    <nz-option *ngFor="let item of data.city" [nzLabel]="item.name" [nzValue]="item">
+                    </nz-option>
+                </nz-select>
+                <button ad-button nzShape="circle" (click)="addCity()">
+                    <i class="material-icons">
+                        add
+                    </i>
+                </button>
+            </div>
+            <div class="formControlWithAction" *ngIf="type.typeValue === 'timeRange'">
+                <nz-time-picker [(ngModel)]="startTime" (ngModelChange)="changeStartTime($event)" nzSize="large"
+                    nzFormat="HH:mm"></nz-time-picker>
+                <nz-time-picker [(ngModel)]="endTime" (ngModelChange)="changeEndTime($event)" nzSize="large"
+                    nzFormat="HH:mm"></nz-time-picker>
+            </div>
+            <div class="formControlWithAction" *ngIf="type.typeValue === 'scroll'">
+                <div class="row" style="width: 100%">
+                    <div class="col-1"></div>
+                    <input nz-input class="col-3" [(ngModel)]="input1" (ngModelChange)="changeOrdinaryInput1($event)"
+                        placeholder="{{ 'Nhập ' + (title | lowercase) }}" style="margin-right: 5px" />
+                    <div class="col-2"></div>
+                    <div class="col-2"></div>
+                    <input nz-input class="col-3" [(ngModel)]="input2" (ngModelChange)="changeOrdinaryInput2($event)"
+                        placeholder="{{ 'Nhập ' + (title | lowercase) }}" style="margin-left: 5px" />
+                    <div class="col-12">
+                        Chưa hỗ trợ thanh kéo kéo nhaaaa
+                    </div>
+                </div>
+            </div>
+            <div class="formControlWithAction" *ngIf="type && type.typeValue === 'operator'">
+                <nz-select [(ngModel)]="selectedItem" name="selectedItem"
+                    nzPlaceHolder="{{ 'Chọn ' + (title | lowercase) }}" nzShowSearch="true">
+                    <nz-option *ngFor="let item of data"
+                        [nzLabel]="('marketing.promotion-policy-condition-operator.' + item | translate) +
+                            (item === 'between' ? ' ' + ('marketing.promotion-policy-condition-unit.' + type.unit | translate | lowercase) : '')"
+                        [nzValue]="item">
+                    </nz-option>
+                </nz-select>
+                <button ad-button nzShape="circle" (click)="addOperator()">
+                    <i class="material-icons">
+                        add
+                    </i>
+                </button>
+            </div>
+        </ng-template>
+    </div>
+    <ng-template [ngIf]="itemType === 'fixedOperator'" [ngIfElse]="fixedElse">
+        <input nz-input class="col-12" [(ngModel)]="input1" (ngModelChange)="changeOrdinaryInput1($event)"
+            placeholder="{{ 'Nhập ' + (title | lowercase) }}" *ngIf="type.dataType !== 'date'" />
+    </ng-template>
+    <ng-template #fixedElse>
+        <div class="store-type-item__product-list" *ngIf="type.typeValue === 'select' || type.typeValue === 'input'">
+            <nz-tag style="margin: 0 5px" *ngFor="let item of selectedList | keys" nzColor="#12CAD1" nzMode="closeable"
+                (nzAfterClose)="removeItem(item.key)">
+                {{ item.value.name }}
+            </nz-tag>
+        </div>
+        <div class="store-type-item__product-list" *ngIf="type.typeValue === 'location' && conditionData.location">
+            <div *ngFor="let city of conditionData.location | keys" style="margin: 15px">
+                <div class="row" style="margin: 10px 0">
+                    <div>{{ city.value.name }}<br /></div>
+                    <div style="color: red" (click)="removeCity(city.key)">
+                        &nbsp;({{ "common.delete" | translate }})
+                    </div>
+                </div>
+                <div class="formControlWithAction" style="margin: 10px 0">
+                    <nz-select [(ngModel)]="selectedDistrict" name="selectedDistrict" nzPlaceHolder="Chọn quận huyện"
+                        nzShowSearch="true">
+                        <ng-template [ngIf]="data.district[city.key]">
+                            <nz-option *ngFor="let item of data.district[city.key]" [nzLabel]="item.name"
+                                [nzValue]="{ district: item, city: city.key }">
+                            </nz-option>
+                        </ng-template>
+                    </nz-select>
+                    <button ad-button nzShape="circle" (click)="addDistrict(city.key)">
+                        <i class="material-icons">
+                            add
+                        </i>
+                    </button>
+                </div>
+                <nz-tag style="margin: 0 5px" *ngFor="let district of city.value.value | keys" nzColor="#12CAD1"
+                    nzMode="closeable" (nzAfterClose)="removeDistrict(city.key, district.key)">
+                    {{ district.value.name }}
+                </nz-tag>
+            </div>
+        </div>
+        <div class="store-type-item__product-list" *ngIf="type && type.rangeType != null">
+            <div class="col-12">
+                <div class="row" style="margin: 10px 0"
+                    *ngIf="conditionData[conditionName] && conditionData[conditionName].operator">
+                    {{("marketing.promotion-policy-condition-operator." + conditionData[conditionName].operator | translate) +
+                            (conditionData[conditionName].operator === "between" ? " " + ("marketing.promotion-policy-condition-operator." + 
+                            type.unit | translate | lowercase) : "")}}
+                    <div style="color: red" (click)="removeOperator()">
+                        &nbsp;({{ "common.delete" | translate }})
+                    </div>
+                </div>
+            </div>
+            <div
+                *ngIf="conditionData[conditionName] && conditionData[conditionName].operator && conditionData[conditionName].operator !== 'between'">
+                <input nz-input class="col-12" [(ngModel)]="input1" (ngModelChange)="changeOrdinaryInput1($event)"
+                    placeholder="{{ 'Nhập ' + (title | lowercase) }}" *ngIf="type.dataType !== 'date'" />
+                <nz-date-picker nzFormat="dd/MM/yyyy" [(ngModel)]="input1" (ngModelChange)="changeDateInput1($event)"
+                    class="col-12" *ngIf="type.dataType === 'date'"></nz-date-picker>
+            </div>
+            <div
+                *ngIf="conditionData[conditionName] && conditionData[conditionName].operator && conditionData[conditionName].operator === 'between'">
+                <input nz-input class="col-5" [(ngModel)]="input1" (ngModelChange)="changeOrdinaryInput1($event)"
+                    placeholder="{{ 'Nhập ' + (title | lowercase) }}" *ngIf="type.dataType !== 'date'"
+                    style="margin-right: 5px" />
+                <input nz-input class="col-5" [(ngModel)]="input2" (ngModelChange)="changeOrdinaryInput2($event)"
+                    placeholder="{{ 'Nhập ' + (title | lowercase) }}" *ngIf="type.dataType !== 'date'"
+                    style="margin-left: 5px" />
+                <div class="col-12" style="margin: 5px 0">
+                    <nz-date-picker nzFormat="dd/MM/yyyy" [(ngModel)]="input1"
+                        (ngModelChange)="changeDateInput1($event)" *ngIf="type.dataType === 'date'"></nz-date-picker>
+                </div>
+                <div class="col-12" style="margin: 5px 0">
+                    <nz-date-picker nzFormat="dd/MM/yyyy" [(ngModel)]="input2"
+                        (ngModelChange)="changeDateInput2($event)" *ngIf="type.dataType === 'date'"></nz-date-picker>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>

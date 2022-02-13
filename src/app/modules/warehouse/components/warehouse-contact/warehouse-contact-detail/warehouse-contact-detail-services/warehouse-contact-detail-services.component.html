@@ -1,0 +1,45 @@
+<page-wrapper [nzTitle]="pageTitle">
+
+    <ng-template #pageTitle>
+        <div style="font-weight:bold">
+            {{ "order.cost" | translate }}
+        </div>
+    </ng-template>
+    <div *ngIf="contact">
+        <nz-skeleton [nzActive]="true" [nzLoading]="loading" [nzTitle]="false" [nzParagraph]="{ rows: 10 }">
+            <div class="row">
+                <div class="col-5 bold">{{'warehouse.warehouse-order.rented-area' | translate}}</div>
+                <div class="col-4 bold text-left">{{'order.time' | translate}}</div>
+                <div class="col-3 bold text-right">{{'order.cost' | translate}}</div>
+            </div>
+            <div class="row">
+                <div class="col-5">{{contact.rentArea | number}}m2</div>
+                <div class="col-4 text-left">{{contact.startedAt | date:'dd/MM/yyyy'}} <br>
+                    {{contact.finishedAt | date:'dd/MM/yyyy'}}</div>
+                <div class="col-3 text-right"></div>
+            </div>
+        </nz-skeleton>
+
+        <div class="d-flex justify-content-between" style="margin-top: 300px">
+            <div class="buttonActions">
+                <button ad-button nzColor="primary" *ngIf="isWatingToConfirm || isCompleted || isFail">
+                    {{ 'button.view-location' | translate }} </button>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between" *ngIf="isWatingToConfirm && checkAuthority()">
+            <div class="buttonActions">
+                <button ad-button nzColor="primary"
+                    (click)="toggleAction(ContactStatus.Completed)">{{ 'warehouse.contact-action.success' | translate }}
+                </button>
+            </div>
+            <div class="buttonActions">
+                <button ad-button nzColor="gray"
+                    (click)="toggleAction(ContactStatus.Fail)">{{ 'warehouse.contact-action.failure' | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</page-wrapper>
+<warehouse-contact-action-modal #actionModal [type]="actionType" [model]="contact"
+    (handleVisible)="handleVisible($event)" [visible]="visibleAction" (submit)="submit()">
+</warehouse-contact-action-modal>

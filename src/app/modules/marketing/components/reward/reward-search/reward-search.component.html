@@ -1,0 +1,12 @@
+<nz-select name="selected" [(ngModel)]="model" style="width: 100%" [nzPlaceHolder]="placeHolder" nzAllowClear
+    nzShowSearch [nzServerSearch]="true" (nzOnSearch)="onSearch($event)" [nzDisabled]="disabled">
+    <ng-container *ngFor="let item of rewardList">
+        <nz-option *ngIf="!isSearching" [nzValue]="selectValue(item)" [nzLabel]="item.code+' - '+item.name">
+        </nz-option>
+    </ng-container>
+    <nz-option *ngIf="isSearching" nzDisabled nzCustomContent>
+        <i nz-icon nzType="loading" nzTheme="outline" style="vertical-align: baseline"></i>
+        &nbsp;
+        {{'common.searching' | translate}}
+    </nz-option>
+</nz-select>

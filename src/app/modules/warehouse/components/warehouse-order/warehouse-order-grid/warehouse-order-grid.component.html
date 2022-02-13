@@ -1,0 +1,91 @@
+<nz-table #table [nzData]="warehouseOrderData.data" [nzFrontPagination]="false" nzShowSizeChanger [nzLoading]="loading"
+    [nzTotal]="warehouseOrderData.total" [(nzPageIndex)]="model.page" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [nzScroll]="{x:'1850px'}" [(nzPageSize)]="model.limit" (nzPageIndexChange)="loadDataByPage($event)"
+    nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th nzWidth="150px" nzLeft="0px">{{ 'common.orderCode' | translate }}</th>
+            <th [nzWidth]="'7%'">{{ 'common.createdAt' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.status' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'warehouse.order.renter' | translate }}</th>
+            <th [nzWidth]="'11%'">{{ 'warehouse.order.warehouse' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'warehouse.order.rent-area' | translate }}</th>
+            <th [nzWidth]="'7%'">{{ 'table.time' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'order.cost' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.commission' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'warehouse.order.processing-staff' | translate }}</th>
+            <th [nzWidth]="'7%'" nzRight="0px">{{ 'common.action' | translate }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of table.data">
+            <td nzLeft="0px">
+                <div class="left-align">
+                    <a target="_blank" routerLink="/pages/order/{{data._id}}" width="100px">{{data?.code}}</a>
+                </div>
+                <div *ngIf="unreadMessage[data._id]" class="right-align">
+                    <div class="unread-message-container">
+                        <img src="assets/icon/unread-message.png" class="unread-message">
+                        <div class="unread-message-counter">
+                            {{(unreadMessage[data._id] > 9) ? '9+' : unreadMessage[data._id]}}
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!unreadMessage[data._id] && totalMessages[data._id]" class="right-align"
+                    style="text-align: center">
+                    <img src="assets/icon/have-message.svg">
+                </div>
+            </td>
+            <td>{{data?.createdAt | date:'HH:mm dd/MM/yyyy'}}</td>
+            <td>
+                <nz-tag [nzColor]="ORDER_STATUS_COLOR[data?.status]">{{data?.statusLabel}}</nz-tag>
+            </td>
+            <td>
+                <a routerLink="/pages/customer-management/personal/detail/{{data?.userId}}">
+                    {{users[data?.userId]?.fullName}}
+                </a>
+            </td>
+            <td>
+                <a routerLink="/pages/warehouse/detail/{{data?.warehouseId}}">
+                    {{warehouses[data?.warehouseId]?.name}}
+                </a>
+            </td>
+            <td>{{data?.rentArea | number}}/{{warehouses[data?.warehouseId]?.availableArea | number}}m<sup>2</sup></td>
+            <td>
+                <div>
+                    {{data?.detail?.points[0]?.services[0]?.startedAt | date:'dd/MM/yyyy'}}
+                </div>
+                <div>
+                    {{data?.detail?.points[0]?.services[0]?.finishedAt | date:'dd/MM/yyyy'}}
+                </div>
+            </td>
+            <td>{{data?.cost | number}} {{'common.currency-unit'|translate|uppercase}}</td>
+            <td>{{data?.commission | number}} {{'common.currency-unit'|translate|uppercase}}</td>
+            <td>{{admins[data?.processedBy]?.fullName}}</td>
+            <td nzRight="0px">
+                <ng-container>
+                    <button nz-dropdown ad-button nzType="dashed" [nzDropdownMenu]="menu"
+                        [nzPlacement]="'bottomCenter'">
+                        {{'common.action' | translate}}
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                            <li nz-menu-item>
+                                <a target="_blank" routerLink="/pages/order/{{data._id}}"
+                                    width="100px">{{'common.detail' | translate}}</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a (click)="processOrder(data?._id)">
+                                    {{'warehouse.order.process' | translate}}
+                                </a>
+                            </li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-total>
+    {{'table.total' | translate}} {{ total }} {{'table.result' | translate | lowercase}}
+</ng-template>

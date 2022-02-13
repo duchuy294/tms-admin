@@ -1,0 +1,19 @@
+<div class="grid__container">
+    <div style="display: flex; width: 100%;">
+        <div style="font-size: 1.5em">
+            {{ 'warehouse.timeline.list' | translate }}
+        </div>
+        <div style="display: flex; position: absolute; right: 0px">
+            <button class="grid__action__right" ad-button nzColor="primary" (click)="create()">
+                {{'warehouse.timeline.create' | translate}}
+            </button>
+        </div>
+    </div>
+    <br>
+    <warehouse-timeline-grid #grid (activate)="confirmActivate($event)" (delete)="confirmDelete($event)"
+        (edit)="modify($event)">
+    </warehouse-timeline-grid>
+</div>
+<create-modify-warehouse-timeline-modal [modifyingModel]="instanceToEdit" [visible]="createModifyModalVisible"
+    (handleVisible)="handleModalVisible($event)" (afterSubmit)="handleAfterSubmit()">
+</create-modify-warehouse-timeline-modal>

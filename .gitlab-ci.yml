@@ -1,0 +1,27 @@
+stages:
+  - build
+  - deploy
+
+.build_template: &build
+  stage: build
+  tags:
+  - runner_build
+  only:
+  - tags
+  - main
+  script: 
+    - bash $HOME/scripts/tms/build
+
+.deploy_template: &deploy
+  stage: deploy
+  only:
+  - tags
+  - main
+  script:
+    - bash $HOME/scripts/tms/build
+
+build:
+  <<: *build
+
+deploy:
+  <<: *deploy

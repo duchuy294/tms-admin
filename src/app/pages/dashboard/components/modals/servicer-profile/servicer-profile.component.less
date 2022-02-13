@@ -1,0 +1,63 @@
+@import 'utils.less';
+
+.info {
+    &__left {
+        text-align: left;
+    }
+
+    &__right {
+        float: right;
+        text-align: right;
+    }
+
+    &__leftMargin {
+        text-align: left;
+        margin-top: 15px;
+    }
+
+    &__rightMargin {
+        float: right;
+        text-align: right;
+        margin-top: 15px;
+    }
+}
+
+.border-style {
+    border: 1px solid #707070;
+    border-radius: 17px;
+    padding: 3px 10px 3px 10px;
+}
+
+.link {
+    color: black;
+}
+
+.link:hover {
+    color: #0F7FEB;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.code-order-style {
+    color: #01ADF9;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.detail {
+    margin-left: 15px;
+
+    &__container {
+        margin: 15px;
+        .em(font-size, 13px);
+    }
+
+    &__avatar {
+        border-radius: 5px;
+    }
+
+    &__name {
+        font-size: 115%;
+        font-weight: bold;
+    }
+}

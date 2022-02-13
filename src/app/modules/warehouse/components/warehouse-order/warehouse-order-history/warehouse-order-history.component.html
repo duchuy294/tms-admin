@@ -1,0 +1,30 @@
+<nz-skeleton [nzActive]="true" [nzLoading]="loading" [nzTitle]="false" [nzParagraph]="{ rows: 15 }">
+    <ng-template [ngIf]="dislayTitle">
+        <div class="title" *ngIf="order">
+            {{ 'order.history'| translate | uppercase }}
+        </div>
+        <div class="title" *ngIf="contact">
+            {{ 'warehouse.contact.history'| translate | uppercase }}
+        </div>
+        <nz-divider></nz-divider>
+    </ng-template>
+    <div>
+        <div *ngFor="let item of actions">
+            <span style="font-weight: 500;"> {{item.createdAt | date:'HH:mm dd/MM/yyyy'}}&nbsp;</span>
+            <a *ngIf="item.userName" target="_blank"
+                routerLink="/pages/customer-management/personal/detail/{{item.userId}}">{{ item.userName }}&nbsp;</a>
+            <a *ngIf="item.servicerName && !allowServicerFooter(item)" target="_blank"
+                routerLink="/pages/servicer-management/servicer/detail/{{item.servicerId}}">{{ item.servicerName
+                }}&nbsp;</a>
+            <a *ngIf="item.accountName" href="javascript:void(0);">{{ item.accountName }}&nbsp;</a>
+            <span [innerHTML]="item.name"></span>
+            <a *ngIf="item.servicerName && allowServicerFooter(item)" target="_blank"
+                routerLink="/pages/servicer-management/servicer/detail/{{item.servicerId}}">&nbsp;{{ item.servicerName
+                }}
+            </a>
+            <a *ngIf="item.subUserName" target="_blank"
+                routerLink="/pages/customer-management/personal/detail/{{item.clientBranchId}}">&nbsp; {{
+                item.subUserName }}</a>
+        </div>
+    </div>
+</nz-skeleton>

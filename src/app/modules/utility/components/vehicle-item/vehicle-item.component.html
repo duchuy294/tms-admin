@@ -1,0 +1,95 @@
+<div class="row">
+    <div class="col-4">
+        <nz-form-item>
+            <nz-form-label nzRequired>
+                {{ 'table.vehicle' | translate }}
+            </nz-form-label>
+            <nz-form-control>
+                <nz-select name="typeId" [(ngModel)]="model.typeId" (ngModelChange)="displayingParent($event)">
+                    <ng-template ngFor let-item [ngForOf]="vehicle">
+                        <div *ngIf="item.children">
+                            <nz-option *ngFor="let child of item.children" [nzValue]="child._id"
+                                [nzLabel]="child.name[lang]">
+                            </nz-option>
+                        </div>
+                        <nz-option *ngIf="!item.children" [nzValue]="item._id" [nzLabel]="item.name[lang]"></nz-option>
+                    </ng-template>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    <div class="col-4">
+        <nz-form-item>
+            <nz-form-label nzRequired>
+                {{ 'table.vehicle-name' | translate }}
+            </nz-form-label>
+            <nz-form-control>
+                <input type="text" nz-input [(ngModel)]="model.name" />
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    <div class="col-4">
+        <nz-form-item>
+            <nz-form-label nzRequired>
+                {{ 'table.vehicle-number' | translate }}
+            </nz-form-label>
+            <nz-form-control>
+                <input type="text" nz-input [(ngModel)]="model.number" />
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+</div>
+<div class="row" *ngIf="model.vehicleChildrenType">
+    <div class="col-4">
+        <nz-form-item>
+            <nz-form-label nzRequired>
+                {{ 'table.capacity' | translate }}
+            </nz-form-label>
+            <nz-form-control>
+                <nz-select name="capacities" nzMode="multiple" [(ngModel)]="model.capacities"
+                    (ngModelChange)="changeMultiSelect($event)">
+                    <ng-template ngFor let-item [ngForOf]="model.vehicleChildrenType">
+                        <nz-option [nzValue]="item._id" [nzLabel]="item.name[lang]"></nz-option>
+                    </ng-template>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <nz-form-item>
+            <nz-form-label>
+                {{ 'table.vehicle-images' | translate }}
+            </nz-form-label>
+            <nz-form-control>
+                <nz-file-uploader [nzFileList]="images" [nzData]="{ path: 'images' }"
+                    (nzChange)="changeImages($event, 'images')"></nz-file-uploader>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    <div class="col-6">
+        <nz-form-item>
+            <nz-form-label>
+                {{ 'table.vehicle-registration-cetificate-images' | translate }}
+            </nz-form-label>
+            <nz-form-control>
+                <nz-file-uploader [nzFileList]="registrationCertificateImages"
+                    [nzData]="{ path: 'registrationCertificateImages' }" (nzChange)="
+                        changeImages($event, 'registrationCertificateImages')
+                    "></nz-file-uploader>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    <div class="col-6">
+        <nz-form-item>
+            <nz-form-label>
+                {{ 'table.vehicle-ensurance-images' | translate }}
+            </nz-form-label>
+            <nz-form-control>
+                <nz-file-uploader [nzFileList]="vehicleInsuranceImages" [nzData]="{ path: 'vehicleInsuranceImages' }"
+                    (nzChange)="changeImages($event, 'vehicleInsuranceImages')"></nz-file-uploader>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+</div>

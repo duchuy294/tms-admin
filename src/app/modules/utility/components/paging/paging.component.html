@@ -1,0 +1,18 @@
+<div class="row no-gutters padding-50">
+    <div class="col-4">
+        {{'paging.displayFrom' | translate}}{{paging.begin}}-{{paging.end}} {{'paging.displayTotal' |
+        translate}}{{paging.total}}
+    </div>
+    <div class="col-4 text-center">
+        {{'paging.display' | translate}}
+        <select [(ngModel)]="paging.limit" (change)="change()">
+            <option *ngFor="let item of paging.selection" [attr.value]="item">{{item}}</option>
+        </select>
+        {{'paging.result' | translate}}
+    </div>
+    <div class="col-4" *ngIf="paging.total > 0">
+        <ngb-pagination [collectionSize]="paging.total" [(page)]="paging.page" [pageSize]="paging.limit" [maxSize]="5"
+            [rotate]="true" [boundaryLinks]="true" (pageChange)="change()" class="d-flex justify-content-end">
+        </ngb-pagination>
+    </div>
+</div>

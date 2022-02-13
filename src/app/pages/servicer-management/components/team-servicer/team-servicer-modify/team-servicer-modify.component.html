@@ -1,0 +1,114 @@
+<nz-modal nzWidth="1050px" [nzVisible]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModel(false)">
+    <ng-template #modalTitle>
+        {{
+            modifyingModel?._id
+                ? modifyingModel?.name
+                : ("button.create-team-servicer" | translate)
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #createModifyForm="ngForm">
+            <div class="row">
+                <div class="col-3">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "table.team-name" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <input nz-input name="teamName" [(ngModel)]="model.name" #teamName="ngModel" required />
+                            <nz-form-explain *ngIf="
+                                    (teamName.dirty || teamName.touched) &&
+                                    teamName.errors?.required
+                                ">
+                                {{
+                                    "validations-form.teamServicer.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+
+            <div class="row" *ngFor="let service of services" style="margin-top:10px">
+                <div class="col-3">
+                    <label nz-checkbox [(ngModel)]="service.isActive" [name]="'checkbox_' + service._id">
+                        {{ service.name }}</label>
+                </div>
+                <div class="col-9" *ngIf="service.isActive">
+                    <div class="row" *ngIf="service.children">
+                        <div class="col-10">
+                            <nz-select style="width: 100%" name="services" [(ngModel)]="service.selectedValue">
+                                <ng-template ngFor let-item [ngForOf]="service.children">
+                                    <nz-option-group *ngIf="item.children" [nzLabel]="item.name">
+                                        <nz-option *ngFor="let s of item.children" [nzValue]="s._id" [nzLabel]="s.name">
+                                        </nz-option>
+                                    </nz-option-group>
+                                    <nz-option *ngIf="!item.children" [nzValue]="item._id" [nzLabel]="item.name">
+                                    </nz-option>
+                                </ng-template>
+                            </nz-select>
+                        </div>
+                        <div class="col-2">
+                            <button ad-button nzUpper nzColor="primary" (click)="addServiceValue(service)">
+                                {{ "button.add" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                    <span class="badge badge-pill badge-info" style="margin-top: 10px"
+                        *ngFor="let item of service.selectedValues">
+                        {{ getServiceValueName(service, item) }}
+                        <i style="cursor: pointer;" class="material-icons" (click)="removeServiceValue(service, item)">
+                            cancel
+                        </i>
+                    </span>
+                    <div class="row" *ngIf="service.style == 21">
+                        <div class="col-3">
+                            {{ "common.from" | translate }}:
+                        </div>
+                        <div class="col-9">
+                            <nz-form-control>
+                                <nz-input-group style="width: 100%;" [nzSuffix]="
+                                        'common.currency-unit'
+                                            | translate
+                                            | uppercase
+                                    ">
+                                    <input nz-input [(ngModel)]="service.from" [name]="serviceFrom"
+                                        #serviceFrom="ngModel" required />
+                                </nz-input-group>
+                            </nz-form-control>
+                        </div>
+                        <div class="col-3">{{ "common.to" | translate }}:</div>
+                        <div class="col-9">
+                            <nz-form-control>
+                                <nz-input-group style="width: 100%;" [nzSuffix]="
+                                        'common.currency-unit'
+                                            | translate
+                                            | uppercase
+                                    ">
+                                    <input nz-input [(ngModel)]="service.to" [name]="serviceTo" #serviceTo="ngModel"
+                                        required />
+                                </nz-input-group>
+                            </nz-form-control>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div style="width: 350px; margin: 0 auto;">
+            <div class="buttonActions">
+                <button ad-button nzColor="primary" (click)="submit()">
+                    {{ "button.yes" | translate }}
+                </button>
+                <button ad-button nzColor="gray" (click)="cancel()">
+                    {{ "button.cancel" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

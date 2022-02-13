@@ -1,0 +1,22 @@
+<nz-modal nzWidth="700px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)" nzClosable="false">
+    <ng-template #modalTitle>
+        {{ 'warehouse.check-area' | translate }}
+    </ng-template>
+    <ng-template #modalContent>
+        <nz-calendar [nzFullscreen]="false" nzMode="month" (nzSelectChange)="onChange($event)">
+            <ng-container *nzDateCell="let date">
+                <div class="area" *ngIf="!isNil(data[convertDateToTimestamp(date)])">
+                    {{data[convertDateToTimestamp(date)] | number}} m<sup>2</sup>
+                </div>
+            </ng-container>
+        </nz-calendar>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="footer">
+            <button ad-button nzUpper nzColor="gray" (click)="handleVisibleModal(false)">
+                {{ 'button.close' | translate }}
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>

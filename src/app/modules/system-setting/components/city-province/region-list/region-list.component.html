@@ -1,0 +1,22 @@
+<div class="grid__container">
+    <div style="display: flex; width: 100%;">
+        <div style="font-size: 1.5em">
+            {{ ('common.list' | translate) + ' ' + ('common.region'| translate | lowercase) }}
+        </div>
+        <div style="display: flex; position: absolute; right: 0px">
+            <nz-input-group nzSuffixIcon="anticon anticon-search">
+                <input name="searchBox" type="text" [(ngModel)]="regionName"
+                    (ngModelChange)="onRegionNameChange($event)" nz-input
+                    [placeholder]="'common.region-name' | translate">
+            </nz-input-group>
+            &nbsp;
+            <button ad-button nzUpper nzColor="primary" (click)="addRegion()">{{ 'button.add' | translate }}</button>
+        </div>
+    </div>
+    <br>
+    <region-grid #regionGrid (delete)="confirmDelete($event)" (edit)="editRegion($event)">
+    </region-grid>
+</div>
+<add-region-modal [regionModel]="regionToEdit" [visible]="addRegionModalVisible"
+    (handleVisible)="handleAddRegionModalVisible($event)" (afterSubmit)="handleAfterSubmit()">
+</add-region-modal>

@@ -1,0 +1,42 @@
+.image-uploader {
+    height: 100px;
+    position: relative;
+    width: 100px;
+
+    &.size-sm {
+        height: 50px;
+        width: 50px;
+    }
+
+    &.size-xs {
+        height: 30px;
+        width: 30px;
+    }
+
+    label {
+        height: 100%;
+        width: 100%;
+    }
+
+    .picture-wrapper {
+        border: 1px solid #C5BABA;
+        height: 100%;
+        width: 100%;
+        text-align: center;
+
+        img {
+            max-height: 100%;
+            max-width: 100%;
+        }
+    }
+
+    .remove-btn {
+        background: red;
+        position: absolute;
+        right: 0;
+        text-align: center;
+        top: 0;
+        width: 25px;
+        border-radius: 20px;
+    }
+}

@@ -1,0 +1,44 @@
+<nz-table [nzData]="rewards" [nzFrontPagination]="true" [nzShowPagination]="false" [nzLoading]="loading"
+    [nzBordered]="true" [nzSize]="'small'">
+    <thead>
+        <tr>
+            <th [nzWidth]="'10%'">{{ 'common.code' | translate }}</th>
+            <th [nzWidth]="'15%'">{{ 'common.name' | translate }}</th>
+            <th [nzWidth]="'20%'">{{ 'common.description' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.status' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'table.duration' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.point' | translate }}</th>
+            <th [nzWidth]="'15%'">{{ 'common.staff' | translate }}</th>
+            <th [nzWidth]="'10%'">{{'common.action' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody *ngIf="!loading && rewards">
+        <tr *ngFor="let reward of rewards">
+            <td>{{ reward.code }} </td>
+            <td>{{ reward.name }}</td>
+            <td>{{ reward.description }}</td>
+            <td>{{ 'common.status' + reward.status | translate }}</td>
+            <td>{{ (reward.effectedAt ? (reward.effectedAt | date:'dd/MM/yyyy') : '') + ' ' + (reward.expiredAt ? (reward.expiredAt | date:'dd/MM/yyyy') : '') }}
+            </td>
+            <td>{{ reward.point }}</td>
+            <td>{{ reward.createdBy ? (adminUpdatedBy[reward.createdBy]?.fullName) : '' }}</td>
+            <td nzRight="0px">
+                <ng-container>
+                    <button nz-dropdown ad-button nzType="dashed" [nzDropdownMenu]="menu"
+                        [nzPlacement]="'bottomCenter'">
+                        {{ 'common.action' | translate }}
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                            <ng-template ngFor let-action [ngForOf]="actions">
+                                <li nz-menu-item *ngIf="!action.visible || action.visible(reward)">
+                                    <a (click)="action.perform(reward)">{{ action.name | translate }}</a>
+                                </li>
+                            </ng-template>
+                        </ul>
+                    </nz-dropdown-menu>
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>

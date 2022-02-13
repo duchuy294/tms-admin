@@ -1,0 +1,15 @@
+<div class="modal-cs">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="payment">
+                <h4>{{'servicer.servicer.pay-collection' | translate}}</h4>
+                <label>{{'servicer.servicer.input-money' | translate}} (<span class="link"
+                        (click)="paidMoney = wallet.collectionDebt">{{wallet.collectionDebt
+                        | number}} VNĐ</span>)</label>
+            </div>
+            <order-grid [(model)]="query" [collectionOrder]="true"
+                [hiddenFields]="['totalCost', 'payment', 'servicer', 'user', 'processingStaff']"
+                [visibleFields]="['collectionMoney']" #orderGrid></order-grid>
+        </div>
+    </div>
+</div>

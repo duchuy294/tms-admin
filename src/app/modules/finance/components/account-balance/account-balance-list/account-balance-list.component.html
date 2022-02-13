@@ -1,0 +1,27 @@
+<div class="grid__container">
+    <div class="grid__header">
+        <button class="grid__action__left" ad-button nzColor="red" (click)="toggleFilter()">
+            {{'button.filter' | translate}}
+        </button>
+        &nbsp;
+        <button class="grid__action__left" ad-button nzColor="white" (click)="exportFilter()">
+            {{ 'button.export' | translate }}
+        </button>
+    </div>
+    <account-balance-filter #filter [visible]="filterVisible" (search)="search($event)" (export)="export($event)">
+    </account-balance-filter>
+    <statistic-tile [data]="statisticData" [style]="{ 'width': '24%' }"></statistic-tile>
+    <div style="clear:both"></div>
+    <account-balance-grid (passingWallet)="receivingWallet($event)"
+        (passingWalletUpdate)="receivingWalletUpdate($event)" #grid>
+    </account-balance-grid>
+    <servicer-balance-modal [queryModel]="historyTransactionQuery" [visible]="historyTransactionGridVisible"
+        (handleVisible)="handleHistoryTransactionGridVisible($event)"></servicer-balance-modal>
+</div>
+<spinner-processing-modal [visible]="loading"></spinner-processing-modal>
+<customer-transaction-history [userIds]="customerId" [visible]="visibleTransactionHistory"
+    (handleVisible)="handleVisibleTransactionHistory($event)">
+</customer-transaction-history>
+<update-wallet [visible]="visibleWalletUpdate" (handleVisible)="handleVisibleWalletUpdate($event)"
+    (afterSuccess)="afterUpdateWallet()" [walletToModify]="walletUpdate">
+</update-wallet>

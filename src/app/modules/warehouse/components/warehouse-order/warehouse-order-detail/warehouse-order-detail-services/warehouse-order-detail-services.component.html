@@ -1,0 +1,77 @@
+<page-wrapper [nzTitle]="pageTitle">
+
+    <ng-template #pageTitle>
+        <div style="font-weight:bold">
+            {{ "order.cost" | translate }}
+        </div>
+    </ng-template>
+    <div *ngIf="order">
+        <nz-skeleton [nzActive]="true" [nzLoading]="loading" [nzTitle]="false" [nzParagraph]="{ rows: 10 }">
+            <div class="row">
+                <div class="col-4 bold">{{'warehouse.warehouse-order.rented-area' | translate}}</div>
+                <div class="col-4 bold text-left">{{'order.time' | translate}}</div>
+                <div class="col-4 bold text-right">{{'order.cost' | translate}}</div>
+            </div>
+            <div class="row" *ngIf="costRent">
+                <div class="col-4">{{costRent.quantity | number}}m2</div>
+                <div class="col-4 text-left">{{costRent.startedAt | date:'dd/MM/yyyy'}} <br>
+                    {{costRent.finishedAt | date:'dd/MM/yyyy'}}</div>
+                <div class="col-4 text-right">{{costRent.cost | number}}đ</div>
+            </div>
+
+            <div class="row">
+                <div class="col-5 bold">{{'order.addonServices' | translate}}</div>
+                <div class="col-7 bold text-right">{{'order.cost' | translate}}</div>
+            </div>
+            <div *ngFor="let service of services" class="row">
+                <div class="col-5 ">{{service.name | translate}}</div>
+                <div class="col-7 text-right">{{service.cost | number}}đ</div>
+            </div>
+            <nz-divider></nz-divider>
+            <div class="row">
+                <div class="col-5 bold">{{'order.totalCost' | translate}}:</div>
+                <div class="col-7 bold text-right" style="color:red">{{order.cost | number}}đ</div>
+            </div>
+            <div class="row" *ngIf="isConfirnedSuccess || isCompleted">
+                <div class="col-5 bold">{{'warehouse.warehouse-order.real-cost' | translate}}:</div>
+                <div class="col-7 bold text-right" style="color:red">{{order.realCost | number}}đ</div>
+            </div>
+            <div class="row" *ngIf="isConfirnedSuccess || isCompleted">
+                <div class="col-5 bold">{{'common.commission' | translate}}:</div>
+                <div class="col-7 bold text-right" style="color:red">{{order.commission  | number}}đ</div>
+            </div>
+            <div class="row" *ngIf="isConfirnedSuccess || isCompleted">
+                <div class="col-5 bold">{{'warehouse.warehouse-order.renting-income' | translate}}:</div>
+                <div class="col-7 bold text-right" style="color:red">
+                    {{ (order.realCost && order.commission) ? (order.realCost - order.commission  | number) : ''}}đ
+                </div>
+            </div>
+        </nz-skeleton>
+
+        <br>
+        <div class="d-flex justify-content-between">
+            <div class="buttonActions"
+                *ngIf="isWatingToComfirm || isPartnerAccepted || isConfirnedSuccess || isCompleted || isCanceledByOperator || isCanceledByRenter || isCanceledByLessor">
+                <button ad-button nzColor="primary">
+                    {{ 'button.view-location' | translate }} </button>
+            </div>
+            <div class="buttonActions" *ngIf="showAction(Actions.CANCEL) && checkAuthority()">
+                <button ad-button nzColor="gray" (click)="handleAction(Actions.CANCEL)">
+                    {{'warehouse.warehouse.cancel-button' | translate }}
+                </button>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between" *ngIf="checkAuthority()">
+            <div class="buttonActions" *ngIf="showAction(Actions.COMPLETE)">
+                <button ad-button nzColor="primary" (click)="handleAction(Actions.COMPLETE)">
+                    {{ 'warehouse.warehouse.success-button' | translate }}
+                </button>
+            </div>
+            <div class="buttonActions" *ngIf="showAction(Actions.CONFIRM)">
+                <button ad-button nzColor="primary" (click)="handleAction(Actions.CONFIRM)">
+                    {{ 'warehouse.warehouse.success-button' | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</page-wrapper>

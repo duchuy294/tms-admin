@@ -1,0 +1,8 @@
+<span *ngIf="showOnly">{{obj.value | number}}</span>
+
+<div *ngIf="!showOnly" class="input-group">
+    <input type="number" class="form-control" placeholder="0" aria-describedby="basic-addon2" [(ngModel)]="obj.value" (keyup)="onChange($event)">
+    <div class="input-group-append">
+        <span class="input-group-text" id="basic-addon2">{{unit}}</span>
+    </div>
+</div>

@@ -1,0 +1,124 @@
+<nz-modal nzWidth="600px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+    <ng-template #modalTitle> </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #smsLogDetailForm="ngForm" *ngIf="smsLogModel">
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "telecom.sms-log.smsProvider" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>{{
+                            smsLogModel.telecom ? smsLogModel.telecom : ""
+                        }}</nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "common.phone" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>{{
+                            smsLogModel.phone ? smsLogModel.phone : ""
+                        }}</nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "common.date" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            {{
+                                smsLogModel.createdAt
+                                    ? (smsLogModel.createdAt
+                                      | date: "H:mm:ss - dd/MM/yyyy")
+                                    : ""
+                            }}
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "telecom.sms-log.bid" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>{{
+                            smsLogModel.bid ? smsLogModel.bid : ""
+                        }}</nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "telecom.sms-log.statusCode.label" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            {{
+                                smsLogModel.statusCode
+                                    ? ("telecom.sms-log.statusCode." +
+                                          smsLogModel.statusCode / 100 +
+                                          "00" | translate)
+                                    : ""
+                            }}
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "telecom.sms-log.responseBody" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>{{
+                                smsLogModel.responseBody
+                                    ? smsLogModel.responseBody
+                                    : ""
+                            }}
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "common.content" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>{{
+                            smsLogModel.content ? smsLogModel.content : ""
+                        }}</nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "common.type" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            {{
+                                smsLogModel.type
+                                    ? ("telecom.sms-type." + smsLogModel.type
+                                      | translate)
+                                    : ""
+                            }}
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="footer">
+            <div class="buttonContainer" style="width: 10%">
+                <button ad-button nzUpper nzColor="gray" (click)="handleVisibleModal(false)">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

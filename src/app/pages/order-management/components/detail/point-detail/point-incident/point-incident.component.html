@@ -1,0 +1,77 @@
+<nz-divider></nz-divider>
+<div *ngFor="let item of model; index as i">
+    <div *ngIf="flagExtend || i <= 1">
+        <div class="titleDetail">{{ 'order.incidentInformation' | translate | uppercase }}</div>
+        <div class="description-item">
+            <label class="col-6 description-label bold"> {{ 'order.incident' | translate }} {{ model.length - i}}:
+                <span style="font-weight: normal;">
+                    <nz-tag [nzColor]="INCIDENT_STATUS_COLOR[item.status]">
+                        {{ ('incident.status.' + item.status) | translate }}
+                    </nz-tag>
+                </span>
+            </label>
+            <div class="col-6" style="float: right; text-align: right; padding-right: 0px">
+                {{ item.createdAt | date:'HH:mm dd/MM/yyyy'}}</div>
+        </div>
+        <div style="padding-left: 12px">
+            {{ item.title }}
+            <a *ngIf="i === 1" class="border-style" style=" float: right" (click)="handleVisibleDetail(flagExtend)">
+                {{ (!flagExtend ? 'common.moreDetails': 'common.collapse') | translate}}</a>
+        </div>
+    </div>
+    <div *ngIf="flagExtend || i === 0">
+        <div style="padding-left: 12px">
+            {{ item.detail }}
+        </div>
+        <div style="padding-left: 12px" *ngIf="incidentImages[i] && incidentImages[i].length">
+            <div style="font-weight: bold;">
+                {{'incident.images' | translate}}: </div>
+            <nz-file-uploader [nzFileList]="incidentImages[i]"
+                [nzShowUploadList]="{showPreviewIcon: true,showRemoveIcon: false}" [nzShowButton]="false">
+            </nz-file-uploader>
+        </div>
+        <div *ngIf="processedIncidents[item.processId]">
+            <div class="titleDetail" style="margin-top:14px">
+                {{ 'order.fixingIncidentInformation' | translate | uppercase }}
+            </div>
+            <div *ngIf="processedIncidents[item.processId].reason">
+                <div style="padding-left: 12px; font-weight: bold;">
+                    {{'incident.reason-failed' | translate}}: </div>
+                <div style="padding-left: 12px">
+                    {{ processedIncidents[item.processId].reason }}
+                </div>
+            </div>
+            <div style="padding-left: 12px"
+                *ngIf="processedincidentImages[item.processId] && processedincidentImages[item.processId].length">
+                <div style="font-weight: bold;"> {{'common.images' | translate}}:
+                </div>
+                <nz-file-uploader [nzFileList]="processedincidentImages[item.processId]"
+                    [nzShowUploadList]="{showPreviewIcon: true,showRemoveIcon: false}" [nzShowButton]="false">
+                </nz-file-uploader>
+            </div>
+            <div style=" font-weight: bold; padding-left: 12px">
+                {{'common.signCustomer' | translate}}:
+            </div>
+            <span style="padding-left: 12px; display: flex">
+                <div *ngIf="customerSign[item.processId] && customerSign[item.processId]?.length">
+                    <nz-file-uploader [nzFileList]="customerSign[item.processId]" [nzShowUploadList]="{
+                            showPreviewIcon: true,
+                            showRemoveIcon: false
+                            }" [nzShowButton]="false">
+                    </nz-file-uploader>
+                </div>
+                <span style="font-weight: bold; margin-top:5%"> {{processedIncidents[item.processId]?.reciverName}}
+                    <br>
+                    <span style="font-weight: normal">
+                        {{processedIncidents[item.processId]?.processedAt | date:"HH:mm dd/MM/yyyy"}}
+                    </span>
+                </span>
+            </span>
+            <div *ngIf="processedIncidents[item.processId]">
+                <div style="padding-left: 12px; font-weight: bold;">{{'common.note' | translate}}: </div>
+                <div style="padding-left: 12px;">{{processedIncidents[item.processId].partnerNote}}</div>
+            </div>
+        </div>
+        <nz-divider *ngIf="i !== model.length-1"></nz-divider>
+    </div>
+</div>

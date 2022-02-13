@@ -1,0 +1,82 @@
+<nz-modal nzWidth="600px" [nzVisible]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModel(false)">
+    <ng-template #modalTitle>
+        {{
+            modifyingModel?._id
+                ? modifyingModel?.name
+                : ("settings.group-admins.create" | translate)
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #createModifyForm="ngForm">
+            <div class="row">
+                <div class="col-12">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "table.group-name" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <input nz-input name="groupName" [(ngModel)]="model.name" #groupName="ngModel" required />
+                            <nz-form-explain *ngIf="
+                                    (groupName.dirty || groupName.touched) &&
+                                    groupName.errors?.required
+                                ">
+                                {{
+                                    "validations-form.groupServicer.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzFor="">{{
+                            "settings.group-admins.permission" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-select style="width: 100%" [(ngModel)]="model.role" name="permission" nzShowSearch>
+                                <nz-option *ngFor="let item of levels" [nzLabel]="
+                                        'settings.admins-level.' + item
+                                            | translate
+                                    " [nzValue]="item">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzFor="">{{
+                            "common.status" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-select style="width: 100%" [(ngModel)]="model.status" name="status" nzShowSearch>
+                                <nz-option *ngFor="let item of statuses" [nzLabel]="
+                                        'common.status' + item | translate
+                                    " [nzValue]="item">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div style="width: 350px; margin: 0 auto;">
+            <div class="buttonActions">
+                <button ad-button nzColor="primary" (click)="submit()">
+                    {{ "button.yes" | translate }}
+                </button>
+                <button ad-button nzColor="gray" (click)="cancel()">
+                    {{ "button.cancel" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

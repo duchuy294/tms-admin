@@ -1,0 +1,66 @@
+<div class="row">
+    <div *ngFor="let serviceGroup of services" class="col-12">
+        <h1>{{serviceGroup.name}}</h1>
+        <button class="btn btn-warning" (click)="openServiceModal(serviceGroup)">{{'price.add' | translate}}</button>
+        <button class="btn btn-warning"
+            (click)="openServiceGroupModal(serviceGroup)">{{'price.addGroup' | translate}}</button>
+        <div class="row">
+            <div class="col-2">
+                <h5>{{'common.group' | translate}}</h5>
+            </div>
+            <div class="col-10">
+                <div class="row">
+                    <h5 class="col-3">{{'common.name' |translate}}</h5>
+                    <h5 class="col-2">{{'price.price' |translate}}</h5>
+                    <h5 class="col-2">{{'price.userPrice' |translate}}</h5>
+                    <h5 class="col-2">{{'price.servicerPrice' |translate}}</h5>
+                    <h5 class="col-2">{{'common.commission' |translate}}(%)</h5>
+                </div>
+            </div>
+            <hr class="col-12" />
+        </div>
+        <div class="row" *ngFor="let service of serviceGroup.children">
+            <div class="col-2 align-middle">
+                <i class="material-icons pointer" (click)="confirmDeleteService(service)">
+                    delete
+                </i>
+                <img *ngIf="service.imgUrl" class="group-icon" [src]="service.imgUrl" /> {{service.name}}
+            </div>
+            <div class="col-10">
+                <div class="row" *ngFor="let sub of service.children">
+                    <div class="col-3">{{sub.name}}</div>
+                    <div class="col-2">
+                        <value-input [obj]="{value: sub.price}" (changeValue)="onPriceChange($event, sub)">
+                        </value-input>
+                    </div>
+                    <div class="col-2">
+                        <value-input [obj]="{value: sub.userPrice}" (changeValue)="onUserPriceChange($event, sub)">
+                        </value-input>
+                    </div>
+                    <div class="col-2">
+                        <value-input [obj]="{value: sub.servicerPrice}"
+                            (changeValue)="onServicerPriceChange($event, sub)">
+                        </value-input>
+                    </div>
+                    <div class="col-2">
+                        <div class="input-group ng-star-inserted">
+                            <input class="form-control" [(ngModel)]="sub.commission"
+                                (ngModelChange)="sub.changed = true" type="number" min="0" max="100" />
+                            <div class="input-group-append">
+                                <span class="input-group-text">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <i class="material-icons pointer" (click)="confirmDeleteService(sub)">
+                            delete
+                        </i>
+                        <i *ngIf="sub.changed" class="material-icons pointer" (click)="updatePrice(sub)">
+                            save
+                        </i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

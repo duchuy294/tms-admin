@@ -1,0 +1,37 @@
+<page-wrapper [nzTitle]="pageTitle">
+    <div class="button-actions__container">
+        <span class="button-actions__left">
+            <button ad-button nzColor="red" (click)="toggleFilter()">
+                {{'button.filter' | translate}}
+            </button>
+            <button ad-button>{{'actions.export' | translate}}</button>
+        </span>
+    </div>
+    <div class="split-container">
+        <div class="block-left">
+            <filter-order-store [(model)]="model" (onReset)="reset()" (onSearch)="search()"
+                [style.display]="showFilter ? 'block' : 'none'">
+            </filter-order-store>
+            <statistic-tile [data]="statisticData" [style]="{ width: '22%' }"></statistic-tile>
+            <div style="clear:both">
+            </div>
+            <grid-order-store *ngIf="storeModel && storeModel?._id" [(model)]="model" [store]="storeModel"
+                (detail)="editStore()" #storeGrid>
+            </grid-order-store>
+        </div>
+        <div class="block-right">
+            <store-info [model]="storeModel"></store-info>
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary"
+                    (click)="editStore()">{{'button.modify' | translate}}</button>
+                <button ad-button nzUpper>{{'finance.history' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</page-wrapper>
+<ng-template #pageTitle>
+    {{ ('warranty-repair.service-center.title' | translate) + ' ' + storeModel?.name }}
+</ng-template>
+<create-store-modal [storeModel]="storeModel" (submit)="saveStore($event)" [visible]="visibleModal"
+    (handleVisible)="handleVisibleModal($event)" #createStoreModal>
+</create-store-modal>

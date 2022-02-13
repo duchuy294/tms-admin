@@ -1,0 +1,796 @@
+<nz-modal nzWidth="900px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+    <ng-template #modalTitle>
+        {{
+            (model?._id
+                ? "warranty-repair.action.modify-service-center"
+                : "warranty-repair.action.create-service-center"
+            ) | translate
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #storeForm="ngForm">
+            <div class="row">
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzFor="" nzRequired>{{
+                                "warranty-repair.service-center.join-adidi"
+                                    | translate
+                            }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-select [(ngModel)]="model.isMember" name="isMember">
+                                <nz-option *ngFor="let item of isMemberValue" [nzLabel]="
+                                        'form.create-store.isMember-' + item
+                                            | translate
+                                    " [nzValue]="!!item">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div *ngIf="model?._id" class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzFor="status">{{
+                            "common.status" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-select [(ngModel)]="model.status" name="status">
+                                <nz-option *ngFor="let item of status" [nzLabel]="
+                                        'common.status' + item | translate
+                                    " [nzValue]="item">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div>
+                <nz-tabset (nzSelectedIndexChange)="onSelectTag($event)" [nzTabPosition]="'top'" [nzType]="'card'"
+                    [nzSelectedIndex]="tabIndex">
+                    <nz-tab [nzTitle]="
+                            'warranty-repair.service-center.information'
+                                | translate
+                        ">
+                        <div class="row">
+                            <div class="col">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="name" nzRequired>
+                                        {{
+                                            "warranty-repair.service-center.name"
+                                                | translate
+                                        }}</nz-form-label>
+                                    <nz-form-control>
+                                        <input nz-input [(ngModel)]="model.name" type="text" name="name" #name="ngModel"
+                                            required />
+                                        <nz-form-explain *ngIf="
+                                                (name.dirty || name.touched) &&
+                                                name.errors?.required
+                                            ">{{
+                                                "warranty-repair.validation.name-required"
+                                                    | translate
+                                            }}
+                                        </nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div class="col">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="phone" nzRequired>{{
+                                        "common.phone" | translate
+                                    }}</nz-form-label>
+                                    <nz-form-control>
+                                        <input nz-input [(ngModel)]="model.phone" type="text" name="phone" required
+                                            #phone="ngModel" />
+                                        <nz-form-explain *ngIf="
+                                                (phone.dirty ||
+                                                    phone.touched) &&
+                                                phone.errors?.required
+                                            ">{{
+                                                "validations-form.phone.required"
+                                                    | translate
+                                            }}
+                                        </nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div class="col">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="email">{{
+                                        "common.email" | translate
+                                    }}</nz-form-label>
+                                    <nz-form-control>
+                                        <input nz-input [(ngModel)]="model.email" type="email" name="email"
+                                            #email="ngModel" />
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="city" nzRequired>{{
+                                            "common.province-city" | translate
+                                        }}
+                                    </nz-form-label>
+                                    <nz-form-control>
+                                        <nz-select [(ngModel)]="model.city" name="city" (ngModelChange)="getDistricts()"
+                                            required #city="ngModel">
+                                            <nz-option *ngFor="
+                                                    let item of cities | keys
+                                                " [nzLabel]="item.value.name" [nzValue]="item.value._id">
+                                            </nz-option>
+                                        </nz-select>
+                                        <nz-form-explain *ngIf="
+                                                (city.dirty || city.touched) &&
+                                                city.errors?.required
+                                            ">{{
+                                                "validations-form.select-province-city.required"
+                                                    | translate
+                                            }}
+                                        </nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div class="col">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="district" nzRequired>{{ "common.district" | translate }}
+                                    </nz-form-label>
+                                    <nz-form-control>
+                                        <nz-select [(ngModel)]="model.district" name="district" required
+                                            #district="ngModel">
+                                            <nz-option *ngFor="
+                                                    let item of districts | keys
+                                                " [nzLabel]="item.value.name" [nzValue]="item.value._id">
+                                            </nz-option>
+                                        </nz-select>
+                                        <nz-form-explain *ngIf="
+                                                (district.dirty ||
+                                                    district.touched) &&
+                                                district.errors?.required
+                                            ">{{
+                                                "validations-form.select-district.required"
+                                                    | translate
+                                            }}
+                                        </nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div class="col">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="ward" nzRequired>{{
+                                        "common.ward" | translate
+                                    }}</nz-form-label>
+                                    <nz-form-control>
+                                        <input nz-input [(ngModel)]="model.ward" name="ward" required #ward="ngModel" />
+                                        <nz-form-explain *ngIf="
+                                                (ward.dirty || ward.touched) &&
+                                                ward.errors?.required
+                                            ">{{
+                                                "validations-form.ward.required"
+                                                    | translate
+                                            }}
+                                        </nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="address">{{
+                                        "common.contactAddress" | translate
+                                    }}</nz-form-label>
+                                    <nz-form-control>
+                                        <input nz-input [(ngModel)]="model.address" name="address" #address />
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div class="col-4">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="mapAddress" nzRequired>{{ "common.mapAddress" | translate }}
+                                    </nz-form-label>
+                                    <nz-form-control [ngClass]="{
+                                            'has-error': addressError
+                                        }">
+                                        <autocomplete-gmap [nzValue]="model.mapAddress" nzPlaceHolder="{{
+                                                'common.enterMap' | translate
+                                            }}" (changePlace)="
+                                                updateLocation($event)
+                                            " #mapAddress>
+                                        </autocomplete-gmap>
+                                        <nz-form-explain *ngIf="addressError">
+                                            {{
+                                                "validations-form.address.required"
+                                                    | translate
+                                            }}
+                                        </nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <nz-form-item>
+                                    <nz-form-label nzNoColon="true">
+                                    </nz-form-label>
+                                    <nz-form-control>
+                                        <button ad-button nzColor="red" (click)="toggleMapVisible()">
+                                            {{
+                                                (mapVisible
+                                                    ? "maps.disable-map"
+                                                    : "maps.enable-map"
+                                                ) | translate
+                                            }}
+                                        </button>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div class="col-12" *ngIf="mapVisible">
+                                <mapp (center)="getMapsCenter($event)" [location]="model.location" [isDraggable]="true">
+                                </mapp>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="description" nzRequired>
+                                        {{
+                                            "warranty-repair.service-center.description"
+                                                | translate
+                                        }}</nz-form-label>
+                                    <nz-form-control>
+                                        <textarea nz-input rows="5" [(ngModel)]="model.description" name="description"
+                                            required #description="ngModel"></textarea>
+                                        <nz-form-explain *ngIf="
+                                                (description.dirty ||
+                                                    description.touched) &&
+                                                description.errors?.required
+                                            ">
+                                            {{
+                                                "warranty-repair.validation.description-required"
+                                                    | translate
+                                            }}
+                                        </nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="descriptionDetail" nzRequired>
+                                        {{
+                                            "warranty-repair.service-center.detail-info"
+                                                | translate
+                                        }}
+                                    </nz-form-label>
+                                    <nz-form-control>
+                                        <ck-editor name="descriptionDetail" [(ngModel)]="
+                                                model.descriptionDetail
+                                            " required></ck-editor>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="images" nzRequired>{{ "common.avatar" | translate }}
+                                    </nz-form-label>
+                                    <nz-form-control>
+                                        <nz-file-uploader [nzFileList]="images" [nzData]="{ path: 'store/images' }"
+                                            (nzChange)="
+                                                updateContentImg(
+                                                    $event,
+                                                    'images'
+                                                )
+                                            ">
+                                        </nz-file-uploader>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div class="col">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="verifiedCertificateImages">
+                                        {{
+                                            "warranty-repair.service-center.genuine-license"
+                                                | translate
+                                        }}
+                                    </nz-form-label>
+                                    <nz-form-control>
+                                        <nz-file-uploader [nzFileList]="
+                                                verifiedCertificateImages
+                                            " [nzData]="{ path: 'store/images' }" (nzChange)="
+                                                updateContentImg(
+                                                    $event,
+                                                    'verifiedCertificateImages'
+                                                )
+                                            ">
+                                        </nz-file-uploader>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="businessCertificateImages">
+                                        {{
+                                            "warranty-repair.service-center.business-license"
+                                                | translate
+                                        }}
+                                    </nz-form-label>
+                                    <nz-form-control>
+                                        <nz-file-uploader [nzFileList]="
+                                                businessCertificateImages
+                                            " [nzData]="{ path: 'store/images' }" (nzChange)="
+                                                updateContentImg(
+                                                    $event,
+                                                    'businessCertificateImages'
+                                                )
+                                            ">
+                                        </nz-file-uploader>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div class="col">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="contractImages">
+                                        {{
+                                            "warranty-repair.service-center.adidi-contract"
+                                                | translate
+                                        }}</nz-form-label>
+                                    <nz-form-control>
+                                        <nz-file-uploader [nzFileList]="contractImages"
+                                            [nzData]="{ path: 'store/images' }" (nzChange)="
+                                                updateContentImg(
+                                                    $event,
+                                                    'contractImages'
+                                                )
+                                            ">
+                                        </nz-file-uploader>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                    </nz-tab>
+                    <nz-tab [nzTitle]="
+                            'warranty-repair.service-center.service' | translate
+                        ">
+                        <div class="row">
+                            <div class="col">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="groupId" nzRequired>{{ "common.group" | translate }}
+                                    </nz-form-label>
+                                    <nz-form-control>
+                                        <nz-select [(ngModel)]="model.groupId" (ngModelChange)="changeGroup()"
+                                            name="groupId">
+                                            <nz-option *ngFor="let item of groups" [nzLabel]="item.name"
+                                                [nzValue]="item._id">
+                                            </nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div class="col">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="teamIds" nzRequired>{{ "common.team" | translate }}
+                                    </nz-form-label>
+                                    <nz-form-control>
+                                        <nz-select [(ngModel)]="model.teamId" name="teamId">
+                                            <nz-option *ngFor="let item of teams" [nzLabel]="item.name"
+                                                [nzValue]="item._id">
+                                            </nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div class="col">
+                                <nz-form-label class="form-label form-label--empty" nzFor="teamIds"></nz-form-label>
+                                <nz-form-control>
+                                    <button ad-button nzColor="red" (click)="addTeam()">
+                                        {{ "button.add" | translate }}
+                                    </button>
+                                    <button ad-button nzColor="red" (click)="addAllTeam()">
+                                        {{ "button.addAll" | translate }}
+                                    </button>
+                                </nz-form-control>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 15px;">
+                            <div class="col">
+                                <nz-tag style="margin-bottom: 5px;" *ngFor="let team of teamSelected | keys"
+                                    nzColor="#12CAD1" nzMode="closeable" (nzAfterClose)="removeTeam(team)">
+                                    {{ team.value?.name }}
+                                </nz-tag>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="">{{
+                                            "warranty-repair.service-center.type"
+                                                | translate
+                                        }}
+                                    </nz-form-label>
+                                    <nz-form-control>
+                                        <ul class="store-type__list">
+                                            <li class="store-type__item">
+                                                <h4 class="store-type__title">
+                                                    {{
+                                                        "warranty-repair.service-center.authorized-center"
+                                                            | translate
+                                                    }}
+                                                    <div class="action-right">
+                                                        <button nz-tooltip ad-button (click)="
+                                                                removeAuthorizedBrand()
+                                                            " nzTooltipTitle="{{
+                                                                'warranty-repair.choice.delete-all-authorized-brands'
+                                                                    | translate
+                                                            }}">
+                                                            {{
+                                                                "button.deleteAll"
+                                                                    | translate
+                                                            }}
+                                                        </button>
+                                                    </div>
+                                                </h4>
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <div class="formControlWithAction">
+                                                            <nz-select style="min-width: 120px" [(ngModel)]="
+                                                                    brandModel
+                                                                " name="branch" [nzPlaceHolder]="
+                                                                    'warranty-repair.placeholder.brand'
+                                                                        | translate
+                                                                " nzShowSearch="true" [nzNotFoundContent]="
+                                                                    'warranty-repair.not-found'
+                                                                        | translate
+                                                                ">
+                                                                <nz-option *ngFor="
+                                                                        let item of brands
+                                                                    " [nzLabel]="
+                                                                        item.name
+                                                                    " [nzValue]="
+                                                                        item._id
+                                                                    ">
+                                                                </nz-option>
+                                                            </nz-select>
+                                                            <button ad-button nzShape="circle" (click)="
+                                                                    addAuthorizedBrand()
+                                                                ">
+                                                                <i class="material-icons">
+                                                                    add
+                                                                </i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-4" *ngFor="
+                                                            let item of authorizedBrands
+                                                                | keys
+                                                        ">
+                                                        <store-type-item (onAddProductType)="
+                                                                updateAuthorizedBrands(
+                                                                    $event
+                                                                )
+                                                            " (onRemoveProductType)="
+                                                                removeAuthorizedProductTypes(
+                                                                    $event
+                                                                )
+                                                            " (remove)="
+                                                                removeAuthorizedBrand(
+                                                                    $event
+                                                                )
+                                                            " [productIds]="
+                                                                item.value
+                                                            " [brand]="
+                                                                brandsQuery[
+                                                                    item.key
+                                                                ]
+                                                            " [nzProductTypes]="
+                                                                productTypes
+                                                            ">
+                                                        </store-type-item>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="store-type__item">
+                                                <h4 class="store-type__title">
+                                                    {{
+                                                        "warranty-repair.service-center.not-authorized-center"
+                                                            | translate
+                                                    }}
+                                                    <div class="action-right">
+                                                        <button nz-tooltip ad-button (click)="
+                                                                removeUnAuthorizedBrand()
+                                                            " nzTooltipTitle="{{
+                                                                'warranty-repair.choice.delete-all-unauthorized-brands'
+                                                                    | translate
+                                                            }}">
+                                                            {{
+                                                                "button.deleteAll"
+                                                                    | translate
+                                                            }}
+                                                        </button>
+                                                    </div>
+                                                </h4>
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <div class="formControlWithAction">
+                                                            <nz-select style="width: 100%" [(ngModel)]="
+                                                                    unBrandModel
+                                                                " name="unbranch" nzShowSearch="true"
+                                                                [nzNotFoundContent]="
+                                                                    'warranty-repair.not-found'
+                                                                        | translate
+                                                                " [nzPlaceHolder]="
+                                                                    'warranty-repair.placeholder.brand'
+                                                                        | translate
+                                                                ">
+                                                                <nz-option *ngFor="
+                                                                        let item of brands
+                                                                    " [nzLabel]="
+                                                                        item.name
+                                                                    " [nzValue]="
+                                                                        item._id
+                                                                    ">
+                                                                </nz-option>
+                                                            </nz-select>
+                                                            <button ad-button nzShape="circle" (click)="
+                                                                    addUnAuthorizedBrand()
+                                                                ">
+                                                                <i class="material-icons">
+                                                                    add
+                                                                </i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-4" *ngFor="
+                                                            let item of unAuthorizedBrands
+                                                                | keys
+                                                        ">
+                                                        <store-type-item (onAddProductType)="
+                                                                updateUnAuthorizedBrands(
+                                                                    $event
+                                                                )
+                                                            " (onRemoveProductType)="
+                                                                removeUnAuthorizedProductTypes(
+                                                                    $event
+                                                                )
+                                                            " (remove)="
+                                                                removeUnAuthorizedBrand(
+                                                                    $event
+                                                                )
+                                                            " [productIds]="
+                                                                item.value
+                                                            " [brand]="
+                                                                brandsQuery[
+                                                                    item.key
+                                                                ]
+                                                            " [nzProductTypes]="
+                                                                removeUnAuthorizedProductTypes
+                                                            ">
+                                                        </store-type-item>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                        <h3 class="form-heading form-heading--style-1">
+                            {{
+                                "warranty-repair.service-center.management"
+                                    | translate
+                            }}
+                        </h3>
+                        <div class="row">
+                            <div class="col">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="">{{
+                                            "warranty-repair.service-center.working-hours"
+                                                | translate
+                                        }}
+                                    </nz-form-label>
+                                    <nz-form-control>
+                                        <div class="formControlWithAction">
+                                            <nz-time-picker name="openTime" nzFormat="HH:mm" [nzPlaceHolder]="
+                                                    'common.start' | translate
+                                                " [nzDefaultOpenValue]="
+                                                    openTimeDefault
+                                                " [(ngModel)]="openTime">
+                                            </nz-time-picker>
+                                            <nz-time-picker name="closeTime" nzFormat="HH:mm" [nzDefaultOpenValue]="
+                                                    endTimeDefault
+                                                " [nzPlaceHolder]="
+                                                    'common.end' | translate
+                                                " [(ngModel)]="closeTime">
+                                            </nz-time-picker>
+                                            <nz-select [(ngModel)]="startDay" name="startDay" [nzPlaceHolder]="
+                                                    'common.effectedAt'
+                                                        | translate
+                                                ">
+                                                <nz-option *ngFor="
+                                                        let item of daysInWeek
+                                                    " [nzLabel]="
+                                                        'daysInWeek.' + item
+                                                            | translate
+                                                    " [nzValue]="item">
+                                                </nz-option>
+                                            </nz-select>
+                                            <nz-select [(ngModel)]="endDay" name="endDay" [nzPlaceHolder]="
+                                                    'common.expiredAt'
+                                                        | translate
+                                                ">
+                                                <nz-option *ngFor="
+                                                        let item of daysInWeek
+                                                    " [nzLabel]="
+                                                        'daysInWeek.' + item
+                                                            | translate
+                                                    " [nzValue]="item">
+                                                </nz-option>
+                                            </nz-select>
+                                            <button ad-button nzColor="red" (click)="addWorkingHours()">
+                                                {{ "button.add" | translate }}
+                                            </button>
+                                        </div>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <nz-tag style="margin-bottom: 5px;" *ngFor="let item of workingHours | keys"
+                                    nzColor="#87d068" nzMode="closeable" (nzAfterClose)="
+                                        removeWorkingHours(item.key)
+                                    ">
+                                    {{ "common.from" | translate }}
+                                    {{
+                                        "daysInWeek." + item.value.startDay
+                                            | translate
+                                    }}
+                                    {{ "common.to" | translate }}
+                                    {{
+                                        "daysInWeek." + item.value.endDay
+                                            | translate
+                                    }}
+                                    ({{ item.value.openTime }} -
+                                    {{ item.value.closeTime }})
+                                </nz-tag>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="">{{
+                                        "common.enterpriseCode" | translate
+                                    }}</nz-form-label>
+                                    <nz-form-control>
+                                        <div class="formControlWithAction">
+                                            <input nz-input placeholder="ABCD1234" [(ngModel)]="
+                                                    servicerQueryModel.code
+                                                " name="code" />
+                                            <button ad-button nzColor="red" (click)="addOwner()">
+                                                {{ "button.add" | translate }}
+                                            </button>
+                                        </div>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                        <nz-table #table [nzData]="servicerData.data" nzSize="small" [nzScroll]="{ x: '800px' }">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        {{
+                                            "common.enterpriseCode" | translate
+                                        }}
+                                    </th>
+                                    <th>
+                                        {{ "common.createdAt" | translate }}
+                                    </th>
+                                    <th>{{ "common.name" | translate }}</th>
+                                    <th>{{ "common.phone" | translate }}</th>
+                                    <th>{{ "common.status" | translate }}</th>
+                                    <th>{{ "common.action" | translate }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of table.data">
+                                    <td>{{ data.code }}</td>
+                                    <td>
+                                        {{ data.createdAt | moment: "HH:mm" }}
+                                        <br />
+                                        {{
+                                            data.createdAt
+                                                | moment: "dd/MM/yyyy"
+                                        }}
+                                    </td>
+                                    <td>
+                                        {{ data.fullName }}
+                                    </td>
+                                    <td>{{ data.phone }}</td>
+                                    <td></td>
+                                    <td>
+                                        <a nz-popconfirm (nzOnConfirm)="deleteOwner()">
+                                            <button ad-button nzColor="red" nzType="dashed">
+                                                {{
+                                                    "common.delete" | translate
+                                                }}
+                                            </button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </nz-table>
+                        <div class="row">
+                            <div class="col-6">
+                                <nz-form-item>
+                                    <nz-form-label nzFor="">{{
+                                            "warranty-repair.service-center.staff"
+                                                | translate
+                                        }}
+                                    </nz-form-label>
+                                    <nz-form-control>
+                                        <div class="formControlWithAction">
+                                            <nz-form-control>
+                                                <nz-select name="selectStaff" [(ngModel)]="selectedStaff">
+                                                    <nz-option *ngFor="
+                                                            let item of memberList
+                                                        " [nzLabel]="
+                                                            item.fullName
+                                                        " [nzValue]="item">
+                                                    </nz-option>
+                                                </nz-select>
+                                            </nz-form-control>
+                                            <button ad-button nzColor="red" (click)="addOneStaff()">
+                                                {{ "button.add" | translate }}
+                                            </button>
+                                            <button ad-button nzColor="red" (click)="addAllStaffs()">
+                                                {{
+                                                    "button.addAll" | translate
+                                                }}
+                                            </button>
+                                        </div>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 15px;">
+                            <div class="col">
+                                <nz-tag style="margin-bottom: 5px;" *ngFor="let staff of staffList | keys"
+                                    nzColor="#12CAD1" nzMode="closeable" (nzAfterClose)="removeStaff(staff)">
+                                    {{ staff?.value?.fullName }}
+                                </nz-tag>
+                            </div>
+                        </div>
+                    </nz-tab>
+                </nz-tabset>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div style="max-width: 360px; margin: 0 auto">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" (click)="onCreateStore()">
+                    {{
+                        (model?._id
+                            ? "form.create-store.update"
+                            : "form.create-store.create"
+                        ) | translate
+                    }}
+                </button>
+                <button ad-button nzUpper nzType="default" (click)="onCancelModal()">
+                    {{ "actions.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

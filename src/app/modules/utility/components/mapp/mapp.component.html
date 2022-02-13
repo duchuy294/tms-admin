@@ -1,0 +1,11 @@
+    <nz-spin [nzSpinning]="loading" nzTip="Đang lấy dữ liệu">
+        <div *ngIf="showButton" class="buttonContainer">
+            <button ad-button nzColor="red" (click)="toggleDraggableFunction()">
+                {{ (isDraggable ? 'maps.disable-dragging' : 'maps.enable-dragging') | translate }}
+            </button>
+        </div>
+        <agm-map (mapReady)="mapReady($event)" [zoom]="zoom" [latitude]="lat" [longitude]="lng"
+            [mapDraggable]="isDraggable">
+            <div class="centerMarker"></div>
+        </agm-map>
+    </nz-spin>

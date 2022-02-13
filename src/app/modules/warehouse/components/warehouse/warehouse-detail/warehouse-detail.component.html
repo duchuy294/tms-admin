@@ -1,0 +1,14 @@
+<button class="page__button" ad-button nzColor="red" (click)="toggleFilter()">
+    {{'button.filter' | translate}}
+</button>
+<button class="page__button" ad-button>
+    {{'actions.export' | translate}}
+</button>
+<div class="row">
+    <div class="col-8 page__left-info">
+        <warehouse-order-information #order></warehouse-order-information>
+    </div>
+    <div class="col-4 page__right-info">
+        <warehouse-information></warehouse-information>
+    </div>
+</div>

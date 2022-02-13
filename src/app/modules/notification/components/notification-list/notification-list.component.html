@@ -1,0 +1,12 @@
+<div class="grid__container">
+    <div class="grid__header">
+        <button class="grid__action__left" ad-button nzColor="red" (click)="toggleFilter()">
+            {{'filter.filter'|translate}}
+        </button>
+    </div>
+    <filter-notification (onSearch)="search($event)" (onReset)="search($event)"
+        [style.display]="showFilter?'block':'none'">
+    </filter-notification>
+    <notification-grid [(model)]="modelQuery" #notificationGrid>
+    </notification-grid>
+</div>

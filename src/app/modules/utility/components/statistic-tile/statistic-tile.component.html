@@ -1,0 +1,12 @@
+<div class="store-statistic__container">
+    <ng-container *ngFor="let item of data; index as i">
+        <div *ngIf="item" [class]="'store-statistic__item store-statistic__item--color'+(i+1)" [ngStyle]="style">
+            <h4 class="store-statistic__title" nz-tooltip [nzTooltipTitle]="item.title | translate"
+                nzTooltipPlacement="topLeft">
+                {{ item.title | translate }}
+            </h4>
+            <span class="store-statistic__total">{{(item.value || 0) | number}}</span>
+        </div>
+    </ng-container>
+</div>
+<div style="clear:both"></div>

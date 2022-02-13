@@ -1,0 +1,45 @@
+<page-wrapper [nzTitle]="pageTitle">
+    <div class="row">
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-control>
+                    <nz-date-picker nzFormat="dd/MM/yyyy" [(ngModel)]="searchTime" name="searchTime"
+                        [nzPlaceHolder]="'filter.fromDate' | translate" (ngModelChange)="onChangeTime($event)"
+                        [nzDisabledDate]="disabledDate">
+                    </nz-date-picker>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-9">
+            <p>{{'finance.session-cod.filterDescription' | translate}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <nz-spin nzTip="Loading..." [nzSpinning]="loading">
+                <nz-transfer [nzDataSource]="list" nzShowSearch [nzFilterOption]="filterOption"
+                    [nzListStyle]="{ 'width.%': 48, 'height.px': 450 }" (nzChange)="onChangeList()"
+                    [nzSearchPlaceholder]="'finance.session-cod.filterPlaceholderList' | translate"
+                    [nzTitles]="['finance.session-cod.leftList' | translate, 'finance.session-cod.rightList' | translate]"
+                    [nzItemsUnit]="'finance.session-cod.titleList' | translate"
+                    [nzItemUnit]="'finance.session-cod.titleList' | translate">
+                </nz-transfer>
+                <div style="margin-top:15px; text-align: center; width: 90%;">
+                    <button [disabled]="disabledCreate" ad-button [nzColor]="'orange'" nzSize="large"
+                        (click)="createSessionCod()">{{ 'finance.session-cod.create-btn' | translate }}</button>
+                </div>
+            </nz-spin>
+        </div>
+    </div>
+
+</page-wrapper>
+<ng-template #pageTitle>
+    <div class="row">
+        <div class="col">
+            {{ "finance.session-cod.create" | translate }}
+            <a routerLink="/pages/finance/session-cod" ad-button nzColor="blue" style="float: right;"><i nz-icon
+                    nzType="left"></i>
+                {{ 'button.back' | translate }}</a>
+        </div>
+    </div>
+</ng-template>

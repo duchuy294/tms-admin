@@ -1,0 +1,45 @@
+@import './../../../utils.less';
+
+.user {
+  &-layout {
+    background: url('/assets/images/user-background.svg') no-repeat;
+    background-size: 100%;
+    min-height: 100vh;
+  }
+
+  &-container {
+    width: 360px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &-header {
+    text-align: center;
+  }
+
+  &-intro {
+    text-align: center;
+    padding: 10px;
+    color: rgba(0, 0, 0, .45);
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  &-logo {
+    img {
+      height: 60px;
+      text-align: right;
+      margin-right: 20px;
+    }
+  }
+
+  &-title {
+    font-size: 30px;
+    font-weight: 600;
+    position: relative;
+    top: 8px;
+    color: @primary-color;
+  }
+}

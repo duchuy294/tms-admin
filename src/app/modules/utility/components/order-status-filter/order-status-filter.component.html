@@ -1,0 +1,3 @@
+<nz-tag *ngFor="let item of data" [nzColor]="colors[item.name]" (click)="onSelectStatus(item)">
+    {{item.label}} <span class="number">{{item.value}}</span>
+</nz-tag>

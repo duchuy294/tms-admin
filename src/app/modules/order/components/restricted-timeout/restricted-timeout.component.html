@@ -1,0 +1,100 @@
+<page-wrapper [nzTitle]="pageTitle">
+    <div class="grid__container">
+        <div class="grid__header">
+            <button
+                class="grid__action__left"
+                ad-button
+                nzColor="red"
+                (click)="showFilter = !showFilter"
+            >
+                {{ "filter.filter" | translate }}
+            </button>
+            <button
+                class="grid__action__right"
+                ad-button
+                nzColor="orange"
+                (click)="openModificationModal()"
+            >
+                {{ "button.add" | translate }}
+            </button>
+        </div>
+    </div>
+    <filter-restricted-timeout
+        (onSearch)="search($event)"
+        (onReset)="search($event)"
+        *ngIf="showFilter"
+    >
+    </filter-restricted-timeout>
+    <nz-table
+        [nzData]="pagingData.data"
+        [nzFrontPagination]="false"
+        nzShowSizeChanger
+        [nzSize]="'small'"
+        [nzTotal]="pagingData.total"
+        [(nzPageIndex)]="query.page"
+        [(nzPageSize)]="query.limit"
+        (nzPageIndexChange)="loadData()"
+        (nzPageSizeChange)="loadData()"
+        [nzScroll]="{ x: '700px' }"
+    >
+        <thead>
+            <tr>
+                <th>{{ "common.customer" | translate }}</th>
+                <th>{{ "order.restricted-timeout.duration" | translate }}</th>
+                <th [nzWidth]="'100px'" nzRight="0px">
+                    {{ "common.action" | translate }}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of pagingData.data">
+                <td width="45%">
+                    <nz-tag [nzColor]="'#2db7f5'" *ngIf="users[item.userId]">
+                        {{
+                            users[item.userId].code +
+                                " - " +
+                                users[item.userId].fullName
+                        }}</nz-tag
+                    >
+                </td>
+                <td width="45%">
+                    {{ getDuration(item.duration) }}
+                </td>
+                <td nzRight="0px" width="10%">
+                    <button
+                        nz-dropdown
+                        ad-button
+                        nzType="dashed"
+                        [nzDropdownMenu]="menu"
+                    >
+                        {{ "common.action" | translate }}
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                            <li nz-menu-item>
+                                <a (click)="edit(item)">{{
+                                    "button.edit" | translate
+                                }}</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a (click)="delete(item._id)">{{
+                                    "common.delete" | translate
+                                }}</a>
+                            </li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</page-wrapper>
+<ng-template #pageTitle>
+    {{ "order.restricted-timeout.title" | translate }}
+</ng-template>
+<restricted-timeout-modify
+    [(visibleModal)]="visibleModal"
+    [model]="model"
+    (updated)="loadData()"
+    (handleVisible)="handleVisible($event)"
+>
+</restricted-timeout-modify>

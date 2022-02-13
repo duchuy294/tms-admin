@@ -1,0 +1,177 @@
+<div class="row">
+    <div class="col-2">
+        <nz-form-item>
+            <nz-form-label>{{'common.code' | translate}}</nz-form-label>
+            <nz-form-control>
+                <input type="text" name="code" nz-input [(ngModel)]="query.code" />
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div class="col-2">
+        <nz-form-item>
+            <nz-form-label nzFor="rewardId">{{'common.reward' | translate}}
+            </nz-form-label>
+            <nz-form-control>
+                <nz-select [(ngModel)]="query.rewardId" name="rewardId" style="width: 100%;" [nzShowSearch]="true"
+                    (nzOnSearch)="loadRewards($event)" [nzAllowClear]="true">
+                    <nz-option *ngFor="let item of rewards" [nzLabel]="item.name" [nzValue]="item._id">
+                    </nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div class="col-2">
+        <nz-form-item>
+            <nz-form-label nzFor="providerIds">{{'common.rewardProvider' | translate}}
+            </nz-form-label>
+            <nz-form-control>
+                <nz-select [(ngModel)]="query.providerIds" name="providerId" style="width: 100%;" [nzShowSearch]="true"
+                    (nzOnSearch)="loadProviders($event)" [nzAllowClear]="true">
+                    <nz-option *ngFor="let item of providers" [nzLabel]="item.name" [nzValue]="item._id">
+                    </nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div class="col-2">
+        <nz-form-item>
+            <nz-form-label nzFor="categoryIds">{{'common.rewardCategory' | translate}}
+            </nz-form-label>
+            <nz-form-control>
+                <nz-select [(ngModel)]="query.categoryIds" name="categoryIds" [nzShowSearch]="true"
+                    [nzAllowClear]="true" style="width: 100%;">
+                    <nz-option *ngFor="let item of categories" [nzLabel]="item.name" [nzValue]="item._id">
+                    </nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-2">
+        <nz-form-item>
+            <nz-form-label>{{'common.rewardType' | translate}}</nz-form-label>
+            <nz-form-control>
+                <nz-select [(ngModel)]="query.type" name="type" style="width: 100%;" [nzAllowClear]="true">
+                    <nz-option *ngFor="let item of ['promoCode']" [nzLabel]="'rewardType.' + item | translate"
+                        [nzValue]="item">
+                    </nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div class="col-2">
+        <nz-form-item>
+            <nz-form-label>{{'common.status' | translate}}</nz-form-label>
+            <nz-form-control>
+                <nz-select [(ngModel)]="query.status" name="status" style="width: 100%;" [nzAllowClear]="true">
+                    <nz-option *ngFor="let item of [1, 2, 4]" [nzLabel]="'common.status' + item | translate"
+                        [nzValue]="item">
+                    </nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div class="col-2">
+        <nz-form-item>
+            <nz-form-label>{{'filter.fromDate' | translate}}</nz-form-label>
+            <nz-form-control>
+                <nz-date-picker nzFormat="dd/MM/yyyy" name="startTime" [(ngModel)]="query.startTime"
+                    [ngStyle]="{ width: '100%' }" nzPlaceHolder="{{'filter.fromDate' | translate}}"></nz-date-picker>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div class="col-2">
+        <nz-form-item>
+            <nz-form-label>{{'filter.toDate' | translate}}</nz-form-label>
+            <nz-form-control>
+                <nz-date-picker nzFormat="dd/MM/yyyy" name="endTime" [(ngModel)]="query.endTime"
+                    [ngStyle]="{ width: '100%' }" nzPlaceHolder="{{'filter.toDate' | translate}}">
+                </nz-date-picker>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div class="col-2 mrg-bt-10">
+        <nz-form-item>
+            <nz-form-label class="form-label--empty"></nz-form-label>
+            <nz-form-control>
+                <button ad-button nzColor="red"
+                    (click)="query.page = 1; loadData()">{{'button.search' | translate}}</button>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div class="col-12 mrg-bt-10">
+        <nz-table [nzData]="pagingData.data" [nzFrontPagination]="true" [nzShowPagination]="false" [nzBordered]="true"
+            [nzSize]="'small'">
+            <thead>
+                <tr>
+                    <th>{{'common.code' | translate }}</th>
+                    <th>{{'common.createdAt' | translate }}</th>
+                    <th>{{'common.awarded' | translate }}</th>
+                    <th>{{'common.receiver' | translate }}</th>
+                    <th>{{'common.used' | translate }}</th>
+                    <th>{{'common.status' | translate }}</th>
+                    <th>{{'common.reward' | translate }}</th>
+                    <th>{{'common.staff' | translate }}</th>
+                    <th *ngIf="actions.length > 0">{{'common.action' | translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of pagingData.data">
+                    <td>
+                        <a href="#">{{item.code}}</a>
+                    </td>
+                    <td>{{item.createdAt | date:'HH:mm dd/MM/yyyy'}}</td>
+                    <td>
+                        <nz-switch [ngModel]="item.isGift === true" [nzDisabled]="true"></nz-switch>
+                    </td>
+                    <td>
+                        <a routerLink="/pages/customer-management/personal/detail/{{item.userId}}" class="link"
+                            *ngIf="userGroups[item.userId]">{{userGroups[item.userId][0]?.fullName}}</a>
+                        <a routerLink="/pages/servicer-management/servicer/detail/{{item.userId}}" class="link"
+                            *ngIf="servicerGroups[item.userId]">{{servicerGroups[item.userId][0]?.fullName}}</a>
+                    </td>
+                    <td>{{item.usedQuantity}}</td>
+                    <td>{{'common.status' + item.status | translate}}</td>
+                    <td><a *ngIf="rewardGroups[item.rewardId]" class="link" style="color: #40a9ff"
+                            (click)="openModifyModal(rewardGroups[item.rewardId][0])">{{rewardGroups[item.rewardId][0].name}}</a>
+                    </td>
+                    <td><a routerLink="#"
+                            *ngIf="accountGroups[item.accountId]">{{accountGroups[item.accountId][0]?.fullName}}</a>
+                    </td>
+                    <td nzRight="0px" *ngIf="actions.length > 0">
+                        <nz-dropdown>
+                            <button nz-dropdown ad-button nzType="dashed">
+                                {{'common.action' | translate}}
+                            </button>
+                            <ul nz-menu nzSelectable>
+                                <ng-template ngFor let-action [ngForOf]="actions">
+                                    <li nz-menu-item *ngIf="!action.visible || action.visible(item)">
+                                        <a (click)="action.perform(item)">{{action.name | translate}}</a>
+                                    </li>
+                                </ng-template>
+                            </ul>
+                        </nz-dropdown>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+    <div class="col-12">
+        <nz-pagination [(nzPageIndex)]="query.page" [nzTotal]="pagingData.total" [(nzPageSize)]="query.limit"
+            [nzShowSizeChanger]="true" [nzPageSizeOptions]="[20, 40, 60]" (nzPageIndexChange)="loadData()"
+            (nzPageSizeChange)="loadData()">
+        </nz-pagination>
+    </div>
+</div>
+<reward-modify [model]="reward" [visibleModal]="visibleModal" (handleVisible)="handleVisible($event)">
+</reward-modify>

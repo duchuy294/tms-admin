@@ -1,0 +1,34 @@
+<form nz-form nzLayout="vertical" #filterDeliveryPoint="ngForm">
+    <div class="row">
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label nzFor="customer">{{
+                    "end-user.sub-end-user.receiver" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <search-and-suggest-end-user-component #suggestForm mode="multiple" [endUserId]="endUserId"
+                        [(ngModel)]="selectedSubEndUser" ngDefaultControl [ngModelOptions]="{ standalone: true }"
+                        #user="ngModel" [allowEndUser]="false" [allowSubEndUser]="true"
+                        [subEndUserSearchCondition]="subEndUserSearchCondition" [valueType]="'_id'" [placeHolder]="
+                            ('common.phone' | translate) +
+                            ', ' +
+                            ('common.name' | translate)
+                        ">
+                    </search-and-suggest-end-user-component>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-label class="form-label form-label--empty"></nz-form-label>
+            <nz-form-control>
+                <button ad-button nzColor="red" (click)="searchEvent()">
+                    {{ "button.find" | translate }}
+                </button>
+                &nbsp;
+                <button ad-button nzColor="white" (click)="reset()">
+                    {{ "button.remove" | translate }}
+                </button>
+            </nz-form-control>
+        </div>
+    </div>
+</form>

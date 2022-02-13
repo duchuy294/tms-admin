@@ -1,0 +1,53 @@
+<nz-table #table (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [(nzPageIndex)]="queryModel.page" [(nzPageSize)]="queryModel.limit" [nzData]="tableData.data"
+    [nzTotal]="tableData.total" [nzFrontPagination]="false" [nzLoading]="loadingGrid" [nzScroll]="{ x: '1000px' }"
+    [nzTotal]="tableData.total" nzShowSizeChanger nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th [nzWidth]="'10%'">{{ 'common.createdAt' | translate }}</th>
+            <th [nzWidth]="'25%'">{{ 'common.title' | translate }}</th>
+            <th [nzWidth]="'25%'">{{ 'common.category' | translate }} </th>
+            <th [nzWidth]="'10%'">{{ 'common.status' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.orderNo' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.staff' | translate }}</th>
+            <th [nzWidth]="'10%'" nzRight="0px">{{'common.action' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of table.data">
+            <td>{{ item.createdAt | date:'h:mm a dd/MM/yyyy' }}</td>
+            <td>{{ item.title }}</td>
+            <td>
+                <div *ngFor="let id of item.catIds">{{ catId[id] }}</div>
+            </td>
+            <td>
+                <nz-switch [ngModel]="statuses[item._id]" [nzLoading]="loadingStatus" [nzControl]="true"
+                    (click)="onChangeStatus(item)"></nz-switch>
+            </td>
+            <td>{{ item.order }}</td>
+            <td>{{ item.updatedBy ? (adminUpdatedBy[item.updatedBy]?.fullName) : '' }}</td>
+            <td nzRight="0px">
+                <ng-container>
+                    <button nz-dropdown ad-button nzType="dashed" [nzDropdownMenu]="menu"
+                        [nzPlacement]="'bottomCenter'">
+                        {{ 'common.action' | translate }}
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                            <li nz-menu-item (click)="handleEdit(item._id)">
+                                {{'button.edit' | translate}}
+                            </li>
+                            <li nz-menu-item (click)="handleSend(item._id)">
+                                {{'marketing.news.send-news-noti' | translate}}
+                            </li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{'table.total' | translate}} {{ total }}
+    {{'table.result' | translate | lowercase}}
+</ng-template>

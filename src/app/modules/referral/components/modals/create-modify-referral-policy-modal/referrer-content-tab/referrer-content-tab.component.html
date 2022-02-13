@@ -1,0 +1,98 @@
+<form nz-form nzLayout="vertical" #referrerContentForm="ngForm">
+    <nz-form-item>
+        <div class="title">
+            <nz-form-label nzNoColon="true">
+                {{ "common.the-referrer" | translate | uppercase }}
+            </nz-form-label>
+        </div>
+        <nz-form-control>
+            <label nz-checkbox [(ngModel)]="giveReward" name="giveReward" (ngModelChange)="onCheckboxChange()">{{
+                    "marketing.referral-policy.give-reward" | translate
+                }}</label>
+            <div class="row">
+                <div class="col-8">
+                    <reward-search [(ngModel)]="selectedReward" ngDefaultControl [ngModelOptions]="{ standalone: true }"
+                        #reward="ngModel" [placeHolder]="'marketing.reward.find' | translate" [disabled]="!giveReward">
+                    </reward-search>
+                    <nz-tag style="margin: 0 5px" *ngFor="let item of rewardListArray" nzColor="#12CAD1"
+                        [nzMode]="giveReward ? 'closeable' : 'default'" (nzAfterClose)="removeReward(item)">
+                        {{ rewardList[item] }}
+                    </nz-tag>
+                </div>
+                <div class="col-2">
+                    <button ad-button nzUpper nzColor="red" (click)="addReward()" [disabled]="!giveReward">
+                        {{ "button.add" | translate }}
+                    </button>
+                </div>
+            </div>
+            <br />
+            <div class="wallet__container">
+                <label nz-checkbox [(ngModel)]="giveBonusToWallet" name="giveBonusToWallet"
+                    (ngModelChange)="onCheckboxChange()">{{
+                        "marketing.referral-policy.give-bonus-to-wallet"
+                            | translate
+                    }}</label>
+                <nz-select class="wallet" [(ngModel)]="walletType" nzPlaceHolder="Choose" name="walletType"
+                    [nzDisabled]="!giveBonusToWallet">
+                    <nz-option *ngFor="let item of walletTypes" [nzValue]="item"
+                        [nzLabel]="'common.wallet-' + item | translate">
+                    </nz-option>
+                </nz-select>
+            </div>
+            <div class="row" *ngIf="bonusDataAmount && bonusDataAmount.length > 1">
+                <div class="col-3">
+                    {{ "marketing.referral-policy.from-number" | translate }}
+                </div>
+                <div class="col-3">
+                    {{ "marketing.referral-policy.to-number" | translate }}
+                </div>
+                <div class="col-3">
+                    {{ "marketing.referral-policy.money-amount" | translate }}
+                </div>
+            </div>
+            <div *ngFor="let item of bonusDataFrom; index as i">
+                <div class="row" *ngIf="i > 0">
+                    <div class="col-3">
+                        <nz-input-number style="width: 100%" [name]="'from' + i" [(ngModel)]="bonusDataFrom[i]"
+                            (ngModelChange)="handleFrom(i)" nz-input [nzMin]="bonusDataTo[i - 1] + 1"
+                            [nzMax]="bonusDataTo[i]" [nzDisabled]="!giveBonusToWallet">
+                        </nz-input-number>
+                    </div>
+                    <div class="col-3">
+                        <nz-input-number style="width: 100%" [name]="'to' + i" [(ngModel)]="bonusDataTo[i]"
+                            (ngModelChange)="handleTo(i)" nz-input [nzMin]="bonusDataFrom[i]"
+                            [nzDisabled]="!giveBonusToWallet">
+                        </nz-input-number>
+                    </div>
+                    <div class="col-4">
+                        <nz-input-group [nzSuffix]="
+                                'common.currency-unit' | translate | uppercase
+                            ">
+                            <input nz-input [name]="'amount' + i" [(ngModel)]="bonusDataAmount[i]"
+                                (ngModelChange)="handleAmount(i)" [textMask]="{ mask: numberMask }"
+                                [disabled]="!giveBonusToWallet" />
+                        </nz-input-group>
+                    </div>
+                    <div class="col-2">
+                        <button ad-button nzUpper nzColor="white" (click)="removeBonus(i)"
+                            [disabled]="!giveBonusToWallet">
+                            {{ "button.remove" | translate }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="visibleBonusWarning" style="color: #f5222d">
+                <div class="col">
+                    {{ textBonusWarning }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <button ad-button nzUpper nzColor="red" (click)="addBonus()" [disabled]="!giveBonusToWallet">
+                        {{ "button.add" | translate }}
+                    </button>
+                </div>
+            </div>
+        </nz-form-control>
+    </nz-form-item>
+</form>

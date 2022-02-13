@@ -1,0 +1,89 @@
+<nz-table #table (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [(nzPageIndex)]="queryModel.page" [(nzPageSize)]="queryModel.limit" [nzData]="tableData.data"
+    [nzFrontPagination]="false" [nzLoading]="loadingGrid" [nzScroll]="{ x: '900px' }" [nzTotal]="tableData.total"
+    nzShowSizeChanger nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th [nzWidth]="'10%'">{{ 'finance.transaction-userType.name' | translate }} </th>
+            <th [nzWidth]="'20%'">{{ 'common.full-name' | translate }} </th>
+            <th [nzWidth]="'12%'">{{ 'finance.transaction-walletType.main' | translate }}
+                ({{ 'common.currency-unit' | translate }})</th>
+            <th [nzWidth]="'10%'" align="right">{{ 'finance.transaction-walletType.sub' | translate }}
+                ({{ 'common.currency-unit' | translate }})</th>
+            <th [nzWidth]="'10%'" align="right">{{ 'finance.transaction-walletType.deposit' | translate }}
+                ({{ 'common.currency-unit' | translate }})</th>
+            <th [nzWidth]="'10%'" style="text-align: 'right'">
+                {{ 'finance.transaction-walletType.collection' | translate }}
+                ({{ 'common.currency-unit' | translate }})</th>
+            <th [nzWidth]="'10%'">{{ 'finance.transaction-walletType.withdrawLimit' | translate }} </th>
+            <th [nzWidth]="'10%'">{{ 'finance.transaction-walletType.minRemaining' | translate }} </th>
+            <th [nzWidth]="'12%'">{{ 'finance.transaction-walletType.postpaid-allowed' | translate }} </th>
+            <th [nzWidth]="'10%'">{{ 'common.staff' | translate }}</th>
+            <th [nzWidth]="'8%'" nzRight="0px">{{'common.action' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of table.data">
+            <td>{{ 'common.userType.' + item?.userType | translate }}</td>
+            <td>
+                <a *ngIf="item.userType === AccountType.USER"
+                    routerLink="/pages/customer-management/personal/detail/{{item?.userId}}">
+                    {{ people[item?.userId]?.fullName }}
+                </a>
+                <a *ngIf="item.userType === AccountType.SERVICER"
+                    routerLink="/pages/servicer-management/servicer/detail/{{item?.userId}}">
+                    {{ people[item?.userId]?.fullName }}
+                </a>
+                <div *ngIf="people[item?.userId]">({{ people[item?.userId]?.code }})</div>
+            </td>
+            <td align="right">
+                <div style="padding-right: 30%">{{ item.mainBalance | number }}</div>
+            </td>
+            <td align="right">
+                <div style="padding-right: 30%">{{ item.subBalance | number }}</div>
+            </td>
+            <td align="right">
+                <div style="padding-right: 30%">{{ item.depositBalance | number }}</div>
+            </td>
+            <td align="right">
+                <div style="padding-right: 30%">{{ item.collectionDebt | number }}</div>
+            </td>
+            <td align="right">
+                <div style="padding-right: 30%">{{ item.minWithdraw | number }} ~
+                    <span *ngIf="item.maxWithdraw !== 0; else elseSpan">{{ item.maxWithdraw | number }}</span>
+                    <ng-template #elseSpan><span style="font-size: 15px;">&infin;</span></ng-template>
+                </div>
+            </td>
+            <td align="right">
+                <div style="padding-right: 30%">{{ item.minRemaining | number }}</div>
+            </td>
+            <td>
+                <nz-switch [nzLoading]="loadingStatus" [ngModel]="statuses[item._id]" [nzControl]="true"
+                    (click)="onChangeStatus(item)"></nz-switch>
+            </td>
+            <td>{{ admins[item?.updatedBy]?.fullName }}</td>
+            <td nzRight="0px">
+                <ng-container>
+                    <button nz-dropdown ad-button nzType="dashed" [nzDropdownMenu]="menu"
+                        [nzPlacement]="'bottomCenter'">
+                        {{'common.action' | translate}}
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                            <li nz-menu-item>
+                                <a (click)="passingWalletData(item)">{{'finance.transaction-title' | translate}}</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a (click)="passingWalletUpdateData(item)">{{'actions.edit' | translate}}</a>
+                            </li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{ 'table.total' | translate }} {{ total }}
+    {{ 'table.result' | translate | lowercase}}
+</ng-template>

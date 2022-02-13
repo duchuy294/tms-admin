@@ -1,0 +1,28 @@
+@text-color: #EE9570;
+
+.unread-item {
+    font-weight: bold;
+    background-color: #F8F8F8;
+}
+
+.alert {
+    &__container {
+        margin-bottom: 5px;
+    }
+
+    &__total {
+        color: red;
+        font-weight: bold;
+    }
+
+    &__view-all {
+        color: @text-color;
+        float: right;
+        cursor: pointer;
+    }
+
+    &__highlight {
+        color: @text-color;
+        cursor: pointer;
+    }
+}

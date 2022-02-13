@@ -1,0 +1,15 @@
+<div class="grid__container">
+    <div class="grid__header">
+        <div>
+            <button class="grid__action__right" ad-button nzColor="primary" (click)="handleVisible(true)">
+                {{'button.add'|translate}}
+            </button>
+        </div>
+    </div>
+    <reason-template-grid [(model)]="modelQuery" (detail)="edit($event)" #reasonTemplateGrid>
+    </reason-template-grid>
+</div>
+<create-reason-template [model]="model" [visible]="visibleModel" (handleVisible)="handleVisible($event)"
+    [loading]="loadingModel" (handleLoading)="handleLoading($event)" (submit)="submit($event)" [type]="modelType"
+    #createReasonTemplate>
+</create-reason-template>

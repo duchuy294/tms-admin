@@ -1,0 +1,15 @@
+<button class="page__button" ad-button nzColor="red" (click)="toggleFilter()">
+    {{'button.filter' | translate}}
+</button>
+<button class="page__button" ad-button>
+    {{'actions.export' | translate}}
+</button>
+<div class="row">
+    <div class="col-8 page__left-info">
+        <team-servicer-detail-list #list queryData="groupId"></team-servicer-detail-list>
+    </div>
+    <div class="col-4 page__right-info">
+        <group-servicer-detail-information (triggerModify)="triggerModify($event)">
+        </group-servicer-detail-information>
+    </div>
+</div>

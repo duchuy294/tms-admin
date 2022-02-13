@@ -1,0 +1,17 @@
+<div class="grid__container">
+    <div style="display: flex; width: 100%; ">
+        <div style="font-size: 1.5em">
+            {{ 'marketing.news-banner.list' | translate }}
+        </div>
+        <div style="display: flex; position: absolute; right: 0px">
+            <button ad-button nzUpper nzColor="primary"
+                (click)="addBanner()">{{  'marketing.news-banner.add-banner' | translate }}</button>
+        </div>
+    </div>
+    <br>
+    <banner-grid #bannerGrid (edit)="editBanner($event)">
+    </banner-grid>
+</div>
+<create-modify-banner-modal [bannerModel]="bannerToEdit" [visible]="addBannerModalVisible"
+    (handleVisible)="handleAddBannerModalVisible($event)" (afterSubmit)="handleAfterSubmit()">
+</create-modify-banner-modal>

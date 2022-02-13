@@ -1,0 +1,38 @@
+<nz-modal [nzWidth]="1400" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="null"
+    (nzOnCancel)="handleVisibleModal()">
+    <ng-template #modalTitle>
+        {{'common.collection-money-total'|translate}}
+    </ng-template>
+    <ng-template #modalContent>
+        <nz-table #totalCollectionDebt [nzSize]="'small'" [nzData]="(totalCollectionDebt$ | async)?.data"
+            [nzFrontPagination]="false" nzShowSizeChanger [nzLoading]="loading$ | async"
+            [nzTotal]="(totalCollectionDebt$ | async)?.total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+            (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+            [nzScroll]="{ x: '1300px' }">
+            <thead>
+                <tr>
+                    <th [nzWidth]="'120px'">{{'servicer.code'|translate}}</th>
+                    <th [nzWidth]="'280px'">{{'table.team-servicer-name'|translate}}</th>
+                    <th>{{'common.servicer'|translate}}</th>
+                    <th>{{'common.phone'|translate}}</th>
+                    <th [nzWidth]="'220px'">{{'common.vehicle'|translate}}</th>
+                    <th>{{'common.wallet-deposit'|translate}}</th>
+                    <th>{{'common.collection-money'|translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of totalCollectionDebt.data">
+                    <td><a target="_blank"
+                            [routerLink]="['/pages/servicer-management/servicer/detail/', data._id]">{{ data.code }}</a>
+                    </td>
+                    <td [innerHTML]="data.teams | split:',': true | viewMore:45"></td>
+                    <td>{{ data.fullName }}</td>
+                    <td>{{ data.phone }}</td>
+                    <td [innerHTML]="data.vehicles | split:',': true"></td>
+                    <td>{{ data.deposit | number }}</td>
+                    <td>{{ data.collectionDebt | number }}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </ng-template>
+</nz-modal>

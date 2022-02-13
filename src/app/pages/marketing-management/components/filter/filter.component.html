@@ -1,0 +1,34 @@
+<div class="filter" *ngIf="display">
+    <div class="row">
+        <div class="form-group col-2">
+            <label>{{'filter.fromDate' | translate }}</label>
+            <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model.startTime"
+                    ngbDatepicker #d1="ngbDatepicker">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"></button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-2">
+            <label>{{'filter.toDate' | translate }}</label>
+            <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model.endTime"
+                    ngbDatepicker #d2="ngbDatepicker">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"></button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-2">
+            <label>{{'filter.notificationType' | translate }}</label>
+            <select class="form-control" [(ngModel)]="model.notificationType">
+                <option value="">{{'common.all' | translate}}</option>
+                <option *ngFor="let item of groups" [ngValue]="item._id">{{item.name}}</option>
+            </select>
+        </div>
+        <div class="form-group col-2">
+            <button type="button" class="btn btn-sm btn-danger" (click)="searchEvent()">{{'button.search' | translate}}</button>
+        </div>
+    </div>
+</div>

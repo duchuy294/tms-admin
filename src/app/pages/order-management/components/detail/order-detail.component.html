@@ -1,0 +1,460 @@
+<div class="titleCode">
+    {{ "common.orderCode" | translate}}: <span>#{{ order?.code | uppercase }}</span>
+</div>
+
+<div class="row">
+    <div class="col-8 content-left">
+        <page-wrapper [nzTitle]="pageTitleInformation">
+            <ng-template #pageTitleInformation>
+                <div class="title">
+                    {{ "order.information-order" | translate }}
+                </div>
+            </ng-template>
+            <div *ngIf="order" style="padding-bottom: 40px;">
+                <nz-skeleton [nzActive]="true" [nzLoading]="isLoaded" [nzTitle]="false" [nzParagraph]="{ rows: 15 }">
+                    <div class="row">
+                        <div class="col-6">
+                            <div>
+                                <span style="font-weight: bold">{{'common.orderType' | translate}}: </span>
+                                <span *ngIf="order.serviceType">{{"order.type." + order.serviceType | translate}}</span>
+                                &nbsp;
+                                <nz-tag *ngIf="order.deliveryType"
+                                    [nzColor]="orderDeliveryType[order.deliveryType]?.color || '#ccc'">
+                                    {{order.deliveryType}}
+                                </nz-tag>
+                            </div>
+                            <div>
+                                <span style="font-weight: bold">{{'common.createdAt' | translate}}: </span>
+                                <span *ngIf="order.createdAt">{{order?.createdAt | date: "HH:mm dd/MM/yyyy"}} </span>
+                            </div>
+                            <div>
+                                <span *ngIf="order.serviceType === 'installation'"
+                                    style="font-weight: bold">{{'common.expectedInstallTime' | translate}}:
+                                </span>
+                                <span
+                                    *ngIf="order.serviceType === 'delivery' || order.serviceType === 'deliveryInstallation'"
+                                    style="font-weight: bold">{{'common.expectedPickupTime' | translate}}:
+                                </span>
+                                <span *ngIf="order.expectedTime" style="color: red;">{{order?.expectedTime | date:
+                                    "HH:mm dd/MM/yyyy"}}
+                                </span>
+                            </div>
+                            <ng-template [ngIf]="user">
+                                <div>
+                                    <span style="font-weight: bold">{{'common.customer' | translate}}: </span>
+                                    <span *ngIf="user">
+                                        <a target="_blank"
+                                            routerLink="/pages/customer-management/personal/detail/{{user._id}}">{{
+                                            user.fullName }}</a>
+                                    </span>
+                                </div>
+                                <div>
+                                    <span style="font-weight:bold">{{'common.phone' | translate}}: </span>
+                                    <span *ngIf="user">{{user.phone}}</span>
+                                </div>
+                                <div>
+                                    <span style="font-weight:bold">{{'common.email' | translate}}: </span>
+                                    <span *ngIf="user">{{user.email}}</span>
+                                </div>
+                                <div>
+                                    <span style="font-weight:bold">{{'filter.address' | translate}}: </span>
+                                    <span *ngIf="user">{{ user.address.street }}{{ user.address.districtName? ', ' +
+                                        user.address.districtName : '' }}{{ user.address.cityName? ', ' +
+                                        user.address.cityName: '' }}</span>
+                                </div>
+                            </ng-template>
+                            <ng-template [ngIf]="order.detail?.distance">
+                                <div>
+                                    <span style="font-weight: bold">{{ "common.shipping-km" | translate }}: </span>
+                                    <span>
+                                        {{order.detail?.distance}} KM
+                                    </span>
+                                </div>
+                            </ng-template>
+                            <ng-template [ngIf]="subUser">
+                                <div>
+                                    <span style="font-weight: bold">3PL: </span>
+                                    <span *ngIf="user">
+                                        <a target="_blank"
+                                            routerLink="/pages/customer-management/personal/detail/{{subUser._id}}">{{
+                                            subUser.fullName }} - {{subUser.phone}}</a>
+                                    </span>
+                                </div>
+                            </ng-template>
+                            <div *ngIf="vehicleTypes[order?.detail?.vehicleTypeId]">
+                                <span style="font-weight:bold"> {{ "common.vehicle" | translate }}: </span>
+                                <span>{{ vehicleTypes[order?.detail?.vehicleTypeId]?.name[lang] }}
+                                    <img style="width: 15px"
+                                        src="{{ vehicleTypes[order?.detail?.vehicleTypeId]?.markerSmIcon }}" /></span>
+                            </div>
+                            <div>
+                                <span style="font-weight:bold">{{'warehouse.warehouse-order.note-customer' |
+                                    translate}}:
+                                </span>
+                                <span>
+                                    {{ order?.note || (order?.detail?.points?.length && order?.detail?.points[0]?.note)
+                                    }}</span>
+                            </div>
+                            <div *ngIf="order && types.includes(order.serviceType)">
+                                <span style="font-weight:bold">
+                                    {{ "order.serialNumber.title" | translate }}:
+                                </span>
+                                <span>
+                                    <a (click)="handleVisibleSerialNumberList(true)">{{'table.detail' | translate}}</a>
+                                </span>
+                            </div>
+                            <div *ngIf="order && order.detail &&
+                order.detail.points[1] &&
+                order.detail.points[1].scanStore">
+                                <span style="font-weight:bold">
+                                    {{ "handoverSessions3PL.toltalPackage" | translate }}:
+                                </span>
+                                <span>
+                                    {{order.packages ? order.packages.totalPackage: 1}}
+                                </span>
+                            </div>
+                            <div *ngIf="images && images.length > 0">
+                                <span style="font-weight:bold">
+                                    {{ "common.images" | translate }}:
+                                </span>
+                                <div>
+                                    <nz-file-uploader [nzFileList]="images" nzShowButton="false"
+                                        [nzShowUploadList]="{showPreviewIcon: true, showRemoveIcon: false}">
+                                    </nz-file-uploader>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 text-left">
+                            <div>
+                                <span style="font-weight: bold">
+                                    {{ "order.status" | translate }}:
+                                </span>
+                                <span>
+                                    <nz-tag [nzColor]="ORDER_STATUS_COLOR[order.status]">{{ order.statusLabel }}
+                                    </nz-tag>
+                                    <img *ngIf="showRevertIcon" (click)="revertOrderStatusVisible = true"
+                                        class="pointer" src="/assets/icon/autorenew-24px.svg" alt="edit" height="20"
+                                        width="20" />
+                                </span>
+                            </div>
+                            <div>
+                                <span style="font-weight: bold">
+                                    {{ 'finance.paymentMethodTitle' | translate}}:
+                                </span>
+                                <span style="color:#007BFF;">
+                                    {{ (order?.paymentMethod === PaymentMethod.CASH ? 'finance.paymentMethod.cash' :
+                                    'finance.paymentMethod.wallet') | translate}}
+                                </span>
+                            </div>
+                            <div *ngIf="order.externalCode">
+                                <span style="font-weight: bold">
+                                    {{ "order.external-code" | translate }}:
+                                </span>
+                                <span [innerHTML]="order.externalCode.split(',').join(', ')"></span>
+                            </div>
+                            <div>
+                                <span style="font-weight: bold">
+                                    {{ "order.admin" | translate }}:
+                                </span>
+                                <span>{{ admin?.fullName }}</span>
+                            </div>
+                            <div *ngIf="order?.operatorId">
+                                <span style="font-weight: bold">
+                                    {{ "order.orderer" | translate }}:
+                                </span>
+                                <span>
+                                    <a routerLink="/pages/customer-management/personal/detail/{{orderer?._id}}">
+                                        {{ orderer?.fullName }}
+                                    </a>
+                                </span>
+                            </div>
+                            <div *ngIf="order?._id && order?.serviceType ==='warrantyRepair'">
+                                <span style="font-weight: bold">
+                                    {{ "order.store" | translate }}:
+                                </span>
+                                <span>
+                                    <a *ngIf="store" [routerLink]="[
+                                            '/pages/warranty-repair/store-list',
+                                            store?._id
+                                        ]">
+                                        {{ store?.name }}
+                                    </a>
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col 12">
+                                    <span style="font-weight: bold">
+                                        {{ "table.perfomred-partner" | translate }}:
+                                    </span>
+                                    <span *ngIf="!visibleAssignOrderForm">
+                                        <a *ngIf="order.servicerId && servicer"
+                                            routerLink="/pages/servicer-management/servicer/detail/{{servicer._id}}">
+                                            {{ servicer.fullName }}
+                                        </a>
+                                        <span *ngIf="displayChangePerformer()">
+                                            <a class="link" (click)="changePerformer()">
+                                                <img src="/assets/icon/edit_pencil.png" alt="edit" height="15"
+                                                    width="15" />
+                                            </a>
+                                        </span>
+                                    </span>
+                                    <span
+                                        *ngIf="order.servicerId && servicer && displayRetry() && !visibleAssignOrderForm">
+                                        <a (click)="processingAssignPartner(servicer._id)" class="link"><img
+                                                src="/assets/icon/autorenew-24px.svg" alt="edit" height="20"
+                                                width="20" /></a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10" style="padding-left: 5px; max-height: 40px">
+                                    <span *ngIf="visibleAssignOrderForm">
+                                        <span *ngIf="displayChangePerformer()">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <search-and-suggest-account-component [(ngModel)]="selectedServicer"
+                                                        ngDefaultControl [ngModelOptions]="{standalone:true}"
+                                                        [selectedId]="order.servicerId" [allowCustomer]="false"
+                                                        [allowServicer]="true"
+                                                        [servicerSearchCondition]="servicerSearchCondition"
+                                                        [valueType]="'_id'"
+                                                        [placeHolder]="('actions.enter' | translate) + ' ' + ('common.id' | translate | uppercase) + '/' + ('common.name' | translate) + '/' + ('common.phone' | translate)">
+                                                    </search-and-suggest-account-component>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </span>
+                                        <span *ngIf="!displayChangePerformer()"></span>
+                                    </span>
+
+                                </div>
+                                <div class="col-2 icon-layout" style="padding-top: 7px; padding-left: 0px"
+                                    *ngIf="visibleAssignOrderForm">
+                                    <a (click)="processingAssignPartner(_selectedServicer)">
+                                        <img src="/assets/icon/ticker.png" alt="edit" height="27" width="27" />
+                                    </a>
+                                    <a (click)="cancelChangePerformer()">
+                                        <img src="/assets/icon/delete.png" alt="edit" height="27" width="27" />
+                                    </a>
+                                </div>
+                            </div>
+                            <div>
+                                <span style="font-weight: bold">{{ "order.partner-number" | translate }}:</span>
+                                <span *ngIf="order">
+                                    {{ servicer?.phone }}
+                                </span>
+                            </div>
+                            <div>
+                                <span style="font-weight: bold">
+                                    {{ "table.processing-staff" | translate }}:
+                                </span>
+                                <span>
+                                    {{ processingStaff ? (processingStaff.fullName) : ''}}
+                                </span>
+                            </div>
+                            <div *ngIf="order.serviceType != WARRANTY_REPAIR">
+                                <span style="font-weight: bold">
+                                    {{ "order.services" | translate }}:
+                                </span>
+                                <span [innerHtml]="orderService.getServiceNamesJoinByCommas(order?.costDetail)"></span>
+                            </div>
+                            <div *ngIf="order?.size">
+                                <span style="font-weight: bold">
+                                    {{ "order.size" | translate }}:
+                                </span>
+                                <span
+                                    *ngIf="order?.size.length > 0 && order?.size.width > 0 && order?.size.height> 0">{{order?.size.length}}x{{order?.size.width}}x{{order?.size.height}}
+                                    m</span>
+                            </div>
+                            <div *ngIf="order?.size">
+                                <span style="font-weight: bold">
+                                    {{ "order.volume" | translate }}:
+                                </span>
+                                <span *ngIf="order?.size?.volume; else volume">{{formatNumber(order?.size?.volume)}}
+                                    m<sup>3</sup> </span>
+                                <ng-template #volume>
+                                    <span>{{(formatNumber(order?.size?.length*order?.size?.width*order?.size?.height))}}
+                                        m<sup>3</sup></span>
+                                </ng-template>
+
+                            </div>
+                            <div *ngIf="order?.weight">
+                                <span style="font-weight: bold">
+                                    {{ "order.weight" | translate }}:
+                                </span>
+                                <span>{{formatNumber(order?.weight)}} Kg</span>
+                            </div>
+                            <div>
+                                <span style="font-weight: bold">
+                                    {{ "order.adminNote" | translate }}:
+                                </span>
+                                <span><span>{{order.adminNote}}</span><a
+                                        *ngIf="currentUser && currentUser._id == order.processedBy"
+                                        (click)="handleNoteAdmin()">
+                                        <img src="/assets/icon/edit_pencil.png" alt="edit" height="15" width="15" /></a>
+                                </span>
+                            </div>
+                            <div *ngIf="order.serviceType != WARRANTY_REPAIR">
+                                <span style="font-weight: bold">
+                                    {{ "order.viewReaches" | translate }}:
+                                </span>
+                                <a (click)="openReachesModal()">{{'table.detail' | translate}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="order.clientBranchId && order.detail && order.detail.points[0]"
+                        style="padding-bottom: 30px;">
+                        <div class="title">{{'common.hubInfo' | translate | uppercase}}</div>
+                        <nz-divider style="margin-top: 15px;"></nz-divider>
+                        <div class="hubInfo">
+
+                            <div class="bold text-left">{{ "warehouse.contact.user" | translate }}: <span
+                                    class="text-normal"
+                                    *ngIf="order.detail.points[0].hubContact">{{order.detail.points[0].hubContact.name}}</span>
+                            </div>
+                            <div class="bold text-left">{{ "common.phone" | translate }}: <span class="text-normal"
+                                    *ngIf="order.detail.points[0].hubContact">{{order.detail.points[0].hubContact.phone}}</span>
+                            </div>
+                            <div class="bold text-left"> {{ "order.address" | translate }}: <span class="text-normal"
+                                    *ngIf="order.detail.points[0].hubLocation">{{order.detail.points[0].hubLocation.address}}</span>
+                            </div>
+                            <div class="bold text-left"> {{ "common.delvery-km" | translate }}: <span
+                                    class="text-normal" *ngIf="order.detail?.hubDistance">{{order.detail?.hubDistance}}
+                                    KM</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="title">{{'common.detail' | translate | uppercase}}</div>
+                    <nz-divider></nz-divider>
+
+                    <div class="row">
+                        <div class="col-2 bold" style="padding-right: 0px">
+                            <div class="fillColorTitle" style="padding-left: 10px">
+                                {{ "order.point" | translate }}
+                            </div>
+                        </div>
+                        <div class="col-4 bold text-left fillColorTitle"> {{ "order.address" | translate }}</div>
+                        <div class="col-2 bold text-left fillColorTitle">{{ "order.customer" | translate }}</div>
+                        <div class="col-2 bold text-left fillColorTitle">{{'common.status' | translate}}</div>
+                        <div class="col-2 bold text-left" style="padding-left: 0px">
+                            <div class="fillColorTitle">
+                                {{'common.detail' | translate}}</div>
+                        </div>
+                    </div>
+                    <div *ngFor="let point of order?.detail?.points; index as index">
+                        <div class="row" style="margin-top: 10px">
+                            <div *ngIf="![PointType.PickUp, PointType.Delivery, PointType.Return].includes(point.type); else newPointTitle"
+                                class="col-2" style="padding-left: 25px">
+                                {{ index + 1}}
+                            </div>
+                            <ng-template #newPointTitle>
+                                <div class="col-2 firstUppercase" style="padding-left: 25px" [style.color]="point.type === PointType.PickUp
+                            ? pointColorList[point.id] : pointColorList[point.pickPointId]">
+                                    {{ 'order.information-type-status.'+ point.type | translate }}
+                                    {{indexPointsList[point.id]}}
+                                </div>
+                            </ng-template>
+                            <div class="col-4 text-left">{{ point?.location?.address }} </div>
+                            <div class="col-2 text-left">
+                                <div> {{ point?.contact?.name }} </div>
+                                <div> {{ point?.contact?.phone }} </div>
+                            </div>
+                            <div class="col-2 text-left">
+                                {{ ('order.pointStatus.' + point?.status + (PointStatus.COMPLETE_LATER === point.status
+                                ? ('.' + point.type) : '')) | translate }}
+                            </div>
+                            <div class="col-2 text-left" style="padding-left: 0px">
+                                <span class="link" (click)="showPointDetail(point, index + 1)">{{ "order.detailPoint" |
+                                    translate }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <warehouse-order-history #history [order]="order"></warehouse-order-history>
+                </nz-skeleton>
+            </div>
+        </page-wrapper>
+    </div>
+    <div class="col-4 content-right">
+        <page-wrapper [nzTitle]="pageTitleCost">
+            <nz-skeleton [nzActive]="true" [nzLoading]="isLoaded" [nzTitle]="false" [nzParagraph]="{ rows: 15 }">
+                <ng-template #pageTitleCost>
+                    <div *ngIf=" order.userCost===order.baseUserCost" class="title">
+                        {{ 'order.cost' | translate}}
+                    </div>
+                    <div class="row" *ngIf="order.userCost !== order.baseUserCost">
+                        <div class="col-10 title">
+                            {{ (!tabIndex ? 'order.receiverCost' : 'order.baseUserCost' ) | translate}}
+                        </div>
+                        <div class="col-2" style="color: #ED1C24; text-align: right"
+                            *ngIf="order.userCost !== order.baseUserCost">
+                            <i *ngIf="!tabIndex" nz-icon nzType="right-circle"
+                                style="cursor: pointer; font-size: 1.5em; margin-top: 5px" (click)=onChangeTab()></i>
+                            <i *ngIf="!!tabIndex" nz-icon nzType="left-circle"
+                                style="cursor: pointer; font-size: 1.5em; margin-top: 5px" (click)=onChangeTab()></i>
+                        </div>
+                    </div>
+                </ng-template>
+                <div *ngIf="order">
+                    <order-detail-services [tabIndex]="tabIndex" [order]="order" #orderDetailServices>
+                    </order-detail-services>
+                    <div class="d-flex justify-content-between">
+                        <div class="buttonActions"
+                            *ngIf="['delivery','deliveryInstallation','warrantyRepair','installation'].includes(order?.serviceType)">
+                            <button ad-button nzColor="primary" (click)="openModal()">{{ 'order.viewMap' | translate }}
+                            </button>
+                        </div>
+                        <div *ngIf="!checkAuthority()" class="buttonActions">
+                            <button ad-button nzColor="red" (click)="acceptHandle()">{{ 'button.process' | translate }}
+                            </button>
+                        </div>
+                        <div class="buttonActions" *ngIf="displayCancelButton()">
+                            <button ad-button nzColor="gray" (click)="handleVisibleCancelOrderForm(true)">
+                                {{ 'button.cancelOrder' | translate }}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div *ngIf="checkAuthority()" class="d-flex justify-content-between">
+                        <div class="buttonActions" *ngIf="checkTimeout">
+                            <button ad-button nzColor="gray" (click)="operateTimeout()">
+                                {{ "button.processing-timeout" | translate }}
+                            </button>
+                        </div>
+                        <div class="buttonActions" *ngIf="checkProcessingTimeout">
+                            <button ad-button nzColor="gray" (click)="operatePocessingTimeout()">
+                                {{ "button.processed-timeout" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nz-skeleton>
+        </page-wrapper>
+    </div>
+</div>
+
+<serial-number-list *ngIf="order && types.includes(order.serviceType)" [visible]="visibleSerialNumberList"
+    (handleVisible)="handleVisibleSerialNumberList($event)" [order]="order._id" [products]="cloneProducts"
+    (submit)="onUpdateProducts($event)" [loading]="loadingSerialNumberList"
+    (handleLoading)="handleLoadingSerialNumberList($event)" #serialNumberList>
+</serial-number-list>
+
+<operator-note [order]="order" [visible]="visibleNoteForm" (handleVisible)="handleVisible($event)"
+    [loading]="loadingNoteForm" (handleLoading)="handleLoading($event)" (submit)="submit($event)" #orderOperatorNote>
+</operator-note>
+
+<new-order-cancel [order]="order" [visible]="visibleCancelOrderForm" (afterSubmit)="loadData()"
+    (handleVisible)="handleVisibleCancelOrderForm($event)" [loading]="loadingCancelOrderForm"
+    (handleLoading)="handleLoadingCancelOrder($event)" #cancelOrderForm>
+</new-order-cancel>
+
+<revert-order-status-modal [order]="order" [(visible)]="revertOrderStatusVisible" (afterSubmit)="reloadOrder()"
+    (handleVisible)="revertOrderStatusVisible = $event">
+</revert-order-status-modal>
+
+<order-modal [order]="order" [servicer]="servicer" [admin]="admin" [allowUpdate]="checkAllowedUpdateRoute()"
+    [visible]="visibleMapForm" (afterSubmit)="reloadOrder()" (handleVisible)="handleVisibleMapForm($event)"
+    (handleLoading)="handleLoadingMap($event)" #mapForm>
+</order-modal>
+
+<spinner-processing-modal [visible]="isLoaded"></spinner-processing-modal>

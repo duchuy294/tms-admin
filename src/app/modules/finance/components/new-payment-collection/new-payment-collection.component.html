@@ -1,0 +1,99 @@
+<nz-modal nzWidth="600px" [nzVisible]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModel(false)">
+    <ng-template #modalTitle>
+        {{ "service.collection-modal.title" | translate }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #createModifyForm="ngForm">
+            <div class="row">
+                <div class="col-12">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "table.team-name" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <input disabled nz-input name="name" [(ngModel)]="servicer.fullName" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="order">
+                            {{ "service.collection-modal.input" | translate }}
+                            (<span class="link" (click)="model.value = maxMoney">{{ maxMoney | number }}</span>):
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-input-number style="width: 100%" [nzMin]="0" [nzMax]="money" name="money" type="number"
+                                id="order" [(ngModel)]="model.value" #money="ngModel" required></nz-input-number>
+                            <nz-form-explain *ngIf="
+                                    (money.dirty || money.touched) &&
+                                    money.errors?.required
+                                ">
+                                {{
+                                    "validations-form.money.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-12">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "common.note" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <textarea name="note" nz-input class="mrg-bt-10" rows="3"
+                                [(ngModel)]="model.note"></textarea>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-12">
+                    <nz-form-item>
+                        <nz-form-label nzFor="">{{
+                            "common.depositMethod" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-select style="width: 100%" [(ngModel)]="model.from" name="depositMethod" nzShowSearch>
+                                <nz-option *ngFor="let item of depositMethods" [nzLabel]="
+                                        'common.depositMethods.' + item
+                                            | translate
+                                    " [nzValue]="item">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-12" *ngIf="model.from === 'bank'">
+                    <nz-form-item>
+                        <nz-form-label nzFor="">{{
+                            "common.bank" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-select style="width: 100%" [(ngModel)]="model.bankCode" name="bank" nzShowSearch>
+                                <nz-option *ngFor="let item of banks" [nzLabel]="item" [nzValue]="item">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div style="width: 350px; margin: 0 auto;">
+            <div class="buttonActions">
+                <button ad-button nzColor="primary" (click)="confirm()"
+                    [disabled]="model.value < 0 || model.value > maxMoney">
+                    {{ "button.payment" | translate }}
+                </button>
+                <button ad-button nzColor="gray" (click)="handleVisibleModel(false)">
+                    {{ "actions.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>
+
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

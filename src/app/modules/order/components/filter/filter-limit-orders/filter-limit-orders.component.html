@@ -1,0 +1,54 @@
+<form nz-form nzLayout="vertical" #filterLimitOrdersForm="ngForm">
+    <div class="row">
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label nzFor="servicer">{{
+                    "messenger.customer-partner" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <search-and-suggest-account-component mode="multiple" [(ngModel)]="selectedServicer"
+                        ngDefaultControl [ngModelOptions]="{ standalone: true }" #servicer="ngModel"
+                        [allowServicer]="true" [servicerSearchCondition]="servicerSearchCondition" [valueType]="'_id'"
+                        [placeHolder]="
+                            ('actions.enter' | translate) +
+                            ' ' +
+                            ('common.id' | translate | uppercase) +
+                            '/' +
+                            ('common.name' | translate) +
+                            '/' +
+                            ('common.phone' | translate)
+                        ">
+                    </search-and-suggest-account-component>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label nzFor="">{{
+                    "filter.group" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select style="width: 100%" [(ngModel)]="modelQuery.groupId" name="servicerGroup" nzShowSearch
+                        nzPlaceHolder="{{ 'common.all' | translate }}" nzAllowClear>
+                        <nz-option *ngFor="let item of groups" [nzLabel]="item.name" [nzValue]="item._id">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label class="form-label form-label--empty"></nz-form-label>
+                <nz-form-control>
+                    <button ad-button nzColor="red" (click)="search()">
+                        {{ "button.find" | translate }}
+                    </button>
+                    &nbsp;
+                    <button ad-button (click)="reset()">
+                        {{ "button.reset" | translate }}
+                    </button>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,77 @@
+<div class="filter" *ngIf="display">
+    <div class="row">
+        <div class="form-group col-2" *ngIf="!hiddens.includes('code')">
+            <label>{{'common.code' | translate }}</label>
+            <input type="text" class="form-control" [(ngModel)]="model.code"
+                placeholder="{{'common.code' | translate}}" />
+        </div>
+        <div class="form-group col-2" *ngIf="!hiddens.includes('name')">
+            <label>{{'common.name' | translate }}</label>
+            <input type="text" class="form-control" [(ngModel)]="model.name"
+                placeholder="{{'common.name' | translate}}" />
+        </div>
+        <div class="form-group col-2" *ngIf="!hiddens.includes('email')">
+            <label>{{'common.email' | translate }}</label>
+            <input type="text" class="form-control" [(ngModel)]="model.email"
+                placeholder="{{'common.email' | translate}}" />
+        </div>
+        <div class="form-group col-2" *ngIf="!hiddens.includes('phone')">
+            <label>{{'common.phone' | translate }}</label>
+            <input type="text" class="form-control" [(ngModel)]="model.phone"
+                placeholder="{{'common.phone' | translate}}" />
+        </div>
+        <div class="form-group col-2" *ngIf="!hiddens.includes('phone')">
+            <label>{{'filter.customer-level' | translate }}</label>
+            <select class="form-control" [(ngModel)]="model.userLevelId">
+                <option value="">{{'common.all' | translate}}</option>
+                <option *ngFor="let item of userLevels" [ngValue]="item._id">{{item.name}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-2">
+            <label>{{'common.user-type' | translate }}</label>
+            <select class="form-control" [(ngModel)]="model.userType">
+                <option value=''>{{'common.all' | translate}}</option>
+                <option *ngFor="let item of userTypes" [ngValue]="item">{{'user-type.' + item | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group col-2">
+            <label>{{'common.status' | translate }}</label>
+            <status [class]="'form-control'" [(ngModel)]="model.status"></status>
+        </div>
+        <div class="form-group col-2" *ngIf="!hiddens.includes('group')">
+            <label>{{'filter.group' | translate }}</label>
+            <select class="form-control" [(ngModel)]="model.groupId">
+                <option value="">{{'common.all' | translate}}</option>
+                <option *ngFor="let item of groups" [ngValue]="item._id">{{item.name}}</option>
+            </select>
+        </div>
+        <div class="form-group col-2">
+            <label>{{'filter.fromDate' | translate }}</label>
+            <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model.startTime"
+                    ngbDatepicker #d1="ngbDatepicker">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"></button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-2">
+            <label>{{'filter.toDate' | translate }}</label>
+            <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model.endTime" ngbDatepicker
+                    #d2="ngbDatepicker">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"></button>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+        <div class="form-group col-2">
+            <button type="button" class="btn btn-sm btn-danger"
+                (click)="searchEvent()">{{'button.search' | translate}}</button>
+        </div>
+    </div>
+</div>

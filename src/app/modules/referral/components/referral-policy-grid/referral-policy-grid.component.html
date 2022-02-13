@@ -1,0 +1,45 @@
+<nz-table #table [nzFrontPagination]="false" [nzTotal]="tableData.total" nzShowSizeChanger
+    [(nzPageIndex)]="modelQuery.page" [nzData]="tableData.data" [nzLoading]="loading"
+    (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [nzScroll]="{x:'1000px'}" [(nzPageSize)]="modelQuery.limit" nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th [nzWidth]="'100px'">
+                {{ "table.referral-policy-code" | translate }}
+            </th>
+            <th>{{ "table.create-date" | translate }}</th>
+            <th>{{ "table.referral-policy-name" | translate }}</th>
+            <th>{{ "table.description" | translate }}</th>
+            <th>{{ "table.apply" | translate }}</th>
+            <th>{{ "table.staff" | translate }}</th>
+            <th nzRight="0px">
+                {{ "table.more-action" | translate }}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of table.data">
+            <td>{{ data.code }}</td>
+            <td>{{ data.createdAt | date: "HH:mm dd/MM/yyyy" }}</td>
+            <td>{{ data.name }}</td>
+            <td>{{ data.description }}</td>
+            <td>
+                <nz-switch [nzLoading]="loadingStatus" [ngModel]="statuses[data._id]" [nzControl]="true"
+                    (click)="onChangeStatus(data)"></nz-switch>
+            </td>
+            <td>
+                {{accounts[data.updatedBy]?.fullName}} <br>
+                {{data.updatedAt | date: "dd/MM/yyyy"}}
+            </td>
+            <td nzRight="0px">
+                <button ad-button nzType="dashed" routerLink="/pages/marketing/referral-policies/{{data._id}}">
+                    {{"common.detail" | translate}}
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{ 'table.total' | translate }} {{ total }}
+    {{ 'table.result' | translate | lowercase}}
+</ng-template>

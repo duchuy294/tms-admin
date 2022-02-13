@@ -1,0 +1,154 @@
+<form nz-form nzLayout="vertical" #filterStore="ngForm">
+    <div class="row">
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="code">{{
+                    "warranty-repair.service-center.code" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input nz-input [(ngModel)]="modelQuery.code" name="code" id="code" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="email">{{
+                    "common.email" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input nz-input [(ngModel)]="modelQuery.email" name="email" type="email" id="email" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="phone">{{
+                    "common.phone" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input nz-input [(ngModel)]="modelQuery.phone" name="phone" id="phone" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="status">{{
+                    "common.status" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select [(ngModel)]="modelQuery.status" name="status">
+                        <nz-option *ngFor="let item of status" [nzLabel]="'common.status' + item | translate"
+                            [nzValue]="item">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="city">{{
+                    "common.province-city" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select [(ngModel)]="modelQuery.city" (ngModelChange)="loadDistricts($event)" name="city"
+                        [nzPlaceHolder]="
+                            'location-placeholder.province-city' | translate
+                        ">
+                        <nz-option *ngFor="let item of cities" [nzLabel]="item.name" [nzValue]="item._id">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="district">{{
+                    "common.district" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select [(ngModel)]="modelQuery.district" name="district" [nzPlaceHolder]="
+                            'location-placeholder.district' | translate
+                        ">
+                        <nz-option *ngFor="let item of districts" [nzLabel]="item.name" [nzValue]="item._id">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="brandId">{{
+                    "warranty-repair.manufacturer" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select [(ngModel)]="modelQuery.brandId" name="brandId" [nzPlaceHolder]="
+                            'warranty-repair.placeholder.manufacturer'
+                                | translate
+                        ">
+                        <nz-option *ngFor="let item of brands" [nzLabel]="item.name" [nzValue]="item._id">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="productTypeId">{{
+                    "warranty-repair.product" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select [(ngModel)]="modelQuery.productTypeId" name="productTypeId" [nzPlaceHolder]="
+                            'warranty-repair.placeholder.product' | translate
+                        ">
+                        <nz-option *ngFor="let item of productTypes" [nzLabel]="item.name" [nzValue]="item._id">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col"></div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="from">{{
+                    "filter.fromDate" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-date-picker [ngStyle]="{ width: '100%' }" [(ngModel)]="modelQuery.from" name="from"
+                        nzFormat="dd/MM/yyyy">
+                    </nz-date-picker>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="to">{{
+                    "filter.toDate" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-date-picker [ngStyle]="{ width: '100%' }" [(ngModel)]="modelQuery.to" name="to"
+                        nzFormat="dd/MM/yyyy">
+                    </nz-date-picker>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label class="form-label form-label--empty"></nz-form-label>
+                <nz-form-control>
+                    <button ad-button nzColor="primary" (click)="search()">
+                        {{ "actions.search" | translate }}
+                    </button>
+                    <button ad-button (click)="reset()">
+                        {{ "common.delete" | translate }}
+                    </button>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+</form>

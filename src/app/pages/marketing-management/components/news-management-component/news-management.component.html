@@ -1,0 +1,13 @@
+<page-wrapper [nzTitle]="'marketing.news.tab-news' | translate">
+    <nz-tabset [(nzSelectedIndex)]="selectedTabIndex" [nzType]="'card'">
+        <nz-tab [nzTitle]="'marketing.news.tab-news' | translate">
+            <news-list></news-list>
+        </nz-tab>
+        <nz-tab [nzTitle]="'marketing.news.tab-news-category' | translate">
+            <news-category-list></news-category-list>
+        </nz-tab>
+        <nz-tab [nzTitle]="'marketing.news.tab-banner' | translate">
+            <banner-list></banner-list>
+        </nz-tab>
+    </nz-tabset>
+</page-wrapper>

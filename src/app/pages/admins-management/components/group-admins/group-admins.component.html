@@ -1,0 +1,14 @@
+<page-wrapper [nzTitle]="'settings.group-admins.title' | translate">
+    <div>
+        <div class="grid__header">
+            <button class="grid__action__right" ad-button nzUpper nzColor="primary" (click)="create()">{{'button.add' |
+                    translate }}</button>
+        </div>
+        <br>
+        <grid-group-admin (modify)=" modify($event)" (delete)="confirmDelete($event)" #gridGroupAdmin>
+        </grid-group-admin>
+    </div>
+</page-wrapper>
+<create-group-admin [modifyingModel]="modifyingModel" [visible]="createModifyModalVisible"
+    (handleVisible)="handleModelVisible($event)" (afterSubmit)="handleAfterSubmit($event)">
+</create-group-admin>

@@ -1,0 +1,15 @@
+<page-wrapper [nzTitle]="pageTitle">
+    <div class="split-container">
+        <div class="row">
+            <div class="col">
+                <brand-grid (delete)="confirmDeleteBrand($event)" #brandGrid></brand-grid>
+            </div>
+            <div class="col">
+                <product-type-grid (delete)="confirmDeleteProductType($event)" #productTypeGrid></product-type-grid>
+            </div>
+        </div>
+    </div>
+</page-wrapper>
+<ng-template #pageTitle>
+    {{'warranty-repair.setting'|translate}}
+</ng-template>

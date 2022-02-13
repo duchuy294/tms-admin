@@ -1,0 +1,77 @@
+<nz-divider></nz-divider>
+<div class="titleDetail" style="margin-left: 10%;"> {{'order.moreDetails' | translate | uppercase}}
+    <a class="border-style" style=" font-weight: normal; float: right" (click)="handleVisibleDetail(expandingDetails)">
+        {{ (!expandingDetails ? 'common.moreDetails': 'common.collapse') | translate}}</a>
+</div>
+<div *ngIf="expandingDetails">
+    <ng-template ngFor let-item [ngForOf]="point.services">
+        <div class="row service-header">
+            <div class="col-1">
+                <div style="padding-left: 15px">
+                    <a *ngIf="item.style !== 2 && item.style !== 24 && canUpdateService(item)"
+                        (click)=" removeServices(item)"><img src="/assets/icon/delete.png" alt="delete" height="15"
+                            width="15" /></a>
+                </div>
+            </div>
+            <div class="col-5" style="padding-right: 0px">
+                <div style="padding-left: 15px" class="fill-grey">
+                    {{ orderService.getServiceName(item) }}</div>
+            </div>
+            <div class="col-3 fill-grey">
+                {{'order.service-style' + item.style + '.unit'| translate}}:
+                {{ getServiceValue(item) | number }} </div>
+            <div class="col-3 text-right" style="padding-left:0px; background-color: white;">
+                <div class="fill-grey">{{ "common.fee" | translate }}<span>: {{ item.cost | number }}
+                        đ</span></div>
+            </div>
+        </div>
+        <div class="row" *ngFor="let sItem of item.children">
+            <ng-template [ngIf]="!canUpdateService(sItem)" [ngIfElse]="service_value">
+                <div class="col-1"></div>
+                <div class="col-5" style="padding-right: 0px">
+                    <div style="padding-left: 15px">
+                        {{ sItem.name }}</div>
+                </div>
+                <div class="col-3">{{ getServiceValue(sItem) | number }}</div>
+                <div class="col-3 text-right">{{ sItem.cost | number }} đ</div>
+            </ng-template>
+            <ng-template #service_value>
+                <div class="col-1">
+                    <a (click)="removeServices(sItem)"><img src="/assets/icon/delete.png" alt="delete" height="15"
+                            width="15" /></a>
+                </div>
+                <div class="col-5">{{ sItem.name }}</div>
+                <div class="col-3" [ngSwitch]="sItem.style">
+                    <nz-input-number *ngSwitchCase="ServiceStyle.Delivery_Collection" [(ngModel)]="sItem.quantity"
+                        [nzMin]="1000"></nz-input-number>
+                    <nz-input-number *ngSwitchDefault [(ngModel)]="sItem.quantity" [nzMin]="1"
+                        (ngModelChange)="updateServiceQuantity(sItem)">
+                    </nz-input-number>
+                </div>
+                <div class="col-3 text-right">{{ sItem.cost | number }} đ</div>
+            </ng-template>
+        </div>
+    </ng-template>
+    <ng-template [ngIf]="point.additionCost && point.additionCost.length > 0">
+        <div class="row service-header">
+            <div class="col-6">{{ 'order.service-style11.name' | translate }}</div>
+            <div class="col-3">{{ 'order.service-style11.unit' | translate }}</div>
+            <div class="col-3 text-right">{{ 'common.fee' | translate }}</div>
+        </div>
+        <div class="row" *ngFor="let sItem of point.additionCost">
+            <div class="col-6">{{ sItem.name }}</div>
+            <div class="col-3">{{ getServiceValue(sItem) | number }}</div>
+            <div class="col-3 text-right">{{ sItem.cost | number }} đ</div>
+        </div>
+    </ng-template>
+
+    <button *ngIf="allowedUpdateServices" ad-button nzColor="red" (click)="handleVisibleServiceForm(true)">
+        {{'button.add'|translate}}
+    </button>
+
+    <loading-services #serviceForm [visible]="visibleServiceForm" (handleVisible)="handleVisibleServiceForm($event)"
+        (handleLoading)="handleLoadingServiceForm($event)" (submit)="submitServiceForm($event)"
+        [services]="userServices">
+    </loading-services>
+
+</div>

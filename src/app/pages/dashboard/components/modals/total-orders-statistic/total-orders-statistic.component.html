@@ -1,0 +1,42 @@
+<nz-modal [nzWidth]="1400" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="null"
+    (nzOnCancel)="handleVisibleModal()">
+    <ng-template #modalTitle>
+        {{ 'order.listByStatus.' + queryModel?.status | translate}}
+    </ng-template>
+    <ng-template #modalContent>
+        <nz-table #totalOrders [nzSize]="'small'" [nzData]="(totalOrders$ | async)?.data" [nzFrontPagination]="false"
+            nzShowSizeChanger [nzLoading]="loading$ | async" [nzTotal]="(totalOrders$ | async)?.total"
+            [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="loadDataByPage($event)"
+            (nzPageSizeChange)="loadDataByPageSize($event)" [nzScroll]="{ x: '1300px' }">
+            <thead>
+                <tr>
+                    <th [nzWidth]="'120px'">{{'common.orderCode'|translate}}</th>
+                    <th [nzWidth]="'120px'">{{'common.createdAt'|translate}}</th>
+                    <th>{{'common.type'|translate}}</th>
+                    <th>{{'common.customer'|translate}}</th>
+                    <th>{{'common.phone'|translate}}</th>
+                    <th>{{'common.status'|translate}}</th>
+                    <th>{{'order.addonServices'|translate}}</th>
+                    <th>{{'order.cost'|translate}}</th>
+                    <th>{{'common.servicer'|translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of totalOrders.data">
+                    <td><a target="_blank" [routerLink]="['/pages/order', data._id]">{{data.code}}</a></td>
+                    <td [innerHTML]="data.createdAt | date: 'HH:mm dd/MM/yyyy'"></td>
+                    <td>{{ 'order.type.' + data.serviceType | translate }}</td>
+                    <td><a target="_blank" [routerLink]="['/pages/customer-management/personal/detail', data.userId]"
+                            routerLinkActive="router-link-active">{{ data.user?.fullName }}</a></td>
+                    <td>{{ data.user?.phone }}</td>
+                    <td>{{ 'order.statusCode.' + data.status | translate }}</td>
+                    <td [innerHTML]="data.services | split:',':true"></td>
+                    <td>{{data.userCost | number }}</td>
+                    <td><a target="_blank"
+                            [routerLink]="['/pages/servicer-management/servicer/detail', data.servicerId]">{{ data.servicer?.fullName }}</a>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </ng-template>
+</nz-modal>

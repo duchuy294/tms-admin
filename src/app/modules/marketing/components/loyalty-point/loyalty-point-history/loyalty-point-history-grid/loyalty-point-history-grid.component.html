@@ -1,0 +1,50 @@
+<nz-table #table [nzLoading]="loadingGrid" [nzData]="tableData.data" [nzFrontPagination]="false"
+    [nzTotal]="tableData.total" [(nzPageIndex)]="queryModel.page" [(nzPageSize)]="queryModel.limit"
+    (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [nzScroll]="{ x: '1300px' }" nzShowSizeChanger nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th [nzWidth]="'100px'">{{'common.date' | translate }}</th>
+            <th>{{'marketing.loyalty-point.orderCode' | translate }}</th>
+            <th>{{'marketing.loyalty-point.loyalty-point' | translate }}</th>
+            <th>{{'marketing.news.list-receiver' | translate }}</th>
+            <th>{{'marketing.loyalty-point.orderType' | translate }}</th>
+            <th>{{'marketing.loyalty-point.orderId' | translate }}</th>
+            <th [nzWidth]="'100px'">{{'marketing.loyalty-point.expiration' | translate }}</th>
+            <th>{{'marketing.loyalty-point.staff' | translate }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of table.data">
+            <td>{{ data.createdAt && ( data.createdAt | date : 'h:mm a d/M/y') }}</td>
+            <td>
+                <div (click)="onClickShowDetail(data)" class="link">
+                    {{ data.code }}
+                </div>
+            </td>
+            <td>{{ data.point | number }}</td>
+            <td>
+                <a *ngIf="data.userType === 'user'"
+                    [routerLink]="[ '/pages/customer-management/personal/detail', data.userId]">
+                    {{ userList[data.userId]?.fullName }}
+                </a>
+                <a *ngIf="data.userType === 'servicer'"
+                    [routerLink]="[ '/pages/servicer-management/servicer/detail', data.userId]">
+                    {{ userList[data.userId]?.fullName }}
+                </a>
+            </td>
+            <td>{{ data.name }}</td>
+            <td>
+                <a [routerLink]="[ '/pages/order', data.orderId]">
+                    {{ data.orderCode }}
+                </a>
+            </td>
+            <td>{{ data.expiredAt && (data.expiredAt | date : 'd/M/y') }}</td>
+            <td>{{ adminList[data.createdBy] ? adminList[data.createdBy].fullName : '' }}</td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{ 'table.total' | translate }} {{ total }}
+    {{ 'table.result' | translate | lowercase}}
+</ng-template>

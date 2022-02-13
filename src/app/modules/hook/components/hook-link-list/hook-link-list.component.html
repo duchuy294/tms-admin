@@ -1,0 +1,20 @@
+<div class="grid__container">
+    <div style="display: flex; width: 100%; margin: 10px 0px">
+        <div style="font-size: 1.5em">
+            {{ 'hook.link.list' | translate }}
+        </div>
+        <div style="display: flex; position: absolute; right: 0px">
+            <button class="grid__action__right" ad-button nzColor="primary" (click)="handleVisible(true)">
+                {{'button.add'|translate}}
+            </button>
+        </div>
+    </div>
+    <filter-hook-link (onSearch)="search($event)" (onReset)="search($event)"
+        [style.display]="showFilter?'block':'none'">
+    </filter-hook-link>
+    <hook-link-grid [(model)]="modelQuery" (detail)="edit($event)" #hookLinkGrid>
+    </hook-link-grid>
+</div>
+<create-hook-link [model]="model" [visible]="visibleModel" (handleVisible)="handleVisible($event)"
+    [loading]="loadingModel" (handleLoading)="handleLoading($event)" (submit)="submit($event)" #createHookLink>
+</create-hook-link>

@@ -1,0 +1,175 @@
+<nz-modal nzWidth="600px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="onCancelModal()">
+    <ng-template #modalTitle>
+        {{
+            (type === "create"
+                ? ("button.create" | translate)
+                : ("button.modify" | translate)) +
+                " " +
+                ("general-menu.promotion-policy" | translate)
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #createPolicyForm="ngForm">
+            <div class="row">
+                <div class="col-12">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "table.promotion-name" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <input name="name" nz-input [(ngModel)]="model.name" required #nameValue="ngModel" />
+                            <nz-form-explain *ngIf="
+                                    (nameValue.dirty || nameValue.touched) &&
+                                    nameValue.errors?.required
+                                ">
+                                {{
+                                    "validations-form.programName.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "table.status" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-select name="status" style="width: 100%;" [(ngModel)]="model.status"
+                                nzPlaceHolder="{{ 'common.all' | translate }}" nzAllowClear #statusValue="ngModel"
+                                required>
+                                <nz-option *ngFor="let item of status" [nzValue]="item" [nzLabel]="
+                                        'marketing.promotion-policy-status.' +
+                                            item | translate
+                                    "></nz-option>
+                            </nz-select>
+                            <nz-form-explain *ngIf="
+                                    (statusValue.dirty ||
+                                        statusValue.touched) &&
+                                    statusValue.errors?.required
+                                ">
+                                {{
+                                    "validations-form.status.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "table.priority-level" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <input nz-input name="priority" [(ngModel)]="model.priority" required
+                                #priorityValue="ngModel" />
+                            <nz-form-explain *ngIf="
+                                    (priorityValue.dirty ||
+                                        priorityValue.touched) &&
+                                    priorityValue.errors?.required
+                                ">
+                                {{
+                                    "validations-form.priority.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                                "marketing.promotion-policy.affected-at"
+                                    | translate
+                            }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-date-picker name="effectedAt" [(ngModel)]="effectedDate"
+                                (ngModelChange)="onChangeAffectingDate($event)" [ngStyle]="{ width: '100%' }"
+                                nzPlaceHolder="{{
+                                    'marketing.promotion-policy.affected-at'
+                                        | translate
+                                }}" required #effectedAt="ngModel"></nz-date-picker>
+                            <nz-form-explain *ngIf="
+                                    (effectedAt.dirty || effectedAt.touched) &&
+                                    effectedAt.errors?.required
+                                ">
+                                {{
+                                    "validations-form.effectedAt.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                                "marketing.promotion-policy.expired-at"
+                                    | translate
+                            }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-date-picker name="expiredAt" [(ngModel)]="expiredDate"
+                                (ngModelChange)="onChangeExpirationDate($event)" [ngStyle]="{ width: '100%' }"
+                                nzPlaceHolder="{{
+                                    'marketing.promotion-policy.expired-at'
+                                        | translate
+                                }}" required #expiredAt="ngModel"></nz-date-picker>
+                            <nz-form-explain *ngIf="
+                                    (expiredAt.dirty || expiredAt.touched) &&
+                                    expiredAt.errors?.required
+                                ">
+                                {{
+                                    "validations-form.expiredAt.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "marketing.promotion-policy.content" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <textarea nz-input name="content" [(ngModel)]="model.content"
+                                [nzAutosize]="{ minRows: 2, maxRows: 6 }" required #content="ngModel"></textarea>
+                            <nz-form-explain *ngIf="
+                                    (content.dirty || content.touched) &&
+                                    content.errors?.required
+                                ">
+                                {{
+                                    "validations-form.content.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div style="max-width: 600px; margin: 0 auto">
+            <div class="buttonContainer">
+                <button ad-button nzUpper nzColor="primary" (click)="onConfirmModal()">
+                    {{ "button.confirm" | translate }}
+                </button>
+                <button ad-button nzUpper nzColor="gray" (click)="onCancelModal()">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

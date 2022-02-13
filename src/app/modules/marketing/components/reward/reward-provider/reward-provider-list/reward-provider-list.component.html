@@ -1,0 +1,22 @@
+<div>
+    <div class="grid__header">
+        <button class="grid__action__left" ad-button nzUpper nzColor="red" (click)="displayFilter = !displayFilter">
+            {{'filter.filter'|translate}}
+        </button>
+        <button class="grid__action__right" ad-button nzUpper nzColor="primary" (click)="create()">{{'button.add' |
+                    translate }}</button>
+    </div>
+    <br>
+    <reward-provider-filter #rewardProviderFilter (search)="search($event)" (onReset)="search($event)"
+        [display]="displayFilter"></reward-provider-filter>
+    <reward-provider-grid #rewardProviderGrid (delete)="confirmDelete($event)" (view)="viewRewardModal($event)"
+        (edit)="editModal($event)">
+    </reward-provider-grid>
+</div>
+<reward-modal [visibleModal]="visibleModal" (handleVisible)="handleVisible($event)" [query]="rewardQuery"
+    [category]="model">
+</reward-modal>
+
+<reward-provider-modify [modifyingModel]="modifyingModel" [visible]="createModifyModalVisible"
+    (handleVisible)="handleModelVisible($event)" (afterSubmit)="handleAfterSubmit($event)">
+</reward-provider-modify>

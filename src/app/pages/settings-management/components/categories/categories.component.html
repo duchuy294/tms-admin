@@ -1,0 +1,45 @@
+<page-wrapper [nzTitle]="'general-menu.categories' | translate">
+    <div class="row">
+        <div class="col">
+            <h2 class="page-title">{{'settings.categories.title'|translate}}</h2>
+        </div>
+        <div class="col" style="text-align:right; ">
+            <button ad-button nzColor="red" (click)="addCategory()">
+                {{ 'settings.categories.create' | translate }}
+            </button>
+        </div>
+    </div>
+    <nz-table #table [nzData]="tableModel" [nzLoading]="loading" [nzShowPagination]="false"
+        [nzScroll]="{ x: '1300px' }">
+        <thead>
+            <tr>
+                <th>{{'settings.categories.name'|translate}}</th>
+                <th [nzWidth]="'240px'">{{'settings.categories.order'|translate}}</th>
+                <th [nzWidth]="'120px'" nzRight="0px">{{'common.action'|translate}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of tableModel">
+                <td>{{ data.name[lang] }}</td>
+                <td>{{ data.order }}</td>
+                <td nzRight="0px">
+                    <nz-dropdown>
+                        <button nz-dropdown ad-button nzType="dashed">
+                            {{'common.action'|translate}}
+                        </button>
+                        <ul nz-menu nzSelectable>
+                            <li nz-menu-item>
+                                <a (click)="onEdit(data)">{{'button.modify'|translate}}</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a (click)="onDelete(data._id)">{{'common.delete'|translate}}</a>
+                            </li>
+                        </ul>
+                    </nz-dropdown>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+    <category-editor [(model)]="modalModel" [(visibleModal)]="visibleModal" (update)="onUpdate()">
+    </category-editor>
+</page-wrapper>

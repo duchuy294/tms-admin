@@ -1,0 +1,30 @@
+<nz-modal nzWidth="480px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal()">
+    <ng-template #modalTitle></ng-template>
+    <ng-template #modalContent>
+        <nz-table #table [nzData]="tableData.data" [nzFrontPagination]="false" nzShowSizeChanger [nzLoading]="loading"
+            [nzTotal]="tableData.total" (nzPageIndexChange)="loadDataByPage($event)"
+            (nzPageSizeChange)="loadDataByPageSize($event)">
+            <thead>
+                <tr>
+                    <th [nzWidth]="'120px'">
+                        {{ "common.orderCode" | translate }}
+                    </th>
+                    <th>{{ "common.using-date" | translate }}</th>
+                    <th>{{ "common.promotion" | translate }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of table.data">
+                    <td>
+                        <a [routerLink]="['/pages/order', data._id]" target="_blank">{{ data.code }}</a>
+                    </td>
+                    <td>{{ data.createdAt | date: "h:mm a d/M/y" }}</td>
+                    <td>{{ data.discountAmount | number }} đ</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </ng-template>
+
+    <ng-template #modalFooter> </ng-template>
+</nz-modal>

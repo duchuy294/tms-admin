@@ -1,0 +1,21 @@
+<div class="store-statistic__container">
+    <div class="store-statistic__item store-statistic__item--color1">
+        <h4 class="store-statistic__title" nz-tooltip [nzTooltipTitle]="'statistics.common.total-order' | translate"
+            nzTooltipPlacement="topLeft">
+            {{ 'statistics.common.total-order' | translate }}
+        </h4>
+        <span class="store-statistic__total">{{(data?.totalOrder || 0) | number}}</span>
+    </div>
+    <div class="store-statistic__item store-statistic__item--color2">
+        <h4 class="store-statistic__title" nz-tooltip [nzTooltipTitle]="'statistics.common.total-cost' | translate"
+            nzTooltipPlacement="topLeft">
+            {{ 'statistics.common.total-cost' | translate }}</h4>
+        <span class="store-statistic__total">{{(data?.totalCost || 0) | number}}</span>
+    </div>
+    <div class="store-statistic__item  store-statistic__item--color3">
+        <h4 class="store-statistic__title" nz-tooltip
+            [nzTooltipTitle]="'statistics.common.total-commission-fee' | translate" nzTooltipPlacement="topLeft">
+            {{ 'statistics.common.total-commission-fee' | translate }}</h4>
+        <span class="store-statistic__total">{{(data?.totalCommission || 0) | number}}</span>
+    </div>
+</div>

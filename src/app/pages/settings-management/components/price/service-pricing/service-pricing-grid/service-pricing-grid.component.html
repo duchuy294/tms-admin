@@ -1,0 +1,42 @@
+<button ad-button nzColor="green" nzType="primary" (click)="addNew()">
+    <i class="material-icons">
+        add
+    </i> {{"button.add" | translate}}
+</button>
+<div class="row" style="margin-bottom: 8px;">
+    <div class="col">{{ "common.name" | translate }}</div>
+    <div class="col">{{ "common.avatar" | translate }}</div>
+    <div class="col">{{ "common.contentImage" | translate }}</div>
+    <div class="col"></div>
+</div>
+<div class="row pricing-item" *ngFor="let pricing of servicePricings">
+    <div class="col">
+        <input class="form-control" (ngModelChange)="pricing.changed = true" [(ngModel)]="pricing.name" />
+    </div>
+    <div class="col">
+        <nz-file-uploader [nzFileList]="fileList[pricing._id].imgUrl" [nzData]="{ path: 'icons/services' }"
+            (nzChange)="updateImg($event, pricing)" [nzShowButton]="!pricing.imgUrl">
+        </nz-file-uploader>
+    </div>
+    <div class="col">
+        <nz-file-uploader [nzFileList]="fileList[pricing._id].imgContentUrl" [nzData]="{ path: 'services/price' }"
+            (nzChange)="updateContentImg($event, pricing)" [nzShowButton]="!pricing.imgContentUrl">
+        </nz-file-uploader>
+    </div>
+    <div class="col">
+        <a nz-popconfirm [nzOkText]="'button.confirm' | translate" [nzCancelText]="'button.cancel' | translate"
+            (nzOnConfirm)="remove(pricing)">
+            <button ad-button nzColor="red" nzSize="medium" nzShape="circle">
+                <i class="material-icons">
+                    delete
+                </i>
+            </button>
+        </a>
+        <button ad-button nzColor="blue" nzSize="medium" nzShape="circle" *ngIf="pricing.changed"
+            (click)="save(pricing)">
+            <i class="material-icons">
+                save
+            </i>
+        </button>
+    </div>
+</div>

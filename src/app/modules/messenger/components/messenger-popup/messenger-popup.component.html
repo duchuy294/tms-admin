@@ -1,0 +1,85 @@
+<div class="messenger__container messenger__header__border">
+    <div class="messenger__header__border messenger__header" (click)="handlePopupModel(false)">
+        <div class="messenger__header__content">
+            <div class="messenger__header__avatar">
+                <img *ngIf="conversation" class="avatar__right" [src]="conversation.images['left']">
+                <img *ngIf="conversation" class="avatar__left" [src]="conversation.images['right']">
+            </div>
+            <div class="title">
+                <div *ngIf="conversation">
+                    <div class="title__name">
+                        {{ ((conversation.type === ConversationType.ALL) ? 'messenger.customer-partner'
+                            : (conversation.type === ConversationType.USER) ? 'common.customer'
+                            : (conversation.type === ConversationType.SERVICER) ? 'common.servicer'
+                            : (conversation.type === ConversationType.HOST) ? 'warehouse.order.lessor'
+                            : (conversation.type === ConversationType.RENTER) ? 'warehouse.order.renter' : '' ) | translate }}
+                        {{ (conversation.type === ConversationType.USER
+                            || (conversation.type === ConversationType.SERVICER)
+                            || (conversation.type === ConversationType.HOST)
+                            || (conversation.type === ConversationType.RENTER)) ?
+                            conversation.fullName : '' }}
+                    </div>
+                    <div class="title__order-code"> {{'common.order' | translate}} {{order}} </div>
+                </div>
+            </div>
+            <button ad-button nzShape="circle" (click)="handlePopupModel(false)">
+                <i class="material-icons">
+                    keyboard_arrow_down
+                </i>
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="!messages.length" class="empty-screen__container">
+        <div class="empty-screen__content">
+            <div *ngIf="!isLoading">
+                <img src="assets/images/no-message-screen.png" width="100%" height="100%" />
+                <div>{{"messenger.no-message"|translate}}</div>
+            </div>
+            <div *ngIf="isLoading">
+                <img src="assets/images/lazy-loading.svg" width="100%" height="100%" />
+            </div>
+        </div>
+    </div>
+    <div *ngIf="messages.length" class="messenger__conversation" infinite-scroll [infiniteScrollDistance]="2"
+        [infiniteScrollUpDistance]="1.5" [infiniteScrollThrottle]="50" (scrolledUp)="onScrollUp()"
+        [scrollWindow]="false" #messengerConversation
+        [scrollTop]="(scrollToBottom)?messengerConversation.scrollHeight:messengerConversation.scrollTop">
+
+        <div class="message">
+            <div *ngFor="let message of messages; index as index">
+                <message [avatar]="messageAvatar(index)" [position]="messagePosition(index)" [content]="message.text"
+                    [time]="message.createdAt" [showDate]="messageDate(index)"
+                    [status]="(messageStatuses[message._id]) ? messageStatuses[message._id] : ''"
+                    [image]="message.imageUrl" [name]="(message.userType !== 'admin') ? name[message.userId] : ''">
+                </message>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div *ngIf="!blockMessage" class="messenger__footer">
+            <textarea rows="1" [(ngModel)]="text" class="input" type="text" nz-input
+                [placeholder]="('common.content' | translate) + '...'" (keydown.enter)="sendMessage()"
+                (keydown.shift)="isShift = true;" (keyup.shift)="isShift = false;" [disabled]="isSending" autofocus>
+            </textarea>
+            <nz-upload class="file-upload" nzType="draw" [nzLimit]="1" [nzShowUploadList]="false"
+                [nzBeforeUpload]="beforeUpload" [nzDisabled]="isUploading">
+                <button ad-button class="send-image-button" nzShape="circle" nzType="default">
+                    <img *ngIf="!isUploading" src="assets/icon/send-image.png" height="100%" width="100%" />
+                    <i *ngIf="isUploading" nz-icon nzType="loading" nzTheme="outline" style="color: white;"></i>
+                </button>
+            </nz-upload>
+            <button class="send-button" ad-button nzShape="circle" (click)="sendMessage()"
+                [disabled]="isSending || isUploading">
+                <img [src]="(text)?'assets/icon/activate-send.png':'assets/icon/deactivate-send.png'" height="100%"
+                    width="100%">
+            </button>
+        </div>
+        <div *ngIf="blockMessage" class="messenger__footer">
+            <div class="block-message">
+                {{blockMessage}}
+            </div>
+        </div>
+    </div>
+</div>

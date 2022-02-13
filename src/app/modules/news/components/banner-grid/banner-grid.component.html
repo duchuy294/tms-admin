@@ -1,0 +1,37 @@
+<nz-table #table (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [(nzPageIndex)]="queryModel.page" [(nzPageSize)]="queryModel.limit" [nzData]="tableData.data"
+    [nzFrontPagination]="false" [nzLoading]="loadingGrid" [nzScroll]="{ x: '1000px' }" [nzTotal]="tableData.total"
+    nzShowSizeChanger nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th [nzWidth]="'10%'">{{ 'common.createdAt' | translate }}</th>
+            <th [nzWidth]="'15%'">{{ 'common.images' | translate }} </th>
+            <th [nzWidth]="'25%'">{{ 'common.title' | translate }}</th>
+            <th [nzWidth]="'15%'">{{ 'common.status' | translate }}</th>
+            <th [nzWidth]="'15%'">{{ 'common.staff' | translate }}</th>
+            <th [nzWidth]="'10%'" nzRight="0px">{{'common.action' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of table.data">
+            <td>{{ item.createdAt | date:'h:mm a dd/MM/yyyy' }}</td>
+            <td>
+                <img style="width: 100px" src="{{ item.image }}" />
+            <td>{{ item.title }}</td>
+            <td>
+                <nz-switch [ngModel]="statuses[item._id]" [nzLoading]="loadingStatus" [nzControl]="true"
+                    (click)="onChangeStatus(item)"></nz-switch>
+            </td>
+            <td>{{ item.updatedBy ? (adminUpdatedBy[item.updatedBy]?.fullName) : '' }}</td>
+            <td nzRight="0px">
+                <button nz-dropdown ad-button nzType="dashed" (click)="handleEdit(item._id)">
+                    {{'button.edit' | translate}}
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{'table.total' | translate}} {{ total }}
+    {{'table.result' | translate | lowercase}}
+</ng-template>

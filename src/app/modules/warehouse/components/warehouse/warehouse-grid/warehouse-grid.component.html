@@ -1,0 +1,61 @@
+<nz-table #table (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [(nzPageIndex)]="queryModel.page" [(nzPageSize)]="queryModel.limit" [nzData]="tableData.data"
+    [nzFrontPagination]="false" [nzLoading]="loadingGrid" [nzScroll]="{ x: '900px' }" [nzTotal]="tableData.total"
+    nzShowSizeChanger nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th [nzWidth]="'8%'">{{ 'warehouse.warehouse.code' | translate }} </th>
+            <th [nzWidth]="'8%'">{{ 'common.createdAt' | translate }} </th>
+            <th [nzWidth]="'15%'">{{ 'warehouse.warehouse.type' | translate }} </th>
+            <th [nzWidth]="'15%'">{{ 'warehouse.warehouse.name' | translate }} </th>
+            <th [nzWidth]="'8%'">{{ 'common.phone' | translate }} </th>
+            <th [nzWidth]="'8%'">{{ 'warehouse.warehouse.lease-area' | translate }} /
+                {{ 'warehouse.warehouse.area' | translate }}
+            </th>
+            <th [nzWidth]="'20%'">{{ 'common.address' | translate }} </th>
+            <th [nzWidth]="'8%'">{{ 'common.status' | translate }} </th>
+            <th [nzWidth]="'5%'">{{ 'warehouse.warehouse.number-of-order' | translate }} </th>
+            <th [nzWidth]="'5%'">{{ 'common.action' | translate }} </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of table.data">
+            <td>{{ item.code }}</td>
+            <td>{{ item.createdAt | date:'hh:mm dd/MM/yyyy' }}</td>
+            <td>{{ showType(item.typeIds) }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.phone }}</td>
+            <td>{{ item.availableArea }} m<sup>2</sup>{{ item.availableArea || item.area ? ' / ' : ' ' }}{{ item.area }}
+                m<sup>2</sup>
+            </td>
+            <td>{{ item.address | address }}</td>
+            <td>
+                {{ 'common.status' + item.status | translate }}
+            </td>
+            <td>{{ item.numberOfOrders }}</td>
+            <td nzRight="0px">
+                <ng-container>
+                    <button nz-dropdown ad-button nzType="dashed" [nzDropdownMenu]="menu"
+                        [nzPlacement]="'bottomCenter'">
+                        {{'common.action' | translate}}
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                            <li nz-menu-item>
+                                <a
+                                    routerLink="/pages/warehouse/detail/{{item._id}}">{{ 'common.detail' | translate}}</a>
+                            </li>
+                            <li nz-menu-item *ngIf="item.status !== 4">
+                                <a (click)="handleDelete(item._id)">{{'common.delete' | translate}}</a>
+                            </li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{ 'table.total' | translate }} {{ total }}
+    {{ 'table.result' | translate | lowercase}}
+</ng-template>

@@ -1,0 +1,6 @@
+<page-wrapper [nzTitle]="pageTitle">
+    <response-list></response-list>
+</page-wrapper>
+<ng-template #pageTitle>
+    {{ ('common.response' | translate) + ' ' + ('common.responseRate' | translate | lowercase)}}
+</ng-template>

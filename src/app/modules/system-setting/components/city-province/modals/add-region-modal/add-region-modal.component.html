@@ -1,0 +1,81 @@
+<nz-modal nzWidth="900px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="cancel()">
+    <ng-template #modalTitle>
+        {{
+            ((regionModel ? "actions.edit" : "actions.add") | translate) +
+                " " +
+                ("common.region" | translate)
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #addRegionForm="ngForm">
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "common.region-name" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <input name="name" [(ngModel)]="model.name" #regionName="ngModel" nz-input required />
+                            <nz-form-explain *ngIf="
+                                    (regionName.dirty || regionName.touched) &&
+                                    regionName.errors?.required
+                                ">
+                                {{
+                                    "validations-form.region-name.required"
+                                        | translate
+                                }}</nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "common.ordinalValue" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <input nz-input type="number" name="order" [(ngModel)]="order" style="width: 100%" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "common.matches-words" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-tag *ngFor="let tag of model.matches; let i = index" [nzMode]="'closeable'"
+                                (nzAfterClose)="handleClose(tag)">
+                                {{ sliceTagName(tag) }}
+                            </nz-tag>
+                            <nz-tag *ngIf="!inputVisible" class="editable-tag" nzNoAnimation (click)="showInput()">
+                                <i nz-icon nzType="plus"></i>
+                                {{ "common.matches-words" | translate }}
+                            </nz-tag>
+                            <input #inputElement nz-input *ngIf="inputVisible" type="text" nzSize="small"
+                                [(ngModel)]="inputValue" style="width: 120px;" (blur)="handleInputConfirm()"
+                                (keydown.enter)="handleInputConfirm()" [ngModelOptions]="{ standalone: true }" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="footer">
+            <div class="buttonContainer" style="width: 10%">
+                <button ad-button nzUpper nzColor="primary" (click)="submit()">
+                    {{
+                        (regionModel ? "button.edit" : "button.add") | translate
+                    }}
+                </button>
+                <button ad-button nzUpper nzColor="gray" (click)="cancel()">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

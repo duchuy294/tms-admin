@@ -1,0 +1,38 @@
+<div class="page__container">
+    <nz-skeleton [nzActive]="true" [nzLoading]="loading" [nzParagraph]="{rows: 19}">
+        <p class="info__left">
+            <b>{{'table.group-code' | translate}}:</b>
+            <span class="info__right">
+                {{model.code}}
+            </span>
+        </p>
+        <p class="info__left">
+            <b>{{'table.create-date' | translate}}:</b>
+            <span class="info__right">
+                {{model.createdAt | date:'HH:mm dd/MM/yyyy'}}
+            </span>
+        </p>
+        <p class="info__left">
+            <b>{{'table.group-name' | translate}}:</b>
+            <span class="info__right">
+                {{model.name}}
+            </span>
+        </p>
+        <p class="info__left">
+            <b>{{'table.status' | translate}}:</b>
+            <span class="info__right">
+                {{'common.status' + model.status | translate}}
+            </span>
+        </p>
+        <div class="info__button__container">
+            <div class="info__button">
+                <button ad-button nzUpper nzColor="primary" nzSize="large" (click)="handleModelVisible(true)"><span><b>
+                            {{ ('button.modify' | translate) + ' ' + ('common.information' | translate) }}</b></span></button>
+            </div>
+        </div>
+    </nz-skeleton>
+</div>
+
+<group-servicer-modify [modifyingModel]="model" [visible]="createModifyModalVisible"
+    (handleVisible)="handleModelVisible($event)" (afterSubmit)="loadData()">
+</group-servicer-modify>

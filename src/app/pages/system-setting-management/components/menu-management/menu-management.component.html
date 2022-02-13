@@ -1,0 +1,56 @@
+<page-wrapper [nzTitle]="'common.menu' | translate">
+    <div>
+        <div class="grid__header">
+            <button class="grid__action__right" ad-button nzUpper nzColor="primary"
+                (click)="openModificationModal()">{{'button.add' | translate }}</button>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{'common.date' | translate }}</th>
+                <th></th>
+                <th>{{'common.title' | translate }}</th>
+                <th>{{'common.link' | translate }}</th>
+                <th>{{'common.orderNo' | translate }}</th>
+                <th>{{'common.action' | translate }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-template ngFor let-item [ngForOf]="model">
+                <tr nzColor="primary">
+                    <td>{{item.createdAt | date:'HH:mm dd/MM/yyyy'}}</td>
+                    <td style="background-color: #001529" class="text-center">
+                        <img class="width-25" *ngIf="item.icon" [src]="item.icon" />
+                    </td>
+                    <td>{{item.title[lang]}}</td>
+                    <td>{{item.path}}</td>
+                    <td>{{item.order}}</td>
+                    <td>
+                        <ng-template ngFor let-action [ngForOf]="actions">
+                            <button ad-button *ngIf="!action.visible || action.visible(item)"
+                                (click)="action.perform(item)">{{action.name | translate}}</button>
+                        </ng-template>
+                    </td>
+                </tr>
+
+                <ng-template [ngIf]="item.children && item.children.length">
+                    <tr *ngFor="let child of item.children">
+                        <td>{{child.createdAt | date:'HH:mm dd/MM/yyyy'}}</td>
+                        <td style="background-color: #001529"></td>
+                        <td class="pd-left-30">{{child.title[lang]}}</td>
+                        <td>{{child.path}}</td>
+                        <td>{{child.order}}</td>
+                        <td>
+                            <ng-template ngFor let-action [ngForOf]="actions">
+                                <button ad-button *ngIf="!action.visible || action.visible(child)"
+                                    (click)="action.perform(child)">{{action.name | translate}}</button>
+                            </ng-template>
+                        </td>
+                    </tr>
+                </ng-template>
+            </ng-template>
+        </tbody>
+    </table>
+</page-wrapper>

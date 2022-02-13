@@ -1,0 +1,60 @@
+<page-wrapper [nzTitle]="model?.fullName |uppercase">
+    <div class="customer-detail">
+        <div class="row">
+            <div class="col-8">
+                <div>
+                    <div class="floatingLeft">
+                        <button ad-button nzUpper nzColor="red" (click)="toggleFilterVisible()">
+                            {{'filter.filter'|translate}}
+                        </button>
+                    </div>
+                </div>
+                <div style="margin-top: 20px">
+                    <filter-order-customer [isEnterprise]='isEnterprise' [(userId)]='query.userId'
+                        (search)="search($event)" (onReset)="search($event)" [display]="filterVisible">
+                    </filter-order-customer>
+                </div>
+                <order-statistic-customer-detail *ngIf="orderStatisticData" [data]="orderStatisticData">
+                </order-statistic-customer-detail>
+                <order-grid [(model)]="query" width="850px"
+                    [hiddenFields]="['incident','services','collectionMoney','prepaid', 'payment', 'processingStaff' ,'user']"
+                    #orderGrid>
+                </order-grid>
+            </div>
+            <div class="col-4" style="display: flex; flex-direction: column;">
+                <div>
+                    <button routerLink="/pages/customer-management/personal/detail/{{customerId}}/end-user"
+                        class="floatingRight" ad-button nzColor="orange">{{'end-user.management' | translate}}</button>
+                    <button class="floatingRight" style="margin-right: 15px" ad-button nzUpper nzColor="orange"
+                        (click)="handleVisibleStaffDetail(true)" *ngIf="isEnterprise">
+                        {{'common.staff'|translate}}
+                    </button>
+                </div>
+                <br>
+                <br>
+                <customer-detail-information *ngIf="model" [model]="model" (transaction)="showTransaction()"
+                    (modify)="showModalModify()" (collection)="showCollectionDebt($event)"
+                    (rating)="showRatingDetail()">
+                </customer-detail-information>
+            </div>
+        </div>
+    </div>
+
+    <customer-transaction-history [userIds]="customerId" [visible]="visibleTransactionHistory"
+        (handleVisible)="handleVisibleTransactionHistory($event)">
+    </customer-transaction-history>
+    <collection-debt-history [setCollectionDebt]="wallet.collectionDebt" [userId]="customerId[0]"
+        [visible]="visibleCollectionDebtHistory" (handleVisible)="handleVisibleCollectionDebtHistory($event)"
+        [currency]="wallet.currency">
+    </collection-debt-history>
+    <rating-list [visible]="visibleRatingDetailModal" (handleVisible)="handleRatingDetailModal($event)"
+        [userId]="customerId" userType="user">
+    </rating-list>
+    <detail-staff [visible]="visibleStaffDetail" (handleVisible)="handleVisibleStaffDetail($event)"
+        [giveEnterpriseId]="model._id">
+    </detail-staff>
+</page-wrapper>
+<customer-modify [customerToModify]="customerToModify" [modalVisible]="customerModifyModalVisible"
+    (handleModalVisible)="handleCustomerModifyModalVisible($event)" (afterSuccess)="afterEdit()">
+</customer-modify>
+<spinner-processing-modal [visible]="isLoading"></spinner-processing-modal>

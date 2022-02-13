@@ -1,0 +1,64 @@
+<nz-modal nzWidth="600px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+
+    <ng-template #modalTitle>{{ 'filter.address' | translate }}</ng-template>
+
+    <ng-template #modalContent>
+        <div class="row">
+            <div class="col-12">
+                <nz-form-item>
+                    <label nz-checkbox
+                        [(ngModel)]="checkinstallationPoint">{{ 'filter.installationPoint' | translate }}</label>
+                </nz-form-item>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <nz-form-item>
+                    <label nz-checkbox [(ngModel)]="checkDeliveryPoint">{{ 'filter.deliveryPoint' | translate }}</label>
+                </nz-form-item>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <nz-form-item>
+                    <nz-form-label nzRequired>{{ 'common.city' | translate }}</nz-form-label>
+                    <nz-form-control>
+                        <nz-select nzShowSearch nzAllowClear name="city" style="width: 100%;" [(ngModel)]="citis"
+                            required #cityId="ngModel">
+                            <nz-option *ngFor="let item of cityOptions" [nzValue]="item.code" [nzLabel]="item.name">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <nz-form-item>
+                    <nz-form-label nzRequired>{{ 'common.district' | translate }}</nz-form-label>
+                    <nz-form-control>
+                        <nz-select name="district" nzShowSearch nzAllowClear style="width: 100%;"
+                            [(ngModel)]="districts" required #districtId="ngModel">
+                            <nz-option *ngFor="let item of districtOptions" [nzValue]="item.code" [nzLabel]="item.name">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" (click)="handleVisibleModal(false)">
+                    {{ 'button.confirm' | translate }}
+                </button>
+                <button ad-button nzUpper nzColor="default" (click)="handleVisibleModal(false)">
+                    {{ 'button.cancel' | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

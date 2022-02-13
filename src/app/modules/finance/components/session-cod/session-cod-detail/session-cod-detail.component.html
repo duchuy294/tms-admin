@@ -1,0 +1,197 @@
+<div class="row">
+    <div class="col">
+        <div class="titleCode"
+            style="padding: 25px 0px 25px 15px; font-weight: bold; background-color: white; font-size: 1.5em;">
+            {{ "finance.session-cod.code" | translate}}: <span>#{{model.code}}</span>
+            <a routerLink="/pages/finance/session-cod" ad-button nzColor="blue"
+                style="float: right; margin-right: 8px;"><i nz-icon nzType="left"></i>
+                {{ 'button.back' | translate }}</a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-8" style="padding: 8px 8px 0px 15px;">
+
+        <page-wrapper [nzTitle]="pageTitleInformation">
+            <ng-template #pageTitleInformation>
+                <h3 class="title">
+                    {{ "order.list" | translate }}
+                </h3>
+            </ng-template>
+            <div class="row">
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzFor="">{{'order.code' | translate }}/{{'order.external-code' | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <input nz-input [(ngModel)]="orderQueryModel.code" name="code"
+                                (keyup.enter)="getOrders(orderQueryModel)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-8">
+                    <nz-form-item>
+                        <nz-form-label class="form-label--empty"></nz-form-label>
+                        <nz-form-control>
+                            <button ad-button nzColor="red"
+                                (click)="getOrders(orderQueryModel)">{{ 'button.search' | translate }}</button> &nbsp;
+                            <button ad-button
+                                (click)="getOrders(orderQueryModel, 1, true)">{{ 'actions.remove' | translate }}</button>
+                        </nz-form-control>
+                    </nz-form-item>
+
+                </div>
+            </div>
+            <nz-table #table (nzPageIndexChange)="loadDataByPage($event)" nzShowSizeChanger nzShowQuickJumper
+                (nzPageSizeChange)="loadDataByPageSize($event)" [(nzPageIndex)]="orderQueryModel.page"
+                [(nzPageSize)]="orderQueryModel.limit" [nzData]="tableData.data" [nzFrontPagination]="false"
+                [nzLoading]="loading" [nzScroll]="{ x: '900px' }" [nzTotal]="tableData.total"
+                [nzShowTotal]="totalTemplate">
+                <thead>
+                    <tr>
+                        <th nzWidth="5%" nzLeft="0px">{{'order.code' | translate }}</th>
+                        <th [nzWidth]="'15%'">{{'order.external-code' | translate}}</th>
+                        <th [nzWidth]="'5%'" nzAlign="right">COD (vnđ)</th>
+                        <th [nzWidth]="'8%'">{{ 'finance.session-cod.delivery-date' | translate }}</th>
+                        <th [nzWidth]="'2%'">{{ 'common.action' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of table.data">
+                        <td>
+                            <a target="_blank" routerLink="/pages/order/{{order._id}}">{{ order.code}}</a>
+                        </td>
+                        <td>
+                            {{order.externalCode}}
+                        </td>
+                        <td nzAlign="right">
+                            {{ order?.cod?.total | number }}
+                        </td>
+                        <td>{{ order.finishedAt | date:'HH:mm dd/MM/yyyy' }}</td>
+                        <td>
+                            <a target="_blank" routerLink="/pages/order/{{order._id}}"><i nz-icon nzType="eye"
+                                    nzTheme="outline"></i></a> &nbsp;
+                            <span *ngIf="!model?.transferredBy && confirm" class="pointer" style="color: #ED1C24;"
+                                (click)="showDeleteConfirm(model.code, order.code)"><i nz-icon nzType="delete"
+                                    nzTheme="outline"></i></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+            <ng-template #totalTemplate let-range="range" let-total>
+                {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{ 'table.total' | translate }}
+                {{ total }}
+                {{ 'table.result' | translate | lowercase}}
+            </ng-template>
+        </page-wrapper>
+
+    </div>
+    <div class="col-4" style="padding:8px 15px 0px 0px">
+        <page-wrapper [nzTitle]="sessionDetail">
+            <ng-template #sessionDetail>
+                <h3 class="title">
+                    {{ "finance.session-cod.detail" | translate }}
+                </h3>
+            </ng-template>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'finance.session-cod.code' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession">{{model?.code}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'order.customer' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession">{{customer?.fullName || ''}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'table.status' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession">
+                        {{'finance.session-cod.status.' + model.status | translate }}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'finance.session-cod.total-order' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession">
+                        {{ model?.orders?.length}}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'finance.session-cod.total-cod' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession">
+                        {{ model?.cod | number}}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'table.create-date' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession">
+                        {{ model?.createdAt | date:'HH:mm dd/MM/yyyy' }}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'finance.session-cod.created-by' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession">
+                        {{ createdBy?.fullName || '' }}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'finance.session-cod.transfer-date' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession">
+                        {{ model?.transferredAt | date:'HH:mm dd/MM/yyyy' }}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'finance.session-cod.transfer-by' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession">
+                        {{ transferredBy?.fullName || ''}}
+                    </span>
+                </div>
+            </div>
+            <div class="row" *ngIf="!model?.transferredBy && confirm">
+                <div class="col" style="text-align: center; margin-top: 1rem;">
+                    <button ad-button (click)="showEditConfirm(model?.code)"
+                        style="background-color: #FB9761; color: #fff;">{{'finance.session-cod.confirm-transfer'  | translate | uppercase}}</button>
+                </div>
+            </div>
+            <div class="row" *ngIf="!confirm">
+                <div class="col" style="text-align: center; margin-top: 1rem;">
+                    <button ad-button (click)="exportExcel(model?.code)"
+                        style="background-color: #FB9761; color: #fff;">{{'finance.session-cod.export-order'  | translate | uppercase}}</button>
+                </div>
+            </div>
+        </page-wrapper>
+
+    </div>
+</div>

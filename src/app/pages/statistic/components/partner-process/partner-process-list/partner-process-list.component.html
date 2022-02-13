@@ -1,0 +1,47 @@
+<nz-table nz-table #table [nzData]="tableData.data" [nzFrontPagination]="false" nzShowSizeChanger [nzLoading]="loading"
+    [nzTotal]="tableData.total" [(nzPageIndex)]="model.page" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [(nzPageSize)]="model.limit" (nzPageIndexChange)="loadDataByPage($event)" nzShowQuickJumper
+    [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th nzWidth="100px">{{'order.servicer' | translate }}</th>
+            <th nzWidth="100px">{{'common.group' | translate }}</th>
+            <th nzWidth="100px">{{'partnerProcess.totalOrder' | translate }}</th>
+            <th nzWidth="100px">{{'partnerProcess.orderSuccess' | translate }}</th>
+            <th nzWidth="200px">{{'partnerProcess.successRate' | translate }}</th>
+            <th nzRight="0px" nzWidth="80px" class="align-left"> {{'common.action' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of table.data">
+            <td>
+                <a *ngIf="servicers[item.servicerId]"
+                    routerLink="/pages/servicer-management/servicer/detail/{{item.servicerId}}" target="_blank">
+                    {{servicers[item.servicerId][0]?.fullName}}
+                </a>
+            </td>
+            <td>
+                <span *ngIf="groups[item.groupId]">
+                    {{groups[item.groupId][0]?.name}}
+                </span>
+            </td>
+            <td>{{item.total}}</td>
+            <td>{{item.completed}}</td>
+            <td>
+                <div style="width: 90%;">
+                    <nz-progress nzStatus="active" [nzPercent]="item.successRatio || 0" [nzFormat]="fortmat">
+                    </nz-progress>
+                </div>
+            </td>
+            <td nzRight="0px" nzWidth="80px" class="align-left">
+                <a ad-button routerLink="/pages/statistic/partner-process/{{item.servicerId}}">
+                    {{'common.detail' | translate}}
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-total let-range="range">
+    {{'table.show' | translate}} {{range[0]}}-{{range[1]}}. {{'table.total' | translate}} {{ total }}
+    {{'table.result' | translate | lowercase}}
+</ng-template>

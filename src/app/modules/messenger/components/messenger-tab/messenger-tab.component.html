@@ -1,0 +1,34 @@
+<div *ngIf="!visiblePopup" class="messenger__container">
+    <div *ngIf="unreadMessages" class="messenger__unread" (click)="visiblePopup=!visiblePopup">
+        {{(unreadMessages > 9) ? '9+' : unreadMessages}}
+    </div>
+    <div class="messenger__content" (click)="visiblePopup=!visiblePopup">
+        <div class="title">
+            <div *ngIf="conversation">
+                <div class="title__name">
+                    {{ ((conversation.type === ConversationType.ALL) ? 'messenger.customer-partner'
+                            : (conversation.type === ConversationType.USER) ? 'common.customer'
+                            : (conversation.type === ConversationType.SERVICER) ? 'common.servicer'
+                            : (conversation.type === ConversationType.HOST) ? 'warehouse.order.lessor'
+                            : (conversation.type === ConversationType.RENTER) ? 'warehouse.order.renter' : '' ) | translate }}
+                    {{ (conversation.type === ConversationType.USER
+                            || (conversation.type === ConversationType.SERVICER)
+                            || (conversation.type === ConversationType.HOST)
+                            || (conversation.type === ConversationType.RENTER)) ?
+                            conversation.fullName : '' }}
+                </div>
+                <div class="title__order-code">
+                    {{'common.order' | translate}} {{order}}
+                </div>
+            </div>
+        </div>
+        <button class="minimize-button" ad-button nzShape="circle" (click)="visiblePopup=!visiblePopup">
+            <i class="material-icons" style="padding-top: 2px;">
+                keyboard_arrow_up
+            </i>
+        </button>
+    </div>
+</div>
+<messenger-popup *ngIf="visiblePopup" [conversation]="conversation" [order]="(order)?order:''"
+    (handlePopup)="handlePopupModel($event)" [blockMessage]="blockMessage" [visible]="visiblePopup" [name]="name">
+</messenger-popup>

@@ -1,0 +1,115 @@
+@import "utils.less";
+
+::ng-deep {
+    .detailPageWrapper {
+        .flex-display();
+        min-height: 100vh;
+
+        .leftWrapper {
+            width: 72%;
+            background: white;
+        }
+
+        .rightWrapper {
+            width: 26%;
+            position: absolute;
+            right: 1%;
+
+            .contentLine {
+                margin-bottom: 8px;
+            }
+
+            .leftAligned {
+                margin: 0 auto;
+                float: left;
+            }
+
+            .rightAligned {
+                margin: 0 auto;
+                float: right;
+            }
+
+            .buttonContainer {
+                .flex-display();
+                align-items: center;
+                justify-content: center;
+
+                >button {
+                    height: 38px;
+                }
+            }
+        }
+    }
+
+    .codeWrapper {
+        margin: 5px 7px;
+        cursor: pointer;
+        border-radius: 25px;
+        padding: 5px 5px 5px 10px;
+        box-sizing: border-box;
+        font-style: bold;
+        box-shadow: 1px 4px 7px 1px rgba(0, 0, 0, 0.1);
+        color: white;
+        font-size: 0.9em;
+        letter-spacing: 1px;
+
+        &1 {
+            background: #f5f5f5;
+            color: #595959;
+        }
+
+        &2 {
+            background: #6b61fb;
+        }
+
+        &3 {
+            background: #ffa39e;
+        }
+    }
+
+    .headerTitle {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .title {
+        position: relative;
+        margin: 0px 20px;
+        margin-top: 20px;
+        width: 100%;
+
+        .titleLeft {
+            font-size: 1.1em;
+        }
+
+        .titleButton {
+            position: absolute;
+            right: -5px;
+            top: -5px;
+        }
+
+        .titleRight {
+            position: absolute;
+            right: 0px;
+            top: -5px;
+            width: 120px;
+        }
+    }
+
+    .radioLabel {
+        margin: 10px 0;
+    }
+
+    .conditionItem {
+        margin: 5px 0;
+    }
+
+    .floatRightButton {
+        right: 0px;
+    }
+
+    .inputIcon {
+        width: 20px;
+        height: 20px;
+    }
+}

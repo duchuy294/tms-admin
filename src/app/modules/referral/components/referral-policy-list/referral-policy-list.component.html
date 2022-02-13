@@ -1,0 +1,23 @@
+<div class="grid__container">
+    <div class="grid__header">
+        <div class="floatingLeft">
+            <button class="grid__action__left" ad-button nzColor="red" (click)="toggleVisibleFilter()">
+                {{ "filter.filter" | translate }}
+            </button>
+        </div>
+        <div class="floatingRight">
+            <button class="grid__action__right" ad-button nzColor="primary" (click)="addReferralPolicy()">
+                {{ "filter.createNew" | translate }}
+            </button>
+        </div>
+    </div>
+    <referral-policy-filter (onClickSearch)="search($event)" (onClickClearFilter)="search($event)"
+        #referralPolicyFilter>
+    </referral-policy-filter>
+    <referral-policy-grid [(model)]="modelQuery" #referralPolicyGrid>
+    </referral-policy-grid>
+</div>
+<create-modify-referral-policy-modal [referralPolicyModel]="referralPolicyToEdit"
+    [visible]="createModifyReferralPolicyModalVisible"
+    (handleVisible)="handleCreateModifyReferralPolicyModalVisible($event)" (afterSubmit)="afterCreated()">
+</create-modify-referral-policy-modal>

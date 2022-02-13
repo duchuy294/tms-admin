@@ -1,0 +1,69 @@
+<nz-modal nzWidth="900px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+    <ng-template #modalTitle>
+        {{
+            ("common.rating-of" | translate) +
+                " " +
+                ((userType == "servicer"
+                    ? "common.servicer"
+                    : "common.customer"
+                )
+                    | translate
+                    | lowercase)
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <nz-table #table [nzData]="tableData.data" [nzFrontPagination]="false" [nzLoading]="loading"
+            [nzTotal]="tableData.total" [(nzPageIndex)]="queryModel.page" [(nzPageSize)]="queryModel.limit"
+            [nzFrontPagination]="false" nzShowSizeChanger (nzPageIndexChange)="loadDataByPage($event)"
+            (nzPageSizeChange)="loadDataByPageSize($event)" [nzScroll]="{ x: '900px' }" nzShowQuickJumper
+            [nzShowTotal]="totalTemplate">
+            <thead>
+                <tr>
+                    <th [nzWidth]="'15%'">
+                        {{ "table.order-code" | translate }}
+                    </th>
+                    <th [nzWidth]="'15%'">{{ "table.time" | translate }}</th>
+                    <th [nzWidth]="'15%'">
+                        {{ "table.star-numbers" | translate }}
+                    </th>
+                    <th [nzWidth]="'30%'">
+                        {{ "table.rating-content" | translate }}
+                    </th>
+                    <th [nzWidth]="'25%'">
+                        {{ "table.rating-advanced-content" | translate }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of table.data">
+                    <td>{{ orderCode[item.orderId] }}</td>
+                    <td>{{ item.createdAt | date: "h:mm:ss a dd/MM/yyyy" }}</td>
+                    <td>
+                        <nz-rate [ngModel]="item.rate" [nzCharacter]="characterIcon" nzAllowHalf nzDisabled>
+                        </nz-rate>
+                        <ng-template #characterIcon>
+                            <i nz-icon nzType="star" nzTheme="fill"></i>
+                        </ng-template>
+                    </td>
+                    <td>{{ item.improve }}</td>
+                    <td>{{ item.reason }}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </ng-template>
+    <ng-template #totalTemplate let-range="range" let-total>
+        {{ "table.show" | translate }} {{ range[0] }}-{{ range[1] }}.
+        {{ "table.total" | translate }} {{ total }}
+        {{ "table.result" | translate | lowercase }}
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="footer">
+            <div class="buttonContainer">
+                <button ad-button nzColor="gray" (click)="handleVisibleModal(false)">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

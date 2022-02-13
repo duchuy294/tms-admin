@@ -1,0 +1,4 @@
+<nz-input-group [nzSuffix]="suffix">
+    <input nz-input name="amount" [(ngModel)]="amount" #valueRef="ngModel" [textMask]="{ mask: numberMask }"
+        [placeholder]="placeholder" [required]="false" />
+</nz-input-group>

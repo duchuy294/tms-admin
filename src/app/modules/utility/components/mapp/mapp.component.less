@@ -1,0 +1,26 @@
+agm-map {
+  height: 300px;
+//   width: 850px;
+    width: 100%;
+}
+agm-map:after {
+    width: 30px;
+    height: 40px;
+    display: block;
+    content: ' ';
+    position: absolute;
+    top: 50%; left: 50%;
+    // margin: -190px 0 0 410px;
+    background: url(https://recoveryannearundel.org/wp-content/uploads/2016/09/google-maps-marker-for-residencelamontagne-hi.png);
+    background-size: 30px 40px; /* Since I used the HiDPI marker version this compensates for the 2x size */
+    pointer-events: none; /* This disables clicks on the marker. Not fully supported by all major browsers, though */
+    transform: translate(-50%, -120%);
+}
+.buttonContainer {
+    margin: 0 0 -45px -10px;
+    text-align: right;
+    padding: 5px;
+}
+button {
+    z-index: 1000;
+}

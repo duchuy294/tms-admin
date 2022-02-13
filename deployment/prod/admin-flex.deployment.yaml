@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-flex
+  namespace: prod
+spec:
+  selector:
+    matchLabels:
+      app: admin-flex
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: admin-flex
+    spec:
+      containers:
+      - image: ${IMAGE_TAG}
+        imagePullPolicy: IfNotPresent
+        name: admin-flex
+        ports:
+        - name: node
+          containerPort: 3080
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1024Mi
+          requests:
+            cpu: 300m
+            memory: 512Mi
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always

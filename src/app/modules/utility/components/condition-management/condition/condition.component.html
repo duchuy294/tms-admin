@@ -1,0 +1,16 @@
+<div class="store-type-item">
+    <button class="store-type-item__remove" ad-button nzShape="circle" (click)="onClickRemove()">
+        <i style="color:red" class="material-icons">
+            close
+        </i>
+    </button>
+    <div class="store-type-item__content">
+        <div class="store-type-item__title">
+            <span>{{ title }}</span><br />
+        </div>
+        <nz-input-number *ngIf="type==='exactNumber'" class="item__input-number" [(ngModel)]="model.value" [nzMin]="1"
+            (ngModelChange)="ngModelChange()" name="model"
+            [nzPlaceHolder]="('actions.enter' | translate) + ' ' + (title | lowercase)">
+        </nz-input-number>
+    </div>
+</div>

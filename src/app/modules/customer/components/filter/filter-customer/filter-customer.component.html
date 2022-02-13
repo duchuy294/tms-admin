@@ -1,0 +1,133 @@
+<form nz-form nzLayout="vertical" #filterCustomer="ngForm" *ngIf="display">
+    <div class="row">
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="customer">{{
+                    "common.customer" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <search-and-suggest-account-component mode="multiple" [(ngModel)]="selectedCustomer"
+                        ngDefaultControl [ngModelOptions]="{ standalone: true }" #user="ngModel" [allowCustomer]="true"
+                        [allowServicer]="false" [customerSearchCondition]="customerSearchCondition" [valueType]="'_id'"
+                        [placeHolder]="
+                            ('actions.enter' | translate) +
+                            ' ' +
+                            ('common.id' | translate | uppercase) +
+                            '/' +
+                            ('common.name' | translate) +
+                            '/' +
+                            ('common.phone' | translate)
+                        ">
+                    </search-and-suggest-account-component>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="">{{
+                    "common.email" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input nz-input [(ngModel)]="model.email" name="email" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="">{{
+                    "filter.customer-level" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select style="width: 100%" [(ngModel)]="model.userLevelId" name="userLevelId" nzShowSearch
+                        nzPlaceHolder="{{ 'common.all' | translate }}" nzAllowClear>
+                        <nz-option *ngFor="let item of userLevels" [nzLabel]="item.name" [nzValue]="item._id">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="">{{
+                    "common.user-type" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select style="width: 100%" [(ngModel)]="model.type" name="userType" nzShowSearch
+                        nzPlaceHolder="{{ 'common.all' | translate }}" nzAllowClear>
+                        <nz-option *ngFor="let item of userTypes" [nzLabel]="'user-type.' + item | translate"
+                            [nzValue]="item">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="">{{
+                    "common.status" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select style="width: 100%" [(ngModel)]="model.status" name="status" nzShowSearch
+                        nzPlaceHolder="{{ 'common.all' | translate }}" nzAllowClear>
+                        <nz-option *ngFor="let item of statues" [nzLabel]="'common.status' + item | translate"
+                            [nzValue]="item">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="">{{
+                    "common.group" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select style="width: 100%" [(ngModel)]="model.groupId" name="groupId" nzShowSearch
+                        nzPlaceHolder="{{ 'common.all' | translate }}" nzAllowClear>
+                        <nz-option *ngFor="let item of groups" [nzLabel]="item.name" [nzValue]="item._id">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="">{{
+                    "common.administrative-staff" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input nz-input name="administrative-staff" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="searchTime">{{
+                    "common.createdAt" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-range-picker [nzShowTime]="false" [nzRanges]="ranges1" nzShowTime nzFormat="dd/MM/yyyy"
+                        [(ngModel)]="searchTime" class="ant-calendar-picker-full-width" name="searchTime"
+                        [nzPlaceHolder]="[
+                            'filter.fromDate' | translate,
+                            'filter.toDate' | translate
+                        ]">
+                    </nz-range-picker>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label class="form-label--empty"></nz-form-label>
+                <nz-form-control>
+                    <button ad-button nzColor="red" (click)="searchEvent()">
+                        {{ "button.search" | translate }}
+                    </button>
+                    <button ad-button style=" margin-left: 10px;" (click)="reset()">
+                        {{ "button.clear" | translate }}
+                    </button>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+</form>

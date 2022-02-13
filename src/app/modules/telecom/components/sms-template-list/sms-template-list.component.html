@@ -1,0 +1,20 @@
+<div class="grid__container">
+    <div style="display: flex; width: 100%; margin: 10px 0px">
+        <div style="font-size: 1.5em">
+            {{ 'telecom.sms-template.list' | translate }}
+        </div>
+        <div style="display: flex; position: absolute; right: 0px">
+            <button class="grid__action__right" ad-button nzColor="primary" (click)="handleVisible(true)">
+                {{'button.add'|translate}}
+            </button>
+        </div>
+    </div>
+    <filter-sms-template (onSearch)="search($event)" (onReset)="search($event)"
+        [style.display]="showFilter?'block':'none'">
+    </filter-sms-template>
+    <sms-template-grid [(model)]="modelQuery" (detail)="edit($event)" #smsTemplateGrid>
+    </sms-template-grid>
+</div>
+<create-sms-template [model]="model" [visible]="visibleModel" (handleVisible)="handleVisible($event)"
+    [loading]="loadingModel" (handleLoading)="handleLoading($event)" (submit)="submit($event)" #createSmsTemplate>
+</create-sms-template>

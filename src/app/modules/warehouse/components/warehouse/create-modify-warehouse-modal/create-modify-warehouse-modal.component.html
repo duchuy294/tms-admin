@@ -1,0 +1,107 @@
+<nz-modal nzWidth="900px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="cancel()">
+    <ng-template #modalTitle>
+        {{
+            (modifyingModel
+                ? "warehouse.warehouse.edit"
+                : "warehouse.warehouse.create"
+            ) | translate
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #createModifyForm="ngForm">
+            <div class="row">
+                <div class="col-4">
+                    <nz-form-label nzRequired>{{
+                        "warehouse.warehouse.type" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>
+                        <nz-select required #type="ngModel" name="type" nzMode="multiple" [(ngModel)]="model.typeIds"
+                            [nzPlaceHolder]="
+                                'warehouse.warehouse.placeholder-type'
+                                    | translate
+                            ">
+                            <nz-option *ngFor="let item of typeList" [nzLabel]="item.name" [nzValue]="item._id">
+                            </nz-option>
+                        </nz-select>
+                        <nz-form-explain *ngIf="
+                                (type.dirty || type.touched) &&
+                                type.errors?.required
+                            ">
+                            {{
+                                "validations-form.content.required" | translate
+                            }}
+                        </nz-form-explain>
+                    </nz-form-control>
+                </div>
+                <div class="col-4">
+                    <nz-form-label nzRequired>{{
+                        "warehouse.warehouse.start-time" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>
+                        <nz-date-picker #startDate_="ngModel" name="startDate" [(ngModel)]="_startAt"
+                            (ngModelChange)="onChangeStartAt($event)" required [nzPlaceHolder]="
+                                'validations-form.effectedAt.required'
+                                    | translate
+                            ">
+                        </nz-date-picker>
+                        <nz-form-explain *ngIf="
+                                (startDate_.dirty || startDate_.touched) &&
+                                startDate_.errors?.required
+                            ">
+                            {{
+                                "validations-form.effectedAt.required"
+                                    | translate
+                            }}
+                        </nz-form-explain>
+                    </nz-form-control>
+                </div>
+                <div class="col-4">
+                    <nz-form-label>{{
+                        "common.status" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>
+                        <nz-select name="status" [(ngModel)]="model.status" [nzPlaceHolder]="'common.all' | translate">
+                            <nz-option *ngFor="let item of statusList" [nzLabel]="'common.status' + item | translate"
+                                [nzValue]="item">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </div>
+            </div>
+            <br />
+            <nz-tabset [(nzSelectedIndex)]="selectedTabIndex" [nzType]="'card'">
+                <nz-tab nzTitle="{{
+                        'warehouse.warehouse.tab-information'
+                            | translate
+                            | uppercase
+                    }}">
+                    <warehouse-information-tab #infoTab [model]="model" (handleSubmit)="handleSubmit($event)">
+                    </warehouse-information-tab>
+                </nz-tab>
+                <nz-tab nzTitle="{{
+                        'warehouse.warehouse.tab-service-utility'
+                            | translate
+                            | uppercase
+                    }}">
+                    <warehouse-service-utility-tab #serviceTab [model]="model" (handleSubmit)="handleSubmit($event)">
+                    </warehouse-service-utility-tab>
+                </nz-tab>
+            </nz-tabset>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="footer">
+            <button ad-button nzUpper nzColor="primary" (click)="submit()">
+                {{
+                    (modifyingModel ? "button.edit" : "button.create")
+                        | translate
+                }}
+            </button>
+            <button ad-button nzUpper nzColor="gray" (click)="cancel()">
+                {{ "button.close" | translate }}
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

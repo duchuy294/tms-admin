@@ -1,0 +1,40 @@
+<nz-table #table [nzData]="tableData.data" [nzFrontPagination]="false" nzShowSizeChanger [nzLoading]="loading"
+    [nzTotal]="tableData.total" [(nzPageIndex)]="modelQuery.page" [(nzPageSize)]="modelQuery.limit"
+    (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [nzScroll]="{ x: '1300px' }">
+    <thead>
+        <tr>
+            <th [nzWidth]="'9%'">{{'table.exchange-code' | translate }}</th>
+            <th [nzWidth]="'10%'">{{'common.createdAt' | translate}}</th>
+            <th [nzWidth]="'15%'">{{'common.customer' | translate}}</th>
+            <th [nzWidth]="'8%'">{{'common.from' | translate}}</th>
+            <th [nzWidth]="'8%'">{{'common.wallet' | translate}}</th>
+            <th [nzWidth]="'8%'">{{'common.to' | translate}}</th>
+            <th [nzWidth]="'10%'">{{'table.money' | translate }}</th>
+            <th [nzWidth]="'12%'">{{'table.action' | translate }}</th>
+            <th [nzWidth]="'10%'">{{'table.status' | translate }}</th>
+            <th [nzWidth]="'10%'">{{'common.staff' | translate }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of table.data">
+            <td>{{data.code}}</td>
+            <td>{{data.createdAt | date:'HH:mm dd/MM/yyyy'}}</td>
+            <td>{{customers[data.userId]?.fullName}}</td>
+            <td>
+                <div *ngIf="data.from" class="btn {{data.from}}">{{'common.wallet-' + data.from | translate}}</div>
+            </td>
+            <td>
+                <div class="btn {{data.type}}">{{'common.wallet-' + data.type |
+                    translate}}</div>
+            </td>
+            <td>
+                <div *ngIf="data.to" class="btn {{data.to}}">{{'common.wallet-' + data.to | translate}}</div>
+            </td>
+            <td>{{data.value | number}}</td>
+            <td>{{data.actionName}}</td>
+            <td>{{data.statusName}}</td>
+            <td>{{performers[data.performerId]?.fullName}}</td>
+        </tr>
+    </tbody>
+</nz-table>

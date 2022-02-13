@@ -1,0 +1,49 @@
+<div class="user-layout">
+    <div class="user-container">
+        <div class="user-header">
+            <div class="user-logo">
+                <img src="/assets/images/logo.png" alt="SUPRA Admin" />
+            </div>
+            <div class="user-intro">
+                {{'login.delivery-setting' | translate}}<br />
+                {{'login.warrantyRepair-sharingWarehouse' | translate}}
+            </div>
+        </div>
+        <nz-alert *ngIf="isLoginSuccessful != null && !isLoginSuccessful" style="margin-bottom: 8px" nzType="error"
+            [nzMessage]="'login.error' | translate">
+        </nz-alert>
+        <nz-alert *ngIf="isLoginSuccessful" style="margin-bottom: 8px" nzType="success"
+            [nzMessage]="'login.success' | translate">
+        </nz-alert>
+        <form nz-form nzLayout="vertical" (ngSubmit)="onSubmit()" #loginForm="ngForm">
+            <nz-form-item>
+                <nz-form-control>
+                    <input nz-input nzSize="large" name="phone" [(ngModel)]="user.phone" type="phone"
+                        placeholder="{{'login.phone' | translate}}" #phone="ngModel" required />
+                    <nz-form-explain *ngIf="(phone.dirty || phone.touched) && phone.errors?.required">
+                        {{'validations-form.phone.required' | translate}}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control>
+                    <input nz-input nzSize="large" name="password" [(ngModel)]="user.password" type="password"
+                        placeholder="{{'login.password' | translate}}" #password="ngModel" required />
+                    <nz-form-explain *ngIf="(password.dirty || password.touched) && password.errors?.required">
+                        {{'validations-form.password.required' | translate}}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control>
+                    <div class="buttonActions">
+                        <button ad-button nzColor="primary" nzSize="large" type="submit"
+                            class="btn btn-default btn-auth">
+                            {{'login.sign_in' | translate }}
+                        </button>
+                    </div>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </div>
+</div>

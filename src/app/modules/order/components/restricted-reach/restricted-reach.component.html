@@ -1,0 +1,117 @@
+<page-wrapper [nzTitle]="pageTitle">
+    <div class="grid__container">
+        <div class="grid__header">
+            <button
+                class="grid__action__left"
+                ad-button
+                nzColor="red"
+                (click)="showFilter = !showFilter"
+            >
+                {{ "filter.filter" | translate }}
+            </button>
+            <button
+                class="grid__action__right"
+                ad-button
+                nzColor="orange"
+                (click)="openModificationModal()"
+            >
+                {{ "button.add" | translate }}
+            </button>
+        </div>
+    </div>
+    <filter-restricted-reach
+        (onSearch)="search($event)"
+        (onReset)="search($event)"
+        *ngIf="showFilter"
+    >
+    </filter-restricted-reach>
+    <nz-table
+        [nzData]="pagingData.data"
+        [nzFrontPagination]="false"
+        nzShowSizeChanger
+        [nzSize]="'small'"
+        [nzTotal]="pagingData.total"
+        [(nzPageIndex)]="query.page"
+        [(nzPageSize)]="query.limit"
+        (nzPageIndexChange)="loadData()"
+        (nzPageSizeChange)="loadData()"
+        [nzScroll]="{ x: '700px' }"
+    >
+        <thead>
+            <tr>
+                <th>{{ "common.customer" | translate }}</th>
+                <th>{{ "common.servicer" | translate }}</th>
+                <th [nzWidth]="'100px'" nzRight="0px">
+                    {{ "common.action" | translate }}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of pagingData.data">
+                <td width="45%">
+                    <ng-template ngFor let-userId [ngForOf]="item.userIds">
+                        <nz-tag [nzColor]="'#2db7f5'" *ngIf="users[userId]">
+                            {{
+                                users[userId]?.code +
+                                    " - " +
+                                    users[userId]?.fullName
+                            }}</nz-tag
+                        >
+                    </ng-template>
+                </td>
+                <td width="45%">
+                    <ng-template
+                        ngFor
+                        let-servicerId
+                        [ngForOf]="item.servicerIds"
+                    >
+                        <nz-tag
+                            [nzColor]="'#87d068'"
+                            *ngIf="servicers[servicerId]"
+                        >
+                            {{
+                                servicers[servicerId]?.code +
+                                    " - " +
+                                    servicers[servicerId]?.fullName
+                            }}
+                        </nz-tag>
+                    </ng-template>
+                </td>
+                <td nzRight="0px" width="10%">
+                    <button
+                        nz-dropdown
+                        ad-button
+                        nzType="dashed"
+                        [nzDropdownMenu]="menu"
+                    >
+                        {{ "common.action" | translate }}
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                            <li nz-menu-item>
+                                <a (click)="edit(item)">{{
+                                    "button.edit" | translate
+                                }}</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a (click)="delete(item._id)">{{
+                                    "common.delete" | translate
+                                }}</a>
+                            </li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</page-wrapper>
+<ng-template #pageTitle>
+    {{ "general-menu.order-acceptance" | translate }}
+</ng-template>
+<restricted-reach-modify
+    [(visibleModal)]="visibleModal"
+    [model]="model"
+    (updated)="loadData()"
+    (handleVisible)="handleVisible($event)"
+>
+</restricted-reach-modify>

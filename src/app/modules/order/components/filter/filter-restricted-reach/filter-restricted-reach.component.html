@@ -1,0 +1,40 @@
+<form nz-form nzLayout="vertical" #filterRestrictedReachForm="ngForm">
+    <div class="row">
+        <div class="col-6">
+            <nz-form-item>
+                <nz-form-label nzFor="customer">{{
+                    "messenger.customer-partner" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <search-and-suggest-account-component mode="multiple" [(ngModel)]="selectedUser" ngDefaultControl
+                        [ngModelOptions]="{ standalone: true }" #user="ngModel" [allowCustomer]="true"
+                        [allowServicer]="true" [customerSearchCondition]="customerSearchCondition" [valueType]="'_id'"
+                        [placeHolder]="
+                            ('actions.enter' | translate) +
+                            ' ' +
+                            ('common.id' | translate | uppercase) +
+                            '/' +
+                            ('common.name' | translate) +
+                            '/' +
+                            ('common.phone' | translate)
+                        ">
+                    </search-and-suggest-account-component>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-6">
+            <nz-form-item>
+                <nz-form-label class="form-label form-label--empty"></nz-form-label>
+                <nz-form-control>
+                    <button ad-button nzColor="red" (click)="search()">
+                        {{ "button.find" | translate }}
+                    </button>
+                    &nbsp;
+                    <button ad-button (click)="reset()">
+                        {{ "button.reset" | translate }}
+                    </button>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+</form>

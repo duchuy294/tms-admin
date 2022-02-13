@@ -1,0 +1,24 @@
+<div class="grid__container">
+    <div class="grid__header">
+        <div class="grid__action__left">
+            <button ad-button nzColor="red" (click)="toggleFilter()">
+                {{'button.filter' | translate}}
+            </button>
+            &nbsp;
+            <button ad-button nzColor="white">
+                {{'actions.export' | translate}}
+            </button>
+        </div>
+    </div>
+    <br>
+    <warehouse-contact-filter #filter [style.display]="filterVisible ? 'block' : 'none'" (search)="search($event)">
+    </warehouse-contact-filter>
+    <order-status-filter #status [data]="statuses" [(model)]="query" (onSelect)="selectStatus()">
+    </order-status-filter>
+    <div>
+        <warehouse-contact-statistic [data]="statisticData"></warehouse-contact-statistic>
+        <div style="clear:both"></div>
+    </div>
+    <warehouse-contact-grid #grid (process)="process($event)">
+    </warehouse-contact-grid>
+</div>

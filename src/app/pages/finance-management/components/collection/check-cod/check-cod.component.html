@@ -1,0 +1,59 @@
+<nz-modal #modalQuickAssign nzWidth="700" [(nzVisible)]="visible" [nzTitle]="'actions.check-cod' | translate"
+    [nzContent]="modalContent" [nzFooter]="modalFooter" [nzMaskClosable]="false" [nzClosable]="closeAble"
+    (nzAfterClose)="closePopup()">
+    <ng-template #modalContent>
+        <div class="conten-package">
+            <div style="margin-bottom: 15px;" nz-row>
+                <div class="title" nz-col nzSpan="6">{{'actions.importCod' | translate}}: </div>
+                <div nz-col nzSpan="18">
+                    <nz-upload #fileUpload class="file-upload" [nzBeforeUpload]="beforeUpload"
+                        [nzShowUploadList]="false" [nzDisabled]="loading"
+                        nzAccept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <button nz-button><i nz-icon nzType="upload"></i>{{'uploader.choose-file' | translate}}</button>
+                    </nz-upload>&nbsp;
+                    <span>
+                        {{ uploading ? ('uploader.uploading-file' | translate) : ('uploader.unselected-file' | translate)}}
+                        <i *ngIf="uploading" nz-icon [nzType]="'loading'"></i>
+                    </span>
+                    <span class="download-sample-file">
+                        <a href="/assets/downloads/check-cod.xlsx" download><img src="/assets/icon/download-icon.svg"
+                                alt="">
+                            {{'common.download-sample-file' | translate}}</a>
+                    </span>
+                </div>
+            </div>
+            <nz-table style="margin-top: 15px;" #table [nzData]="tableData" [nzPageSize]="10" [nzLoading]="loading"
+                nzSize="small" nzBordered>
+                <thead>
+                    <tr>
+                        <th>{{'common.index' | translate}}</th>
+                        <th>{{'order.external-code' | translate}}</th>
+                        <th>{{'order.external-cod' | translate}}</th>
+                        <th>{{'order.code' | translate}}</th>
+                        <th>{{'order.external-cod' | translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of table.data; index as index">
+                        <td>{{ item.no }}</td>
+                        <td>{{ item.externalCode}}</td>
+                        <td align="right">{{ item.externalCod | number:'1.0-2'}}</td>
+                        <td>{{ item.code}}</td>
+                        <td align="right">{{ item.cod | number:'1.0-2'}}</td>
+                    </tr>
+                </tbody>
+            </nz-table>
+
+        </div>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="grid__footer" style="width: 50%; margin: 0 auto;">
+            <div class="buttonActions" style="margin-top: 15px; margin-bottom: 15px;">
+                <button ad-button nzUpper nzColor="default" (click)="hideModal()" [disabled]="loading">
+                    {{ 'button.cancel' | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+
+</nz-modal>

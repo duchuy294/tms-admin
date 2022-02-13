@@ -1,0 +1,217 @@
+<nz-skeleton [nzActive]="true" [nzLoading]="loading" [nzParagraph]="{ rows: 15 }">
+    <div class="pendingRow" *ngIf="currentModel.status === PointStatus.PENDING ">
+        <div class="row">
+            <div class="col-3">
+                <label class="description-label">{{'common.pointDetail.expectedTime' | translate}}:</label>
+            </div>
+            <div class="col-9">
+                <span>{{ currentModel.expectedTime | date: "HH:mm dd/MM/yyyy"}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <label class="description-label">{{'common.pointDetail.pendingReason' | translate}}:</label>
+            </div>
+            <div class="col-9">
+                <span>{{ currentModel.partnerNote }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="description-list modelContainer">
+        <div style="padding-right: 10px">
+            <div class="row">
+                <div class="col-6 description-item">
+                    <label class="description-label">{{'common.full-name' | translate}}:</label>
+                    <span>{{ currentModel.contact?.name }}</span>
+                </div>
+                <div *ngIf="productType" class="col-6 description-item">
+                    <label class="description-label">{{'common.product' | translate}}:</label>
+                    <span>{{ productType?.name }}</span>
+                </div>
+                <div class="col-6 description-item">
+                    <label class="description-label">{{'common.phone' | translate}}: </label>&nbsp;
+                    <span>{{ currentModel.contact?.phone }}</span>
+                </div>
+                <div *ngIf="brand" class="col-6 description-item">
+                    <label class="description-label">{{'common.brand' | translate}}:</label>
+                    <span>{{ brand?.name }}</span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col description-item" *ngIf="currentModel.note">
+                    <label class="description-label">{{'common.note' | translate}}:</label>
+                    <span>{{ currentModel.note }}</span>
+                </div>
+                <div *ngIf="canDisplayTime" class="row">
+                    <div class="col description-item">
+                        <label class="description-label">{{'order.time' | translate}}:</label>
+                        <span class="time">{{currentModel.finishedAt || currentModel.arrivedAt || currentModel.createdAt
+                            | date: "HH:mm dd/MM/yyyy"}}</span>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="currentModel.productStatus !== ''" class="row">
+                <div class="col description-item">
+                    <label class="description-label">{{'common.product-status' | translate}}:</label>
+                    <span>{{ currentModel.productStatus }}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col description-item">
+                    <label class="description-label">{{'common.images' | translate}}:</label>
+                    <div></div>
+                </div>
+            </div>
+            <div *ngIf="[PointType.Delivery, PointType.PickUp, PointType.Return].includes(currentModel.type) &&
+            (currentModel?.externalCode ||  pickPointExternalCode.length || returnExternalCode.length)" class="row">
+                <div class="col description-item">
+                    <label class="description-label">{{'order.external-code' | translate}}:</label>
+                    <span *ngIf="currentModel.type === PointType.Delivery && currentModel"> &nbsp;
+                        {{ currentModel.externalCode }}</span>
+                    <span *ngIf="PointType.PickUp === currentModel.type"> &nbsp;
+                        {{ pickPointExternalCode.join(', ') }}</span>
+                    <span *ngIf="PointType.Return === currentModel.type"> &nbsp;
+                        {{ returnExternalCode.join(', ') }}</span>
+                </div>
+            </div>
+            <div *ngIf="PointType.Delivery === currentModel.type && deliveryAddress" class="row">
+                <div class="col description-item">
+                    <label class="description-label">{{'order.points.pickup-point-address' | translate}}: </label>
+                    <span>&nbsp; {{ deliveryAddress }}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-auto description-item">
+                    <label class="description-label">{{'common.address' | translate}}:</label>
+                </div>
+                <div class="col" *ngIf="location?.address">
+                    <input *ngIf="showEditMap; else locationAddress" nz-input [(ngModel)]="location.address" />
+                    <ng-template #locationAddress>{{location?.address}}</ng-template>
+                </div>
+            </div>
+            <div class="row" *ngIf="showEditMap">
+                <div class="col-auto description-item">
+                    <label class="description-label">{{'common.address-map' | translate}}:</label>
+                </div>
+                <div class="col">
+                    <div class="autocomplate-map">
+                        <autocomplete-gmap [nzValue]="location?.mapAddress || location?.address"
+                            (inputChange)="handleAutocompleteChange($event)"
+                            nzPlaceHolder="{{'common.enterMap' | translate}}" (changePlace)="updateLocation($event)"
+                            #mapAddress>
+                        </autocomplete-gmap>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="showEditMap">
+                <div class="col-12">
+                    <div class="map">
+                        <mapp #mapInstance [showButton]="true" (center)="getMapsCenter($event)" [location]="location"
+                            [isDraggable]="false">
+                        </mapp>
+                    </div>
+                </div>
+            </div>
+            <warranty-repair-point-more-detail *ngIf="currentModel.storeId" [model]="currentModel">
+            </warranty-repair-point-more-detail>
+
+
+            <point-incident *ngIf="currentModel.userIncidents" [model]="currentModel.userIncidents"
+                [processIncident]="currentModel?.processedIncidents">
+            </point-incident>
+
+            <div *ngIf="!currentModel || !showServiceDetail">
+                <a class="border-style" style=" font-weight: normal; float: right"
+                    (click)="updateExpand(!expandingDetails)">
+                    {{ (!expandingDetails ? 'common.moreDetails': 'common.collapse') | translate}}</a>
+            </div>
+            <br />
+            <point-service *ngIf="currentModel && showServiceDetail" [point]="currentModel" [order]="order"
+                [allowedUpdateServices]="allowedUpdateServices" [userServices]="userServices"
+                [expandingDetails]="expandingDetails" (updateExpand)="updateExpand($event)">
+            </point-service>
+
+            <div *ngIf="expandingDetails">
+                <nz-divider></nz-divider>
+
+                <div class="row layoutCost">
+                    <div class="col-9 text-right"> {{'common.totalCost' | translate}}: </div>
+                    <div class="col-3 text-right" style="color: red">
+                        {{(currentModel.realCost ? currentModel.realCost : 0) | number}}đ</div>
+                </div>
+                <div class="row layoutCost">
+                    <div class="col-9 text-right">{{'common.paidCost' | translate}}:</div>
+                    <div class="col-3 text-right" style="color: red">
+                        {{(currentModel.paid ? currentModel.paid : 0) | number}}đ
+                    </div>
+                </div>
+                <div class="row layoutCost">
+                    <div class="col-9 text-right">{{'common.totalReceipt' | translate}}:</div>
+                    <div class="col-3 text-right" style="color: red">
+                        {{(currentModel.userCost ? currentModel.userCost : 0) | number}}đ</div>
+                </div>
+                <point-product [pickPointProducts]="infoDeliveryOfPickupPointList"
+                    [groupReturnProducts]="groupReturnProductsList" [point]="currentModel">
+                </point-product>
+
+                <div *ngIf="currentModel.unexpectedIncidents && currentModel.unexpectedIncidents.length > 0">
+                    <label class="font-weight-bold">{{"order.pointDetail.incident" | translate}}</label>
+                    <div *ngFor="let incident of currentModel.unexpectedIncidents; index as i" class="pd-left-30">
+                        <div class="bold">{{ i + 1 }}. {{ incident.title }}</div>
+                        <div class="italic">{{ incident.detail }}</div>
+                        <img *ngFor="let item of incident.images" src="{{ item }}"
+                            class="img-thumbnail-100 mrg-right-10" />
+                    </div>
+                </div>
+                <div *ngIf="currentModel.images && currentModel.images.length > 0">
+                    <label class="font-weight-bold">{{ "common.images" | translate }}:</label><br />
+                    <nz-file-uploader [nzFileList]="images"
+                        [nzShowUploadList]="{showPreviewIcon: true,showRemoveIcon: false}"
+                        [nzShowButton]="!images.length">
+                    </nz-file-uploader>
+                </div>
+
+                <div *ngIf="currentModel.signImage">
+                    <label class="font-weight-bold">{{ "common.signature" | translate }}:</label><br />
+                    <nz-file-uploader [nzFileList]="signImage"
+                        [nzShowUploadList]="{showPreviewIcon: true, showRemoveIcon: false}" [nzShowButton]="!signImage">
+                    </nz-file-uploader>
+                </div>
+
+                <div *ngIf="currentModel.arrivedAt">
+                    <span class="font-weight-bold">{{ "common.arrivedAt" | translate }}:</span>
+                    <span class="time"> {{currentModel.arrivedAt | date: "HH:mm dd/MM/yyyy"}}</span>
+                </div>
+
+                <div *ngIf="currentModel.finishedAt || currentModel.installedAt || currentModel.deliveryAt">
+                    <span class="font-weight-bold">{{ "common.finishedWorkAt" | translate }}:</span>
+                    <span class="time"> {{currentModel.finishedAt | date: "HH:mm dd/MM/yyyy"}}</span>
+                </div>
+
+                <div *ngIf="currentModel.partnerNote && currentModel.status !== PointStatus.PENDING">
+                    <label class="font-weight-bold">{{ "common.partnerNote" | translate }}:</label>
+                    {{ currentModel.partnerNote }}
+                </div>
+                <div *ngIf="currentModel.laterReason">
+                    <div class="col description-item" style="padding-left: 0px">
+                        <label class="description-label">{{"order.points.reason" | translate}}
+                            {{ "order.points.later-reason-status." + currentModel.type | translate }}:</label>
+                        <span>&nbsp;{{ currentModel.laterReason }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="buttonActions" *ngIf="allowedUpdateServices">
+                    <button ad-button nzUpper nzColor="primary" (click)="confirmUpdateService()">
+                        {{ ('actions.update') | translate }}
+                    </button>
+                </div>
+                <div class="buttonActions" [style.width]="!allowedUpdateServices ? '50%' : '100%'">
+                    <button ad-button nzUpper nzColor="gray" (click)="close()">{{ 'button.close' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</nz-skeleton>

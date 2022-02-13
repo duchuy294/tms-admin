@@ -1,0 +1,20 @@
+<div class="grid__container">
+    <div style="display: flex; width: 100%;">
+        <div style="font-size: 1.5em">
+            {{ 'marketing.news.list' | translate }}
+        </div>
+        <div style="display: flex; position: absolute; right: 0px">
+            <button ad-button nzUpper nzColor="primary"
+                (click)="addNews()">{{  'marketing.news.add-news' | translate }}</button>
+        </div>
+    </div>
+    <br>
+    <filter-news-list (onSearch)="handleSearch($event)" (onReset)="handleReset($event)"></filter-news-list>
+    <news-grid #newsGrid (edit)="editNews($event)" (send)="sendNoti($event)"></news-grid>
+</div>
+<create-modify-news-modal [newsModel]="newsToEdit" [visible]="addNewsModalVisible"
+    (handleVisible)="handleAddNewsModalVisible($event)" (afterSubmit)="handleAfterSubmit()">
+</create-modify-news-modal>
+<send-news-notification-modal [newsModel]="newsToEdit" [visible]="sendNewsNotiModalVisible"
+    (handleVisible)="handleSendNewsNotiModalVisible($event)">
+</send-news-notification-modal>

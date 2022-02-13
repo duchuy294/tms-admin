@@ -1,0 +1,42 @@
+<page-wrapper [nzTitle]="pageTitle">
+    <nz-tabset>
+        <nz-tab [nzTitle]="'collectionTab.collectionManager' | translate | uppercase">
+            <ng-template nz-tab>
+                <button ad-button nzColor="red" (click)="displayFilter=!displayFilter">{{'tab.filter' | translate
+                    }}</button>
+                &nbsp;
+                <button ad-button (click)="export()" nzColor="primary">{{'actions.export' | translate}}</button>
+                &nbsp;
+                <button *ngIf="canCompareCOD" ad-button (click)="visibleModal = true"
+                    nzColor="primary">{{'actions.check-cod' | translate}}</button>
+                <collection-filter (search)="search($event)" [display]="displayFilter" [visibles]="['collection']">
+                </collection-filter>
+                <order-grid [(model)]="query" [collectionOrder]="true"
+                    [hiddenFields]="['totalCost', 'payment', 'user', 'services', 'prepaid', 'totalPackage']"
+                    [visibleFields]="['collectionMoney', 'finishedAt']" [actions]="orderActions" #orderGrid>
+                </order-grid>
+                <transaction-grid-modal [queryModel]="historyQuery" [visible]="transactionGridVisible"
+                    (handleVisible)="handleTransactionGridVisible($event)"></transaction-grid-modal>
+                <check-cod [visible]="visibleModal" (close)="visibleModal=false"></check-cod>
+            </ng-template>
+        </nz-tab>
+        <nz-tab [nzTitle]="'collectionTab.collectionTransferSession' | translate | uppercase">
+            <ng-template nz-tab>
+                <request-cod-list></request-cod-list>
+            </ng-template>
+        </nz-tab>
+        <nz-tab [nzTitle]="'collectionTab.debt' | translate | uppercase">
+            <ng-template nz-tab>
+                <request-debt-list></request-debt-list>
+            </ng-template>
+        </nz-tab>
+    </nz-tabset>
+</page-wrapper>
+<ng-template #pageTitle>
+    {{ 'general-menu.serviceCollection' | translate }}
+</ng-template>
+
+
+
+
+<spinner-processing-modal [visible]="exporting"></spinner-processing-modal>

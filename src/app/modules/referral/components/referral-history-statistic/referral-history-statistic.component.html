@@ -1,0 +1,29 @@
+<nz-spin [nzSpinning]="loadingStatistic" nzTip="{{'common.loading'|translate}}">
+    <div class="store-statistic__container">
+        <div class="store-statistic__item store-statistic__item--color1">
+            <h4 class="store-statistic__title" nz-tooltip
+                [nzTooltipTitle]="'statistics.referral.total-presenter'|translate" nzTooltipPlacement="topLeft">
+                {{'statistics.referral.total-presenter'|translate}}
+            </h4>
+            <span class="store-statistic__total">{{(statisticData?.totalPresenter || 0) | number}}</span>
+        </div>
+        <div class="store-statistic__item store-statistic__item--color2">
+            <h4 class="store-statistic__title" nz-tooltip
+                [nzTooltipTitle]="'statistics.referral.total-presentee'|translate" nzTooltipPlacement="topLeft">
+                {{'statistics.referral.total-presentee'|translate}}</h4>
+            <span class="store-statistic__total">{{(statisticData?.totalPresentee || 0) |number}}</span>
+        </div>
+        <div class="store-statistic__item  store-statistic__item--color3">
+            <h4 class="store-statistic__title" nz-tooltip
+                [nzTooltipTitle]="'statistics.referral.total-redeemedReward'|translate" nzTooltipPlacement="topLeft">
+                {{'statistics.referral.total-redeemedReward'|translate}}</h4>
+            <span class="store-statistic__total">{{(statisticData?.totalRedeemedReward || 0) | number}}</span>
+        </div>
+        <div class="store-statistic__item statistic__item--last store-statistic__item--color4">
+            <h4 class="store-statistic__title" nz-tooltip [nzTooltipTitle]="'statistics.referral.total-bonus'|translate"
+                nzTooltipPlacement="topLeft">
+                {{'statistics.referral.total-bonus'|translate}}</h4>
+            <span class="store-statistic__total">{{(statisticData?.totalBonus || 0) | number}}đ</span>
+        </div>
+    </div>
+</nz-spin>

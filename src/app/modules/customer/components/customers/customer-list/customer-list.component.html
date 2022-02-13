@@ -1,0 +1,22 @@
+<div class="grid__container">
+    <div class="grid__header">
+        <button class="grid__action__left" ad-button nzUpper nzColor="red" (click)="toggleFilterVisible()">
+            {{'filter.filter'|translate}}
+        </button>
+        <button class="grid__action__right" ad-button nzUpper nzColor="primary"
+            (click)="openModalCreate()">{{'button.add' | translate }}</button>
+    </div>
+    <br>
+    <filter-customer (search)="search($event)" (onReset)="search($event)" [display]="filterVisible"
+        [userLevels]="userLevels"></filter-customer>
+    <customer-grid #customerGrid [userLevels]="userLevels" (delete)="confirmDelete($event)"
+        (password)="resetPassword($event)">
+    </customer-grid>
+</div>
+<customer-modify [modalVisible]="customerModifyModalVisible" [userLevels]="userLevels"
+    (handleModalVisible)="handleCustomerModifyModalVisible($event)" (afterSuccess)="afterCreateCustomer()">
+</customer-modify>
+<reset-password [model]="customerId" [type]="type" [visible]="visiblePasswordForm"
+    (handleVisible)="handleVisible($event)" [loading]="loadingPasswordForm" (handleLoading)="handleLoading($event)"
+    (submit)="submit($event)" #customerResetPassword>
+</reset-password>

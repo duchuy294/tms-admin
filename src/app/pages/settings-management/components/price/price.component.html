@@ -1,0 +1,58 @@
+<page-wrapper [nzTitle]="pageTitle">
+    <ng-template #pageTitle>
+        {{'common.priceForm' | translate}}<span *ngIf="priceForm">: {{priceForm.name}}</span>
+    </ng-template>
+    <div *ngIf="!priceForm">{{'price-form-not-found' | translate}}</div>
+    <nz-tabset *ngIf="priceForm">
+        <nz-tab nzTitle="{{'price.tabs.delivery' | translate}}">
+            <price-delivery [priceFormId]="priceFormId"></price-delivery>
+        </nz-tab>
+        <nz-tab nzTitle="{{'price.tabs.installation' | translate}}">
+            <price-installation [priceFormId]="priceFormId"></price-installation>
+        </nz-tab>
+        <nz-tab nzTitle="{{'price.tabs.additionalCost' | translate}}">
+            <div class="row">
+                <h5 class="col-12">{{'common.commission' | translate}}(%)</h5>
+                <h5 class="col-4 col-md-2">{{'order.type.deliveryInstallation' | translate}}</h5>
+                <div class="col-6 col-md-2">
+                    <div class="input-group ng-star-inserted">
+                        <input class="form-control" [(ngModel)]="priceForm.deliveryInstallationCommission" type="number"
+                            min="0" max="100" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2 col-md-8"></div>
+                <h5 class="col-6 col-md-2">{{'order.type.delivery' | translate}}</h5>
+                <div class="col-6 col-md-2">
+                    <div class="input-group ng-star-inserted">
+                        <input class="form-control" [(ngModel)]="priceForm.deliveryCommission" type="number" min="0"
+                            max="100" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2 col-md-8"></div>
+                <h5 class="col-6 col-md-2">
+                    {{'order.type.installation' | translate}}</h5>
+                <div class="col-6 col-md-2">
+                    <div class="input-group ng-star-inserted">
+                        <input class="form-control" [(ngModel)]="priceForm.installationCommission" type="number" min="0"
+                            max="100" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary" (click)="savePriceForm()">{{'actions.save' | translate}}</button>
+                </div>
+            </div>
+        </nz-tab>
+        <nz-tab nzTitle="{{'price.tabs.service-pricing' | translate}}">
+            <service-pricing [priceFormId]="priceFormId"></service-pricing>
+        </nz-tab>
+    </nz-tabset>
+</page-wrapper>

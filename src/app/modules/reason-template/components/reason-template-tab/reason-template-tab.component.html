@@ -1,0 +1,6 @@
+<nz-tabset [nzTabPosition]="'left'">
+    <nz-tab *ngFor="let type of types" [nzTitle]="('settings.reason-template-type.'+type)|translate">
+        <div class="title">{{'settings.reason-template-list.'+type | translate}}</div>
+        <reason-template-list [type]="type"></reason-template-list>
+    </nz-tab>
+</nz-tabset>

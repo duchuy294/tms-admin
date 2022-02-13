@@ -1,0 +1,7 @@
+<page-wrapper [nzTitle]="pageTitle">
+    <partner-process-filters (onSearch)="onSearch($event)" (onExport)="onExport($event)"></partner-process-filters>
+    <partner-process-list></partner-process-list>
+</page-wrapper>
+<ng-template #pageTitle>
+    {{ "partnerProcess.title" | translate }}
+</ng-template>

@@ -1,0 +1,25 @@
+<page-wrapper *ngIf="enduser && enduser._id" [nzTitle]="pageTitle">
+    <div class="grid__container">
+        <div class="grid__header">
+            <button class="grid__action__left" ad-button nzColor="red" (click)="toggleFilter()">
+                {{'button.filter' | translate}}
+            </button>
+            <button class="grid__action__right" ad-button nzColor="primary" (click)="create()">
+                {{'end-user.sub-end-user.create' | translate}}
+            </button>
+        </div>
+        <delivery-point-filter #filter [endUserId]="endUserId" [style.display]="filterVisible ? 'block' : 'none'"
+            (search)="search($event)">
+        </delivery-point-filter>
+        <div style="clear:both"></div>
+        <delivery-point-grid #grid (delete)="confirmDelete($event)" (edit)="edit($event)"
+            (createSubEndUser)="createSubEndUser($event)">
+        </delivery-point-grid>
+    </div>
+    <create-modify-delivery-point [modifyingModel]="modifyingModel" [visible]="createModifyModalVisible"
+        (handleVisible)="handleModalVisible($event)" (afterSubmit)="handleAfterSubmit()" [endUserId]="endUserId">
+    </create-modify-delivery-point>
+    <ng-template #pageTitle>
+        {{ 'end-user.sub-end-user.manage' | translate }}
+    </ng-template>
+</page-wrapper>

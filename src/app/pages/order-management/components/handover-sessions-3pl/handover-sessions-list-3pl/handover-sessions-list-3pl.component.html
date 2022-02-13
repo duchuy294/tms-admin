@@ -1,0 +1,219 @@
+<div class="grid__container">
+    <div class="grid__header">
+        <button nzColor="red" ad-button nzColor="primary" (click)="visibleSearch = visibleSearch ? false : true">
+            {{ "button.filter" | translate }}
+        </button>
+        &nbsp;
+        <button ad-button nzColor="primary" (click)="visibleModal = true">
+            {{ "handoverSessions.receivePhysical" | translate }}
+        </button>
+    </div>
+</div>
+<handover-sessions-filters-3pl (onSearch)="loadData($event)" *ngIf="visibleSearch"></handover-sessions-filters-3pl>
+<nz-table nz-table #table [nzData]="tableData.data" [nzFrontPagination]="false" nzShowSizeChanger [nzLoading]="loading"
+    [nzTotal]="tableData.total" [(nzPageIndex)]="model.page" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [(nzPageSize)]="model.limit" (nzPageIndexChange)="loadDataByPage($event)" nzShowQuickJumper
+    [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th nzWidth="50px">{{'finance.session-cod.code' | translate }}</th>
+            <th nzWidth="120px">3PL</th>
+            <th nzWidth="100px">{{'common.status' | translate }}</th>
+            <th nzWidth="100px">{{'handoverSessions3PL.toltalSO' | translate }}</th>
+            <th nzWidth="110px">{{'handoverSessions3PL.toltalSOReceived' | translate }}</th>
+            <th nzWidth="100px">{{'handoverSessions3PL.toltalPackage' | translate }}</th>
+            <th nzWidth="100px">{{'table.create-date' | translate }}</th>
+            <th nzWidth="100px">{{'handoverSessions3PL.handedOverDate' | translate }}</th>
+            <th nzWidth="100px">{{'handoverSessions3PL.receivedDate' | translate }}</th>
+            <th nzWidth="100px">{{'handoverSessions3PL.createdBy' | translate }}</th>
+            <th nzRight="0px" nzWidth="80px" class="align-left"> {{'common.action' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of table.data">
+            <td><a [routerLink]="'/pages/order/handover-sessions-3pl/'+item._id" target="_blank">
+                    {{item.code}}</a></td>
+            <td><a [routerLink]="'/pages/customer-management/personal/detail/'+item.clientBranchId">{{
+                    customers[item.clientBranchId] ?
+                    customers[item.clientBranchId][0].fullName: ''}}</a>
+            </td>
+            <td>
+                <nz-tag *ngIf="handoverSessions[item.status]" [nzColor]="handoverSessions[item.status].color">
+                    {{'handoverSessions3PL.statusLabel.' + item.status | translate}}
+                </nz-tag>
+            </td>
+            <td>{{item.saleOrderQuantity || 0}}</td>
+            <td>{{soRecived(item)}}</td>
+            <td>{{item.packageQuantity || 0}}</td>
+            <td>{{item.createdAt | date:'HH:mm dd/MM/yyyy'}}</td>
+            <td><span *ngIf="item.confirmedAt">
+                    {{item.confirmedAt | date:'HH:mm dd/MM/yyyy'}}</span>
+            </td>
+            <td><span *ngIf="item.completedAt || item.lastScanAt">
+                    {{(item.completedAt || item.lastScanAt) | date:'HH:mm dd/MM/yyyy'}}</span>
+            </td>
+            <td>{{
+                accounts[item.processedBy] ?
+                accounts[item.processedBy][0].fullName: ''}}
+            </td>
+            <td>
+                <ng-container>
+                    <button nz-dropdown ad-button nzType="dashed" [nzDropdownMenu]="menu"
+                        [nzPlacement]="'bottomCenter'">
+                        {{'common.action' | translate}}
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                            <li nz-menu-item>
+                                <a [routerLink]="'/pages/order/handover-sessions-3pl/'+item._id">{{'table.detail' |
+                                    translate}}</a>
+                            </li>
+                            <li nz-menu-item *ngIf="item.status === handoverSessionsStatus.new">
+                                <a (click)=" openCancelModal(item._id)">{{'handoverSessions3PL.buttonCancle'
+                                    |
+                                    translate}}</a>
+                            </li>
+                            <li nz-menu-item *ngIf="item.status === handoverSessionsStatus.new">
+                                <a (click)="adminConfirm(item._id)">{{'handoverSessions3PL.buttonConfirm'
+                                    |
+                                    translate}}</a>
+                            </li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-total let-range="range">
+    {{'table.show' | translate}} {{range[0]}}-{{range[1]}}. {{'table.total' | translate}} {{ total }}
+    {{'table.result' | translate | lowercase}}
+</ng-template>
+
+
+<nz-modal #modalQuickAssign nzWidth="850px" [(nzVisible)]="visibleModal"
+    [nzTitle]="'handoverSessions3PL.title' | translate" [nzContent]="modalContent" [nzFooter]="modalFooter"
+    [nzMaskClosable]="false" [nzClosable]="false">
+    <ng-template #modalContent>
+        <div class="conten-package">
+            <div style="margin-bottom: 15px;" nz-row>
+                <div class="title" nz-col nzSpan="6">
+                    {{ 'actions.scanSO' | translate }}:
+                </div>
+                <div nz-col nzSpan="18">
+                    <nz-input-group [nzSuffix]="suffixTemplateInfo" [nzPrefix]="prefixTemplateUser">
+                        <input #singleScanPack [disabled]="loading" type="text" nz-input
+                            [placeholder]="'actions.scanSO' | translate" (keyup)="handleScan($event)" />
+                    </nz-input-group>
+                    <ng-template #prefixTemplateUser><i nz-icon nzType="scan"></i></ng-template>
+                    <ng-template #suffixTemplateInfo><i nz-icon nz-tooltip
+                            [nzTooltipTitle]="'actions.scanSO'| translate" nzType="info-circle"></i>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="buttonActions-package" style="margin-top: 15px;">
+                <span class="total">
+                    {{ "handoverSessions3PL.toltalSO" | translate }}:
+                    <strong>{{ packages.length }}</strong>
+                </span>
+                <nz-checkbox-wrapper (nzOnChange)="choosePackageFilter($event)">
+                    <span>
+                        <label nz-checkbox [(ngModel)]="checkValid" [nzValue]="true">{{ "common.valid" | translate
+                            }}:</label>
+                        <b class="valid">{{ totalValidPackage }}</b>
+                    </span>
+                    <span>
+                        <label nz-checkbox [(ngModel)]="checkInalid" [nzValue]="false">{{ "common.invalid" |
+                            translate }}:</label>
+                        <b class="invalid">{{
+                            packages.length - totalValidPackage
+                            }}</b>
+                    </span>
+                </nz-checkbox-wrapper>
+            </div>
+            <nz-table style="margin-top: 15px;" #packagesTable [nzData]="shownPackages" [nzPageSize]="10"
+                [nzLoading]="loading" nzSize="small" nzBordered>
+                <thead>
+                    <tr>
+                        <th width="80px">{{ "common.index" | translate }}</th>
+                        <th width="80px">{{ "common.soCode" | translate }}</th>
+                        <th>3PL</th>
+                        <th width="120px">{{ "handoverSessions3PL.toltalPackage" | translate }}</th>
+                        <th width="300px">{{ "handoverSessions3PL.messageScan" | translate }}</th>
+                        <th width="90px">{{ "common.status" | translate }}</th>
+                        <th width="90px">{{ "common.action" | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="
+                                let item of packagesTable.data;
+                                index as index
+                            " [style.color]="item.valid ? 'inherit' : 'red'">
+                        <td nzAlign="center" style="color: black;">
+                            {{
+                            (packagesTable.nzPageIndex - 1) *
+                            packagesTable.nzPageSize +
+                            index +
+                            1
+                            }}
+                        </td>
+                        <td>{{ item.SO }}</td>
+                        <td>{{ item.clientBranch?.fullName }}</td>
+                        <td>{{ item.packageQuantity }}</td>
+                        <td>{{ item.message }}</td>
+                        <td nzAlign="center">
+                            <i *ngIf="item.valid" nz-icon nzType="check" style="color: #21a525"></i>
+                            <span *ngIf="!item.valid">
+                                <i nz-icon nzType="close"></i>
+                            </span>
+                        </td>
+                        <td nzAlign="center">
+                            <span *ngIf="!item.valid">
+                                <a (click)="remove(item)"><i nz-icon nzType="delete"></i></a>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="grid__footer" style="width: 50%; margin: 0 auto;">
+            <div class="" style="margin-top: 15px; margin-bottom: 15px; text-align: center;">
+                <button ad-button nzUpper nzColor="default" (click)="closePopup()" [disabled]="loading"
+                    style="width: 120px;">
+                    {{ "button.close" | translate }}
+                </button>
+                <button ad-button nzUpper nzColor="primary" (click)="submit()"
+                    [disabled]="loading || totalInValidPackage > 0 || totalValidPackage === 0" style="width: 150px;">
+                    {{ "button.confirm" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>
+
+<nz-modal #modalHandoverSessionsCancel nzWidth="600px" [(nzVisible)]="visibleCancelModal"
+    [nzTitle]="'handoverSessions3PL.titleCancle' | translate" [nzContent]="modalContentCancel"
+    [nzFooter]="modalFooterCancel" [nzMaskClosable]="false" [nzClosable]="false">
+    <ng-template #modalContentCancel>
+        <div class="conten-modal">
+            <div><strong>{{'reason' | translate}} <span style="color: #f00;">*</span></strong> </div>
+            <div>
+                <textarea rows="4" [(ngModel)]="reason" nz-input></textarea>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #modalFooterCancel>
+        <div class="grid__footer" style="width: 20%; margin: 0 auto;">
+            <div class="buttonActions" style="margin-top: 15px; margin-bottom: 15px; justify-content: center">
+                <button ad-button nzUpper nzColor="primary" (click)="onConfirm()" [disabled]="loading || !reason ">
+                    {{ "button.confirm" | translate }}
+                </button>
+                <button ad-button nzUpper nzColor="default" (click)="closeCancelModal()" [disabled]="loading">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

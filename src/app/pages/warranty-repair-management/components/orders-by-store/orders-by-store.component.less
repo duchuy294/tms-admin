@@ -1,0 +1,15 @@
+@import "utils.less";
+:host {
+    ::ng-deep {
+        .split-container {
+            .flex-display();
+            > * {
+                .flex(1 auto);
+            }
+            .block-right {
+                width: 450px;
+                .flex(0 0 auto);
+            }
+        }
+    }
+}

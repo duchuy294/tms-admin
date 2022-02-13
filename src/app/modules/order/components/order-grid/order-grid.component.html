@@ -1,0 +1,147 @@
+<nz-table nz-table #table [nzData]="tableData.data" [nzFrontPagination]="false" nzShowSizeChanger [nzLoading]="loading"
+    [nzTotal]="tableData.total" [(nzPageIndex)]="model.page" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [nzScroll]="{x: width}" [(nzPageSize)]="model.limit" (nzPageIndexChange)="loadDataByPage($event)" nzShowQuickJumper
+    [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th nzWidth="205px" nzLeft>{{'order.code' | translate }} / <br>{{'order.external-code' | translate}}
+            </th>
+            <th nzWidth="60px" *ngIf="!hiddenFields.includes('totalPackage')">{{'handoverSessions3PL.toltalPackage' |
+                translate }}</th>
+            <th nzWidth="90px" *ngIf="!hiddenFields.includes('createdAt') || visibleFields.includes('finishedAt')">
+                <span *ngIf="!hiddenFields.includes('createdAt')">{{'common.createdAt' | translate }}</span>
+                <ng-template [ngIf]="!hiddenFields.includes('createdAt') && visibleFields.includes('finishedAt')">
+                    /<br />
+                </ng-template>
+                <span *ngIf="visibleFields.includes('finishedAt')">{{'filter.finishDate' | translate }}</span>
+            </th>
+            <th nzWidth="90px">{{'common.type' | translate }}</th>
+            <th nzWidth="80px">{{ "common.deliveryType" | translate }}</th>
+            <th nzWidth="150px" *ngIf="!hiddenFields.includes('user')">{{'order.customer' | translate }}</th>
+            <th nzWidth="90px" *ngIf="visibleFields.includes('incident')">{{'order.incident' | translate }}</th>
+            <th nzWidth="160px" *ngIf="!hiddenFields.includes('status')">{{'order.status' | translate }}</th>
+            <th nzWidth="100px" *ngIf="!hiddenFields.includes('services')">{{'order.addonServices' | translate }}</th>
+            <th nzWidth="80px" *ngIf="visibleFields.includes('collectionMoney')">
+                {{'order.collectionMoney' | translate }}
+            </th>
+            <th nzWidth="110px" *ngIf="!hiddenFields.includes('totalCost')">{{'order.cost' | translate }}</th>
+            <th nzWidth="110px">3PL</th>
+            <th nzWidth="150px" *ngIf="!hiddenFields.includes('servicer')">{{'order.servicer' | translate }}</th>
+            <th nzWidth="90px" *ngIf="!hiddenFields.includes('clientHandoverCode')">{{'order.clientHandoverCode' |
+                translate }}</th>
+            <th nzWidth="110px" *ngIf="!hiddenFields.includes('processingStaff')">
+                {{'table.processing-staff' | translate }}
+            </th>
+            <th *ngIf="actions.length > 0" nzRight="0px" nzWidth="110px" class="align-center">
+                {{'common.action' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let order of table.data" [ngClass]="{'alert alert-danger': isOverduePayment(order) && !orderService.isCompletedCollectionPayment(order), 'alert alert-success': visibleFields.includes('collectionMoney') &&
+            orderService.isCompletedCollectionPayment(order)}">
+            <td nzLeft>
+                <div class="align-left">
+                    <a target="_blank" routerLink="/pages/order/{{order._id}}" width="100px"> {{order.code}}</a>
+                    <div *ngIf="order.externalCode">
+                        <div *ngIf="order.externalCode.split(',').length > 2">
+                            (<span *ngIf="flagExpanding[order._id]"
+                                [innerHTML]="order.externalCode.split(',').join(',<br />')"></span>
+                            <span *ngIf="!flagExpanding[order._id]"
+                                [innerHTML]="order.externalCode.split(',').splice(0,2).join(',<br />')"></span>)
+                            <button class="btn btn-primary"
+                                (click)="flagExpanding[order._id] = !flagExpanding[order._id]">{{flagExpanding[order._id]?
+                                '-': '+'}}</button>
+                        </div>
+                        <div *ngIf="order.externalCode.split(',').length <= 2">
+                            (<span [innerHTML]="order.externalCode.split(',').join(',<br />')"></span>)
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="unreadMessage[order._id]" class="align-right">
+                    <div class="unread-message-container">
+                        <img src="assets/icon/unread-message.png" class="unread-message">
+                        <div class="unread-message-counter">
+                            {{(unreadMessage[order._id] > 9) ? '9+' : unreadMessage[order._id]}}
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!unreadMessage[order._id] && totalMessages[order._id]" class="align-right"
+                    style="text-align: center">
+                    <img src="assets/icon/have-message.svg">
+                </div>
+            </td>
+            <td *ngIf="!hiddenFields.includes('totalPackage')">{{order?.packages?.totalPackage}}</td>
+            <td *ngIf="!hiddenFields.includes('createdAt') || visibleFields.includes('finishedAt')">
+                <div *ngIf="!hiddenFields.includes('createdAt')">{{order.createdAt | date:'HH:mm dd/MM/yyyy'}}</div>
+                <div *ngIf="visibleFields.includes('finishedAt')">{{order.finishedAt | date:'HH:mm dd/MM/yyyy'}}</div>
+            </td>
+            <td>{{'order.type.' + order.serviceType | translate}}</td>
+            <td>
+                <nz-tag *ngIf="order.deliveryType" [nzColor]="orderDeliveryType[order.deliveryType]?.color || '#ccc'">
+                    {{ order.deliveryType }}
+                </nz-tag>
+            </td>
+            <td *ngIf="!hiddenFields.includes('user')">
+                <a *ngIf="users[order.userId]" routerLink="/pages/customer-management/personal/detail/{{order.userId}}"
+                    target="_blank">
+                    {{users[order.userId]?.fullName}}
+                </a>
+                <div *ngIf="users[order.userId]">{{users[order.userId].phone}}</div>
+            </td>
+            <td *ngIf="visibleFields.includes('incident')" [innerHtml]=orderService.getIncidents(order)></td>
+            <td *ngIf="!hiddenFields.includes('status')">
+                <nz-tag [nzColor]="ORDER_STATUS_COLOR[order.status]">{{'order.statusCode.'+order.status | translate}}
+                </nz-tag>
+                <a *ngIf="displayNoteByOperator(order)">
+                    <img src="/assets/icon/edit.png" alt="edit" height="15" width="15" (click)="getOrder(order)" /></a>
+            </td>
+            <td *ngIf="!hiddenFields.includes('services')" [innerHtml]="orderService.getServiceNames(order.costDetail)">
+            </td>
+            <td *ngIf="visibleFields.includes('collectionMoney')">
+                {{(order.cod ? order.cod.total - order.cod.remaining : 0) | number}}<br />
+                {{(order.cod ? order.cod.total : 0) | number:'1.0-2'}}
+                ({{orderService.getCompletedCollectionRatio(order)|percent }})</td>
+            <td *ngIf="!hiddenFields.includes('totalCost')">{{order.userCost | number}}
+                <div *ngIf="order.userCost !== order.baseUserCost" class="grey-text bold">
+                    {{order.baseUserCost | number}}
+                </div>
+                <div *ngIf="order.userCost !== order.servicerCost" class="red-text bold">{{order.servicerCost | number}}
+                </div>
+            </td>
+            <td>
+                <a *ngIf="users[order.clientBranchId]"
+                    routerLink="/pages/customer-management/personal/detail/{{order.clientBranchId}}" target="_blank">
+                    {{users[order.clientBranchId]?.fullName}}
+                </a>
+                <div *ngIf="users[order.clientBranchId]">{{users[order.clientBranchId].phone}}</div>
+            </td>
+            <td *ngIf="!hiddenFields.includes('servicer')">
+                <a *ngIf="servicers[order.servicerId]"
+                    routerLink="/pages/servicer-management/servicer/detail/{{order.servicerId}}" target="_blank">
+                    {{servicers[order.servicerId]?.fullName}}
+                </a>
+            </td>
+            <td *ngIf="!hiddenFields.includes('clientHandoverCode')"> {{order?.clientHandoverCode}}
+            </td>
+            <td *ngIf="!hiddenFields.includes('processingStaff')">{{admins[order?.processedBy]?.fullName}}</td>
+            <td nzRight="0px" *ngIf="actions.length > 0" class="align-center">
+                <button nz-dropdown ad-button nzType="dashed" [nzDropdownMenu]="menu" [nzPlacement]="'bottomCenter'">
+                    {{'common.action' | translate}}
+                </button>
+                <nz-dropdown-menu #menu="nzDropdownMenu">
+                    <ul nz-menu nzSelectable>
+                        <ng-template ngFor let-action [ngForOf]="actions">
+                            <li nz-menu-item *ngIf="!action.visible || action.visible(order)">
+                                <a (click)="action.perform(order)">{{action.name | translate}}</a>
+                            </li>
+                        </ng-template>
+                    </ul>
+                </nz-dropdown-menu>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-total let-range="range">
+    {{'table.show' | translate}} {{range[0]}}-{{range[1]}}. {{'table.total' | translate}} {{ total }}
+    {{'table.result' | translate | lowercase}}
+</ng-template>

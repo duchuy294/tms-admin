@@ -1,0 +1,366 @@
+<div class="grid__container">
+    <div class="grid__header">
+        <div class="grid__action__left">
+            <button ad-button nzColor="red" (click)="showFilter = !showFilter">
+                {{ "filter.filter" | translate }}
+            </button>
+            &nbsp;
+            <button ad-button nzColor="primary" (click)="export()" style="display:none">
+                {{ "actions.export" | translate }}
+            </button>
+            &nbsp;
+            <button ad-button nzColor="primary" (click)="exportForUser()">
+                {{ "actions.exportForUser" | translate }}
+            </button>
+            &nbsp;
+            <button ad-button style="background: #079ce0; color:#fff" (click)="exportForSo()">
+                {{ "actions.exportForSo" | translate }}
+            </button>
+            &nbsp;
+            <button ad-button nzColor="primary" (click)="exportDistance()" style="display:none">
+                {{ "actions.exportDistance" | translate }}
+            </button>
+            &nbsp;
+            <button ad-button nzColor="primary" (click)="showModalAssign()">
+                {{ "actions.quickAssign" | translate }}
+            </button>
+            &nbsp;
+            <button ad-button nzColor="primary" (click)="showModalAssign(true)">
+                {{ "actions.quickAssignBySO" | translate }}
+            </button>
+            &nbsp;
+            <button *ngIf="currentUser.roles.includes(AdminPermission.ASSIGN_3PL)" ad-button
+                style="background: #28a745; color:#fff" (click)="showModal3PLOrder(false)">
+                {{ "actions.quick3PLAssign" | translate }}
+            </button>
+            &nbsp;
+            <button *ngIf="currentUser.roles.includes(AdminPermission.ASSIGN_3PL)" ad-button
+                style="background: #28a745; color:#fff" (click)="showModal3PLOrder(true)">
+                {{ "actions.quick3PLAssignBySO" | translate }}
+            </button>
+
+            &nbsp;
+            <button *ngIf="currentUser.roles.includes(AdminPermission.CANCEL_ORDERS_FASTLY)" ad-button nzColor="primary"
+                (click)="showModalQuickCancelOrder()">
+                {{ "actions.quickCancelOrder" | translate }}
+            </button>
+        </div>
+    </div>
+    <filter-order (onSearch)="search($event)" (onReset)="search($event)" *ngIf="showFilter"></filter-order>
+    <order-grid [hiddenFields]="['requestStatus']" [currentUser]="currentUser" [(model)]="modelQuery"
+        [actions]="actions" #orderGrid (noteAdmin)="displayNoteAdmin()" (dataNoteOrder)="dataNoteOrder($event)">
+    </order-grid>
+    <spinner-processing-modal [visible]="exporting"></spinner-processing-modal>
+    <operator-note [order]="order" [visible]="visibleNoteForm" (handleVisible)="handleVisible($event)"
+        [loading]="loadingNoteForm" (handleLoading)="handleLoading($event)" (submit)="submit($event)"
+        #orderOperatorNote>
+    </operator-note>
+    <quick-cancel-order [visibleModal]="visibleCancelOrder" (handleVisible)="hideModalQuickCancelOrder()"
+        (loadData)="search()">
+    </quick-cancel-order>
+    <quick-assign-3pl [visibleModal]="visible3PLOrder" [currentUser]="currentUser" [scanBySO]="scan3PLBySO"
+        (handleVisible)="hideModalQuick3PLOrder()" (loadData)="search()">
+    </quick-assign-3pl>
+    <nz-modal #modalQuickAssign nzWidth="700px" [(nzVisible)]="visibleModal"
+        [nzTitle]="(scanBySO? 'actions.quickAssignBySO': 'actions.quickAssign') | translate" [nzContent]="modalContent"
+        [nzFooter]="modalFooter" [nzMaskClosable]="false" [nzClosable]="closeAble" (nzAfterClose)="closePopup()">
+        <ng-template #modalContent>
+            <div class="conten-package">
+                <div style="margin-bottom: 15px;" nz-row>
+                    <div class="title" nz-col nzSpan="6">
+                        {{ (scanBySO? "common.scanSO": "common.scanPackageCode") | translate }}:
+                    </div>
+                    <div nz-col nzSpan="18">
+                        <nz-input-group [nzSuffix]="suffixTemplateInfo" [nzPrefix]="prefixTemplateUser">
+                            <input #singleScanPack [disabled]="loading" type="text" nz-input
+                                [placeholder]="(scanBySO?  'actions.scanSO': 'actions.scanPackage') | translate"
+                                (keyup)="handleScan($event)" />
+                        </nz-input-group>
+                        <ng-template #prefixTemplateUser><i nz-icon nzType="scan"></i></ng-template>
+                        <ng-template #suffixTemplateInfo><i nz-icon nz-tooltip
+                                [nzTooltipTitle]="(scanBySO?  'actions.scanSO':'actions.scanPackage') | translate"
+                                nzType="info-circle"></i>
+                        </ng-template>
+                    </div>
+                </div>
+                <div *ngIf="currentUser.roles.includes(AdminPermission.IMPORT_SO) || !scanBySO"
+                    style="margin-bottom: 15px;" nz-row>
+                    <div class="title" nz-col nzSpan="6">
+                        {{ (scanBySO ? "actions.importSO" : "actions.importPackage") | translate }}:
+                    </div>
+                    <div nz-col nzSpan="18">
+                        <nz-upload #fileUpload class="file-upload" [nzBeforeUpload]="beforeUpload"
+                            [nzShowUploadList]="false" [nzDisabled]="loading"
+                            nzAccept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                            <button nz-button>
+                                <i nz-icon nzType="upload"></i>{{ "uploader.choose-file" | translate }}
+                            </button>
+                        </nz-upload>&nbsp;
+                        <span>
+                            {{
+                            uploading
+                            ? ("uploader.uploading-file" | translate)
+                            : ("uploader.unselected-file" | translate)
+                            }}
+                            <i *ngIf="uploading" nz-icon [nzType]="'loading'"></i>
+                        </span>
+                        <span class="download-sample-file">
+                            <a href="/assets/downloads/XFA_Template.xlsx" download><img
+                                    src="/assets/icon/download-icon.svg" alt="" />
+                                {{
+                                "common.download-sample-file" | translate
+                                }}</a>
+                        </span>
+                    </div>
+                </div>
+                <div style="margin-bottom: 15px;" nz-row>
+                    <div class="title" nz-col nzSpan="6">
+                        {{ "common.servicer" | translate }}:
+                    </div>
+                    <nz-form-control nz-col nzSpan="18">
+                        <search-and-suggest-account-component mode="default" [(ngModel)]="selectedServicer"
+                            ngDefaultControl [ngModelOptions]="{ standalone: true }" #servicer="ngModel"
+                            [allowCustomer]="false" [allowServicer]="true"
+                            [servicerSearchCondition]="servicerSearchCondition" [valueType]="'_id'" [placeHolder]="
+                                ('actions.enter' | translate) +
+                                ' ' +
+                                ('common.id' | translate | uppercase) +
+                                '/' +
+                                ('common.name' | translate) +
+                                '/' +
+                                ('common.phone' | translate)
+                            ">
+                        </search-and-suggest-account-component>
+                    </nz-form-control>
+                </div>
+                <div style="margin-bottom: 15px" nz-row>
+                    <div class="title" nz-col nzSpan="6">
+                        {{ "common.hub" | translate }}
+                    </div>
+                    <nz-form-control nz-col nzSpan="18">
+                        <nz-select [(ngModel)]="hubId" style="width: 100%">
+                            <nz-option [nzValue]="''" [nzLabel]="'common.none' | translate"></nz-option>
+                            <nz-option *ngFor="let item of hubs" [nzValue]="item._id" [nzLabel]="item.fullName">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </div>
+                <nz-tabset>
+                    <nz-tab
+                        [nzTitle]="('common.soCode' | translate) + ' (' + (shownPackagesSo ? shownPackagesSo?.length : 0) + ')'"
+                        *ngIf="scanBySO">
+                        <div class="buttonActions-package" style="margin-top: 15px;">
+                            <span class="total">
+                                {{ "common.totalSo" | translate }}:
+                                <strong>{{ shownPackagesSo?.length || 0 }}</strong>
+                            </span>
+                            <span class="total">
+                                {{ "handoverSessions3PL.toltalPackage" | translate }}:
+                                <strong>{{ totalPackages(shownPackagesSo) }}</strong>
+                            </span>
+                            <span class="total" style="color: green;">
+                                {{ "common.totalValidPackage" | translate }}:
+                                <strong>{{ shownPackagesSo?.length - totalInvalidPackage(shownPackagesSo)
+                                    }}</strong>
+                            </span>
+                            <span class="total" style="color: red;">
+                                {{ "common.totalInValidPackage" | translate }}:
+                                <strong>{{ totalInvalidPackage(shownPackagesSo) }}</strong>
+                            </span>
+                        </div>
+                        <nz-table style="margin-top: 15px;" #packagesSoTable [nzData]="shownPackagesSo"
+                            [nzPageSize]="10" [nzLoading]="loading" nzSize="small" nzBordered>
+                            <thead>
+                                <tr>
+                                    <th>{{ "common.index" | translate }}</th>
+                                    <th>{{ "common.soCode" | translate }}</th>
+                                    <th>{{ "common.valid" | translate }}</th>
+                                    <th>{{ "common.invalid" | translate }}</th>
+                                    <th>{{ "handoverSessions3PL.toltalPackage" | translate }}</th>
+                                    <th>{{ "common.remove" | translate }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="
+                                                    let item of packagesSoTable.data;
+                                                    index as index ">
+                                    <td nzAlign="center" style="color: black;">
+                                        {{
+                                        (packagesSoTable.nzPageIndex - 1) *
+                                        packagesSoTable.nzPageSize +
+                                        index +
+                                        1
+                                        }}
+                                    </td>
+                                    <td [style]="item?.inValid > 0 ? 'color: red;' : 'color: green;' ">{{ item.soCode }}
+                                    </td>
+                                    <td>{{ item?.totalPackage - item?.inValid }}</td>
+                                    <td>{{ item?.inValid || 0 }}</td>
+                                    <td>{{ item?.totalPackage || 0 }}</td>
+                                    <td nzAlign="center" (click)="removePackageSo(item.soCode)">
+                                        <i nz-icon nzType="delete" nzTheme="outline"
+                                            style="color: black; cursor: pointer;"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </nz-table>
+                    </nz-tab>
+                    <nz-tab [nzTitle]="'common.packageNo' | translate">
+                        <div class="buttonActions-package" style="margin-top: 15px;">
+                            <span class="total">
+                                {{ "order.total" | translate }}:
+                                <strong>{{ packages?.length }}</strong>
+                            </span>
+                            <nz-checkbox-wrapper (nzOnChange)="choosePackageFilter($event)">
+                                <span>
+                                    <label nz-checkbox [(ngModel)]="checkValid" [nzValue]="true">{{ "common.valid" |
+                                        translate
+                                        }}:</label>
+                                    <b class="valid">{{ totalValidPackage }}</b>
+                                </span>
+                                <span>
+                                    <label nz-checkbox [(ngModel)]="checkInalid" [nzValue]="false">{{ "common.invalid" |
+                                        translate }}:</label>
+                                    <b class="invalid">{{
+                                        packages.length - totalValidPackage
+                                        }}</b>
+                                </span>
+                            </nz-checkbox-wrapper>
+                        </div>
+                        <nz-table style="margin-top: 15px;" #packagesTable [nzData]="shownPackages" [nzPageSize]="10"
+                            [nzLoading]="loading" nzSize="small" nzBordered>
+                            <thead>
+                                <tr>
+                                    <th>{{ "common.index" | translate }}</th>
+                                    <th>{{ "common.packageNo" | translate }}</th>
+                                    <th>{{ "common.orderCode" | translate }}</th>
+                                    <th>{{ "common.status" | translate }}</th>
+                                    <th>{{ "common.remove" | translate }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="
+                                let item of packagesTable.data;
+                                index as index
+                            " [style.color]="item.valid ? 'inherit' : 'red'">
+                                    <td nzAlign="center" style="color: black;">
+                                        {{
+                                        (packagesTable.nzPageIndex - 1) *
+                                        packagesTable.nzPageSize +
+                                        index +
+                                        1
+                                        }}
+                                    </td>
+                                    <td>{{ item.packageNo }}</td>
+                                    <td>{{ item.soCode }}</td>
+                                    <td nzAlign="center">
+                                        <i *ngIf="item.valid" nz-icon nzType="check" style="color: #21a525"></i>
+                                        <i *ngIf="!item.valid" nz-icon nzType="close"></i>
+                                    </td>
+                                    <td nzAlign="center" (click)="removePackage(item)">
+                                        <i nz-icon nzType="delete" nzTheme="outline"
+                                            style="color: black; cursor: pointer;"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </nz-table>
+                    </nz-tab>
+
+                </nz-tabset>
+
+            </div>
+        </ng-template>
+
+        <ng-template #modalFooter>
+            <div class="grid__footer" style="width: 50%; margin: 0 auto;">
+                <div class="buttonActions" style="margin-top: 15px; margin-bottom: 15px;">
+                    <button ad-button nzUpper nzColor="primary" (click)="assignHandle()" [nzLoading]="assigning"
+                        [disabled]="totalInvalidPackage(shownPackagesSo) > 0 || loading">
+                        {{ "button.assignOrder" | translate }}
+                    </button>
+                    <button ad-button nzUpper nzColor="default" (click)="hideModalAssign()" [disabled]="loading">
+                        {{ "button.cancel" | translate }}
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+    </nz-modal>
+
+
+    <nz-modal #modalTotalPackage nzWidth="600px" [(nzVisible)]="visibleUpdateTotalPackage"
+        [nzTitle]="'button.updatePackage' | translate" [nzContent]="modalContentUpdateTotalPackage"
+        [nzFooter]="modalFooterUpdateTotalPackage" [nzMaskClosable]="false" [nzClosable]="closeAble"
+        (nzAfterClose)="closePopupUpdateTotalPackage()">
+        <ng-template #modalContentUpdateTotalPackage>
+            <div class="conten-package">
+                <div>
+                    <div class="title">
+                        {{ 'handoverSessions3PL.toltalPackage' | translate }}:
+                    </div>
+                    <div>
+                        <input [disabled]="true" type="number" min="1" max="10000" step="1" nz-input
+                            [value]="clonePackages.packageList.length || 0" />
+                    </div>
+                    <div *ngIf="!isView">
+                        <div class="title" style="padding-top: 10px">
+                            {{'common.packageNo' | translate}}
+                        </div>
+                        <div style="display:flex; margin: 10px 0">
+                            <input [disabled]="loading" type="text" nz-input [(ngModel)]="packageTxt" />
+                            <button nz-button nzType="primary" style="margin-left: 10px" (click)="addPackage()"
+                                [disabled]="!packageTxt">
+                                {{'actions.add' | translate}}
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="title" style="padding: 10px 0">
+                    {{ 'Danh sách kiện'}}:
+                </div>
+
+                <div style="display:flex; margin: 10px 0">
+                    <input [disabled]="loading" type="text" nz-input [(ngModel)]="packageSearch" />
+                    <button nz-button nzType="primary" style="margin-left: 10px" (click)="filterPackage()">
+                        {{'button.search' | translate}}
+                    </button>
+                </div>
+                <nz-table #packageList [nzData]="clonePackages.packageList">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>{{'common.packageNo' | translate}}</th>
+                            <th *ngIf="!isView">{{'common.action' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let packageItem of packageList.data; index as index ">
+                            <td>{{ index+1 }}</td>
+                            <td>{{ packageItem }}</td>
+                            <td *ngIf="!isView">
+                                <a nz-button nzDanger [nzSize]="'small'" nzType="primary"
+                                    (click)="removePackageList(packageItem)">
+                                    {{'actions.remove' | translate}}
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </div>
+        </ng-template>
+        <ng-template #modalFooterUpdateTotalPackage>
+            <div class="grid__footer" style="width: 50%; margin: 0 auto;">
+                <div class="buttonActions" style="margin-top: 15px; margin-bottom: 15px;">
+                    <button *ngIf="!isView" ad-button nzUpper nzColor="primary" (click)="updateTotalPackage()"
+                        [nzLoading]="loading" [disabled]="loading">
+                        {{ "button.update" | translate }}
+                    </button>
+                    <button ad-button nzUpper nzColor="default" (click)="hideModalTotalPackage()" [disabled]="loading">
+                        {{ "button.cancel" | translate }}
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+    </nz-modal>
+</div>

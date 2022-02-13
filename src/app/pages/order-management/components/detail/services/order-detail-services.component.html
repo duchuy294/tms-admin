@@ -1,0 +1,46 @@
+<div *ngFor="let service of services" class="row mrg-bt-20">
+    <div class="col-5 bold" style="padding-right: 0px">
+        <div style="background-color: #F6F6F6; padding-top: 4px; padding-bottom: 4px; padding-left: 10px">
+            {{'order.service-style' + service.style + '.name' | translate}}
+        </div>
+    </div>
+    <div class="col-4 text-center bold" style="background-color: #F6F6F6; padding-top: 4px; padding-bottom: 4px;">
+        {{'order.service-style' + service.style + '.unit' | translate}}</div>
+    <div class="col-3 text-right bold" style="padding-left: 0px">
+        <div style="background-color: #F6F6F6; padding: 4px 10px 4px">{{'order.fare' | translate}}
+        </div>
+    </div>
+
+    <div class="col-5" style="margin-top: 10px; padding-left: 25px">{{orderService.getServiceName(service)}}</div>
+    <div class="col-4 text-center" style="margin-top: 10px">
+        <value-input [obj]="{value: getServiceValue(service)}" [unit]="'d'" [showOnly]="true"></value-input>
+    </div>
+    <div class="col-3 text-right" style="margin-top: 10px; padding-right: 25px">
+        <value-input [obj]="{value: getServiceCost(service)}" [unit]="'d'" [showOnly]="true"></value-input>
+    </div>
+</div>
+
+<div class="row bold">
+    <div class="col-8" style="padding-left: 25px">{{'order.totalCost' | translate}}: </div>
+    <div class="col-4 text-right red-text" style="padding-right: 25px">
+        <value-input [obj]="{value: order.userCost}" [unit]="'d'" [showOnly]="true"></value-input>
+    </div>
+
+    <div class="col-8" style="padding-left: 25px">{{'common.userTotalCost' | translate}}: </div>
+    <div class="col-4 text-right red-text" style="padding-right: 25px">
+        <value-input [obj]="{value: order.baseUserCost}" [unit]="'d'" [showOnly]="true"></value-input>
+    </div>
+
+    <div class="col-8" style="padding-left: 25px">{{'common.servicerIncome' | translate}}: </div>
+    <div class="col-4 text-right red-text" style="padding-right: 25px">
+        <value-input [obj]="{value: order.servicerCostDetail[1].value}" [unit]="'d'" [showOnly]="true">
+        </value-input>
+    </div>
+    <ng-template [ngIf]="order?.paymentMethod==='wallet'">
+        <div class="col-8" style="padding-left: 25px">{{'common.prepaid' | translate}}: </div>
+        <div class="col-4 text-right red-text" style="padding-right: 25px">
+            <value-input [obj]="{value: order.prePaid}" [unit]="'d'" [showOnly]="true">
+            </value-input>
+        </div>
+    </ng-template>
+</div>

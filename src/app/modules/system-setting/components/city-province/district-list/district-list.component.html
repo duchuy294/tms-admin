@@ -1,0 +1,22 @@
+<div class="grid__container">
+    <div style="display: flex; width: 100%;">
+        <div style="font-size: 1.5em">
+            {{ ('common.district-list'| translate) }}
+        </div>
+        <div style="display: flex; position: absolute; right: 0px">
+            <nz-input-group nzSuffixIcon="anticon anticon-search">
+                <input name="searchBox" type="text" [(ngModel)]="districtName"
+                    (ngModelChange)="onDistrictNameChange($event)" nz-input
+                    [placeholder]="'common.district-name' | translate">
+            </nz-input-group>
+            &nbsp;
+            <button ad-button nzUpper nzColor="primary" (click)="addDistrict()">{{ 'button.add' | translate }}</button>
+        </div>
+    </div>
+    <br>
+    <district-grid #districtGrid (delete)="confirmDelete($event)" (edit)="editDistrict($event)">
+    </district-grid>
+</div>
+<add-edit-district-modal [districtModel]="districtToEdit" [visible]="addEditDistrictModalVisible"
+    (handleVisible)="handleAddEditDistrictModal($event)" (afterSubmit)="handleAfterSubmit()">
+</add-edit-district-modal>

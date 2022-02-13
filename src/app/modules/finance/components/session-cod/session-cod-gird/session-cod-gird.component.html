@@ -1,0 +1,63 @@
+<nz-table #table (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [(nzPageIndex)]="queryModel.page" [(nzPageSize)]="queryModel.limit" [nzData]="tableData.data"
+    [nzFrontPagination]="false" [nzLoading]="loadingGrid" [nzScroll]="{ x: '900px' }" [nzTotal]="tableData.total"
+    nzShowSizeChanger nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th [nzWidth]="'8%'">{{ 'finance.session-cod.code' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'order.customer' | translate }}</th>
+            <th [nzWidth]="'8%'">{{ 'table.status' | translate }}</th>
+            <th [nzWidth]="'8%'">{{ 'finance.session-cod.total-order' | translate }}</th>
+            <th [nzWidth]="'8%'" nzAlign="right">COD (vnđ)</th>
+            <th [nzWidth]="'8%'">{{ 'finance.session-cod.created-by' | translate }}</th>
+            <th [nzWidth]="'8%'">{{ 'table.create-date' | translate }}</th>
+            <th [nzWidth]="'8%'">{{ 'finance.session-cod.transfer-by' | translate }}</th>
+            <th [nzWidth]="'8%'">{{ 'finance.session-cod.transfer-date' | translate }}</th>
+            <th [nzWidth]="'8%'">{{ 'common.action' | translate }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of table.data">
+            <td>
+                <label class="link"><a target="_blank" routerLink="/pages/finance/session-cod/{{item._id}}">
+                        {{ item.code}}</a></label>
+            </td>
+            <td>
+                <span *ngIf="userGroups[item.userId]">{{ userGroups[item.userId][0]?.fullName }}</span>
+            </td>
+            <td>
+                <nz-tag [nzColor]="statusColor[item.status]">
+                    {{'finance.session-cod.status.' + item.status | translate }}
+                </nz-tag>
+            </td>
+            <td>{{ item.orders.length }}</td>
+            <td nzAlign="right">
+                {{item.cod | number}}
+            </td>
+            <td>
+                <span *ngIf="accountGroups[item.createdBy]">{{ accountGroups[item.createdBy][0]?.fullName }}</span>
+            </td>
+            <td>{{ item.createdAt | date:'HH:mm dd/MM/yyyy' }}</td>
+            <td>
+                <span
+                    *ngIf="transferredBy[item.transferredBy]">{{ transferredBy[item.transferredBy][0]?.fullName }}</span>
+            </td>
+            <td>{{ item.transferredAt | date:'HH:mm dd/MM/yyyy' }}</td>
+            <td>
+                <a routerLink="/pages/finance/session-cod/{{item._id}}"><i nz-icon nzType="eye"
+                        nzTheme="outline"></i>&nbsp;</a>
+                <a [routerLink]="'/pages/finance/session-cod/'+item._id" [queryParams]="{confirm: 1}"
+                    *ngIf="item.status !== sessionCodStatus.DELETED && !item.transferredBy"><i nz-icon nzType="edit"
+                        nzTheme="outline"></i>
+                    &nbsp;</a>
+                <span class="pointer" *ngIf="item.status !== sessionCodStatus.DELETED && !item.transferredBy"
+                    style="color: #ED1C24;" (click)="showDeleteConfirm(item.code)"><i nz-icon nzType="delete"
+                        nzTheme="outline"></i></span>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{ 'table.total' | translate }} {{ total }}
+    {{ 'table.result' | translate | lowercase}}
+</ng-template>

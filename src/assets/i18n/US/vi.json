@@ -1,0 +1,2572 @@
+{
+    "actions": {
+        "accept": "Chấp nhận",
+        "add": "Thêm",
+        "cancel": "Hủy",
+        "cancelOrder": "Hủy đơn",
+        "check-cod": "Đối soát thu hộ",
+        "close": "Đóng",
+        "continue": "Tiếp tục",
+        "create-end-user": "Tạo người dùng cuối",
+        "edit": "Sửa",
+        "enter": "Nhập",
+        "enterCodeTransaction": "Nhập mã giao dịch",
+        "export": "Xuất dữ liệu",
+        "exportDistance": "Xuất theo khoảng cách",
+        "exportForSo": "Xuất dữ liệu theo SO",
+        "exportForUser": "Xuất dữ liệu theo người dùng",
+        "importCod": "Tải danh sách COD",
+        "importPackage": "Tải danh sách kiện",
+        "importSO": "Tải danh sách SO",
+        "process": "Xử lý",
+        "punish": "Phạt",
+        "quick3PLAssign": "Gán 3PL",
+        "quick3PLAssignBySO": "Gán 3PL theo SO",
+        "quickAssign": "Gán đơn nhanh",
+        "quickAssignBySO": "Gán đơn nhanh theo SO",
+        "quickCancelOrder": "Hủy đơn nhanh",
+        "reject": "Từ chối",
+        "remove": "Xóa",
+        "reply": "Trả lời",
+        "reward": "Thưởng",
+        "save": "Lưu",
+        "scanPackage": "Quét mã kiện",
+        "scanSO": "Quét mã SO",
+        "search": "Tìm",
+        "select": "Chọn",
+        "topup": "Nạp",
+        "update": "Cập nhật",
+        "withdraw": "Rút"
+    },
+    "afterReversionStatus": "Trạng thái đơn sau khi chuyển",
+    "assign3PL": "Gán 3PL",
+    "bank": {
+        "account-number": "Số tài khoản",
+        "agency": "Chi nhánh",
+        "bank": "Ngân hàng",
+        "customer-name": "Chủ tài khoản"
+    },
+    "button": {
+        "add": "Thêm",
+        "add-member": "Thêm thành viên",
+        "add-team": "Thêm đội",
+        "addAll": "Thêm Tất cả",
+        "agree": "Đồng ý",
+        "assignOrder": "Gán đơn",
+        "back": "Quay lại",
+        "cancel": "Hủy",
+        "cancelOrder": "Hủy đơn",
+        "change-password": "Đổi mật khẩu",
+        "clear": "Xóa",
+        "close": "Đóng",
+        "confirm": "Xác nhận",
+        "create": "Tạo",
+        "create-customer": "Tạo khách hàng",
+        "create-group": "Tạo nhóm",
+        "create-price": "Tạo biểu phí",
+        "create-servicer": "Tạo đối tác",
+        "create-team": "Tạo đội",
+        "create-team-servicer": "Tạo đội dịch vụ",
+        "delete": "Loại bỏ",
+        "deleteAll": "Xóa tất cả",
+        "edit": "Sửa",
+        "export": "Xuất file",
+        "export-detail": "Xuất danh sách",
+        "filter": "Bộ lọc",
+        "find": "Tìm",
+        "modify": "Chỉnh sửa",
+        "modifyInfo": "Chỉnh sửa thông tin",
+        "no": "Không",
+        "packageList": "Danh sách kiện",
+        "payment": "Nộp tiền",
+        "process": "Nhận xử lý",
+        "processed-timeout": "Đã xử lý",
+        "processing-timeout": "Xử lý hết hạn",
+        "remove": "Xóa",
+        "reply": "Trả lời",
+        "reset": "Khôi phục",
+        "search": "Tìm kiếm",
+        "select": "Chọn",
+        "send": "Gửi",
+        "send-gift": "Tặng",
+        "update": "Cập nhật",
+        "updatePackage": "Cập nhật số lượng kiện",
+        "view": "Xem",
+        "view-location": "Xem vị trí",
+        "viewAll": "Xem tất cả",
+        "yes": "Đồng ý"
+    },
+    "cancelOrdersFastly": "Hủy đơn nhanh",
+    "collectionDebt": {
+        "history": "Lịch sử thu hộ",
+        "unsubmittedMoney": "Tổng tiền chưa thu"
+    },
+    "collectionFilterType": {
+        "all": "Tất cả",
+        "finishedOrder": "Đơn hàng hoàn thành",
+        "finishedSubmit": "Đã nộp đủ thu hộ",
+        "unfinishedOrder": "Đơn hàng chưa hoàn thành",
+        "unfinishedSubmit": "Chưa nộp đủ thu hộ"
+    },
+    "collectionTab": {
+        "amount": "Số tiền nộp",
+        "amountDebt": "Số tiền",
+        "amountLabelForm": "Số tiền thực nộp",
+        "amountLabelTable": "Số tiền thực nộp VNĐ",
+        "amountTextConfirm": "Số tiền xác nhận",
+        "amountTextForm": "Số tiền đối tác báo nộp",
+        "bank": "Ngân hàng",
+        "buttonTextQuickConfirm": "Xác nhận nhanh",
+        "code": "Mã phiên chuyển tiền",
+        "collectionManager": "Quản lý thu hộ",
+        "collectionTransferSession": "Phiên chuyển tiền",
+        "confirmationMethod": {
+            "auto": "Xác nhận nhanh",
+            "manual": "Xác nhận thủ công"
+        },
+        "confirmationMethodText": "Hình thức xác nhận",
+        "dateConfirm": "Ngày xác nhận",
+        "debt": "Công nợ",
+        "debtLimit": "Hạn mức",
+        "debtStatus": "Trạng thái công nợ",
+        "debtStatusOption": {
+            "0": "Không có công nợ",
+            "1": "Có công nợ"
+        },
+        "deleteDebt": "Xóa công nợ",
+        "detailTitleConfirmModal": "Xác nhận yêu cầu",
+        "detailTitleModal": "Phiên chuyển tiền",
+        "downloadFile": "Tải file",
+        "downloadList": "Tải danh sách",
+        "enterTransCode": "Nhập mã giao dịch",
+        "filterCode": "Mã phiên chuyển tiền",
+        "formError": {
+            "amount": {
+                "required": "Vui lòng nhập số tiền thực nộp"
+            },
+            "code": {
+                "required": "Vui lòng nhập mã giao dịch"
+            },
+            "confirmPaid": {
+                "invalid": "Số tiền thực nộp phải lớn hơn hoặc bằng số tiền đối tác báo nộp"
+            },
+            "fileImport": {
+                "invalid": "File import không đúng mẫu"
+            }
+        },
+        "noTransCode": "Chưa có mã giao dịch",
+        "noteLabel": "Ghi chú/Lý do",
+        "notePlaceholder": "Nhập ghi chú",
+        "noteRequired": "Vui lòng nhập ghi chú",
+        "orderStatus": {
+            "notSubmitted": "Chưa nộp thu hộ",
+            "submitted": "Đã nộp thu hộ",
+            "waitConfirm": "Chờ xác nhận"
+        },
+        "provisionalDebt": "Công nợ tạm tính",
+        "reason": "Lý do",
+        "reasonOption": {
+            "1": "Sai số tiền báo nộp",
+            "2": "Lý do khác"
+        },
+        "reasonPlaceholder": "Nhập lý do khác",
+        "rejectLabelForm": "Lý do từ chối",
+        "status": "Trạng thái phiên chuyển tiền",
+        "statusLabel": {
+            "cancel": "Hủy",
+            "holding": "Chưa có mã giao dịch",
+            "processing": "Chờ xử lý",
+            "reject": "Từ chối",
+            "request": "Chờ xác nhận",
+            "success": "Đã xác nhận"
+        },
+        "titleDetail": "Chi tiết phiên chuyển tiền",
+        "titleQuickConfirm": "Xác nhận thu hộ",
+        "titleReject": "Từ chối phiên chuyển tiền",
+        "totalDebt": "Tổng công nợ",
+        "totalSessionCod": "Số phiên chuyển tiền",
+        "transactionCode": "Mã giao dịch ngân hàng",
+        "typeConfirm": "Hình thức xác nhận",
+        "valid": "Hợp lệ"
+    },
+    "common": {
+        "Latitude": "Kinh độ",
+        "Longitude": "Vĩ độ",
+        "Number-of-points": "Điểm giao",
+        "above": "trở lên",
+        "acceptedOrders": "ĐH Đã chấp nhận",
+        "action": "Thao tác",
+        "add": "Thêm",
+        "address": "Địa chỉ",
+        "address-map": "Địa chỉ bản đồ",
+        "address-warehouse": "Địa chỉ kho",
+        "adidi": "SUPRA",
+        "administrative-staff": "Nhân viên quản lý",
+        "all": "Tất cả",
+        "arrivedAt": "Đến nơi lúc",
+        "article": "Bài viết",
+        "assign-orders": "Gán đơn",
+        "avatar": "Ảnh đại diện",
+        "awarded": "Được tặng",
+        "bank": "Ngân hàng",
+        "branch": "Chi nhánh",
+        "brand": "Thương hiệu",
+        "brief-introduction": "Giới thiệu sơ lược",
+        "category": "Chuyên mục",
+        "city": "Tỉnh/Thành phố",
+        "code": "Mã",
+        "collapse": "Thu gọn",
+        "collection-money": "Tiền thu hộ",
+        "collection-money-total": "Tổng tiền thu hộ",
+        "commission": "Hoa hồng",
+        "condition": "Điều kiện",
+        "confirm": "Xác nhận",
+        "confirm-password": "Nhập lại mật khẩu",
+        "confirmActivate": "Bạn có chắc là muốn kích hoạt?",
+        "confirmChange": "Xác nhận thay đổi",
+        "confirmDeactivate": "Bạn có chắc là muốn hủy kích hoạt?",
+        "confirmDelete": "Bạn có chắc muốn xóa?",
+        "confirmImport": "Bạn có chắc muốn nhập dữ liệu?",
+        "contact": "Liên hệ",
+        "contactAddress": "Địa chỉ liên hệ",
+        "content": "Nội dung",
+        "contentImage": "Hình nội dung",
+        "contract-number": "Số hợp đồng",
+        "convertToDelivery": "Chuyển thành giao hàng",
+        "copy": "Nhân bản",
+        "createdAt": "Ngày tạo",
+        "createdBy": "Tạo bởi",
+        "currency-unit": "VNĐ",
+        "customer": "Khách hàng",
+        "customer-type": "Loại doanh nghiệp",
+        "date": "Ngày",
+        "default": "Mặc định",
+        "delete": "Xóa",
+        "deliveryType": "Dịch vụ giao hàng",
+        "delvery-km": "KM giao hàng",
+        "depositMethod": "Hình thức nạp tiền",
+        "depositMethods": {
+            "bank": "Qua ngân hàng",
+            "cash": "Nạp bằng tiền mặt",
+            "main": "Từ tài khoản chính"
+        },
+        "description": "Mô tả",
+        "description-explaination": "Diễn giải",
+        "detail": "Chi tiết",
+        "district": "Quận/ Huyện",
+        "district-list": "Danh sách quận/ huyện",
+        "district-name": "Tên quận/ huyện",
+        "doingOrders": "ĐH Đang thực hiện",
+        "download-sample-file": "Tải file mẫu",
+        "dueDate": "Hạn dùng",
+        "edit-order": "Chỉnh sửa đơn hàng",
+        "editLimitOrders": "Sửa giới hạn thực hiện đơn hàng",
+        "effectedAt": "Ngày bắt đầu",
+        "email": "Email",
+        "en": "🇬🇧 English",
+        "end": "Kết thúc",
+        "enterMap": "Nhập địa chỉ",
+        "enterpriseCode": "Mã doanh nghiệp",
+        "existed-packages": "Mã kiện đã được scan vào danh sách",
+        "expectedInstallTime": "Dự kiến lắp đặt",
+        "expectedPickupTime": "Dự kiến lấy hàng",
+        "expiredAt": "Ngày kết thúc",
+        "failed": "Thất bại",
+        "fax": "Fax",
+        "fee": "Phí",
+        "fetchdata": "Đang tải...",
+        "file-reader-not-support": "FileReader không được hỗ trợ trên trình duyệt này",
+        "finishedWorkAt": "Thực hiện xong lúc",
+        "freeServicer": "Đang rảnh",
+        "from": "Từ",
+        "full-name": "Họ và tên",
+        "group": "Nhóm",
+        "group-list": "Danh sách đội",
+        "history": "Lịch sử",
+        "host": "Host",
+        "hours": "giờ",
+        "hub": "Hub",
+        "hubInfo": "Thông tin hub",
+        "icon": "Biểu tượng",
+        "id": "Id",
+        "images": "Hình ảnh",
+        "import": "Nhập dữ liệu",
+        "income": "Doanh thu",
+        "index": "STT",
+        "information": "Thông tin",
+        "input-package-code": "Vui lòng nhập mã kiện cần scan",
+        "invalid": "Không hợp lệ",
+        "invalid-data": "Dữ liệu không hợp lệ",
+        "invalid-file": "File không hợp lệ",
+        "invalid-format-file": "Định dạng file không hợp lệ",
+        "invalid-size-file": "Quá dung lượng cho phép (20MB)",
+        "items": "Mục",
+        "limitOrders": "Giới hạn đơn hàng thực hiện",
+        "link": "Đường dẫn",
+        "list": "Danh sách",
+        "loading": "Đang tải dữ liệu",
+        "loyaltyPointPolicy": "Chính sách điểm thưởng",
+        "maintenanceSchedule": "Chăm sóc định kỳ",
+        "mapAddress": "Địa chỉ (map)",
+        "matches-words": "Từ phù hợp",
+        "members": "Thành viên",
+        "menu": "Danh mục",
+        "method": "Hình thức",
+        "moreDetails": "Xem thêm",
+        "name": "Tên",
+        "no": "No",
+        "no-data": "Không có dữ liệu",
+        "no-file-content": "Không có nội dung trong file {{fileName}}",
+        "noData": "Không có dữ liệu",
+        "none": "Không",
+        "not-rated": "Chưa có đánh giá",
+        "note": "Ghi chú",
+        "notifications": "Thông báo",
+        "offline": "Offline",
+        "online": "Online",
+        "order": "Đơn hàng",
+        "orderCode": "Mã đơn hàng",
+        "orderNo": "Thứ tự",
+        "orderNumber": "Số thứ tự",
+        "orderType": "Loại đơn hàng",
+        "ordinalValue": "Thứ tự",
+        "other-option": "Thiết lập khác",
+        "overview": "Tổng quan",
+        "packageIsExited": "Mã kiện đã có trong danh sách",
+        "packageNo": "Mã kiện",
+        "paidCost": "Đã thanh toán",
+        "parent": "Mục cha",
+        "partnerNote": "Chú thích người thực hiện",
+        "party-A": "Bên A",
+        "party-B": "Bên B",
+        "password": "Mật khẩu",
+        "perform": "Thực hiện",
+        "phone": "Số điện thoại",
+        "point": "Điểm",
+        "pointDetail": {
+            "expectedTime": "Dự kiến nhận hàng",
+            "pendingReason": "Lý do tạm hoãn"
+        },
+        "policy": "Chính sách",
+        "policy-name": "Tên chính sách",
+        "port": "Port",
+        "prepaid": "Trả trước",
+        "priceForm": "Bảng giá",
+        "privilege": "Phân quyền",
+        "processing": "Đang xử lý...",
+        "product": "Sản phẩm",
+        "product-status": "Tình trạng sản phẩm",
+        "profile": "Thông tin tài khoản",
+        "profit": "Lợi nhuận",
+        "promote": "Tặng",
+        "promotion": "Khuyến mãi",
+        "province": "Tỉnh thành",
+        "province-city": "Tỉnh/ Thành phố",
+        "province-name": "Tên tỉnh thành",
+        "rating-of": "Đánh giá về",
+        "receiver": "Người nhận",
+        "redeemedRewardHistory": "Lịch sử đổi ưu đãi",
+        "region": "Vùng/Miền",
+        "region-name": "Tên vùng/miền",
+        "remove": "Xóa",
+        "report": "Báo cáo",
+        "report-description": "Mô tả",
+        "report-download": "Tải báo cáo",
+        "report-so": "Báo cáo theo SO",
+        "report-so-description": "Cho phép xuất báo cáo chi tiết theo SO ",
+        "report-type": "Loại báo cáo",
+        "response": "Phản hồi",
+        "responseRate": "Đánh giá",
+        "responseRateCode": "Mã đánh giá",
+        "return-warehouse": "Kho hoàn trả",
+        "return-warehouse-list": "Danh sách kho hoàn trả",
+        "return-warehouse-name": "Tên kho hoàn trả",
+        "returnOrders": "Hoàn trả",
+        "reward": "Ưu đãi",
+        "rewardAndCondition": "Ưu đãi và điều kiện",
+        "rewardCategory": "Chuyên mục ưu đãi",
+        "rewardInformation": "Thông tin ưu đãi",
+        "rewardProvider": "Đối tác ưu đãi",
+        "rewardType": "Loại ưu đãi",
+        "save": "Lưu",
+        "scanPackageCode": "Quét mã kiện",
+        "scanReceivedPhysical": "Scan nhận hàng vật lý",
+        "scanSO": "Quét mã SO",
+        "schedule-appointment": "Hẹn lịch",
+        "searching": "Đang tìm...",
+        "selected": "Đã chọn",
+        "sentAt": "Ngày gửi",
+        "service": "Dịch vụ",
+        "servicer": "Đối tác",
+        "servicer-list": "Danh sách đối tác",
+        "servicer-type": "Loại đối tác",
+        "servicerIncome": "Thu nhập của đối tác",
+        "shipping-km": "KM vận chuyển",
+        "signCustomer": "Chữ kí khách hàng",
+        "signature": "Chữ ký",
+        "signout": "Đăng xuất",
+        "soCode": "Mã SO",
+        "staff": "Nhân viên",
+        "start": "Bắt đầu",
+        "status": "Trạng thái",
+        "status1": "Chờ kích hoạt",
+        "status2": "Đã kích hoạt",
+        "status3": "Khóa",
+        "status4": "Xóa",
+        "successRate": "Tỉ lệ thành công",
+        "successfully": "Thành công",
+        "sucessful-delete": "Xóa thành công",
+        "summary": "Tóm tắt",
+        "support-customer": "Đáp ứng khách hàng",
+        "target": "Đối tượng",
+        "team": "Đội",
+        "the-referral": "Người được giới thiệu",
+        "the-referrer": "Người giới thiệu",
+        "time": "Thời gian",
+        "title": "Tiêu đề",
+        "to": "Đến",
+        "total": "Tổng",
+        "totalCost": "Tổng phí",
+        "totalInValidPackage": "Tổng số đơn không hợp lệ",
+        "totalReceipt": "Tiền thực nhận",
+        "totalSo": "Tổng số SO",
+        "totalValidPackage": "Tổng số đơn hợp lệ",
+        "type": "Loại",
+        "unable-read-file": "Không thể đọc file",
+        "unsucessful-delete": "Xóa thất bại",
+        "updatedBy": "Cập nhật bởi",
+        "updatedDate": "Ngày cập nhật",
+        "used": "Đã sử dụng",
+        "user": "Người dùng",
+        "user-type": "Loại khách hàng",
+        "userLevel": "Cấp thành viên",
+        "userTotalCost": "Tổng chi phí của khách hàng",
+        "userType": {
+            "servicer": "Đối tác",
+            "user": "Khách hàng"
+        },
+        "using-date": "Ngày dùng",
+        "valid": "Hợp lệ",
+        "vehicle": "Phương tiện",
+        "vi": "🇻🇳 Tiếng Việt",
+        "wallet": "Tài khoản",
+        "wallet-bank": "Ngân hàng",
+        "wallet-cash": "Tiền mặt",
+        "wallet-collectionDebt": "Thu hộ",
+        "wallet-deposit": "Ký quỹ",
+        "wallet-main": "Tài khoản chính",
+        "wallet-owner": "SUPRA",
+        "wallet-sub": "Tài khoản phụ",
+        "wallet-vnpay": "VNPay",
+        "ward": "Phường",
+        "wards": "Phường/Xã",
+        "wards-list": "Danh sách Phường/Xã",
+        "wards-name": "Tên Phường/Xã",
+        "warehouse": "Kho",
+        "website": "Trang web"
+    },
+    "compareCOD": "Đối soát COD",
+    "condition": {
+        "select": "Chọn điều kiện",
+        "title": {
+            "numberOfOrder": "Số đơn hàng"
+        }
+    },
+    "customer": {
+        "account-name": "Chủ tài khoản",
+        "account-number": "Số tài khoản",
+        "bank": "Ngân hàng",
+        "bank-agency": "Chi nhánh",
+        "brief-introduction": "Giới thiệu sơ lược",
+        "certificate-image": "Ảnh GPKD",
+        "collection-amount": "Mức thu hộ",
+        "contract-image": "Hợp đồng khách hàng",
+        "customerLevel": "Cấp khách hàng",
+        "delete-complete": "Xóa khách hàng thành công",
+        "delete-fail": "Xảy ra lỗi khi xóa khách hàng",
+        "depositBalance": "Ký quỹ",
+        "enterprise": "Doanh nghiệp",
+        "enterprise-name": "Công ty",
+        "id-staff": "Mã nhân viên",
+        "list-staff": "Doanh sách nhân viên",
+        "list-user-level": "Danh sách cấp khách hàng",
+        "loyaltyPoint": "Số điểm",
+        "mainBalance": "Tài khoản chính",
+        "note": "Giới thiệu sơ lược",
+        "placeholder": {
+            "account-name": "Nhập họ tên",
+            "account-number": "Nhập số tài khoản",
+            "bank": "Chọn ngân hàng",
+            "bank-agency": "Nhập chi nhánh",
+            "brief-introduction": "Nhập giới thiệu sơ lược",
+            "confirm-password": "Nhập lại mật khẩu",
+            "contract-number": "Nhập số hợp đồng",
+            "email": "Nhập email",
+            "enterprise-name": "Nhập tên doanh nghiệp",
+            "maintenance-days": "Chọn ngày chăm sóc",
+            "maintenance-services": "Chọn dịch vụ",
+            "max-collection": "Đến",
+            "min-collection": "Từ",
+            "password": "Nhập mật khẩu",
+            "phone": "Nhập số điện thoại",
+            "select-enterprise": "Chọn doanh nghiệp"
+        },
+        "staff-in-charge": "Nhân viên phụ trách",
+        "statistic": {
+            "sum-of-customer": "Tổng số khách hàng",
+            "sum-of-enterprise": "Khách hàng doanh nghiệp",
+            "sum-of-order": "Tổng số đơn hàng",
+            "sum-of-successfulOrder": "Tổng số thành công"
+        },
+        "subBalance": "Tài khoản phụ",
+        "under-collection-amount": "Dưới",
+        "unsubmitted-collectionDebt": "Tiền chưa thu"
+    },
+    "customer-type": {
+        "1": "Truck"
+    },
+    "dashboard": {
+        "all-group": "Tất cả nhóm",
+        "incident-order": "Đơn hàng bị sự cố",
+        "status": {
+            "idle": "Đang rảnh",
+            "in-debt": "Thu hộ",
+            "incident": "Sự cố",
+            "processing": "Đang thực hiện"
+        }
+    },
+    "date": {
+        "later-period": "Kì sau",
+        "placeholder": {
+            "month": "Chọn tháng",
+            "week": "Chọn tuần",
+            "year": "Chọn năm"
+        },
+        "previous-period": "Kì trước",
+        "quarter": {
+            "1": "Quý 1",
+            "2": "Quý 2",
+            "3": "Quý 3",
+            "4": "Quý 4"
+        },
+        "validation": {
+            "end-month-required": "Vui lòng chọn tháng kết thúc",
+            "end-year-required": "Vui lòng chọn năm kết thúc",
+            "start-end-quarter-required": "Vui lòng chọn quý bắt đầu hoặc kết thúc",
+            "start-month-required": "Vui lòng chọn tháng bắt đầu",
+            "start-year-required": "Vui lòng chọn năm bắt đầu"
+        }
+    },
+    "daysInWeek": {
+        "2": "Thứ 2",
+        "3": "Thứ 3",
+        "4": "Thứ 4",
+        "5": "Thứ 5",
+        "6": "Thứ 6",
+        "7": "Thứ 7",
+        "8": "Chủ nhật"
+    },
+    "direction": {
+        "east": "Đông",
+        "north": "Bắc",
+        "northEast": "Đông bắc",
+        "northWest": "Tây bắc",
+        "south": "Nam",
+        "southEast": "Đông nam",
+        "southWest": "Tây nam",
+        "west": "Tây"
+    },
+    "email": {
+        "account": {
+            "change-password": "Đổi mật khẩu",
+            "create": "Tạo tài khoản email",
+            "edit": "Sửa tài khoản email",
+            "list": "Danh sách tài khoản email",
+            "new-password": "Mật khẩu mới",
+            "old-password": "Mật khẩu cũ",
+            "status-activate-complete": "Kích hoạt tài khoản email thành công",
+            "status-activate-fail": "Có lỗi khi kích hoạt tài khoản email",
+            "status-change-password-complete": "Đổi mật khẩu thành công",
+            "status-deactivate-complete": "Hủy kích hoạt tài khoản email thành công",
+            "status-deactivate-fail": "Có lỗi khi hủy kích hoạt tài khoản email",
+            "status-delete-complete": "Xóa tài khoản email thành công",
+            "status-delete-fail": "Có lỗi khi xóa tài khoản email",
+            "type-automatic": "Tự động",
+            "type-system": "Hệ thống"
+        },
+        "template": {
+            "create": "Tạo mẫu email",
+            "edit": "Sửa mẫu email",
+            "list": "Danh sách mẫu email",
+            "status-activate-complete": "Kích hoạt mẫu email thành công",
+            "status-activate-fail": "Có lỗi khi kích hoạt mẫu email",
+            "status-create-complete": "Tạo mẫu email thành công",
+            "status-deactivate-complete": "Hủy kích hoạt mẫu email thành công",
+            "status-deactivate-fail": "Có lỗi khi hủy kích hoạt mẫu email",
+            "status-delete-complete": "Xóa mẫu email thành công",
+            "status-delete-fail": "Có lỗi khi xóa mẫu email",
+            "status-edit-complete": "Sửa mẫu email thành công",
+            "type-receiveResponse": "Nhận phản hồi",
+            "type-replyResponse": "Trả lời phản hồi"
+        }
+    },
+    "end-user": {
+        "create": "Tạo người dùng cuối",
+        "edit": "Sửa người dùng cuối",
+        "import": "Nhập",
+        "management": "Quản lý người dùng cuối",
+        "name": "Người dùng cuối",
+        "sub-end-user": {
+            "create": "Tạo điểm giao",
+            "edit": "Sửa điểm giao",
+            "manage": "Quản lý điểm giao",
+            "receiver": "Người nhận"
+        },
+        "validations": {
+            "required-address": "Vui lòng nhập vào địa chỉ",
+            "required-full-name": "Vui lòng nhập họ và tên"
+        }
+    },
+    "errorCodes": {
+        "401": "Người dùng không có quyền (mã thông báo, tên người dùng, lỗi mật khẩu).",
+        "403": "Người dùng được ủy quyền nhưng quyền truy cập bị cấm.",
+        "500": "Lỗi hệ thống",
+        "common": "Lỗi hệ thống.",
+        "request": "Lỗi yêu cầu"
+    },
+    "filter": {
+        "action": "Hoạt động",
+        "address": "Địa chỉ",
+        "all": "Tất cả",
+        "assignDate": "Ngày gán đơn",
+        "city": "Tỉnh/Thành phố",
+        "code": "Mã",
+        "collectionStatus": "Trạng thái thu hộ",
+        "createNew": "Tạo mới",
+        "customer": "Khách hàng",
+        "customer-code": "Mã khách hàng",
+        "customer-level": "Cấp khách hàng",
+        "dateTypes": {
+            "day": "Ngày",
+            "month": "Tháng",
+            "quarter": "Quý",
+            "week": "Tuần",
+            "year": "Năm"
+        },
+        "deliveryPoint": "Điểm giao hàng",
+        "district": "Quận/Huyện",
+        "filter": "Bộ lọc",
+        "finishDate": "Ngày hoàn thành",
+        "finishedEnd": "Hoàn thành đến ngày",
+        "fromDate": "Từ ngày",
+        "group": "Nhóm",
+        "groupAdmin": "Nhóm quản trị",
+        "installationPoint": "Điểm lắp đặt",
+        "location": "Khu vực",
+        "notificationType": "Loại thông báo",
+        "phone": "Số điện thoại",
+        "placeholderCustomer": "Nhập tên khách hàng...",
+        "program": "Chương trình",
+        "providers": "Nhà mạng",
+        "referralpolicy": "Chính sách",
+        "responseRate": "Đánh giá",
+        "service": "Dịch vụ",
+        "servicer": "Đối tác",
+        "smsProvider": "Nhà cung cấp",
+        "smsType": "Loại SMS",
+        "source": "Nguồn",
+        "staff": "Nhân viên",
+        "staff-code": "Mã nhân viên",
+        "staff-orderCode": "Nhân viên/Mã đơn",
+        "status": "Trạng thái",
+        "team": "Đội dịch vụ",
+        "timePeriod": "Khoảng thời gian",
+        "toDate": "Đến ngày",
+        "type": "Loại",
+        "userCode": "Mã khách hàng",
+        "userServicerCode": "Mã khách hàng/đối tác",
+        "userType": "Đối tượng",
+        "ward": "Phường/Xã"
+    },
+    "finance": {
+        "bank": {
+            "create": "Tạo ngân hàng",
+            "edit": "Sửa ngân hàng",
+            "keyword": "Ký hiệu",
+            "list": "Danh sách ngân hàng",
+            "search": "Tìm ngân hàng",
+            "short-name": "Tên giao dịch",
+            "status-create-complete": "Tạo ngân hàng thành công",
+            "status-delete-complete": "Xóa ngân hàng thành công",
+            "status-edit-complete": "Sửa ngân hàng thành công"
+        },
+        "history": "Lịch sử giao dịch",
+        "paymentMethod": {
+            "cash": "Tiền mặt",
+            "wallet": "Tài khoản"
+        },
+        "paymentMethodTitle": "Phương thức thanh toán",
+        "session-cod": {
+            "code": "Mã phiên",
+            "confirm-transfer": "Xác nhận chuyển khoản",
+            "confirm-transfer-content": "Bạn muốn xác nhận đã chuyển cho phiên COD này?",
+            "create": "Thêm phiên",
+            "create-btn": "Tạo phiên",
+            "created-by": "Người tạo",
+            "delete": "Xóa phiên giao dịch",
+            "delete-content": "Bạn có chắc chắn muốn xoá phiên COD này?",
+            "delete-order": "Xoá đơn hàng trong phiên",
+            "delete-order-content": "Bạn muốn xoá đơn hàng ra khỏi phiên COD này?",
+            "delivery-date": "Ngày giao hàng",
+            "detail": "Chi tiết phiên COD",
+            "export-order": "XUẤT EXCEL",
+            "filterDescription": "(Tất cả đơn hàng có COD đã giao hàng thành công có thời gian nhỏ hơn hoặc bằng ngày được chọn)",
+            "filterPlaceholderList": "Nhập khách hàng",
+            "leftList": "Khách hàng khả dụng",
+            "rightList": "Khách hàng được chọn để tạo phiên",
+            "status": {
+                "1": "Chưa chuyển",
+                "2": "Đã chuyển",
+                "4": "Đã xóa"
+            },
+            "title": "Quản lý phiên COD",
+            "titleList": "Khách hàng",
+            "total-cod": "Tổng COD",
+            "total-order": "Số lượng đơn hàng",
+            "transfer-by": "Người chuyển khoản",
+            "transfer-date": "Ngày chuyển khoản"
+        },
+        "systemBankAccount": {
+            "create": "Tạo tài khoản ngân hàng",
+            "edit": "Sửa tài khoản ngân hàng",
+            "list": "Danh sách tài khoản ngân hàng",
+            "status-create-complete": "Tạo tài khoản ngân hàng thành công",
+            "status-delete-complete": "Xóa tài khoản ngân hàng thành công",
+            "status-delete-fail": "Có lỗi khi xóa tài khoản ngân hàng",
+            "status-edit-complete": "Sửa tài khoản ngân hàng thành công"
+        },
+        "transaction-action": {
+            "adjust-deposit": "Ký quỹ",
+            "adjust-order": "Điều chỉnh đơn hàng",
+            "all": "Tất cả",
+            "collection-money": "Thanh toán thu hộ",
+            "commission": "Tiền hoa hồng",
+            "deposit": "Nạp tiền",
+            "fine": "Phạt tiền",
+            "payment": "Thanh toán",
+            "promotion": "Thưởng tiền",
+            "referral-bonus": "Thưởng theo chính sách giới thiệu",
+            "refund": "Hoàn phí",
+            "withdraw": "Rút tiền"
+        },
+        "transaction-adjust-deposit": {
+            "adjustDepositOfEnterpriseStaff": "Không thể ký quỹ cho nhân viên doanh nghiệp",
+            "bankMethod": "Ngân hàng",
+            "cashMethod": "Trực tiếp",
+            "create": "Ký quỹ",
+            "failed": "Thất bại",
+            "moneyAmount": "Số tiền",
+            "successfully": "Thành công",
+            "topupMethod": "Hình thức nạp tiền",
+            "withdrawMethod": "Hình thức rút tiền"
+        },
+        "transaction-bonus": {
+            "create": "Thưởng tiền",
+            "walletType": "Loại ví"
+        },
+        "transaction-bonus-forfeit": {
+            "every-customer": "Tất cả khách hàng",
+            "every-servicer": "Tất cả đối tác",
+            "individual": "Cá nhân",
+            "no-target-validations": "Chưa chọn đối tượng"
+        },
+        "transaction-forfeit": {
+            "create": "Phạt tiền"
+        },
+        "transaction-status": {
+            "all": "Tất cả",
+            "processing": "Đang xử lý",
+            "reject": "Hủy",
+            "request": "Gửi yêu cầu",
+            "success": "Đã xử lý"
+        },
+        "transaction-title": "Giao dịch",
+        "transaction-top-up": {
+            "bank": "Ngân hàng",
+            "branch": "Chi nhánh nhận tiền",
+            "create": "Nạp tiền",
+            "money": "Số tiền",
+            "remark": "Ghi chú",
+            "type": "Hình thức nạp tiền"
+        },
+        "transaction-top-up-detail": {
+            "code": "Mã nạp tiền",
+            "id": "ID đối tác",
+            "money": "Số tiền",
+            "name": "Tên đối tác",
+            "remark": "Ghi chú",
+            "staff-action": "Nhân viên thực hiện",
+            "time": "Thời gian nạp"
+        },
+        "transaction-userType": {
+            "name": "Đối tượng",
+            "owner": "SUPRA",
+            "servicer": "Đối tác",
+            "user": "Khách hàng"
+        },
+        "transaction-walletType": {
+            "bank": "Qua ngân hàng",
+            "cash": "Trực tiếp",
+            "collection": "Thu hộ",
+            "deposit": "Ký quỹ",
+            "main": "Ví chính",
+            "minRemaining": "Số dư tối thiểu",
+            "postpaid-allowed": "Cho phép trả sau",
+            "sub": "Ví phụ",
+            "withdrawLimit": "Giới hạn rút tiền"
+        }
+    },
+    "finance-wallet": {
+        "postpaid-allowed": {
+            "activate-failed": "Kích hoạt trả sau thất bại",
+            "activate-success": "Kích hoạt trả sau thành công",
+            "deactivate-failed": "Hủy kích hoạt trả sau thất bại",
+            "deactivate-success": "Hủy kích hoạt trả sau thành công"
+        },
+        "remainingEdit": {
+            "title": "Sửa số dư",
+            "title-minRemaining": "Số dư tối thiểu",
+            "withdraw-max": "Tối đa",
+            "withdraw-min": "Tối thiểu",
+            "withdraw-title": "Giới hạn rút tiền"
+        },
+        "statistics": {
+            "total-collection": "Tổng thu hộ",
+            "total-deposit": "Tổng ký quỹ",
+            "total-main": "Tổng tài khoản chính",
+            "total-sub": "Tổng tài khoản phụ"
+        }
+    },
+    "form": {
+        "categories": {
+            "delete-content": "Bạn có chắc chắn khi xoá nhóm hàng này không?",
+            "delete-title": "Xóa nhóm hàng",
+            "nameEn": "Tên nhóm hàng (en)",
+            "nameVi": "Tên nhóm hàng (vi)",
+            "order": "Thứ tự",
+            "placeholderName": "Nhập tên nhóm hàng",
+            "titleCreate": "TẠO NHÓM HÀNG",
+            "titleEdit": "SỬA NHÓM HÀNG",
+            "validations-name": "Vui lòng nhập tên nhóm hàng",
+            "validations-order": "Vui lòng nhập thứ thự hiển thị nhóm sản phẩm"
+        },
+        "create-store": {
+            "create": "Tạo trung tâm",
+            "isMember-0": "Chưa tham gia",
+            "isMember-1": "Đã tham gia",
+            "update": "Cập nhật"
+        },
+        "placeholderLimitOrders": "Nhập giới hạn đơn hàng",
+        "user-level": {
+            "auto-level": "Thăng cấp tự động",
+            "avatar": "Ảnh đại diện",
+            "create-level": "Tạo cấp",
+            "detail": "Thông tin chi tiết",
+            "edit-level": "Sửa cấp",
+            "image": "Ảnh",
+            "level-name": "Tên cấp khách hàng",
+            "min-point": "Số điểm lên cấp",
+            "special-level": "Cấp đặc biệt",
+            "status": "Trạng thái",
+            "user-type": "Loại khách hàng"
+        },
+        "user-status": {
+            "1": "Mới",
+            "2": "Đã kích hoạt",
+            "3": "Đình chỉ",
+            "4": "Đã xoá"
+        },
+        "vehicle": {
+            "cod": "Marker thu hộ",
+            "grooving": "Marker đang rãnh",
+            "imageNormal": "Ảnh chưa chọn",
+            "imageSelected": "Ảnh được chọn",
+            "incident": "Marker có sự cố",
+            "markerLarge": "Marker lớn",
+            "markerNormal": "Marker nhỏ",
+            "nameEn": "Tên phương tiện (en)",
+            "nameVi": "Tên phương tiện (vi)",
+            "offline": "Marker ngoại tuyến",
+            "placeholderCapacity": "Nhập trọng tải",
+            "placeholderName": "Nhập tên phương tiện",
+            "placeholderOrder": "Nhập thứ tự hiển thị",
+            "processing": "Marker đang thực hiện",
+            "return": "Marker hoàn trả",
+            "titleCreate": "TẠO PHƯƠNG TIỆN",
+            "titleEdit": "SỬA PHƯƠNG TIỆN"
+        },
+        "vehicle-validations": {
+            "imageMarkerLarge": "Vui lòng chọn marker phương tiện ở trạng thái phóng to",
+            "imageMarkerNormal": "Vui lòng chọn marker phương tiện ở trạng thái bình thường",
+            "imageNormal": "Vui lòng chọn ảnh phương tiện ở trạng thái bình thường",
+            "imageSelected": "Vui lòng chọn ảnh phương tiện ở trạng thái được chọn",
+            "markerCod": "Vui lòng chọn ảnh phương tiện ở trạng thái có thu hộ",
+            "markerGrooving": "Vui lòng chọn ảnh phương tiện ở trạng thái đang rãnh",
+            "markerIncident": "Vui lòng chọn ảnh phương tiện ở trạng thái có sụ cố",
+            "markerOffline": "Vui lòng chọn ảnh phương tiện ở trạng thái ngoại tuyến",
+            "markerProcessing": "Vui lòng chọn ảnh phương tiện ở trạng thái đang thực hiện",
+            "markerReturn": "Vui lòng chọn ảnh phương tiện ở trạng thái hoàn trả",
+            "name": "Vui lòng nhập tên phương tiện",
+            "order": "Vui lòng nhập thứ tự hiển thị phương tiện"
+        }
+    },
+    "general-menu": {
+        "account-balance": "Số dư tài khoản",
+        "adidi-branch": "Chi nhánh SUPRA",
+        "categories": "Nhóm hàng",
+        "city-province": "Tỉnh/ Thành phố",
+        "customer": "Khách hàng",
+        "district": "Quận/Huyện",
+        "hook": "Hook",
+        "hookLink": "Liên kết hook",
+        "hookType": "Phân loại hook",
+        "limit-orders": "Giới hạn đơn hàng",
+        "loyalty-point": "Quản lý điểm thưởng",
+        "order-acceptance": "Chấp nhận đơn",
+        "policy": "Chính sách",
+        "priceManagement": "Thiết lập biểu phí",
+        "promotion-policy": "Chương trình khuyến mãi",
+        "referral-policy": "Chính sách giới thiệu",
+        "region": "Vùng/Miền",
+        "return-warehouse": "Kho hoàn trả",
+        "reward-management": "Quản lý đổi thưởng",
+        "serviceCollection": "Quản lý thu hộ",
+        "sms": "SMS",
+        "smsLogs": "Lịch sử SMS",
+        "smsProvider": "Nhà cung cấp",
+        "smsTemplate": "Mẫu sms",
+        "user-level": "Cấp khách hàng",
+        "vehicle": "Phương tiện",
+        "wards": "Phường/Xã",
+        "warehouse": "Thuê kho chia sẻ",
+        "warehouse-list": "Danh sách kho",
+        "warehouse-setting": "Cài đặt kho"
+    },
+    "handoverSessions": {
+        "buttonSuccess": "Hoàn thành",
+        "handoverSessionCode": "Mã phiên bàn giao",
+        "packageReceived": "Kiện hàng đã nhận",
+        "receivePhysical": "Quét bàn giao",
+        "receivedDate": "Thời gian nhận",
+        "receivedDateFirst": "Nhận đầu tiên",
+        "receivedDateLast": "Nhận cuối cùng",
+        "statusLabel": {
+            "1": "Mới",
+            "2": "Đang xử lý",
+            "3": "Hoàn thành chưa đủ hàng",
+            "4": "Đã hoàn thành"
+        },
+        "statusPackageLabel": {
+            "notReceived": "Chưa nhận",
+            "received": "Đã nhận"
+        },
+        "title": "Phiên bàn giao",
+        "titleDetail": "DANH SÁCH KIỆN HÀNG",
+        "titleModal": "HOÀN THÀNH CHƯA ĐỦ HÀNG",
+        "titleRight": "THÔNG TIN PHIÊN BÀN GIAO"
+    },
+    "handoverSessions3PL": {
+        "adminConfirm": "Đã bàn giao",
+        "buttonCancle": "Hủy phiên",
+        "buttonConfirm": "Xác nhận bàn giao",
+        "confirmCancle": "Xác nhận hủy phiên",
+        "confirmedBy": "Nhân viên bàn giao",
+        "contentConfirm": "Bạn có muốn xác nhận phiên bàn giao?",
+        "contentConfirmCancle": "Bạn có muốn hủy phiên bàn giao?",
+        "createdAt": "Ngày tạo phiên",
+        "createdBy": "Nhân viên tạo phiên",
+        "errorSOValid": "Vui lòng scan 1 SO hợp lệ",
+        "handedOverDate": "Ngày bàn giao",
+        "messageScan": "Thông báo",
+        "noteCancle": "Lý do hủy",
+        "noteReceived": "Ghi chú đã nhận",
+        "receivedDate": "Thời gian xác nhận",
+        "soList": "Danh sách SO",
+        "statusLabel": {
+            "1": "Mới",
+            "2": "Đã bàn giao",
+            "3": "Đã xác nhận",
+            "4": "Đã hủy",
+            "5": "Xác nhận 1 phần",
+            "6": "Hoàn thành 1 phần"
+        },
+        "title": "Phiên bàn giao 3PL",
+        "titleCancle": "Hủy phiên bàn giao 3PL",
+        "toltalPackage": "Tổng số kiện",
+        "toltalSO": "Tổng số SO",
+        "toltalSOReceived": "Tổng số SO đã nhận",
+        "unconfimred": "Chưa xác nhận"
+    },
+    "hook": {
+        "hook-type": {
+            "create": "Tạo hook",
+            "edit": "Sửa hook",
+            "list": "Danh sách hook",
+            "requiredFields": "Trường bắt buộc"
+        },
+        "hook-type-status": {
+            "activate-complete": "Kích hoạt hook thành công",
+            "activate-fail": "Có lỗi khi kích hoạt hook",
+            "create-complete": "Tạo hook thành công",
+            "deactivate-complete": "Hủy kích hoạt hook thành công",
+            "deactivate-fail": "Có lỗi khi hủy kích hoạt hook",
+            "delete-complete": "Xóa hook thành công",
+            "delete-fail": "Có lỗi khi xóa hook",
+            "edit-complete": "Sửa hook thành công"
+        },
+        "hook-type-type": {
+            "order_status": "Trạng thái đơn hàng"
+        },
+        "link": {
+            "customer-partner": "Khách hàng / Đối tác",
+            "input-id": "Nhập ID",
+            "link": "Đường dẫn",
+            "list": "Danh sách liên kết hook"
+        },
+        "link-status": {
+            "create-complete": "Tạo liên kết hook thành công",
+            "delete-complete": "Xóa liên kết hook thành công",
+            "delete-fail": "Có lỗi khi xóa liên kết hook",
+            "edit-complete": "Sửa liên kết hook thành công"
+        },
+        "link-type": {
+            "order_status": "Trạng thái đơn hàng"
+        }
+    },
+    "importSO": "Gán đơn SO file excel",
+    "incident": {
+        "failed": "Thất bại",
+        "images": "Hình ảnh sự cố",
+        "reason-failed": "Lý do thất bại",
+        "status": {
+            "0": "Có sự cố",
+            "1": "Đang xử lí",
+            "2": "Xử lí thành công",
+            "3": "Xử lí thất bại"
+        },
+        "successfully": "Thành công"
+    },
+    "label": {
+        "account-information": "Thông tin tài khoản",
+        "finance": "Tài chính",
+        "service": "Dịch vụ"
+    },
+    "location-placeholder": {
+        "city": "Chọn thành phố",
+        "district": "Chọn quận/huyện",
+        "province-city": "Chọn tỉnh/thành phố",
+        "street": "Nhập địa chỉ",
+        "ward": "Nhập phường"
+    },
+    "login": {
+        "delivery-setting": "Giao hàng - lắp đặt",
+        "error": "Sai số điện thoại hoặc mật khẩu!",
+        "password": "Mật khẩu",
+        "phone": "Số điện thoại",
+        "sign_in": "Đăng nhập",
+        "success": "Đăng nhập thành công!",
+        "warrantyRepair-sharingWarehouse": "Bảo hành sửa chữa - Thuê kho chia sẻ"
+    },
+    "maps": {
+        "disable-dragging": "Tắt bản đồ",
+        "disable-map": "Tắt bản đồ",
+        "distance": "Quãng đường",
+        "enable-dragging": "Bật bản đồ",
+        "enable-map": "Bật bản đồ"
+    },
+    "marketing": {
+        "loyalty-point": {
+            "expiration": "Hạn sử dụng",
+            "loyalty-point": "Điểm thưởng",
+            "modal-point-number": "Số điểm",
+            "modal-title-modify": "Điều chỉnh điểm thưởng",
+            "modify-point": "Điều chỉnh điểm",
+            "one-point": "1 điểm",
+            "orderCode": "Mã giao dịch",
+            "orderId": "Đơn hàng",
+            "orderType": "Loại giao dịch",
+            "partnerCode-customerCode": "Mã đối tác / Khách hàng",
+            "point-values": "Giá trị điểm",
+            "receiverCode": "Mã người nhận",
+            "staff": "Nhân viên"
+        },
+        "loyalty-point-type": {
+            "adjustDecrease": "Trừ từ hệ thống",
+            "adjustIncrease": "Thưởng từ hệ thống",
+            "order": "Đơn hàng",
+            "redeem": "Đổi thưởng"
+        },
+        "news": {
+            "add-news": "Thêm tin",
+            "featured": "Nổi bật",
+            "featured-category": "Danh mục nổi bật",
+            "featured-news": "Tin nổi bật",
+            "list": "Danh sách tin tức",
+            "listreceiver": "Người nhận",
+            "name": "Tên tin tức",
+            "send-news-noti": "Gửi thông báo",
+            "status-activate-complete": "Kích hoạt tin tức thành công",
+            "status-activate-fail": "Có lỗi khi kích hoạt tin tức",
+            "status-active": "Kích hoạt",
+            "status-deactivate-complete": "Hủy kích hoạt tin tức thành công",
+            "status-deactivate-fail": "Có lỗi khi hủy kích hoạt tin tức",
+            "status-inactive": "Chưa kích hoạt",
+            "tab-banner": "Ảnh ứng dụng",
+            "tab-news": "Tin tức",
+            "tab-news-category": "Danh mục tin tức"
+        },
+        "news-banner": {
+            "activate-complete": "Kích hoạt banner thành công",
+            "activate-fail": "Có lỗi khi kích hoạt banner",
+            "add-banner": "Thêm banner",
+            "banner": "Banner",
+            "deactivate-complete": "Hủy kích hoạt banner thành công",
+            "deactivate-fail": "Có lỗi khi hủy kích hoạt banner",
+            "list": "Danh sách banner"
+        },
+        "news-category": {
+            "add": "Thêm danh mục",
+            "create": "Tạo danh mục",
+            "edit": "Sửa danh mục",
+            "list": "Danh mục tin tức",
+            "name": "Danh mục",
+            "status-activate-complete": "Kích hoạt danh mục thành công",
+            "status-activate-fail": "Có lỗi khi kích hoạt danh mục",
+            "status-create-complete": "Tạo danh mục thành công",
+            "status-deactivate-complete": "Hủy kích hoạt danh mục thành công",
+            "status-deactivate-fail": "Có lỗi khi hủy kích hoạt danh mục",
+            "status-edit-complete": "Sửa danh mục thành công"
+        },
+        "promotion-policy": {
+            "affected-at": "Bắt đầu",
+            "amount": "Số lượng",
+            "appliedCondition": "Điều kiện áp dụng",
+            "appliedPriceForm": "Biểu phí áp dụng",
+            "byDepositAmount": "Theo mức nạp",
+            "byDepositRatio": "Theo tỉ lệ giá trị nạp",
+            "byOrderValue": "Theo giá trị đơn hàng",
+            "byOrderValueProportion": "Theo tỉ lệ giá trị đơn hàng",
+            "chooseCondition": "Chọn điều kiện muốn thêm",
+            "choosePriceForm": "Chọn biểu phí",
+            "content": "Diễn giải",
+            "diffAmountByServicer": "Tỉ lệ đối tác chịu chênh lệch",
+            "discountByAmount": "Theo số tiền",
+            "discountByPercent": "Theo phần trăm",
+            "discountSamePrice": "Đồng giá đơn hàng",
+            "displayCondition": "Điều kiện hiển thị",
+            "expired-at": "Kết thúc",
+            "maximumAmount": "Số tiền tối đa",
+            "programDetail": "Thông tin chương trình",
+            "promoCodeQuantity": "Tổng số mã khuyến mãi",
+            "promoPolicyDetail": "Chi tiết khuyến mãi",
+            "promotion-code": "Mã khuyến mãi",
+            "promotionFixedByOrderValue": "Khuyến mãi cố định theo giá trị đơn hàng",
+            "success-update": "Cập nhật thành công",
+            "withoutAdditionalCost": "không bao gồm chi phí phát sinh"
+        },
+        "promotion-policy-condition-operator": {
+            "between": "Khoảng",
+            "day": "Thời gian",
+            "days": "",
+            "diff": "Khác",
+            "equal": "Bằng",
+            "greater": "Lớn hơn",
+            "greaterOrEqual": "Lớn hơn hoặc bằng",
+            "less": "Nhỏ hơn",
+            "lessOrEqual": "Nhỏ hơn hoặc bằng",
+            "money": "Tiền",
+            "time": "Thời gian"
+        },
+        "promotion-policy-condition-promotion-code": {
+            "baseUserCost": "Chi phí cho khách hàng",
+            "createdAt": "Ngày đăng ký SUPRA",
+            "dayPeriod": "Khoảng thời gian đặt đơn trong ngày",
+            "depositAmount": "Số tiền nạp",
+            "depositTime": "Số lần nạp",
+            "displayedAt": "Thời gian hiển thị",
+            "incomeAmount": "Tổng thu nhập",
+            "limitedQuantityByDay": "Giới hạn SL theo ngày",
+            "limitedQuantityByDayAndUser": "Giới hạn SL theo ngày cho người dùng",
+            "limitedQuantityByMonth": "Giới hạn SL theo tháng",
+            "limitedQuantityByMonthAndUser": "Giới hạn SL theo tháng cho người dùng",
+            "limitedQuantityByUser": "Giới hạn SL cho người dùng",
+            "limitedQuantityByWeek": "Giới hạn SL theo tuần",
+            "limitedQuantityByWeekAndUser": "Giới hạn SL theo tuần cho người dùng",
+            "location": "Khu vực",
+            "numberOfOrder": "Số đơn hàng",
+            "numberOfWorkingDay": "Số ngày làm việc",
+            "orderType": "Loại đơn hàng",
+            "paymentMethod": "Phương thức thanh toán",
+            "service": "Dịch vụ",
+            "servicerCost": "Giá trị đơn hàng",
+            "servicerRating": "Đánh giá",
+            "userCost": "Giá trị đơn hàng",
+            "userId": "ID khách hàng",
+            "userLevel": "Cấp thành viên",
+            "userLevelId": "Cấp thành viên"
+        },
+        "promotion-policy-condition-unit": {
+            "day": "Ngày",
+            "days": "Thời gian",
+            "money": "Tiền",
+            "time": "Lần"
+        },
+        "promotion-policy-detail": {
+            "appliedCode": "Mã khuyến mãi áp dụng",
+            "deposit": "Nạp tiền",
+            "detail": "Chi tiết chính sách",
+            "infor": "Thông tin chính sách",
+            "priceForm": "Bảng giá",
+            "promotion": "Thưởng tiền"
+        },
+        "promotion-policy-promotionHistory": {
+            "countOfCodes": "Tổng số mã",
+            "countOfUsedCodes": "Tổng số lần sử dụng",
+            "countOfUsers": "Tổng số khách hàng",
+            "promotionHistoryName": "Lịch sử khuyến mãi",
+            "sumOfMoney": "Tổng tiền sử dụng"
+        },
+        "promotion-policy-status": {
+            "1": "Mới tạo",
+            "2": "Đã kích hoạt",
+            "3": "Tạm dừng",
+            "4": "Deleted"
+        },
+        "promotion-policy-warning": {
+            "invalid-data": "Vui lòng kiểm tra lại dữ liệu",
+            "invalid-discAmount": "Số tiền khuyến mãi không hợp lệ",
+            "invalid-discMaximumAmount": "Số tiền tối đa không hợp lệ",
+            "invalid-discPercent": "Phần trăm khuyến mãi không hợp lệ",
+            "invalid-discSamePrice": "Số tiền khuyến mãi theo đơn hàng không hợp lệ",
+            "missing-image": "Vui lòng chọn ảnh",
+            "notChosen-condition": "Chưa chọn điều kiện"
+        },
+        "referral-code": "Mã giới thiệu",
+        "referral-history": {
+            "bonus": "Thường tiền",
+            "list": "Danh sách nhận thưởng",
+            "receiver": "Người nhận",
+            "transaction-code": "Mã giao dịch",
+            "type-presentee": "Người được giới thiệu",
+            "type-presenter": "Người giới thiệu"
+        },
+        "referral-policy": {
+            "applied-condition": "Điều kiện áp dụng",
+            "condition-number-order": "Số đơn hàng",
+            "from-number": "Từ người",
+            "give-bonus-to-wallet": "Tặng tiền vào tài khoản",
+            "give-reward": "Tặng ưu đãi",
+            "introduction-article": "Bài viết giới thiệu",
+            "money-amount": "Tặng",
+            "sharing-content": "Nội dung chia sẻ",
+            "to-number": "Đến"
+        },
+        "referral-policy-validations": {
+            "invalid-data-article": "Dữ liệu trong mục nội dung không hợp lệ",
+            "invalid-data-referrer": "Dữ liệu trong mục người giới thiệu không hợp lệ",
+            "invalid-interval": "Từ (người) không được lớn hơn đến (người)",
+            "max-bonus-item-warning": "Chỉ được thêm tối đa 5 dòng",
+            "negative-number": "Giá trị phải là số nguyên dương",
+            "not-a-number": "Giá trị không được bỏ trống"
+        },
+        "response": {
+            "empty-data": "Tiêu đề và email phải khác rỗng",
+            "no-comment": "Hiện tại phản hồi này chưa được trả lời",
+            "replyContent": "Nội dung trả lời",
+            "replyDate": "Ngày trả lời",
+            "replyFailed": "Trả lời thất bại",
+            "replySuccessfully": "Trả lời thành công",
+            "status-all": "Tất cả",
+            "status-new": "Chưa trả lời",
+            "status-replied": "Đã trả lời"
+        },
+        "reward": {
+            "create-reward": "Tạo đổi thưởng",
+            "find": "Tìm ưu đãi"
+        }
+    },
+    "messenger": {
+        "block-message": {
+            "4": "Đơn hàng bị hủy bởi khách hàng",
+            "5": "Đơn hàng bị hủy bởi đối tác",
+            "6": "Đơn hàng bị hủy bởi điều phối viên",
+            "8": "Đơn hàng đã hoàn thành",
+            "19": "Lắp đặt thất bại",
+            "22": "Hoàn thành có hoàn trả",
+            "not-receiveOrder": "Đối tác chưa nhận đơn hàng"
+        },
+        "customer-partner": "Khách hàng - Đối tác",
+        "no-message": "Không có tin nhắn"
+    },
+    "notification": {
+        "action": {
+            "mark-all-as-read": "Xem tất cả",
+            "read": "Đã xem",
+            "unmark": "Bỏ chọn"
+        },
+        "content": "Nội dung thông báo",
+        "no-message": "Không có tin nhắn",
+        "no-notification": "Không có thông báo",
+        "self": "Thông báo",
+        "status": {
+            "read": "Đã xem",
+            "unread": "Chưa xem"
+        },
+        "type": {
+            "confirmCompleteRequest": "Yêu cầu xác nhận hoàn thành",
+            "created": "Đơn hàng mới",
+            "happenIncident": "Đơn hàng có sự cố",
+            "newMessage": "Tin nhắn",
+            "newWarehouse": "Yêu cầu kích hoạt kho",
+            "response": "Phản hồi đánh giá",
+            "self": "Loại thông báo",
+            "warehouseContactRequest": "Tư vấn thuê kho",
+            "withdrawRequest": "Yêu cầu chuyển tiền"
+        },
+        "view-detail": "Xem chi tiết"
+    },
+    "order": {
+        "addonServices": "Dịch vụ kèm theo",
+        "address": "Địa chỉ",
+        "admin": "Nhân viên phụ trách",
+        "adminNote": "Ghi chú điều phối",
+        "baseUserCost": "Chi phí cho khách hàng",
+        "cancel-order": "Hủy đơn hàng",
+        "cancel-party": "Bên hủy đơn",
+        "cancel-reason": "Nguyên nhân hủy đơn",
+        "choosing-installation": "Chọn dịch vụ lắp đặt",
+        "choosing-loading": "Chọn dịch vụ bốc xếp",
+        "clientHandoverCode": "Mã phiên bàn giao",
+        "code": "Mã đơn hàng",
+        "collectionMoney": "Tiền thu hộ",
+        "cost": "Chi phí",
+        "create-selectShipper": {
+            "employee": "Nhân viên",
+            "employees": "Danh sách nhân viên",
+            "group": "Chọn nhóm",
+            "income": "Thu nhập trong tháng",
+            "phone": "Số điện thoại",
+            "placeholderEmployee": "Nhập tên nhân viên",
+            "team": "Chọn đội",
+            "title": "Chọn người thực hiện đơn hàng"
+        },
+        "customer": "Khách hàng",
+        "customer-confirmed": "Khách hàng xác nhận",
+        "detail": "Thông tin đơn hàng",
+        "detailPoint": "Chi tiết",
+        "downloadListSo": "Tải danh sách SO",
+        "edit-successfully": "Sửa điểm thành công",
+        "enterReason": "Nhập lý do",
+        "error-admin-note": "Vui lòng nhập nội dung ghi chú",
+        "error-cancel-reason": "Vui lòng nhập vào nguyên nhân hủy đơn",
+        "error-reason": "Vui lòng nhập vào lý do",
+        "error-user-cancel": "Vui lòng chọn bên hủy đơn",
+        "external-cod": "Tiền thu hộ",
+        "external-code": "Mã tham chiếu",
+        "fare": "Phí",
+        "fixingIncidentInformation": "Thông tin khắc phục sự cố",
+        "history": "Lịch sử đơn hàng",
+        "incident": "Sự cố",
+        "incidentInformation": "Thông tin sự cố",
+        "incidentName": "Đơn hàng có sự cố",
+        "information-order": "Thông tin đơn hàng",
+        "information-point": "Thông tin điểm",
+        "information-type-status": {
+            "1": "lấy hàng số",
+            "2": "giao hàng số",
+            "4": "hoàn trả số"
+        },
+        "list": "Danh sách đơn hàng",
+        "listByStatus": {
+            "3": "Danh sách đơn hàng đã chấp nhận",
+            "7": "Danh sách đơn hàng đang thực hiện",
+            "9": "Danh sách đơn hàng hoàn trả",
+            "10,11": "Danh sách đơn hàng có sự cố"
+        },
+        "maintenancePeriod": "Ngày chăm sóc hàng tháng",
+        "maintenanceServices": "Dịch vụ chăm sóc",
+        "modal": {
+            "add-stop-point": "Thêm điểm dừng",
+            "cancel-order": "Hủy vận đơn",
+            "delete-marker": "Hủy điểm",
+            "direction": "Tuyến đường đi",
+            "edit-marker": "Chọn điểm cần thay đổi",
+            "edit-order-collection": "Sửa tiền thu hộ",
+            "edit-reason": "Lý do thay đổi",
+            "hint-drag-map": "Kéo các điểm để thay đổi tuyến đường đúng nhất",
+            "history": "Lịch sử đơn hàng",
+            "input-new-money": "Số tiền thu hộ mới",
+            "input-new-money-placeholder": "Số tiền thu hộ mới",
+            "reason-cancel-order": "Lý do hủy vận đơn",
+            "reason-delete-marker": "Lý do hủy điểm",
+            "reason-refund": "Lý do hoàn trả",
+            "reason-skip-marker": "Lý do bỏ điểm",
+            "refund": "Hoàn trả",
+            "select-delete-marker": "Chọn điểm cần hủy",
+            "select-skip-marker": "Chọn điểm cần bỏ qua",
+            "skip-marker": "Bỏ điểm",
+            "total-package": "Tổng số kiện"
+        },
+        "moreDetails": "Thông tin chi tiết",
+        "note": "Ghi chú",
+        "order": "Đơn hàng",
+        "order-status": "Trạng thái đơn hàng",
+        "orderer": "Người đặt",
+        "package-list-invalid": "Danh sách kiện không hợp lệ",
+        "partner": "Đối tác thực hiện",
+        "partner-number": "Số điện thoại đối tác",
+        "point": "Điểm",
+        "pointDetail": {
+            "incident": "Sự cố phát sinh"
+        },
+        "pointStatus": {
+            "0": "Chưa tới nơi",
+            "1": "Đã giao hàng",
+            "2": "Đã lắp đặt",
+            "3": "Đã hủy",
+            "4": "Bỏ qua",
+            "5": "Có sự cố",
+            "6": "Đồng ý xử lý sự cố",
+            "7": "Đã xử lý sự cố",
+            "8": "Đã đến nơi",
+            "9": "Đã trả hàng",
+            "10": "Trả hàng thất bại",
+            "11": "Lấy hàng thành công",
+            "12": "Đồng ý báo giá",
+            "13": "Từ chối báo giá",
+            "14": "Đã hẹn lịch",
+            "15": "Đã gởi báo giá",
+            "16": "Đã hoàn thành",
+            "17": "Thất bại",
+            "19": "Đang thực hiện",
+            "20": {
+                "1": "Lấy hàng sau",
+                "2": "Giao hàng sau",
+                "4": "Hoàn trả sau"
+            },
+            "21": "Tạm hoãn",
+            "-1": "Giao hàng thất bại",
+            "-2": "Lắp đặt thất bại",
+            "-3": "Lấy hàng thất bại"
+        },
+        "points": {
+            "later-reason-status": {
+                "1": "lấy hàng sau",
+                "2": "giao hàng sau",
+                "4": "hoàn trả sau"
+            },
+            "number": "Điểm giao số ",
+            "pickup-point-address": "Lấy hàng tại điểm",
+            "reason": "Lý do"
+        },
+        "processingOrder": "Đơn hàng thực hiện",
+        "product": "Sản phẩm",
+        "reason-cancel": "Lý do hủy đơn",
+        "receiverCost": "Chi phí cho người nhận",
+        "requestType": {
+            "consultation": "Tư vấn kỹ thuật",
+            "home-service": "Kiểm tra tại nhà",
+            "store-service": "Đến trung tâm"
+        },
+        "restricted-delete-content": "Bạn có chắc chắn khi xoá mục chấp nhận đơn này ? ",
+        "restricted-delete-title": "Xóa chấp nhận đơn",
+        "restricted-timeout": {
+            "delete-content": "Bạn có chắc chắn khi xoá giới hạn thời gian tìm kiểm này ? ",
+            "delete-title": "Xóa giới hạn tìm kiếm",
+            "duration": "Giới hạn thời gian tìm kiếm (hh:mm:ss)",
+            "modify-customer-error": "Vui lòng chọn khách hàng",
+            "modify-duration": "Giới hạn thời gian tìm kiếm",
+            "modify-hint-customer": "Nhập tên, số điện thoại, mã khách hàng",
+            "modify-title-create": "Tạo giới hạn tìm kiếm",
+            "modify-title-edit": "Sửa giới hạn tìm kiếm",
+            "title": "Danh sách giới hạn tìm kiếm"
+        },
+        "serialNumber": {
+            "SKU": "SKU",
+            "input": "Nhập số serial",
+            "list": "Danh sách số serial",
+            "quantity": "Số lượng",
+            "title": "Số serial"
+        },
+        "serialNumber-status": {
+            "empty-serialNumber": "Số serial không được bỏ trống",
+            "quantity-error": "Số lượng phải lớn hơn 0",
+            "update-complete": "Cập nhật danh sách sản phẩm thành công"
+        },
+        "service-style0": {
+            "name": "Dịch vụ kèm theo",
+            "unit": ""
+        },
+        "service-style10": {
+            "name": "Phí lắp đặt",
+            "text": "Lắp đặt",
+            "unit": "Số lượng"
+        },
+        "service-style108": {
+            "name": "Khuyến mãi",
+            "unit": ""
+        },
+        "service-style11": {
+            "name": "Phí phát sinh",
+            "text": "Dịch vụ phát sinh",
+            "unit": "Số lượng"
+        },
+        "service-style2": {
+            "name": "Phí giao hàng",
+            "text": "Giao hàng",
+            "unit": "Số km"
+        },
+        "service-style21": {
+            "name": "Thu hộ",
+            "text": "Thu hộ",
+            "unit": "Số tiền"
+        },
+        "service-style22": {
+            "name": "Bốc xếp",
+            "text": "Bốc xếp",
+            "unit": "Số lượt"
+        },
+        "service-style23": {
+            "name": "Phí quay lại",
+            "text": "Quay lại nơi nhận hàng",
+            "unit": ""
+        },
+        "service-style24": {
+            "name": "Phí điểm dừng",
+            "text": "Điểm dừng",
+            "unit": "Số lượt"
+        },
+        "service-style25": {
+            "name": "Phí hoàn trả",
+            "text": "Hoàn trả",
+            "unit": "Số km"
+        },
+        "service-style26": {
+            "name": "Dự kiến hoàn trả",
+            "text": "Dự kiến hoàn trả",
+            "unit": "Số km"
+        },
+        "servicer": "Đối tác",
+        "services": "Dịch vụ",
+        "size": "Kích thước (DxRxC)",
+        "status": "Trạng thái",
+        "statusCode": {
+            "1": "Mới",
+            "2": "Đang tìm",
+            "3": "Đã chấp nhận",
+            "4": "Hủy bởi khách hàng",
+            "5": "Hủy bởi đối tác",
+            "6": "Hủy bởi điều phối viên",
+            "7": "Đang thực hiện",
+            "8": "Hoàn thành",
+            "9": "Hoàn trả",
+            "10": "Có sự cố",
+            "11": "Đang xử lý sự cố",
+            "12": "Chờ xác nhận",
+            "14": "Xác nhận hoàn thành",
+            "15": "Hủy bởi người thuê",
+            "16": "Hủy bởi người cho thuê",
+            "17": "Đang xử lý hết hạn",
+            "18": "Đã xử lý hết hạn",
+            "19": "Lắp đặt thất bại",
+            "20": "Tạm hoãn",
+            "21": "Tạm hoãn và đã nhận hàng",
+            "22": "Hoàn thành có hoàn trả",
+            "-1": "Hết hạn tìm kiếm",
+            "10,11": "Có sự cố",
+            "4,5,6": "Hủy đơn",
+            "all": "Tất cả",
+            "cancelled": "Hủy đơn"
+        },
+        "store": "Trung tâm",
+        "time": "Thời gian",
+        "title-point": {
+            "1": "Sản phẩm lấy tại điểm này",
+            "2": "Sản phẩm giao tại điểm này ",
+            "4": "Sản phẩm hoàn trả tại điểm này"
+        },
+        "total": "Tổng số đơn",
+        "totalCost": "Tổng chi phí",
+        "type": {
+            "delivery": "Giao hàng",
+            "deliveryInstallation": "Giao hàng - Lắp đặt",
+            "installation": "Lắp đặt",
+            "sharingWarehouse": "Thuê kho chia sẻ",
+            "warrantyRepair": "Bảo hành - Sửa chữa"
+        },
+        "user-cancel-selection": "Chọn bên hủy đơn",
+        "validate-assign-3PL": "Vui lòng chọn 3PL cần gán",
+        "validate-assign-partner": "Vui lòng chọn đối tác cần gán",
+        "viewMap": "Xem đường đi",
+        "viewReaches": "Xem danh sách",
+        "volume": "Thể tích",
+        "warranty-repair": "Bảo hành sửa chữa",
+        "weight": "Cân nặng"
+    },
+    "orderDeliveryType": {
+        "AHMD2H": "AHMD2H - AhaMove 2H",
+        "D2H": "D2H - Eton 2H",
+        "D4H": "D4H - Eton 4H",
+        "EXP": "EXP - Express",
+        "OTHERS": "Khác",
+        "SMD": "SMD - Same day",
+        "STD": "STD - Standard"
+    },
+    "others": "Khác",
+    "pages-title": {
+        "statistics": "Thống kê"
+    },
+    "paging": {
+        "display": "Hiển thị",
+        "displayFrom": "Hiển thị kết quả từ ",
+        "displayTotal": " trên tổng ",
+        "result": "Kết quả"
+    },
+    "partnerProcess": {
+        "activities": "Hoạt động đối tác",
+        "completedOrder": "Đơn hoàn thành",
+        "completionRate": "Tỉ lệ hoàn thành",
+        "orderOfDay": "Đơn mới trong ngày",
+        "orderOld": "Đơn cũ",
+        "orderSuccess": "Đơn thành công",
+        "package": "Kiện",
+        "successRate": "Tỉ lệ thực hiện đơn hàng",
+        "title": "Hoạt động đối tác",
+        "titleDetail": "Chi tiết hoạt động đối tác",
+        "totalOrder": "Tổng số đơn"
+    },
+    "permissions": "Phân quyền",
+    "permissions-select": "Chọn quyền ở đây",
+    "placeholder": {
+        "order": "Nhập thứ tự",
+        "selectDate": "Chọn ngày"
+    },
+    "price": {
+        "add": "Thêm",
+        "addGroup": "Thêm nhóm",
+        "delivery": {
+            "additionService": "Dịch vụ kèm theo",
+            "collectionValue": "Giá trị thu hộ dưới {{value}} VND",
+            "minimumCollectionFee": "Phí thu hộ tối thiểu"
+        },
+        "delivery-vehicle": {
+            "initCost": "Cước phí ban đầu",
+            "initDistance": "Khoảng cách ban đầu",
+            "nextDistance": "Km tiếp theo",
+            "stopointPrice": "Phí điểm dừng",
+            "type": "Loại xe"
+        },
+        "group": "Nhóm",
+        "name": "Tên",
+        "name-price": "Tên biểu phí",
+        "note": "Ghi chú",
+        "price": "Giá",
+        "rate": "Tỉ lệ",
+        "servicerPrice": "Giá với đối tác",
+        "servicerRate": "Tỉ lệ với đối tác",
+        "tabs": {
+            "additionalCost": "Chi phí phát sinh",
+            "delivery": "Giao hàng",
+            "installation": "Lắp đặt",
+            "service-pricing": "Biểu giá dịch vụ"
+        },
+        "unit": "Đơn vị",
+        "userPrice": "Giá người dùng cuối",
+        "userRate": "Tỉ lệ người dùng cuối"
+    },
+    "price-form-not-found": "Biểu phí không tồn tại",
+    "profile-info": {
+        "change-password": "Đổi mật khẩu",
+        "confirm-new-password": "Xác nhận mật khẩu mới",
+        "detail": "Thông tin chi tiết",
+        "history": "Lịch sử",
+        "level": "Cấp tài khoản",
+        "new-password": "Mật khẩu mới",
+        "old-password": "Mật khẩu cũ",
+        "password-not-match": "Mật khẩu không trùng khớp",
+        "register-date": "Ngày đăng kí",
+        "title": "Thông tin cá nhân",
+        "update": "Sửa thông tin cá nhân",
+        "userName": "Tài khoản"
+    },
+    "prompt-enter-name": "Nhập tên",
+    "reason": "Lý do",
+    "receiveReturnedProduct": "Nhận hàng hoàn trả",
+    "referralPolicy": {
+        "referral-policy": "Chính sách giới thiệu",
+        "status": {
+            "activate-complete": "Kích hoạt chính sách thành công",
+            "activate-fail": "Có lỗi khi kích hoạt chính sách",
+            "deactivate-complete": "Hủy kích hoạt chính sách thành công",
+            "deactivate-fail": "Có lỗi khi hủy kích hoạt chính sách"
+        }
+    },
+    "revertOrderStatus": "Chuyển trạng thái đơn hàng",
+    "rewardType": {
+        "item": "Đổi sản phẩm",
+        "promoCode": "Mã khuyến mãi",
+        "voucher": "Đổi voucher"
+    },
+    "service": {
+        "collection": {
+            "payment": "Nộp tiền"
+        },
+        "collection-modal": {
+            "error-moneyIsInvalid": "Số tiền phải lớn hơn 0 VNĐ và nhiều nhất là {{maxMoney}} VNĐ",
+            "input": "Nhập số tiền",
+            "placeholder": "Nhập số tiền...",
+            "title": "Nộp tiền thu hộ"
+        },
+        "incident": {
+            "changeServicer": "Thay người",
+            "requestProcessing": "Yêu cầu xử lý",
+            "title": "Xử lý sự cố"
+        },
+        "return": {
+            "getCode": "Lấy mã",
+            "title": "Quản lý hoàn trả"
+        },
+        "return-pending": {
+            "receive": "Nhận hàng trả",
+            "title": "Quản lý hoàn trả - tạm hoản"
+        }
+    },
+    "servicer": {
+        "code": "Mã đối tác",
+        "group": {
+            "title": "Nhóm đối tác",
+            "total-teams": "Tổng số đội"
+        },
+        "phone": "Điện thoại đối tác",
+        "servicer": {
+            "collection-money": "Tiền thu hộ",
+            "enterprise-name": "Tên doanh nghiệp",
+            "input-money": "Nhập số tiền",
+            "main-account": "Tài khoản chính",
+            "pay-collection": "Nộp tiền thu hộ",
+            "payment": "Nộp tiền",
+            "sub-account": "Tài khoản phụ",
+            "total-orders": "Tổng số đơn hàng đã phát sinh:",
+            "user-level-to-serve": "Đáp ứng khách hàng"
+        },
+        "servicer-image": {
+            "avatar": "Ảnh đại diện",
+            "business-certificate": "Ảnh giấy phép kinh doanh",
+            "driver-license": "Ảnh bằng lái",
+            "identity-card": "Ảnh CMND"
+        },
+        "team": {
+            "title": "Đội dịch vụ",
+            "total-members": "Tổng số thành viên:"
+        },
+        "type": {
+            "1": "Cá nhân",
+            "2": "Doanh nghiệp",
+            "3": "Nhân viên của doanh nghiệp",
+            "4": "Vận hành",
+            "5": "Cộng đồng"
+        }
+    },
+    "settings": {
+        "admins-level": {
+            "1": "Admin",
+            "2": "Vận hành",
+            "3": "Hành chính",
+            "4": "Nhân sự",
+            "5": "Partner Leader"
+        },
+        "admins-title": "Danh sách quản trị",
+        "categories": {
+            "create": "Tạo nhóm hàng",
+            "name": "Tên nhóm hàng",
+            "order": "Thứ tự",
+            "title": "Danh sách nhóm hàng"
+        },
+        "createAccount": {
+            "account": "Tài khoản",
+            "address": "Địa chỉ",
+            "edit-sucessful-password": "Thay đổi mật khẩu thành công",
+            "email": "Email",
+            "enterPassword": "Nhập mật khẩu mới",
+            "error-blank-password": "Vui lòng nhập vào mật khẩu",
+            "failed-change-password": "Thay đổi mật khẩu thất bại",
+            "invalid-password": "Mật khẩu tối thiểu 8 ký tự, phải bao gồm cả chữ cái và số.",
+            "password": "Mật khẩu",
+            "phoneNumber": "Số điện thoại",
+            "reEnterPassword": "Nhập lại mật khẩu",
+            "repassword": "Nhập lại mật khẩu",
+            "title": "Tạo tài khoản",
+            "wrongRepassword": "Mật khẩu nhập lại không đúng"
+        },
+        "group-admins": {
+            "create": "Tạo nhóm quản trị",
+            "name": "Tên nhóm",
+            "permission": "Phân quyền",
+            "title": "Nhóm quản trị"
+        },
+        "reason-template": {
+            "create": "Tạo mẫu lý do",
+            "edit": "Sửa mẫu lý do",
+            "name": "Lý do",
+            "selectedImage": "Hình khi chọn",
+            "title": "Thiết lập lý do"
+        },
+        "reason-template-list": {
+            "cancelByHost": "Danh sách lý do hủy bởi người cho thuê",
+            "cancelByRenter": "Danh sách lý do hủy bởi người thuê",
+            "cancelDelInsByUser": "Danh sách lý do khách hàng hủy đơn giao hàng lắp đặt",
+            "cancelDeliveryByUser": "Danh sách lý do khách hàng hủy đơn giao hàng",
+            "cancelInstallationByUser": "Danh sách lý do khách hàng hủy đơn lắp đặt",
+            "cancelWarrantyByUser": "Danh sách lý do khách hàng hủy đơn bảo hàng sửa chữa",
+            "failureConsult": "Danh sách lý do tư vấn thất bại",
+            "failureDelivery": "Danh sách lý do giao hàng thất bại",
+            "failureInstallation": "Danh sách lý do lắp đặt thất bại",
+            "failurePickup": "Danh sách lý do lấy hàng thất bại",
+            "failureReturn": "Danh sách lý do hoàn trả thất bại",
+            "improveForServicer": "Danh sách lý do đánh giá đối tác",
+            "improveForUser": "Danh sách lý do đánh giá khách hàng",
+            "laterDelivery": "Danh sách lý do giao hàng sau",
+            "laterPickup": "Danh sách lý do lấy hàng sau",
+            "laterReturn": "Danh sách lý do hoàn trả sau",
+            "pendingDelivery": "Danh sách lý do tạm hoãn giao hàng",
+            "rejectQuotation": "Danh sách lý do từ chối báo giá"
+        },
+        "reason-template-status": {
+            "create-complete": "Tạo mẫu lý do thành công",
+            "delete-complete": "Xóa mẫu lý do thành công",
+            "delete-fail": "Có lỗi khi xóa mẫu lý do",
+            "edit-complete": "Sửa mẫu lý do thành công"
+        },
+        "reason-template-type": {
+            "cancelByHost": "Hủy bởi người cho thuê",
+            "cancelByRenter": "Hủy bởi người thuê",
+            "cancelDelInsByUser": "Khách hàng hủy đơn giao hàng lắp đặt",
+            "cancelDeliveryByUser": "Khách hàng hủy đơn giao hàng",
+            "cancelInstallationByUser": "Khách hàng hủy đơn lắp đặt",
+            "cancelWarrantyByUser": "Khách hàng hủy đơn bảo hàng sửa chữa",
+            "failureConsult": "Tư vấn thất bại",
+            "failureDelivery": "Giao hàng thất bại",
+            "failureInstallation": "Lắp đặt thất bại",
+            "failurePickup": "Lấy hàng thất bại",
+            "failureReturn": "Hoàn trả thất bại",
+            "improveForServicer": "Đánh giá đối tác",
+            "improveForUser": "Đánh giá khách hàng",
+            "laterDelivery": "Giao hàng sau",
+            "laterPickup": "Lấy hàng sau",
+            "laterReturn": "Hoàn trả sau",
+            "pendingDelivery": "Tạm hoãn giao hàng",
+            "rejectQuotation": "Từ chối báo giá"
+        },
+        "vehicle": {
+            "capacity": "Trọng tải",
+            "name": "Tên phương tiện",
+            "order": "Thứ tự",
+            "root": "Thuộc phương tiện",
+            "size": "Kích cỡ",
+            "title": "Danh sách phương tiện",
+            "type": "Loại phương tiện",
+            "typeMotor": "Xe máy",
+            "typeTricycles": "Xe ba gác",
+            "typeTruck": "Xe tải"
+        }
+    },
+    "statistics": {
+        "chart-name": {
+            "orders": "Đơn hàng",
+            "periodic-report": "Báo cáo cùng kỳ"
+        },
+        "common": {
+            "total-commission-fee": "Tổng hoa hồng",
+            "total-cost": "Tổng chi phí",
+            "total-order": "Tổng số đơn hàng"
+        },
+        "dashboard": {
+            "idle-partner": "Đối tác đang rảnh",
+            "offline-partner": "Đối tác offline",
+            "total-collection-debt": "Tổng tiền thu hộ"
+        },
+        "dashboard-order": {
+            "accepted": "Đã chấp nhận",
+            "incident": "Bị sự cố",
+            "processing": "Đang thực hiện",
+            "return": "Hoàn trả"
+        },
+        "order-report-numbers": "Số đơn hàng",
+        "order-report-order-type": {
+            "call": "Cuộc gọi",
+            "cancel": "Hủy",
+            "complete": "Hoàn thành",
+            "incident": "Sự cố",
+            "return": "Hoàn trả"
+        },
+        "order-report-overview": {
+            "total-income": "Tổng doanh thu",
+            "total-order": "Tổng số đơn hàng",
+            "total-profit": "Tổng lợi nhuận"
+        },
+        "order-store": {
+            "total-commission-fee": "Tổng hoa hồng",
+            "total-income": "Tổng thu nhập",
+            "total-order": "Tổng số đơn hàng",
+            "total-successful-order": "Tổng số đơn thành công"
+        },
+        "referral": {
+            "total-bonus": "Tổng tiền được thưởng",
+            "total-presentee": "Số người được giới thiệu",
+            "total-presenter": "Số người giới thiệu",
+            "total-redeemedReward": "Ưu đãi được thưởng"
+        },
+        "service-center": {
+            "total-joined-adidi": "Đã tham gia SUPRA",
+            "total-repair-order": "Tổng số đơn bảo hành",
+            "total-service-center": "Tổng số trung tâm",
+            "total-warranty-order": "Tổng số đơn bảo hành"
+        },
+        "warehouse": {
+            "total-contact": "Tổng số liên hệ",
+            "total-failed-contact": "Liên hệ thất bại",
+            "total-lease-area": "Tổng diện tích cho thuê",
+            "total-order": "Tổng số đơn hàng",
+            "total-success-contact": "Liên hệ thành công",
+            "total-warehouse": "Tổng số kho"
+        }
+    },
+    "tab": {
+        "filter": "Bộ lọc"
+    },
+    "table": {
+        "action": "Hoạt động",
+        "active-vehicle": "Kích hoạt",
+        "address": "Địa chỉ",
+        "admin-code": "Mã nhân viên",
+        "apply": "Áp dụng",
+        "capacity": "Tải trọng",
+        "command-transfer": "Lệnh chuyển khoản",
+        "content": "Nội dung",
+        "create-date": "Ngày tạo",
+        "customer": "Khách hàng",
+        "customer-level": "Cấp khách hàng",
+        "delete-vehicle": "Xóa xe",
+        "deposit": "Ký quỹ",
+        "description": "Diễn giải",
+        "detail": "Chi tiết",
+        "duration": "Thời hạn",
+        "enterprise-name": "Tên doanh nghiệp",
+        "exchange-code": "Mã giao dịch",
+        "group-code": "Mã nhóm",
+        "group-name": "Tên nhóm",
+        "identity-number": "Số CMND",
+        "images-avatar": "Ảnh đại diện",
+        "images-driver-license": "Ảnh bằng lái",
+        "images-identity-card": "Ảnh CMND",
+        "images-vehicle": "Ảnh phương tiện",
+        "member": "Thành viên",
+        "money": "Số tiền",
+        "more-action": "Thao tác",
+        "name": "Họ tên",
+        "name-vehicle": "Tên xe",
+        "notification-code": "Mã thông báo",
+        "order": "Đơn hàng",
+        "order-code": "Mã đơn hàng",
+        "password": "Mật khẩu",
+        "perfomred-partner": "Đối tác thực hiện",
+        "performerName": "Nhân viên thực hiện",
+        "permission": "Phân quyền",
+        "phone-number": "Số điện thoại",
+        "priority-level": "Độ ưu tiên",
+        "processing-staff": "Nhân viên xử lý",
+        "program": "Chương trình",
+        "promotion-code": "Mã chương trình",
+        "promotion-name": "Tên chương trình",
+        "rating-advanced-content": "Nâng cao",
+        "rating-content": "Nội dung đánh giá",
+        "referral-policy-code": "Mã chính sách",
+        "referral-policy-name": "Tên chính sách",
+        "reset-password": "Khôi phục mật khẩu",
+        "result": "Kết quả",
+        "service": "Dịch vụ",
+        "service-support": "Dịch vụ hỗ trợ",
+        "servicer": "Đối tác",
+        "servicer-code": "Mã đối tác",
+        "servicer-id": "ID đối tác",
+        "services": "Dịch vụ kèm theo",
+        "show": "Hiển thị",
+        "staff": "Nhân viên",
+        "star-numbers": "Số sao",
+        "status": "Trạng thái",
+        "team-code": "Mã đội",
+        "team-name": "Tên đội",
+        "team-servicer-name": "Đội dịch vụ",
+        "time": "Thời gian",
+        "total": "Tổng cộng",
+        "total-members": "Số thành viên",
+        "total-orders": "Số đơn hàng",
+        "total-users": "Số user",
+        "user": "Khách hàng",
+        "vehicle": "Phương tiện",
+        "vehicle-ensurance-images": "Ảnh bảo hiểm xe",
+        "vehicle-images": "Ảnh phương tiện",
+        "vehicle-name": "Loại xe",
+        "vehicle-number": "Biển số xe",
+        "vehicle-registration-cetificate-images": "Ảnh cà vẹt xe",
+        "verifierName": "Nhân viên xác nhận",
+        "view-detail": "Xem chi tiết"
+    },
+    "telecom": {
+        "provider": "Nhà mạng",
+        "provider-name": "Tên nhà cung cấp",
+        "providers": {
+            "account": "Tài khoản",
+            "confirm-password": "Nhập lại mật khẩu",
+            "list": "Danh sách nhà cung cấp",
+            "prefix": "Đầu số",
+            "status1": "Mới tạo",
+            "status2": "Đã kích hoạt",
+            "type-SMS": "SMS"
+        },
+        "providers-change-password": {
+            "failed": "Đổi mật khẩu thất bại",
+            "success": "Đổi mật khẩu thành công"
+        },
+        "providers-status": {
+            "activate-complete": "Kích hoạt nhà cung cấp thành công",
+            "activate-fail": "Có lỗi khi kích hoạt nhà cung cấp",
+            "deactivate-complete": "Hủy kích hoạt nhà cung cấp thành công",
+            "deactivate-fail": "Có lỗi khi hủy kích hoạt nhà cung cấp"
+        },
+        "providers-validations": {
+            "account": {
+                "required": "Vui lòng nhập tên nhà tài khoản"
+            },
+            "name": {
+                "required": "Vui lòng nhập tên nhà cung cấp"
+            },
+            "prefix": {
+                "required": "Vui lòng nhập đầu số"
+            },
+            "url": {
+                "required": "Vui lòng nhập url"
+            }
+        },
+        "sms-log": {
+            "bid": "BID",
+            "responseBody": "Response Body",
+            "smsProvider": "Nhà cung cấp",
+            "statusCode": {
+                "100": "Thông tin",
+                "200": "Thành công",
+                "300": "Chuyển huớng",
+                "400": "Lỗi client",
+                "500": "Lỗi server",
+                "label": "Status Code"
+            }
+        },
+        "sms-template": {
+            "create": "Tạo mẫu sms",
+            "edit": "Sửa mẫu sms",
+            "list": "Danh sách mẫu sms",
+            "status": {
+                "activate-complete": "Kích hoạt mẫu sms thành công",
+                "activate-fail": "Có lỗi khi kích hoạt mẫu sms",
+                "create-complete": "Tạo mẫu sms thành công",
+                "deactivate-complete": "Hủy kích hoạt mẫu sms thành công",
+                "deactivate-fail": "Có lỗi khi hủy kích hoạt mẫu sms",
+                "delete-complete": "Xóa mẫu sms thành công",
+                "delete-fail": "Có lỗi khi xóa mẫu sms",
+                "edit-complete": "Sửa mẫu sms thành công"
+            }
+        },
+        "sms-type": {
+            "delivery": "Thông báo giao hàng",
+            "install": "Thông báo lắp đặt",
+            "otp": "Mã xác thực đăng nhập",
+            "reset-password": "Đổi mật khẩu",
+            "withdraw-otp": "Mã xác thực rút tiền"
+        }
+    },
+    "term-and-condition": {
+        "forServicer": "Cho đối tác",
+        "forUser": "Cho người dùng",
+        "modal": {
+            "content": "Nội dung",
+            "order": "Thứ tự",
+            "title": "Tiêu đề",
+            "type": "Loại người dùng"
+        },
+        "title": "Điều khoản - Điều kiện"
+    },
+    "updateCOD": "Thay đổi COD",
+    "updateOrderLocation": "Thay đổi vị trí của đơn hàng",
+    "updateTotalPackage": "Thay đổi số lượng kiện hàng",
+    "uploader": {
+        "choose-file": "Chọn tập tin",
+        "file-format-invalid": "Định dạng file không hợp lệ",
+        "unselected-file": "Chưa chọn tập tin",
+        "upload-size": "Vui lòng tải file có kích thước nhỏ hơn {{size}}",
+        "uploading-file": "Đang tải tập tin",
+        "video-duration": "Video có độ dài tối đa {{limit}}s"
+    },
+    "user-type": {
+        "1": "Cá nhân",
+        "2": "Doanh nghiệp",
+        "3": "Nhân viên doanh nghiệp",
+        "4": "Điều phối viên"
+    },
+    "validations-form": {
+        "account": {
+            "required": "Vui Lòng nhập tài khoản"
+        },
+        "accountNumber": {
+            "number": "Số tài khoản chỉ bao gồm chữ số",
+            "required": "Vui lòng nhập số tài khoản ngân hàng"
+        },
+        "address": {
+            "required": "Vui lòng nhập địa chỉ"
+        },
+        "agency": {
+            "required": "Vui lòng nhập tên chi nhánh"
+        },
+        "amount": {
+            "too-large": "Giá trị quá lớn"
+        },
+        "avatar": {
+            "required": "Vui lòng thêm ảnh đại diện"
+        },
+        "bank": {
+            "required": "Vui lòng nhập tên ngân hàng",
+            "selected": "Vui lòng chọn ngân hàng"
+        },
+        "branchName": {
+            "required": "Vui lòng nhập tên chi nhánh"
+        },
+        "code": {
+            "required": "Vui lòng nhập mã"
+        },
+        "condition-set-name": {
+            "required": "Vui lòng nhập tên"
+        },
+        "content": {
+            "required": "Vui lòng nhập nội dung"
+        },
+        "customer-servicer": {
+            "required": "Vui lòng nhập thông tin khách hàng - đối tác"
+        },
+        "customerName": {
+            "required": "Vui lòng nhập họ tên chủ tài khoản"
+        },
+        "description": {
+            "required": "Vui lòng nhập mô tả"
+        },
+        "districtName": {
+            "required": "Vui lòng nhập tên quận huyện"
+        },
+        "effectedAt": {
+            "invalid": "Ngày bắt đầu không hợp lệ",
+            "invalidRange": "Khoảng thời gian không hợp lệ",
+            "promotion-invalid": "Thời gian hiệu lực phải nằm trong thời gian áp dụng của chương trình khuyến mãi tương ứng",
+            "required": "Vui lòng chọn ngày bắt đầu"
+        },
+        "email": {
+            "required": "Vui lòng nhập email"
+        },
+        "enterpriseName": {
+            "required": "Vui lòng nhập tên doanh nghiệp"
+        },
+        "expiredAt": {
+            "invalid": "Ngày kết thúc không hợp lệ",
+            "invalidRange": "Khoảng thời gian không hợp lệ",
+            "promotion-invalid": "Thời gian hiệu lực phải nằm trong thời gian áp dụng của chương trình khuyến mãi tương ứng",
+            "required": "Vui lòng chọn ngày kết thúc"
+        },
+        "fax": {
+            "number": "Fax chỉ bao gồm chữ số"
+        },
+        "field": {
+            "required": "Vui lòng nhập trường bắt buộc"
+        },
+        "fullName": {
+            "required": "Vui lòng nhập họ tên"
+        },
+        "groupServicer": {
+            "required": "Vui lòng nhập nhóm đối tác"
+        },
+        "host": {
+            "required": "Vui lòng nhập host"
+        },
+        "image": {
+            "required": "Vui lòng tải lên tập tin hình ảnh",
+            "type": "Định dạng hình ảnh không được hỗ trợ"
+        },
+        "level-name": {
+            "required": "Vui lòng nhập cấp khách hàng"
+        },
+        "limitOrders": {
+            "required": "Giới hạn đơn hàng không hợp lệ"
+        },
+        "link": {
+            "required": "Vui lòng nhập đường dẫn"
+        },
+        "maintenance": {
+            "numberOfDays": "Chọn ít nhất một ngày chăm sóc",
+            "services": "Chọn ít nhất một dịch vụ"
+        },
+        "mapAddress": {
+            "invalid": "Địa chỉ (Map) không hợp lệ",
+            "required": "Vui lòng nhập địa chỉ (Map)"
+        },
+        "maxWithdraw": {
+            "required": "Vui lòng nhập số tiền rút tối đa"
+        },
+        "minPoint": {
+            "required": "Vui lòng nhập điểm lên cấp"
+        },
+        "minRemaining": {
+            "required": "Vui lòng nhập số dư tối thiểu"
+        },
+        "minWithdraw": {
+            "required": "Vui lòng nhập số tiền rút tối thiểu"
+        },
+        "money": {
+            "required": "Vui Lòng nhập số tiền"
+        },
+        "moneyAmount": {
+            "invalid-thousand": "Số tiền phải là bội số của 1,000",
+            "positiveValue": "Số tiền phải lớn hơn 0",
+            "required": "Vui lòng nhập số tiền",
+            "too-large-amount": "Số tiền quá lớn"
+        },
+        "name": {
+            "required": "Vui lòng nhập tên"
+        },
+        "noti-content": {
+            "required": "Vui lòng nhập tóm tắt"
+        },
+        "orderNo": {
+            "invalid": "Thứ tự không hợp lệ",
+            "required": "Vui lòng nhập thứ tự"
+        },
+        "password": {
+            "confirm": "Mật khẩu không khớp",
+            "confirm-required": "Vui lòng xác nhận mật khẩu",
+            "minlength": "Mật khẩu ít nhất {{min}} kí tự",
+            "new-required": "Vui lòng nhập mật khẩu mới",
+            "old-required": "Vui lòng nhập mật khẩu cũ",
+            "required": "Vui lòng nhập mật khẩu"
+        },
+        "phone": {
+            "maxlength": "Số điện thoại tối đã {{max}} kí tự",
+            "minlength": "Số điện thoại ít nhất {{min}} kí tự",
+            "number": "Số điện thoại chỉ bao gồm chữ số",
+            "required": "Vui lòng nhập số điện thoại"
+        },
+        "point": {
+            "required": "Vui lòng nhập số điểm"
+        },
+        "pointValue": {
+            "required": "Vui lòng nhập giá trị điểm"
+        },
+        "policyName": {
+            "required": "Vui lòng nhập tên chính sách"
+        },
+        "port": {
+            "required": "Vui lòng nhập port"
+        },
+        "priority": {
+            "required": "Vui lòng nhập độ ưu tiên"
+        },
+        "programName": {
+            "required": "Vui lòng nhập tên chương trình"
+        },
+        "promoCode": {
+            "required": "Vui lòng nhập mã khuyến mãi"
+        },
+        "province-name": {
+            "required": "Vui nhập tên tỉnh thành"
+        },
+        "quantity": {
+            "required": "Vui lòng nhập số lượng"
+        },
+        "reason-template": {
+            "required": "Vui lòng nhập lý do"
+        },
+        "region-name": {
+            "required": "Vui nhập tên vùng/miền"
+        },
+        "rewardCategory": {
+            "required": "Vui lòng nhập tên chuyên mục khuyến mãi"
+        },
+        "select-city": {
+            "required": "Vui lòng chọn thành phố"
+        },
+        "select-district": {
+            "required": "Vui lòng chọn quận/huyện"
+        },
+        "select-province-city": {
+            "required": "Vui lòng chọn tỉnh/thành phố"
+        },
+        "selectedImage": {
+            "required": "Vui lòng thêm hình khi chọn"
+        },
+        "status": {
+            "required": "Vui lòng chọn trạng thái"
+        },
+        "street": {
+            "required": "Vui lòng nhập địa chỉ"
+        },
+        "support-customer": {
+            "required": "Vui lòng chọn đáp ứng khách hàng"
+        },
+        "teamServicer": {
+            "required": "Vui lòng nhập đội đối tác"
+        },
+        "title": {
+            "required": "Vui lòng nhập tiêu đề"
+        },
+        "user-status": {
+            "required": "Vui lòng chọn trạng thái"
+        },
+        "userCode": {
+            "required": "Vui lòng nhập mã đối tác"
+        },
+        "value": {
+            "required": "Vui lòng nhập số tiền"
+        },
+        "walletTypes": {
+            "required": "Vui lòng chọn loại tài khoản"
+        },
+        "ward": {
+            "required": "Vui lòng nhập Phường/Xã"
+        },
+        "wardsName": {
+            "required": "Vui lòng nhập tên phường/xã"
+        },
+        "warehouseName": {
+            "required": "Vui lòng nhập tên kho"
+        }
+    },
+    "vehicle": {
+        "add": "Thêm phương tiện",
+        "in-use": "Đang sử dụng",
+        "use": "Sử dụng"
+    },
+    "warehouse": {
+        "check-area": "Kiểm tra diện tích",
+        "contact": {
+            "action-note": "Lưu ý: Khi xác nhận hoàn thành sẽ ảnh hưởng đến các thống kê về đơn hàng. Hãy chắc chắn trước khi xác nhận.",
+            "code": "Mã liên hệ",
+            "history": "Lịch sử liên hệ",
+            "information": "Thông tin liên hệ",
+            "staff-in-charge": "Nhân viên xử lý",
+            "status-contact": "Trạng thái liên hệ",
+            "tab-title": "Liên hệ",
+            "type": "Loại liên hệ",
+            "user": "Người liên hệ"
+        },
+        "contact-action": {
+            "failure": "Liên hệ thất bại",
+            "success": "Liên hệ thành công"
+        },
+        "contact-status": {
+            "1": "Chờ xác nhận",
+            "2": "Thành công",
+            "3": "Thất bại",
+            "all": "Tất cả",
+            "completed": "Hoàn thành"
+        },
+        "direction": "Hướng",
+        "order": {
+            "cancel-party": "Bên hủy đơn",
+            "cancel-reason": "Nguyên nhân hủy đơn",
+            "complete-warning": "Lưu ý khi xác nhận hoàn thành sẽ ảnh hưởng đến các thống kê về đơn hàng.Hãy chắc chắn trước khi xác nhận.",
+            "lessor": "Người cho thuê",
+            "note-by-operator": "Nội dung ghi chú",
+            "process": "Nhận xử lý",
+            "processing-staff": "Nhân viên xử lý",
+            "real-cost": "Số tiền thực trả",
+            "rent-area": "Diện tích thuê",
+            "renter": "Người thuê",
+            "service-fee": "Tiền dịch vụ",
+            "tab-title": "Thuê kho chia sẻ",
+            "warehouse": "Kho"
+        },
+        "order-actions": {
+            "cancel": "Hủy đơn hàng",
+            "complete": "Hoàn thành",
+            "confirmComplete": "Xác nhận hoàn thành",
+            "note": "Ghi chú điều phối"
+        },
+        "service": {
+            "create": "Tạo dịch vụ",
+            "edit": "Sửa dịch vụ",
+            "list": "Danh sách dịch vụ kho",
+            "name": "Tên dịch vụ",
+            "title": "Dịch vụ kho"
+        },
+        "services": "Dịch vụ",
+        "timeline": {
+            "create": "Tạo mốc thời gian",
+            "day": "Ngày",
+            "edit": "Sửa mốc thời gian",
+            "list": "Danh sách mốc thời gian",
+            "name": "Tên mốc thời gian",
+            "number-of-day": "Khoảng thời gian",
+            "title": "Mốc thời gian"
+        },
+        "timelines": "Mốc thời gian",
+        "utilities": "Tiện ích",
+        "utility": {
+            "create": "Tạo tiện ích",
+            "edit": "Sửa tiện ích",
+            "list": "Danh sách tiện ích kho",
+            "name": "Tên tiện ích",
+            "title": "Tiện ích kho"
+        },
+        "validations": {
+            "cancel-by-required": "Vui lòng chọn giá trị",
+            "large-number": "Giá trị quá lớn",
+            "negative-number": "Giá trị phải là số nguyên dương",
+            "number-of-day-required": "Vui lòng nhập khoảng thời gian",
+            "service-name-required": "Vui lòng nhập tên dịch vụ",
+            "summary-required": "Vui lòng nhập giới thiệu",
+            "timeline-name-required": "Vui lòng nhập tên mốc thời gian",
+            "utility-name-required": "Vui lòng nhập tên tiện ích"
+        },
+        "warehouse": {
+            "adidi-contract": "Ảnh hợp đồng SUPRA",
+            "area": "Diện tích kho",
+            "avatar": "Ảnh đại diện",
+            "cancel-button": "Hủy đơn",
+            "cancel-by-15": "Người thuê",
+            "cancel-by-16": "Người cho thuê",
+            "cancel-by-6": "Điều phối",
+            "code": "Mã kho",
+            "create": "Tạo kho",
+            "detailed-info": "Thông tin chi tiết",
+            "edit": "Sửa kho",
+            "fpff-cert": "Ảnh giấy phép PCCC",
+            "layout": "Ảnh sơ đồ kho",
+            "lease-area": "Diện tích cho thuê",
+            "manager": "Quản lý kho",
+            "name": "Tên kho",
+            "number-of-order": "Số đơn hàng",
+            "orientation": "Hướng kho",
+            "phone-host-warehouse": "Điện thoại chủ kho",
+            "placeholder-type": "Nhập loại kho",
+            "start-time": "Thời gian bắt đầu",
+            "success-button": "Hoàn thành",
+            "summary-intro": "Giới thiệu sơ lược",
+            "tab-information": "Thông tin kho",
+            "tab-service-utility": "Dịch vụ & tiện ích",
+            "type": "Loại kho"
+        },
+        "warehouse-order": {
+            "content-edit-operator": "Nội dung ghi chú",
+            "host": "Người cho thuê",
+            "note-customer": "Ghi chú khách hàng",
+            "note-operator": "Ghi chú điều phối",
+            "operator": "Nhân viên điều phối",
+            "points-information": "Thông tin điểm",
+            "real-cost": "Tiền thực trả",
+            "rented-area": "Diện tích thuê",
+            "renting-income": "Thu nhập cho thuê",
+            "successful-edit-operator": "Thay đổi ghi chú điều phối thành công"
+        },
+        "warehouse-order-status": {
+            "0": "Chưa thực hiện",
+            "3": "Hủy điểm",
+            "16": "Hoàn thành",
+            "18": "Xác nhận hoàn thành"
+        },
+        "warehouse-service-utility": {
+            "customer-code": "Mã khách hàng",
+            "length": "Chiều dài",
+            "note": "Giá thuê được tính theo đơn vị m2/tháng",
+            "price": "Giá tiền",
+            "price-by-timeline": "Giá thuê kho theo mốc thời gian",
+            "staff-code": "Mã nhân viên",
+            "validation-available-area": "Diện tích cho thuê phải nhỏ hơn hoặc bằng diện tích kho",
+            "validation-manager-required": "Vui lòng nhập quản lý kho",
+            "validation-price-out-of-range": "Số tiền nhập vào ngoài phạm vi cho phép",
+            "validation-unique-manager": "Chỉ tồn tại duy nhất 1 quản lý kho",
+            "validation-value-out-of-range": "Giá trị nhập vượt quá phạm vi cho phép",
+            "warehouse-rental-price": "Giá thuê kho",
+            "width": "Chiều rộng"
+        }
+    },
+    "warranty-repair": {
+        "action": {
+            "create-service-center": "Tạo trung tâm",
+            "delete-service-center": "Xóa trung tâm",
+            "modify-service-center": "Sửa trung tâm",
+            "view-order": "Xem đơn hàng"
+        },
+        "brand": "Thương hiệu",
+        "choice": {
+            "delete-all-authorized-brands": "Xóa tất cả thương hiệu ủy quyền",
+            "delete-all-unauthorized-brands": "Xóa tất cả thương hiệu không ủy quyền"
+        },
+        "create-brand": "Tạo thương hiệu",
+        "create-product": "Tạo sản phẩm",
+        "edit-brand": "Sửa thương hiệu",
+        "edit-product": "Sửa sản phẩm",
+        "find-brand": "Tìm thương hiệu",
+        "find-product": "Tìm sản phẩm",
+        "manufacturer": "Hãng sản xuất",
+        "not-found": "Không tìm thấy",
+        "placeholder": {
+            "brand": "Chọn thương hiệu",
+            "manufacturer": "Chọn hãng sản xuất",
+            "product": "Chọn sản phẩm"
+        },
+        "product": "Sản phẩm",
+        "service-center": {
+            "adidi-contract": "Hợp đồng SUPRA",
+            "authorized-center": "Trung tâm ủy quyền",
+            "business-license": "Giấy phép kinh doanh",
+            "code": "Mã trung tâm",
+            "description": "Giới thiệu tóm tắt",
+            "detail-info": "Thông tin chi tiết",
+            "genuine": "Chính hãng",
+            "genuine-license": "Giấy phép chính hãng",
+            "information": "Thông tin trung tâm",
+            "join-adidi": "Tham gia SUPRA",
+            "management": "Quản lý",
+            "name": "Tên trung tâm",
+            "not-authorized-center": "Trung tâm không ủy quyền",
+            "not-genuine": "Không chính hãng",
+            "number-of-orders": "Số đơn hàng",
+            "number-of-staffs": "Số nhân viên",
+            "service": "Dịch vụ",
+            "staff": "Nhân viên trung tâm",
+            "status-joined": "Đã tham gia",
+            "status-not-join": "Chưa tham gia",
+            "title": "Trung tâm bảo hành",
+            "type": "Loại trung tâm",
+            "working-hours": "Thời gian làm việc"
+        },
+        "setting": "Thiết lập bảo hành sửa chữa",
+        "validation": {
+            "authorized-brand-required": "Vui lòng chọn thương hiệu ủy quyền",
+            "description-required": "Vui lòng nhập giới thiệu tóm tắt",
+            "enterprise-code-required": "Vui lòng nhập mã doanh nghiệp",
+            "group-required": "Vui lòng chọn nhóm",
+            "invalid-working-hours": "Thời gian làm việc không hợp lệ",
+            "name-required": "Vui lòng nhập tên trung tâm",
+            "not-existed-enterprise-code": "Mã doanh nghiệp không tồn tại",
+            "team-required": "Vui lòng chọn đội",
+            "team-to-add-required": "Vui lòng chọn đội cần thêm",
+            "unauthorized-brand-required": "Vui lòng chọn thương hiệu chưa ủy quyền",
+            "unselected-staff": "Chưa chọn nhân viên"
+        }
+    }
+}

@@ -1,0 +1,76 @@
+<nz-modal nzWidth="600px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+    <ng-template #modalTitle>
+        {{
+            model?._id
+                ? ("order.restricted-timeout.modify-title-edit" | translate)
+                : ("order.restricted-timeout.modify-title-create" | translate)
+        }}
+    </ng-template>
+
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" class="row" #restrictedModifyForm="ngForm">
+            <div class="col-6">
+                <nz-form-item>
+                    <nz-form-label nzRequired>{{ "common.customer" | translate }}
+                    </nz-form-label>
+                    <nz-form-control [ngClass]="{ 'has-error': error.userId }">
+                        <nz-select name="userId" [(ngModel)]="model.userId" name="userIds" style="width: 100%;"
+                            nzAllowClear [nzPlaceHolder]="
+                                'order.restricted-timeout.modify-hint-customer'
+                                    | translate
+                            " nzServerSearch [nzShowSearch]="true" (nzOnSearch)="searchUser($event)"
+                            [nzMaxMultipleCount]="1">
+                            <ng-container *ngFor="let item of userPaging.data">
+                                <nz-option *ngIf="!isSearching" [nzLabel]="
+                                        item.code + ' - ' + item.fullName
+                                    " [nzValue]="item._id">
+                                </nz-option>
+                            </ng-container>
+                            <nz-option *ngIf="isSearching" nzDisabled nzCustomContent>
+                                <i nz-icon nzType="loading" nzTheme="outline" style="vertical-align: baseline"></i>
+                                &nbsp;
+                                {{ "common.searching" | translate }}
+                            </nz-option>
+                        </nz-select>
+                        <nz-form-explain *ngIf="error.userId">{{
+                            error.userId
+                        }}</nz-form-explain>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-6">
+                <nz-form-item>
+                    <nz-form-label nzRequired>{{
+                            "order.restricted-timeout.modify-duration"
+                                | translate
+                        }}
+                    </nz-form-label>
+                    <nz-form-control [ngClass]="{ 'has-error': error.duration }">
+                        <nz-time-picker name="duration" [(ngModel)]="duration"></nz-time-picker>
+                        <nz-form-explain *ngIf="error.duration">{{
+                            error.duration
+                        }}</nz-form-explain>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" (click)="confirm()" [nzLoading]="loadingModal">
+                    {{
+                        (model?._id ? "button.update" : "button.create")
+                            | translate
+                    }}
+                </button>
+                <button ad-button nzUpper nzColor="default" (click)="handleVisibleModal(false)">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

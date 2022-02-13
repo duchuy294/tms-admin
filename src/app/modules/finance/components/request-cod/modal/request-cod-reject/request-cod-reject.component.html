@@ -1,0 +1,45 @@
+<nz-modal nzWidth="550px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+    <ng-template #modalTitle>
+        {{ "collectionTab.titleReject" | translate }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+            <nz-form-item>
+                <nz-form-label nzFor="reason">{{
+                    "collectionTab.rejectLabelForm" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-radio-group [(ngModel)]="reason" [ngModelOptions]="{ standalone: true }">
+                        <label nz-radio [nzValue]="1" style="display: block;">{{
+                            "collectionTab.reasonOption.1" | translate
+                        }}</label>
+                        <label nz-radio [nzValue]="2" style="display: block;">{{
+                            "collectionTab.reasonOption.2" | translate
+                        }}</label>
+                    </nz-radio-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="reason === 2">
+                <nz-form-control>
+                    <textarea rows="4" nz-input formControlName="note" [(ngModel)]="model.note" [placeholder]="
+                            'collectionTab.reasonPlaceholder' | translate
+                        "></textarea>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" (click)="submitForm()" [nzLoading]="loading"
+                    *ngIf="visibleAction">
+                    {{ "button.confirm" | translate }}
+                </button>
+                <button ad-button nzUpper nzColor="gray" (click)="handleVisibleModal(false)">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

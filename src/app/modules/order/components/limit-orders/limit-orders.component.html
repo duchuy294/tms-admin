@@ -1,0 +1,42 @@
+<page-wrapper [nzTitle]="pageTitle">
+    <div class="grid__container">
+        <div class="grid__header">
+            <button class="grid__action__left" ad-button nzColor="red" (click)="showFilter=!showFilter">
+                {{ 'filter.filter' | translate }}
+            </button>
+        </div>
+    </div>
+    <filter-limit-orders (onSearch)="search($event)" (onReset)="search($event)" *ngIf="showFilter">
+    </filter-limit-orders>
+    <nz-table [nzData]="pagingData.data" [nzFrontPagination]="false" nzShowSizeChanger [nzSize]="'small'"
+        [nzTotal]="pagingData.total" [(nzPageIndex)]="query.page" [(nzPageSize)]="query.limit" [nzLoading]="loading"
+        (nzPageIndexChange)="loadData()" (nzPageSizeChange)="loadData()" [nzScroll]="{ x: '700px' }">
+        <thead>
+            <tr>
+                <th>{{'table.servicer-code' | translate }}</th>
+                <th>{{'common.full-name' | translate }}</th>
+                <th>{{'common.group' | translate }}</th>
+                <th>{{'common.limitOrders' | translate }}</th>
+                <th [nzWidth]="'100px'" nzRight="0px">{{'common.action' | translate}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of pagingData.data">
+                <td>{{item.code}}</td>
+                <td>{{item.fullName}}</td>
+                <td><span *ngIf="groups[item.groupId]">{{groups[item.groupId].name}}</span></td>
+                <td><span>{{ item.limitOrder ? item.limitOrder:0 }}</span></td>
+                <td nzRight="0px" width="10%">
+                    <button ad-button nzUpper nzColor="primary"
+                        (click)="edit(item)">{{'button.edit' |translate }}</button>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</page-wrapper>
+<ng-template #pageTitle>
+    {{ 'general-menu.limit-orders' | translate }}
+</ng-template>
+<limit-orders-modify [(visibleModal)]="visibleModal" [model]="model" (updated)="loadData()"
+    (handleVisible)="handleVisible($event)">
+</limit-orders-modify>

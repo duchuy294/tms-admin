@@ -1,0 +1,179 @@
+<nz-modal nzWidth="900px" [nzVisible]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModel(false)">
+    <ng-template #modalTitle>
+        {{
+        modifyingModel?._id
+        ? modifyingModel?.fullName
+        : ("settings.createAccount.title" | translate)
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #createModifyForm="ngForm">
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "table.phone-number" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <input type="text" nz-input name="phone" [(ngModel)]="model.phone" #phone="ngModel" required
+                                minlength="10" maxlength="12" />
+                            <nz-form-explain *ngIf="
+                                    (phone.dirty || phone.touched) &&
+                                    phone.errors?.required
+                                ">
+                                {{
+                                "validations-form.phone.required"
+                                | translate
+                                }}</nz-form-explain>
+                            <nz-form-explain *ngIf="
+                                    (phone.dirty || phone.touched) &&
+                                    phone.errors?.minlength
+                                ">
+                                {{
+                                "validations-form.phone.minlength"
+                                | translate: { min: 10 }
+                                }}
+                            </nz-form-explain>
+                            <nz-form-explain *ngIf="
+                                    (phone.dirty || phone.touched) &&
+                                    phone.errors?.maxlength
+                                ">
+                                {{
+                                "validations-form.phone.maxlength"
+                                | translate: { max: 12 }
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "common.full-name" | translate | translate }}
+                        </nz-form-label>
+                        <nz-form-control [nzErrorTip]="'validations-form.fullName.required' | translate">
+                            <input nz-input name="fullName" [(ngModel)]="model.fullName" #fullName="ngModel" required />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div [ngClass]="modifyingModel ? 'col-6' : 'col-4'">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "common.email" | translate }}
+                        </nz-form-label>
+                        <nz-form-control [nzErrorTip]="'validations-form.email.required' | translate">
+                            <input nz-input name="email" [(ngModel)]="model.email" #email="ngModel" required email />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-4" *ngIf="!modifyingModel">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "table.password" | translate }}
+                        </nz-form-label>
+                        <nz-form-control [ngClass]="{
+                                'has-error':
+                                    (password.dirty || password.touched) &&
+                                    password.errors
+                            }">
+                            <input type="password" nz-input name="password" [(ngModel)]="model.password"
+                                #password="ngModel" required
+                                pattern="^(?=.*[A-Za-z@$!%*#?&])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$" />
+                            <nz-form-explain *ngIf="
+                                    (password.dirty || password.touched) &&
+                                    password.errors?.required
+                                ">
+                                {{
+                                "validations-form.password.required"
+                                | translate
+                                }}
+                            </nz-form-explain>
+                            <nz-form-explain *ngIf="
+                                    (password.dirty || password.touched) &&
+                                    password.errors?.pattern
+                                ">
+                                {{
+                                "settings.createAccount.invalid-password"
+                                | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div [ngClass]="modifyingModel ? 'col-6' : 'col-4'">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "settings.createAccount.address" | translate }}
+                        </nz-form-label>
+                        <nz-form-control [nzErrorTip]="'validations-form.address.required' | translate">
+                            <input nz-input name="address" [(ngModel)]="model.address" #address="ngModel" required />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzFor="groupId">
+                            {{ "common.group" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-select style="width: 100%" [(ngModel)]="model.groupId" name="groupId" required>
+                                <nz-option *ngFor="let item of groups" [nzLabel]="item.name" [nzValue]="item._id">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzFor="branchId">
+                            {{ "common.branch" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-select style="width: 100%" [(ngModel)]="model.branchId" name="branchId" required>
+                                <nz-option *ngFor="let item of branches" [nzLabel]="item.name" [nzValue]="item._id">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label>
+                            {{ "permissions" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-select name="roles" [(ngModel)]="model.roles" nzMode="multiple" style="width: 100%;"
+                                [nzShowSearch]="true" [nzPlaceHolder]="'permissions-select' | translate">
+                                <nz-option *ngFor="let item of adminRoles | keyvalue" [nzLabel]="item.value | translate"
+                                    [nzValue]="item.value">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div style="width: 350px; margin: 0 auto;">
+            <div class="buttonActions">
+                <button ad-button nzColor="primary" (click)="submit()">
+                    {{ "button.yes" | translate }}
+                </button>
+                <button ad-button nzColor="gray" (click)="cancel()">
+                    {{ "button.cancel" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

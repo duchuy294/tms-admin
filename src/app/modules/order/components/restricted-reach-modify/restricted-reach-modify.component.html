@@ -1,0 +1,63 @@
+<nz-modal nzWidth="600px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+    <ng-template #modalTitle>
+        <span *ngIf="model._id">{{ model.name }}</span>
+        <span *ngIf="!model._id">{{ "button.create" | translate }}</span>
+    </ng-template>
+
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" class="row" #restrictedReachModifyForm="ngForm">
+            <div class="col-6">
+                <nz-form-item>
+                    <nz-form-label nzFor="userIds">{{ "common.customer" | translate }}
+                    </nz-form-label>
+                    <nz-form-control [ngClass]="{ 'has-error': error.userIds }">
+                        <nz-select [(ngModel)]="model.userIds" name="userIds" style="width: 100%;" [nzShowSearch]="true"
+                            nzMode="multiple" (nzOnSearch)="searchUser($event)">
+                            <nz-option *ngFor="let item of userPaging.data"
+                                [nzLabel]="item.code + ' - ' + item.fullName" [nzValue]="item._id">
+                            </nz-option>
+                        </nz-select>
+                        <nz-form-explain *ngIf="error.userIds">{{
+                            error.userIds
+                        }}</nz-form-explain>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="col-6">
+                <nz-form-item>
+                    <nz-form-label nzFor="servicerIds">{{ "common.servicer" | translate }}
+                    </nz-form-label>
+                    <nz-form-control [ngClass]="{ 'has-error': error.servicerIds }">
+                        <nz-select [(ngModel)]="model.servicerIds" name="servicerIds" nzMode="multiple"
+                            style="width: 100%;" (nzOnSearch)="searchServicer($event)">
+                            <nz-option *ngFor="let item of servicerPaging.data"
+                                [nzLabel]="item.code + ' - ' + item.fullName" [nzValue]="item._id">
+                            </nz-option>
+                        </nz-select>
+                        <nz-form-explain *ngIf="error.servicerIds">{{
+                            error.servicerIds
+                        }}</nz-form-explain>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" (click)="confirm()" [nzLoading]="loadingModal">
+                    {{
+                        (model?._id ? "button.update" : "button.add")
+                            | translate
+                    }}
+                </button>
+                <button ad-button nzUpper nzColor="default" (click)="handleVisibleModal(false)">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

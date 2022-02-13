@@ -1,0 +1,13 @@
+<page-wrapper [nzTitle]="pageTitle">
+    <nz-tabset [(nzSelectedIndex)]="selectedTabIndex" [nzType]="'card'">
+        <nz-tab [nzTitle]="'general-menu.hookType' | translate">
+            <hook-type-list></hook-type-list>
+        </nz-tab>
+        <nz-tab [nzTitle]="'general-menu.hookLink' | translate">
+            <hook-link-list></hook-link-list>
+        </nz-tab>
+    </nz-tabset>
+</page-wrapper>
+<ng-template #pageTitle>
+    {{ 'general-menu.hook' | translate }}
+</ng-template>

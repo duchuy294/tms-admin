@@ -1,0 +1,81 @@
+<nz-table #table (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [(nzPageIndex)]="queryModel.page" [(nzPageSize)]="queryModel.limit" [nzData]="tableData.data"
+    [nzFrontPagination]="false" [nzLoading]="loadingGrid" [nzScroll]="{ x: '900px' }" [nzTotal]="tableData.total"
+    nzShowSizeChanger nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th [nzWidth]="'7%'">{{ 'collectionTab.code' | translate }}</th>
+            <th [nzWidth]="'5%'">{{ 'table.create-date' | translate }}</th>
+            <th [nzWidth]="'5%'">{{ 'collectionTab.transactionCode' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.servicer' | translate }}</th>
+            <th [nzWidth]="'5%'">{{ 'table.status' | translate }}</th>
+            <th [nzWidth]="'5%'" nzAlign="right">{{ 'table.money' | translate }}</th>
+            <th [nzWidth]="'7%'">{{ 'collectionTab.confirmationMethodText' | translate }}</th>
+            <th [nzWidth]="'5%'">{{ 'table.processing-staff' | translate }}</th>
+            <th [nzWidth]="'5%'">{{ 'common.action' | translate }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of table.data">
+            <td>
+                <label class="link"><a target="_blank" routerLink="/pages/finance/request-cod/{{item._id}}">
+                        {{ item.code}}</a></label>
+            </td>
+
+            <td>{{ item.createdAt | date:'HH:mm dd/MM/yyyy' }}</td>
+            <td>{{ item.transCode }}</td>
+            <td>
+                <span *ngIf="servicerGroups[item.servicerId]">
+                    <a target="_blank" routerLink="/pages/servicer-management/servicer/detail/{{item.servicerId}}">
+                        {{ servicerGroups[item.servicerId][0]?.fullName }}
+                    </a>
+                </span>
+            </td>
+            <td>
+                <nz-tag *ngIf="requestCod[item.status]" [nzColor]="requestCod[item.status].color">
+                    {{'collectionTab.statusLabel.' + item.status | translate}}
+                </nz-tag>
+            </td>
+            <td nzAlign="right">
+                {{item.paid | number}}
+            </td>
+            <td>
+                <span *ngIf="item.confirmationMethod">
+                    {{'collectionTab.confirmationMethod.' + item.confirmationMethod | translate}}
+                </span>
+            </td>
+            <td>
+                <span *ngIf="performerGroup[item.performerId]">
+                    {{ performerGroup[item.performerId][0]?.fullName }}
+                </span>
+            </td>
+            <td nzRight="0px" *ngIf="actions.length > 0">
+                <ng-container>
+                    <button nz-dropdown ad-button nzType="dashed" [nzDropdownMenu]="menu"
+                        [nzPlacement]="'bottomCenter'">
+                        {{'common.action' | translate}}
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                            <ng-template ngFor let-action [ngForOf]="actions">
+                                <li nz-menu-item *ngIf="!action.visible || action.visible(item)">
+                                    <a (click)="action.perform(item)">{{action.name | translate}}</a>
+                                </li>
+                            </ng-template>
+                        </ul>
+                    </nz-dropdown-menu>
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{ 'table.total' | translate }} {{ total }}
+    {{ 'table.result' | translate | lowercase}}
+</ng-template>
+<request-cod-confirm [visibleModal]="visibleModalConfirm" (handleVisible)="handelVisibleModalConfirm($event)"
+    [model]="detail" [visibleAction]="checkUpdate(detail)" (loadData)="loadData()">
+</request-cod-confirm>
+<request-cod-reject [visibleModal]="visibleModalReject" (handleVisible)="handelVisibleModalReject($event)"
+    [model]="detail" [visibleAction]="checkVisibleAction(detail)" (loadData)="loadData()">
+</request-cod-reject>

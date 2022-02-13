@@ -1,0 +1,131 @@
+<h1>{{'price.delivery.additionService' | translate}}</h1>
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <h5 class="col-5">{{'price.delivery.minimumCollectionFee' | translate}}</h5>
+            <h5 class="col-2">{{'price.rate' |translate}}(%)</h5>
+            <h5 class="col-2">{{'price.userRate' |translate}}(%)</h5>
+            <h5 class="col-2">{{'price.servicerRate' |translate}}(%)</h5>
+            <h5 class="col-1">{{'common.commission' | translate}}(%)</h5>
+        </div>
+        <div class="row">
+            <div class="col-1">
+                <div class="btn btn-primary" (click)="addCollectionFee()">{{'price.add' | translate}}</div>
+            </div>
+            <div class="col-4">
+                <value-input [obj]="{value: newCollectionFee.to}" (changeValue)="newCollectionFee.to = +$event">
+                </value-input>
+            </div>
+            <div class="col-2">
+                <value-input [obj]="{value: newCollectionFee.rate}" (changeValue)="newCollectionFee.rate = +$event"
+                    valueType="float">
+                </value-input>
+            </div>
+            <div class="col-2">
+                <value-input [obj]="{value: newCollectionFee.userRate}"
+                    (changeValue)="newCollectionFee.userRate = +$event" valueType="float">
+                </value-input>
+            </div>
+            <div class="col-2">
+                <value-input [obj]="{value: newCollectionFee.servicerRate}"
+                    (changeValue)="newCollectionFee.servicerRate = +$event" valueType="float">
+                </value-input>
+            </div>
+            <div class="col-1">
+                <div class="input-group ng-star-inserted">
+                    <input class="form-control" [(ngModel)]="newCollectionFee.commission" type="number" min="0"
+                        max="100" />
+                    <div class="input-group-append"><span class="input-group-text">%</span></div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <ng-template ngFor let-fee [ngForOf]="collectionFees">
+                <div class="col-1">
+                    <i class="material-icons pointer" (click)="deleteCollectionFee(fee._id)">delete</i>
+                    <i *ngIf="fee.changed" class="material-icons pointer" (click)="updateCollectionFee(fee)">save</i>
+                </div>
+                <div class="col-4">{{ 'price.delivery.collectionValue' | translate: { value: fee.toFormatted } }}</div>
+                <div class="col-2">
+                    <value-input [obj]="{value: fee.rate}" (changeValue)="fee.rate = +$event; fee.changed = true"
+                        valueType="float">
+                    </value-input>
+                </div>
+                <div class="col-2">
+                    <value-input [obj]="{value: fee.userRate}"
+                        (changeValue)="fee.userRate = +$event; fee.changed = true" valueType="float">
+                    </value-input>
+                </div>
+                <div class="col-2">
+                    <value-input [obj]="{value: fee.servicerRate}"
+                        (changeValue)="fee.servicerRate = +$event; fee.changed = true" valueType="float">
+                    </value-input>
+                </div>
+                <div class="col-1">
+                    <div class="input-group ng-star-inserted">
+                        <input class="form-control" [(ngModel)]="fee.commission" (ngModelChange)="fee.changed = true"
+                            type="number" min="0" max="100" />
+                        <div class="input-group-append"><span class="input-group-text">%</span></div>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="row" *ngFor="let service of addonServices">
+            <h2 class="col-12">{{service.name}} <button class="btn btn-primary"
+                    (click)="addChildService(service)">{{'actions.add' | translate}}</button>
+            </h2>
+            <div class="col-12">
+                <div class="row">
+                    <h5 class="col-5">{{'common.name' |translate}}</h5>
+                    <h5 class="col-2">{{'price.price' |translate}}</h5>
+                    <h5 class="col-2">{{'price.userPrice' |translate}}</h5>
+                    <h5 class="col-2">{{'price.servicerPrice' |translate}}</h5>
+                    <h5 class="col-1">{{'common.commission' | translate}}(%)</h5>
+                    <ng-template ngFor let-item [ngForOf]="service.children">
+                        <hr class="col-12" />
+                        <div class="col-1">
+                            <i class="material-icons pointer" (click)="removeChildService(item, service)">
+                                delete
+                            </i>
+                            <i *ngIf="item.changed" class="material-icons pointer" (click)="updateAddonService(item)">
+                                save
+                            </i>
+                        </div>
+                        <div class="col-3">
+                            <input class="form-control" [(ngModel)]="item.name" (ngModelChange)="item.changed = true" />
+                        </div>
+                        <div class="col-1">
+                            <select class="form-control" [ngModel]="item.unit" disabled>
+                                <option *ngFor="let unit of units" [ngValue]="unit.value">{{unit.name}}</option>
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <value-input [obj]="{value: item.price}"
+                                (changeValue)="item.price = +$event; item.changed = true">
+                            </value-input>
+
+                        </div>
+                        <div class="col-2">
+                            <value-input [obj]="{value: item.userPrice}"
+                                (changeValue)="item.userPrice = +$event; item.changed = true"></value-input>
+                        </div>
+                        <div class="col-2">
+                            <value-input [obj]="{value: item.servicerPrice}"
+                                (changeValue)="item.servicerPrice = +$event; item.changed = true"></value-input>
+                        </div>
+                        <div class="col-1">
+                            <div class="input-group ng-star-inserted">
+                                <input class="form-control" [(ngModel)]="item.commission"
+                                    (ngModelChange)="item.changed = true" type="number" min="0" max="100" />
+                                <div class="input-group-append"><span class="input-group-text">%</span></div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

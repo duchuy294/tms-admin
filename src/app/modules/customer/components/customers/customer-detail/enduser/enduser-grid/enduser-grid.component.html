@@ -1,0 +1,53 @@
+<nz-table #table [nzData]="enduserData.data" [nzFrontPagination]="false" [nzLoading]="loadingGrid"
+    [nzTotal]="enduserData.total" [(nzPageIndex)]="queryModel.page" [(nzPageSize)]="queryModel.limit"
+    [nzFrontPagination]="false" nzShowSizeChanger (nzPageIndexChange)="loadDataByPage($event)"
+    (nzPageSizeChange)="loadDataByPageSize($event)" [nzScroll]="{ x: '1000px' }" nzShowQuickJumper
+    [nzShowTotal]="totalTemplate" style="margin-top: 10px;">
+    <thead>
+        <tr>
+            <th [nzWidth]="'35%'" nzLeft="0px">{{'common.full-name' | translate }}</th>
+            <th [nzWidth]="'25%'">{{'common.phone' | translate }}</th>
+            <th [nzWidth]="'15%'">{{'common.Number-of-points' | translate }}</th>
+            <th [nzWidth]="'10%'" nzRight="0px">{{'table.status' | translate}}</th>
+            <th [nzWidth]="'10%'" nzRight="0px">{{'table.more-action' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of table.data">
+            <td>{{item.name}}</td>
+            <td>{{item.phone}}</td>
+            <td>{{item.numberOfPoint}}</td>
+            <td>
+                <nz-switch [ngModel]="statuses[item._id]" [nzLoading]="loadingStatus" (click)="handleActive(item)">
+                </nz-switch>
+            </td>
+            <td>
+                <ng-container>
+                    <button nz-dropdown ad-button nzType="dashed" [nzDropdownMenu]="menu"
+                        [nzPlacement]="'bottomCenter'">
+                        {{'common.action' | translate}}
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                            <li nz-menu-item>
+                                <a target="_blank"
+                                    routerLink="/pages/customer-management/personal/detail/{{userId}}/end-user/{{item._id}}/sub-end-user">{{'common.detail' | translate}}</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a (click)="handleUpdate(item._id)">{{'actions.update' | translate}}</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a
+                                    (click)="handleSubEndUser(item._id)">{{'end-user.sub-end-user.create' | translate}}</a>
+                            </li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{ 'table.total' | translate }} {{ total }}
+    {{ 'table.result' | translate | lowercase}}
+</ng-template>

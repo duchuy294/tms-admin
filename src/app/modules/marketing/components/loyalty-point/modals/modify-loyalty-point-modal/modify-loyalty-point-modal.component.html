@@ -1,0 +1,129 @@
+<nz-modal nzWidth="600px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="onCancelModal()">
+    <ng-template #modalTitle>
+        {{ "marketing.loyalty-point.modal-title-modify" | translate }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #pointAdjust="ngForm">
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label>
+                            {{ "common.method" | translate }}</nz-form-label>
+                        <nz-form-control>
+                            <div class="row">
+                                <nz-radio-group name="adjustType" [(ngModel)]="model.type"
+                                    style="width: 100%; display: flex">
+                                    <div class="col-6">
+                                        <label nz-radio nzValue="adjustIncrease">{{
+                                                "actions.reward" | translate
+                                            }}</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <label nz-radio nzValue="adjustDecrease">{{
+                                                "actions.punish" | translate
+                                            }}</label>
+                                    </div>
+                                </nz-radio-group>
+                            </div>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{
+                                ("actions.enter" | translate) +
+                                    " " +
+                                    ("common.id" | translate | uppercase)
+                            }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-select name="selectUser" [(ngModel)]="selectedUser" #userValue="ngModel"
+                                style="width: 100%" nzPlaceHolder="Mã code" nzAllowClear nzShowSearch
+                                [nzServerSearch]="true" (nzOnSearch)="onSearchUser($event)" required>
+                                <ng-container *ngFor="let user of userOptionList">
+                                    <nz-option *ngIf="!isSearching" [nzValue]="user" [nzLabel]="
+                                            (user.code | uppercase) +
+                                            ' - ' +
+                                            user.fullName +
+                                            ' - ' +
+                                            ((user.userType === 'user'
+                                                ? 'common.customer'
+                                                : 'common.servicer'
+                                            ) | translate)
+                                        ">
+                                    </nz-option>
+                                </ng-container>
+                                <nz-option *ngIf="isSearching" nzDisabled nzCustomContent>
+                                    <i nz-icon [nzType]="loading"
+                                        [nzSpin]="true"></i>{{ "common.searching" | translate }}
+                                </nz-option>
+                            </nz-select>
+                            <nz-form-explain *ngIf="
+                                    (userValue.dirty || userValue.touched) &&
+                                    userValue.errors?.required
+                                ">
+                                {{
+                                    "validations-form.userCode.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                                "marketing.loyalty-point.modal-point-number"
+                                    | translate
+                            }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-input-number [(ngModel)]="model.point" style="width: 100%" nzMin="1" name="point"
+                                required #point="ngModel">
+                            </nz-input-number>
+                            <nz-form-explain *ngIf="
+                                    (point.dirty || point.touched) &&
+                                    point.errors?.required
+                                ">
+                                {{
+                                    "validations-form.point.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "common.note" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <textarea nz-input [nzAutosize]="{ minRows: 2, maxRows: 6 }" name="note"
+                                [(ngModel)]="model.note"></textarea>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="footer">
+            <button ad-button nzUpper nzColor="primary" class="longButton" (click)="onConfirmModal()">
+                {{ "button.confirm" | translate }}
+            </button>
+            <button ad-button nzUpper nzColor="gray" class="longButton" (click)="onCancelModal()">
+                {{ "button.close" | translate }}
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

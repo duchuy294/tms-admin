@@ -1,0 +1,92 @@
+<nz-modal nzWidth="550px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="cancel()">
+    <ng-template #modalTitle>
+        {{ "order.cancel-order" | translate }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #orderCancel="ngForm">
+            <ng-template [ngIf]="
+                    model?.serviceType !== OrderType.INSTALL &&
+                    !(
+                        (model?.serviceType === OrderType.DELIVERY ||
+                            model?.serviceType ===
+                                OrderType.DELIVERY_INSTALL) &&
+                        !isPickedUpOrder(model)
+                    )
+                ">
+                <div class="row">
+                    <div class="col">
+                        <nz-form-item>
+                            <nz-form-label nz-form-label nzFor="cancelParty" nzRequired>
+                                <b>{{ "order.cancel-party" | translate }}</b>
+                            </nz-form-label>
+                            <nz-form-control [ngClass]="{
+                                    'has-error':
+                                        (typeUserCancel.dirty ||
+                                            typeUserCancel.touched) &&
+                                        typeUserCancel.errors
+                                }">
+                                <nz-select style="width: 100%" [(ngModel)]="model.cancelBy" name="userType"
+                                    [nzPlaceHolder]="
+                                        'order.user-cancel-selection'
+                                            | translate
+                                    " nzAllowClear required #typeUserCancel="ngModel">
+                                    <nz-option *ngFor="let item of userCancel" [nzLabel]="
+                                            'common.userType.' + item
+                                                | translate
+                                        " [nzValue]="item">
+                                    </nz-option>
+                                </nz-select>
+                                <nz-form-explain *ngIf="
+                                        (typeUserCancel.dirty ||
+                                            typeUserCancel.touched) &&
+                                        typeUserCancel.errors?.required
+                                    ">
+                                    {{ "order.error-user-cancel" | translate }}
+                                </nz-form-explain>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </ng-template>
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nz-form-label nzFor="orderCancel" nzRequired>
+                            <b>{{ "order.cancel-reason" | translate }}</b>
+                        </nz-form-label>
+                        <nz-form-control [ngClass]="{
+                                'has-error':
+                                    (cancelReason.dirty ||
+                                        cancelReason.touched) &&
+                                    cancelReason.errors
+                            }">
+                            <textarea name="cancelReason" [(ngModel)]="model.cancelReason" rows="5" nz-input required
+                                #cancelReason="ngModel"></textarea>
+                            <nz-form-explain *ngIf="
+                                    (cancelReason.dirty ||
+                                        cancelReason.touched) &&
+                                    cancelReason.errors?.required
+                                ">
+                                {{ "order.error-cancel-reason" | translate }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" (click)="update()">
+                    {{ "button.confirm" | translate }}
+                </button>
+                <button ad-button nzUpper nzColor="gray" (click)="cancel()">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

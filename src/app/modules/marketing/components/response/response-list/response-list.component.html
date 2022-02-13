@@ -1,0 +1,19 @@
+<div class="grid__container">
+    <div class="grid__header">
+        <div>
+            <button class="grid__action__left" ad-button nzColor="red" (click)="toggleFilterVisible()">
+                {{'filter.filter'|translate}}
+            </button>
+        </div>
+    </div>
+    <response-filter (onSearch)="search($event)" (onReset)="reset($event)" [display]="filterVisible"></response-filter>
+    <response-grid [(selectedResponse)]="selectedResponse" (clickShowReply)="clickResponse()"
+        (clickToShowReplyModal)="clickToShowReplyModal()" #responseGrid>
+    </response-grid>
+</div>
+<response-reply-list [response]="selectedResponse" [visible]="responseReplyListVisible"
+    (handleVisible)="handleResponseReplyListVisible($event)">
+</response-reply-list>
+<reply-modal [response]="selectedResponse" [visible]="replyModalVisible"
+    (handleVisible)="handleReplyModalVisible($event)" (afterReply)="handleAfterReply()">
+</reply-modal>

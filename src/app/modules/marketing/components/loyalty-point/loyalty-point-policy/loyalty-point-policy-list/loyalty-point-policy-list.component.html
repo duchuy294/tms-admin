@@ -1,0 +1,14 @@
+<div class="grid__container">
+    <div class="grid__header">
+        <button class="grid__action__left" ad-button nzColor="red" (click)="toggleVisibleFilter()">
+            {{ 'filter.filter' | translate }}
+        </button>
+        <button class="grid__action__right" ad-button nzColor="primary" (click)="onClickCreate()">
+            {{ 'filter.createNew' | translate }}
+        </button>
+    </div>
+    <loyalty-point-policy-filter [display]="visibleFilter" (search)="search($event)"></loyalty-point-policy-filter>
+    <loyalty-point-policy-grid #grid></loyalty-point-policy-grid>
+</div>
+<loyalty-point-policy-modification-modal [visible]="visibleModal" (handleVisible)="handleVisibleModal($event)"
+    (onFinished)="handleAfterSubmit()"></loyalty-point-policy-modification-modal>

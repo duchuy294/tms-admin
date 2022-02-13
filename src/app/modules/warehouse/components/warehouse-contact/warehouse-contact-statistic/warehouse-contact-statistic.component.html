@@ -1,0 +1,21 @@
+<div class="store-statistic__container">
+    <div class="store-statistic__item store-statistic__item--color1">
+        <h4 class="store-statistic__title" nz-tooltip
+            [nzTooltipTitle]="'statistics.warehouse.total-contact' | translate" nzTooltipPlacement="topLeft">
+            {{ 'statistics.warehouse.total-contact' | translate }}
+        </h4>
+        <span class="store-statistic__total">{{(data?.totalContact || 0) | number}}</span>
+    </div>
+    <div class="store-statistic__item store-statistic__item--color2">
+        <h4 class="store-statistic__title" nz-tooltip
+            [nzTooltipTitle]="'statistics.warehouse.total-success-contact' | translate" nzTooltipPlacement="topLeft">
+            {{ 'statistics.warehouse.total-success-contact' | translate }}</h4>
+        <span class="store-statistic__total">{{(data?.totalSuccess || 0) | number}}</span>
+    </div>
+    <div class="store-statistic__item  store-statistic__item--color5">
+        <h4 class="store-statistic__title" nz-tooltip
+            [nzTooltipTitle]="'statistics.warehouse.total-failed-contact' | translate" nzTooltipPlacement="topLeft">
+            {{ 'statistics.warehouse.total-failed-contact' | translate }}</h4>
+        <span class="store-statistic__total">{{(data?.totalFailure || 0) | number}}</span>
+    </div>
+</div>

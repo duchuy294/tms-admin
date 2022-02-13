@@ -1,0 +1,21 @@
+<div class="grid__container">
+    <div style="display: flex; width: 100%;">
+        <div style="font-size: 1.5em">
+            {{ ('common.return-warehouse-list' | translate) }}
+        </div>
+        <div style="display: flex; position: absolute; right: 0px">
+            <nz-input-group nzSuffixIcon="anticon anticon-search">
+                <input name="searchBox" type="text" [(ngModel)]="nameSearch" (ngModelChange)="onNameChange($event)"
+                    nz-input [placeholder]="'common.return-warehouse-name' | translate">
+            </nz-input-group>
+            &nbsp;
+            <button ad-button nzUpper nzColor="primary" (click)="addWarehouse()">{{ 'button.add' | translate }}</button>
+        </div>
+    </div>
+    <br>
+    <return-warehouse-grid #warehouseGrid (delete)="confirmDelete($event)" (edit)="editWarehouse($event)">
+    </return-warehouse-grid>
+</div>
+<add-edit-return-warehouse-modal [warehouseModel]="warehouseToEdit" [visible]="addEditReturnWarehouseModalVisible"
+    (handleVisible)="handleAddEditReturnWarehouseModal($event)" (afterSubmit)="handleAfterSubmit()">
+</add-edit-return-warehouse-modal>

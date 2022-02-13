@@ -1,0 +1,190 @@
+<div class="bonus-forfeit bg-white padding-10">
+    <form nz-form nzLayout="vertical" #bonusForm="ngForm">
+        <div class="row">
+            <div class="col">
+                <nz-form-item>
+                    <nz-form-label>{{
+                        "common.method" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>
+                        <nz-radio-group name="method" [(ngModel)]="methodType" (ngModelChange)="onChangeMethodType()"
+                            style="width: 100%">
+                            <label nz-radio nzValue="individual">{{
+                                "finance.transaction-bonus-forfeit.individual"
+                                    | translate
+                            }}</label>
+                            <br />
+                            <div class="row" *ngIf="methodType === 'individual'">
+                                <div class="col">
+                                    <div>
+                                        <search-and-suggest-account-component mode="multiple" [(ngModel)]="selectedUser"
+                                            ngDefaultControl [ngModelOptions]="{
+                                                standalone: true
+                                            }" #userValue="ngModel" [allowCustomer]="true" [allowServicer]="true"
+                                            [placeHolder]="
+                                                ('actions.enter' | translate) +
+                                                ' ' +
+                                                ('common.id'
+                                                    | translate
+                                                    | uppercase) +
+                                                '/' +
+                                                ('common.name' | translate) +
+                                                '/' +
+                                                ('common.phone' | translate)
+                                            " [servicerSearchCondition]="
+                                                servicerSearchCondition
+                                            " [customerSearchCondition]="
+                                                customerSearchCondition
+                                            ">
+                                        </search-and-suggest-account-component>
+                                    </div>
+                                </div>
+                            </div>
+                            <label nz-radio [nzValue]="balanceAccountType.PARTNER">{{
+                                    "finance.transaction-bonus-forfeit.every-servicer"
+                                        | translate
+                                }}</label>
+                            <br />
+                            <div class="row" *ngIf="
+                                    methodType === balanceAccountType.PARTNER
+                                ">
+                                <div class="col-6">
+                                    <div>
+                                        <label>{{
+                                            ("actions.select" | translate) +
+                                                " " +
+                                                ("common.group"
+                                                    | translate
+                                                    | lowercase)
+                                        }}</label>
+                                        <nz-select name="groupId" [(ngModel)]="model.groupId"
+                                            (ngModelChange)="changeGroup()">
+                                            <nz-option [nzValue]="'all'" [nzLabel]="
+                                                    'common.all' | translate
+                                                ">
+                                            </nz-option>
+                                            <nz-option *ngFor="let item of groups" [nzValue]="item._id"
+                                                [nzLabel]="item.name">
+                                            </nz-option>
+                                        </nz-select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div *ngIf="
+                                            model &&
+                                            model.groupId &&
+                                            model.groupId !== 'all'
+                                        ">
+                                        <label>{{
+                                            ("actions.select" | translate) +
+                                                " " +
+                                                ("common.team"
+                                                    | translate
+                                                    | lowercase)
+                                        }}</label>
+                                        <nz-select name="team" [(ngModel)]="model.teamId">
+                                            <nz-option [nzValue]="'all'" [nzLabel]="
+                                                    'common.all' | translate
+                                                ">
+                                            </nz-option>
+                                            <nz-option *ngFor="let item of teams" [nzValue]="item._id"
+                                                [nzLabel]="item.name"></nz-option>
+                                        </nz-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <label nz-radio [nzValue]="balanceAccountType.CUSTOMER">{{
+                                    "finance.transaction-bonus-forfeit.every-customer"
+                                        | translate
+                                }}</label>
+                            <div class="row" *ngIf="
+                                    methodType === balanceAccountType.CUSTOMER
+                                ">
+                                <div class="col-6">
+                                    <label>{{
+                                        ("actions.select" | translate) +
+                                            " " +
+                                            ("common.userLevel"
+                                                | translate
+                                                | lowercase)
+                                    }}</label>
+                                    <nz-select name="userLevel" [(ngModel)]="model.userLevelId">
+                                        <nz-option [nzValue]="'all'" [nzLabel]="'common.all' | translate">
+                                        </nz-option>
+                                        <nz-option *ngFor="
+                                                let item of userLevelOptionList
+                                            " [nzValue]="item._id" [nzLabel]="item.name">
+                                        </nz-option>
+                                    </nz-select>
+                                </div>
+                            </div>
+                        </nz-radio-group>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <nz-form-item>
+                    <nz-form-label nzRequired>{{ "finance.transaction-top-up.money" | translate }}
+                    </nz-form-label>
+                    <nz-form-control>
+                        <nz-input-group [nzSuffix]="
+                                'common.currency-unit' | translate | uppercase
+                            ">
+                            <input nz-input name="valueInput" [(ngModel)]="value" required #valueRef="ngModel"
+                                [textMask]="{ mask: numberMask }" [placeholder]="
+                                    'finance.transaction-adjust-deposit.moneyAmount'
+                                        | translate
+                                " />
+                        </nz-input-group>
+                        <nz-form-explain *ngIf="
+                                (valueRef.dirty || valueRef.touched) &&
+                                valueRef.errors?.required
+                            ">
+                            {{ "validations-form.value.required" | translate }}
+                        </nz-form-explain>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-6">
+                <nz-form-item>
+                    <nz-form-label nzRequired>{{
+                            "finance.transaction-bonus.walletType" | translate
+                        }}
+                    </nz-form-label>
+                    <nz-form-control>
+                        <nz-select name="walletType" [(ngModel)]="model.type" required #walletType="ngModel">
+                            <nz-option *ngFor="let item of walletTypes" [nzValue]="item" [nzLabel]="
+                                    'finance.transaction-walletType.' + item
+                                        | translate
+                                "></nz-option>
+                        </nz-select>
+                        <nz-form-explain *ngIf="
+                                (walletType.dirty || walletType.touched) &&
+                                walletType.errors?.required
+                            ">
+                            {{
+                                "validations-form.walletTypes.required"
+                                    | translate
+                            }}
+                        </nz-form-explain>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <nz-form-item>
+                    <nz-form-label>{{
+                        "finance.transaction-top-up.remark" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>
+                        <textarea name="note" rows="5" nz-input [(ngModel)]="model.note"></textarea>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </form>
+</div>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

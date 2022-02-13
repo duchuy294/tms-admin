@@ -1,0 +1,28 @@
+<page-wrapper *ngIf="customer && customer._id" [nzTitle]="'end-user.management' | translate">
+    <button style="margin-right: 5px;" ad-button nzColor="red" (click)="toggleFilter()">
+        {{'filter.filter' | translate}}
+    </button>
+    <nz-upload nzName="file" (nzChange)="onFileChange($event)" [nzBeforeUpload]="beforeUpload"
+        [(nzFileList)]="upFileList" [nzCustomRequest]="importData" [nzShowUploadList]="showUploadList">
+        <button ad-button style="margin-right: 5px;">
+            {{'common.import' | translate}}
+        </button>
+    </nz-upload>
+    <button ad-button>
+        {{'actions.export' | translate}}
+    </button>
+    <button class="grid__action__right" ad-button nzColor="orange" (click)="create()">
+        {{'actions.create-end-user' | translate }}
+    </button>
+    <filter-enduser #filter (search)="search($event)" [userId]="userId"
+        [style.display]=" filterVisible ? 'block' : 'none'">
+    </filter-enduser>
+    <enduser-grid #grid (modify)="modify($event)" (createSubEndUser)="createSubEndUser($event)">
+    </enduser-grid>
+</page-wrapper>
+<create-modify-enduser-model [userId]="userId" [modifyingModel]="modifyingModel" [visible]="createModifyModalVisible"
+    (handleVisible)="handleModelVisible($event)" (afterSubmit)="handleAfterSubmit()">
+</create-modify-enduser-model>
+<create-modify-delivery-point [visible]="createModifyModalVisibleSubEndUser"
+    (handleVisible)="handleModalVisibleSubEndUser($event)" (afterSubmit)="handleAfterSubmit()" [endUserId]="endUserId">
+</create-modify-delivery-point>

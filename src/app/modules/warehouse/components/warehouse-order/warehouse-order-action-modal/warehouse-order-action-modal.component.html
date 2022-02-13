@@ -1,0 +1,250 @@
+<nz-modal nzWidth="600px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="cancel()">
+    <ng-template #modalTitle>
+        {{ "warehouse.order-actions." + action | translate }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #form="ngForm">
+            <div *ngIf="action === _actions.CANCEL">
+                <div class="row">
+                    <div class="col">
+                        <nz-form-item>
+                            <nz-form-label nzRequired>
+                                {{ "warehouse.order.cancel-party" | translate }}
+                            </nz-form-label>
+                            <nz-form-control>
+                                <nz-select name="cancelBy" [(ngModel)]="model.status" #cancelBy_="ngModel"
+                                    [nzPlaceHolder]="
+                                        'warehouse.order.cancel-party'
+                                            | translate
+                                    " required>
+                                    <nz-option *ngFor="let item of cancelBy" [nzLabel]="
+                                            'warehouse.warehouse.cancel-by-' +
+                                                item | translate
+                                        " [nzValue]="item">
+                                    </nz-option>
+                                </nz-select>
+                                <nz-form-explain *ngIf="
+                                        (cancelBy_.dirty ||
+                                            cancelBy_.touched) &&
+                                        cancelBy_.errors?.required
+                                    ">
+                                    {{
+                                        "warehouse.validations.cancel-by-required"
+                                            | translate
+                                    }}
+                                </nz-form-explain>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <nz-form-item>
+                            <nz-form-label nzRequired>
+                                {{
+                                    "warehouse.order.cancel-reason" | translate
+                                }}
+                            </nz-form-label>
+                            <nz-form-control>
+                                <textarea name="reason" #reason_="ngModel" [(ngModel)]="model.cancelReason" rows="5"
+                                    nz-input required></textarea>
+                                <nz-form-explain *ngIf="
+                                        (reason_.dirty || reason_.touched) &&
+                                        reason_.errors?.required
+                                    ">
+                                    {{
+                                        "validations-form.content.required"
+                                            | translate
+                                    }}
+                                </nz-form-explain>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="action === _actions.NOTE">
+                <div class="row">
+                    <div class="col">
+                        <nz-form-item>
+                            <nz-form-label>
+                                {{
+                                    "warehouse.order.note-by-operator"
+                                        | translate
+                                }}
+                            </nz-form-label>
+                            <nz-form-control>
+                                <textarea name="note" #note_ [(ngModel)]="model.noteByOperator" rows="5"
+                                    nz-input></textarea>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="action === _actions.CONFIRM">
+                <div class="row">
+                    <div class="col-12">
+                        {{ "warehouse.order.complete-warning" | translate }}
+                    </div>
+                    <div class="col-12">
+                        <nz-form-item>
+                            <nz-form-label nzRequired>
+                                {{ "warehouse.order.service-fee" | translate }}
+                            </nz-form-label>
+                            <nz-form-control>
+                                <input-currency [(model)]="model.commission" #commission [required]="true" [suffix]="
+                                        'common.currency-unit'
+                                            | translate
+                                            | uppercase
+                                    ">
+                                </input-currency>
+                                <nz-form-explain *ngIf="
+                                        showCommissionError &&
+                                        commission.error()
+                                    " [style.color]="'red'">
+                                    {{
+                                        "validations-form.value.required"
+                                            | translate
+                                    }}
+                                </nz-form-explain>
+                                <nz-form-explain *ngIf="model.commission > maxAmount" [style.color]="'red'">
+                                    {{
+                                        "validations-form.amount.too-large"
+                                            | translate
+                                    }}
+                                </nz-form-explain>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-12">
+                        <nz-form-item>
+                            <nz-form-label nzRequired>
+                                {{ "common.note" | translate }}
+                            </nz-form-label>
+                            <nz-form-control>
+                                <textarea name="note" #note_="ngModel" [(ngModel)]="model.adminNote" rows="5" nz-input
+                                    required></textarea>
+                                <nz-form-explain *ngIf="
+                                        (note_.dirty || note_.touched) &&
+                                        note_.errors?.required
+                                    ">
+                                    {{
+                                        "validations-form.content.required"
+                                            | translate
+                                    }}
+                                </nz-form-explain>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="action === _actions.COMPLETE">
+                <div class="row">
+                    <div class="col-12">
+                        {{ "warehouse.order.complete-warning" | translate }}
+                    </div>
+                    <div class="col-12">
+                        <nz-form-item>
+                            <nz-form-label>{{
+                                "common.images" | translate
+                            }}</nz-form-label>
+                            <nz-form-control>
+                                <nz-file-uploader [(nzFileList)]="_images" [nzData]="{ path: 'store/images' }"
+                                    (nzChange)="updateImg($event, 'images')" [nzFileType]="fileType">
+                                </nz-file-uploader>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-12">
+                        <nz-form-item>
+                            <nz-form-label nzRequired>
+                                {{ "warehouse.order.real-cost" | translate }}
+                            </nz-form-label>
+                            <nz-form-control>
+                                <input-currency [(model)]="model.realCost" #cost [required]="true" [suffix]="
+                                        'common.currency-unit'
+                                            | translate
+                                            | uppercase
+                                    ">
+                                </input-currency>
+                                <nz-form-explain *ngIf="showCostError && cost.error()" [style.color]="'red'">
+                                    {{
+                                        "validations-form.value.required"
+                                            | translate
+                                    }}
+                                </nz-form-explain>
+                                <nz-form-explain *ngIf="model.realCost > maxAmount" [style.color]="'red'">
+                                    {{
+                                        "validations-form.amount.too-large"
+                                            | translate
+                                    }}
+                                </nz-form-explain>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-12">
+                        <nz-form-item>
+                            <nz-form-label nzRequired>
+                                {{ "warehouse.order.service-fee" | translate }}
+                            </nz-form-label>
+                            <nz-form-control>
+                                <input-currency [(model)]="model.commission" #commission [required]="true" [suffix]="
+                                        'common.currency-unit'
+                                            | translate
+                                            | uppercase
+                                    ">
+                                </input-currency>
+                                <nz-form-explain *ngIf="
+                                        showCommissionError &&
+                                        commission.error()
+                                    " [style.color]="'red'">
+                                    {{
+                                        "validations-form.value.required"
+                                            | translate
+                                    }}
+                                </nz-form-explain>
+                                <nz-form-explain *ngIf="model.commission > maxAmount" [style.color]="'red'">
+                                    {{
+                                        "validations-form.amount.too-large"
+                                            | translate
+                                    }}
+                                </nz-form-explain>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-12">
+                        <nz-form-item>
+                            <nz-form-label nzRequired>
+                                {{ "common.note" | translate }}
+                            </nz-form-label>
+                            <nz-form-control>
+                                <textarea name="note" #note_="ngModel" [(ngModel)]="model.adminNote" rows="5" nz-input
+                                    required></textarea>
+                                <nz-form-explain *ngIf="
+                                        (note_.dirty || note_.touched) &&
+                                        note_.errors?.required
+                                    ">
+                                    {{
+                                        "validations-form.content.required"
+                                            | translate
+                                    }}
+                                </nz-form-explain>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="buttonActions">
+            <button ad-button nzUpper nzColor="primary" (click)="submit()">
+                {{ "button.confirm" | translate }}
+            </button>
+            <button ad-button nzUpper nzColor="gray" (click)="cancel()">
+                {{ "button.close" | translate }}
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

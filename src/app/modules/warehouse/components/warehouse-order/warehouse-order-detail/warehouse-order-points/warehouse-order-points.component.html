@@ -1,0 +1,164 @@
+<nz-modal nzWidth="600px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="cancel()">
+    <ng-template #modalTitle>
+        {{ "warehouse.warehouse-order.points-information" | translate }}
+    </ng-template>
+    <ng-template #modalContent>
+        <div class="row">
+            <span class="col-6">
+                <span class="col-3" style="font-weight: bold; padding-left: 0px; padding-right: 5px">&#8226;
+                    {{ "warehouse.warehouse.name" | translate }}:
+                </span>
+                <span class="col-3">{{ pointDetail?.warehouseName }}</span>
+            </span>
+            <span class="col-6 text-left">
+                <span style="font-weight: bold">&#8226;
+                    {{
+                        "warehouse.warehouse.phone-host-warehouse" | translate
+                    }}:
+                </span>
+                <span class="col-4">{{ host?.phone }}</span>
+            </span>
+        </div>
+        <div class="row">
+            <span class="col-12">
+                <span style="font-weight: bold; padding-left: 0px; padding-right: 0px" class="leftAlign col-3">&#8226;
+                    {{ "common.address-warehouse" | translate }}:
+                </span>
+                <span class="col-9" style="padding-left: 0px">
+                    {{ pointDetail?.location?.address }}
+                </span>
+            </span>
+        </div>
+        <div class="row" *ngIf="order && isConfirmedSuccessOrCompleted && images.length > 0">
+            <span class="col-12">
+                <span style="font-weight: bold">&#8226; {{ "common.images" | translate }}:
+                </span>
+                <div>
+                    <nz-file-uploader [nzFileList]="images" [nzShowUploadList]="{
+                            showPreviewIcon: true,
+                            showRemoveIcon: false
+                        }" [nzShowButton]="false">
+                    </nz-file-uploader>
+                </div>
+            </span>
+        </div>
+        <nz-divider></nz-divider>
+        <div class="titleDetail">
+            {{ "order.moreDetails" | translate | uppercase }}
+        </div>
+        <div class="row" style="padding-top: 4px; padding-bottom: 4px; background-color: #F6F6F6">
+            <div class="col-4 bold">
+                {{ "warehouse.warehouse-order.rented-area" | translate }}
+            </div>
+            <div class="col-4 bold text-center">
+                {{ "order.time" | translate }}
+            </div>
+            <div class="col-4 bold text-right">
+                {{ "order.cost" | translate }}
+            </div>
+        </div>
+        <div class="row" style="padding-top: 2px" *ngIf="costRent">
+            <div class="col-4">{{ costRent.quantity | number }}m2</div>
+            <div class="col-4 text-center">
+                {{ costRent.startedAt | date: "dd/MM/yyyy" }} <br />
+                {{ costRent.finishedAt | date: "dd/MM/yyyy" }}
+            </div>
+            <div class="col-4 text-right">{{ costRent.cost | number }}đ</div>
+        </div>
+
+        <div class="row" style="padding-top: 4px; padding-bottom: 4px; background-color: #F6F6F6"
+            *ngIf="services.length > 0">
+            <div class="col-5 bold">
+                {{ "order.addonServices" | translate }}
+            </div>
+            <div class="col-7 bold text-right">
+                {{ "order.cost" | translate }}
+            </div>
+        </div>
+        <div style="padding-top: 2px" *ngFor="let service of services" class="row">
+            <div class="col-5 ">{{ service.name | translate }}</div>
+            <div class="col-7 text-right">{{ service.cost | number }}đ</div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-9 bold text-right">
+                {{ "order.totalCost" | translate }}:
+            </div>
+            <div class="col-3 bold text-right" style="color:red">
+                {{ order?.cost | number }}đ
+            </div>
+        </div>
+        <div class="row" *ngIf="order && isConfirmedSuccessOrCompleted">
+            <div class="col-9 bold text-right">
+                {{ "warehouse.warehouse-order.real-cost" | translate }}:
+            </div>
+            <div class="col-3 bold text-right" style="color:red">
+                {{ order?.realCost | number }}đ
+            </div>
+        </div>
+
+        <nz-divider></nz-divider>
+        <div class="row" *ngIf="order && isConfirmedSuccessOrCompleted">
+            <div class="col-12" v style=" font-weight: bold; margin-bottom: 20px;">
+                &#8226; {{ "order.customer-confirmed" | translate }}:
+            </div>
+            <span class="col-6" style="display: flex">
+                <nz-file-uploader [nzFileList]="renterSignImage" [nzShowUploadList]="{
+                        showPreviewIcon: true,
+                        showRemoveIcon: false
+                    }" [nzShowButton]="false">
+                </nz-file-uploader>
+                <span class="detailInformation">{{ "common.party-A" | translate }}: <br />
+                    {{ user ? user.fullName : "" }} <br />
+                    <span style="font-weight: normal">
+                        {{
+                            (order?.detail?.points)[0]?.finishedAt
+                                | date: "HH:mm dd/MM/yyyy"
+                        }}
+                    </span>
+                </span>
+            </span>
+            <span class="col-6 content-left" style="display: flex">
+                <nz-file-uploader [nzFileList]="lessorSignImage" [nzShowUploadList]="{
+                        showPreviewIcon: true,
+                        showRemoveIcon: false
+                    }" [nzShowButton]="false">
+                </nz-file-uploader>
+                <span class="detailInformation">{{ "common.party-B" | translate }}: <br />
+                    {{ host ? host.fullName : "" }} <br />
+                    <span style="font-weight: normal">{{
+                            (order?.detail?.points)[0]?.finishedAt
+                                | date: "HH:mm dd/MM/yyyy"
+                        }}
+                    </span>
+                </span>
+            </span>
+        </div>
+        <div class="row">
+            <span class="col-12" *ngIf="order && isCancelStatus">
+                <span style="font-weight: bold">&#8226; {{ "order.reason-cancel" | translate }}:
+                </span>
+                <span class="col-12">
+                    {{ order?.cancelReason | translate }}
+                </span>
+            </span>
+        </div>
+        <div class="row">
+            <span class="col-12" *ngIf="order && !isCancelStatus">
+                <span style="font-weight: bold">&#8226; {{ "common.note" | translate }}:
+                </span>
+                <span class="col-12">
+                    {{ (order?.detail?.points)[0]?.adminNote | translate }}
+                </span>
+            </span>
+        </div>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="buttonActions" style="margin-left: 25%; width: 50%">
+            <button ad-button nzUpper nzSize="large" nzColor="gray" (click)="cancel()">
+                {{ "button.close" | translate }}
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>

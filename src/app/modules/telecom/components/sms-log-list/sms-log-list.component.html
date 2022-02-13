@@ -1,0 +1,6 @@
+<div class="grid__container">
+    <sms-log-filter (onSearch)="handleSearch($event)" (onReset)="handleReset($event)"></sms-log-filter>
+    <sms-log-grid #smsLogGrid (view)="handleViewDetail($event)"></sms-log-grid>
+</div>
+<sms-log-detail [smsLogModel]="smsLogToShow" [visible]="smsLogDetailModalVisible"
+    (handleVisible)="handleSmsLogDetailModalVisible($event)"></sms-log-detail>

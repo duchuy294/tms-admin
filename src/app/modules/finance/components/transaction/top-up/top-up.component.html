@@ -1,0 +1,119 @@
+<form nz-form nzLayout="vertical" #form="ngForm">
+    <div class="row">
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzRequired>
+                    {{
+                        ("actions.enter" | translate) +
+                            " " +
+                            ("common.id" | translate | uppercase)
+                    }}
+                </nz-form-label>
+                <nz-form-control>
+                    <search-and-suggest-account-component mode="multiple" [(ngModel)]="selectedUser" ngDefaultControl
+                        [ngModelOptions]="{ standalone: true }" #userValue="ngModel" [allowCustomer]="true"
+                        [allowServicer]="true" [placeHolder]="
+                            ('common.code' | translate) +
+                            '/' +
+                            ('common.name' | translate) +
+                            '/' +
+                            ('common.phone' | translate)
+                        " [servicerSearchCondition]="servicerSearchCondition"
+                        [customerSearchCondition]="customerSearchCondition">
+                    </search-and-suggest-account-component>
+                    <nz-form-explain *ngIf="showTargetExplain && !validTarget()" [style.color]="'#f5222d'">
+                        {{ "validations-form.userCode.required" | translate }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzRequired>
+                    {{ "finance.transaction-top-up.money" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <nz-input-group [nzSuffix]="
+                            'common.currency-unit' | translate | uppercase
+                        ">
+                        <input nz-input name="valueInput" [(ngModel)]="value" required #amountValue="ngModel"
+                            [textMask]="{ mask: numberMask }" [placeholder]="
+                                'finance.transaction-top-up.money' | translate
+                            " />
+                    </nz-input-group>
+                    <nz-form-explain *ngIf="
+                            (amountValue.dirty || amountValue.touched) &&
+                            amountValue.errors?.required
+                        ">
+                        {{
+                            "validations-form.moneyAmount.required" | translate
+                        }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <nz-form-item>
+                <nz-form-label>
+                    {{ "finance.transaction-top-up.type" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <nz-select name="method" style="width: 100%;" [(ngModel)]="method" #methodValue="ngModel" required>
+                        <nz-option *ngFor="let item of methodList" [nzValue]="item" [nzLabel]="
+                                'finance.transaction-adjust-deposit.' +
+                                    item +
+                                    'Method' | translate
+                            ">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-6">
+            <nz-form-item *ngIf="method === 'cash'">
+                <nz-form-label>
+                    {{ "finance.transaction-top-up.branch" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    {{ branchName }}
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="method === 'bank'">
+                <nz-form-label nzRequired>
+                    {{ "common.bank" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <nz-select name="bankName" style="width: 100%;" [(ngModel)]="model.bankId" #bankIdValue="ngModel"
+                        required>
+                        <nz-option *ngFor="let item of bankList" [nzValue]="item._id" [nzLabel]="item.name"></nz-option>
+                    </nz-select>
+                    <nz-form-explain *ngIf="
+                            (bankIdValue.dirty || bankIdValue.touched) &&
+                            bankIdValue.errors?.required
+                        ">
+                        {{ "validations-form.bank.selected" | translate }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label>
+                    {{ "common.note" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <textarea nz-input name="note" [(ngModel)]="model.note" [nzAutosize]="{ minRows: 5, maxRows: 10 }"
+                        #noteValue="ngModel">
+                    </textarea>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+</form>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

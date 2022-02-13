@@ -1,0 +1,70 @@
+<div class="store-info">
+    <div class="store-info__container">
+        <div class="store-info__header">
+            <div class="store-info__image">
+                <img [src]="modelQuery.images[0]" alt="" />
+            </div>
+            <div class="store-info__summary">
+                <h2>{{ modelQuery.name }}</h2>
+                <span>{{ modelQuery.createdAt | date: "HH:mm dd/MM/yyyy" }}</span>
+                <span>
+                    <nz-rate [ngModel]="modelQuery.rate" nzDisabled></nz-rate>
+                </span>
+                <span>#{{ modelQuery.code }}</span>
+                <span>{{ modelQuery.phone }} | {{ modelQuery.email }}</span>
+            </div>
+        </div>
+        <div class="store-info__description">
+            <ul>
+                <li>
+                    <label>Loại trung tâm:</label>
+                    <span>Uỷ quyền</span>
+                </li>
+                <li>
+                    <label>Trạng thái:</label>
+                    <span>{{
+                        "common.status" + modelQuery.status | translate
+                    }}</span>
+                </li>
+                <li>
+                    <label>Tham gia ETON:</label>
+                    <span>{{
+                        modelQuery.isMember ? "Đã tham gia" : "Chưa tham gia"
+                    }}</span>
+                </li>
+                <li>
+                    <label>Dịch vụ:</label>
+                    <span>Bảo hành, sửa chữa</span>
+                </li>
+                <li>
+                    <label>Nhân viên:</label>
+                    <span>15</span>
+                </li>
+                <li>
+                    <label>Quản lý:</label>
+                    <span>{{
+                        modelQuery.owner && servicerData
+                            ? servicerData.fullName
+                            : ""
+                    }}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="store-info__wallet">
+            <ul>
+                <li>
+                    <label>Tài khoản chính</label>
+                    <span>1.000.000.000đ</span>
+                </li>
+                <li>
+                    <label>Tài khoản phụ</label>
+                    <span>500.000.000đ</span>
+                </li>
+                <li>
+                    <label>Ký quỹ</label>
+                    <span>5.000.000đ</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

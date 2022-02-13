@@ -1,0 +1,112 @@
+<form nz-form nzLayout="vertical" #filterServicer="ngForm" *ngIf="display">
+    <div class="row">
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="servicer">{{ "common.servicer" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <search-and-suggest-account-component mode="multiple" [(ngModel)]="selectedServicer"
+                        ngDefaultControl [ngModelOptions]="{ standalone: true }" #servicer="ngModel"
+                        [allowCustomer]="false" [allowServicer]="true"
+                        [servicerSearchCondition]="servicerSearchCondition" [valueType]="'_id'" [placeHolder]="
+                            ('actions.enter' | translate) +
+                            ' ' +
+                            ('common.id' | translate | uppercase) +
+                            '/' +
+                            ('common.name' | translate) +
+                            '/' +
+                            ('common.phone' | translate)
+                        ">
+                    </search-and-suggest-account-component>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="">{{
+                    "filter.status" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select style="width: 100%" [(ngModel)]="model.status" name="status" nzShowSearch
+                        nzPlaceHolder="{{ 'common.all' | translate }}" nzAllowClear>
+                        <nz-option *ngFor="let item of statuses" [nzLabel]="'common.status' + item | translate"
+                            [nzValue]="item">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="">{{
+                    "filter.group" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select style="width: 100%" [(ngModel)]="model.groupId" name="servicerGroup" nzShowSearch
+                        nzPlaceHolder="{{ 'common.all' | translate }}" nzAllowClear (ngModelChange)="getTeams()">
+                        <nz-option *ngFor="let item of groups" [nzLabel]="item.name" [nzValue]="item._id">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="">{{
+                    "filter.team" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select style="width: 100%" [(ngModel)]="model.teamId" name="servicerTeam" nzShowSearch
+                        nzPlaceHolder="{{ 'common.all' | translate }}" nzAllowClear>
+                        <nz-option *ngFor="let item of teams" [nzLabel]="item.name" [nzValue]="item._id">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="searchTime">{{
+                    "common.createdAt" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-range-picker [nzShowTime]="false" [nzRanges]="ranges1" nzShowTime nzFormat="dd/MM/yyyy"
+                        [(ngModel)]="searchTime" name="searchTime" [nzPlaceHolder]="[
+                            'filter.fromDate' | translate,
+                            'filter.toDate' | translate
+                        ]" class="ant-calendar-picker-full-width">
+                    </nz-range-picker>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label>{{
+                    "common.servicer-type" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select style="width: 100%" [(ngModel)]="model.type" name="servicerType" nzShowSearch
+                        nzPlaceHolder="{{ 'common.all' | translate }}" nzAllowClear>
+                        <nz-option *ngFor="let item of servicerTypes" [nzLabel]="'servicer.type.' + item | translate"
+                            [nzValue]="item">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label class="form-label--empty"></nz-form-label>
+                <nz-form-control>
+                    <button ad-button nzColor="red" (click)="searchEvent()">
+                        {{ "button.search" | translate }}
+                    </button>
+                    &nbsp;
+                    <button ad-button (click)="reset()">
+                        {{ "button.clear" | translate }}
+                    </button>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+</form>

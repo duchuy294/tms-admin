@@ -1,0 +1,74 @@
+<page-wrapper [nzTitle]="'common.report'|translate">
+    <nz-table #reportList [nzData]="reportTable" [nzFrontPagination]="false" style="width: 50%;">
+        <thead>
+            <tr>
+                <th>{{'common.report-type' | translate}}</th>
+                <th>{{'common.report-description' | translate}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of reportList.data">
+                <td>
+                    <button nz-button nzType="dashed" [nzSize]="'small'" [title]="item.name |translate"
+                        (click)="visibleModal = true; currentTitle = item.name"><i nz-icon
+                            nzType="download"></i></button>
+                    &nbsp;{{item.name | translate}}
+                </td>
+                <td>{{item.description | translate}}</td>
+            </tr>
+        </tbody>
+    </nz-table>
+</page-wrapper>
+
+<nz-modal #modalQuickAssign nzWidth="680px" [(nzVisible)]="visibleModal" [nzTitle]="currentTitle | translate"
+    [nzContent]="modalContent" [nzFooter]="modalFooter" [nzMaskClosable]="false" [nzClosable]="false">
+    <ng-template #modalContent>
+        <div class="conten-package">
+            <div style="margin-bottom: 15px;" nz-row>
+                <div class="title" nz-col nzSpan="6">
+                    {{ "actions.importSO" | translate }}:
+                </div>
+                <div nz-col nzSpan="18">
+                    <nz-upload #fileUpload class="file-upload" [nzBeforeUpload]="beforeUpload"
+                        [nzShowUploadList]="false" [nzDisabled]="loading"
+                        nzAccept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <button nz-button>
+                            <i nz-icon nzType="upload"></i>{{ "uploader.choose-file" | translate }}
+                        </button>
+                    </nz-upload>&nbsp;
+                    <i *ngIf="loading" nz-icon [nzType]="'loading'"
+                        style="font-size: 20px; color: #08c; padding: 0 10px;"></i>
+                    <span>{{filename}}</span>
+                    <span class="download-sample-file" style="float: right;">
+                        <a href="/assets/downloads/Report_Template.xlsx" download><img
+                                src="/assets/icon/download-icon.svg" alt="" />
+                            {{
+                            "common.download-sample-file" | translate
+                            }}</a>
+                    </span>
+                </div>
+            </div>
+            <div [ngStyle]="{color: color}">
+                <span>{{message}}</span>
+                <a *ngIf="listSOError.length > 0" (click)="downloadSOError()" style="margin: 0 5px; color: #f00;">
+                    <img src="/assets/icon/download-icon.svg" alt="" />
+                    {{'collectionTab.downloadList' | translate}}
+                </a>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="grid__footer" style="width: 70%; margin: 0 auto;">
+            <div class="" style="margin-top: 15px; margin-bottom: 15px; text-align: center;">
+                <button ad-button nzUpper nzColor="default" (click)="close()" [disabled]="loading"
+                    style="width: 120px;">
+                    {{ "actions.cancel" | translate }}
+                </button>
+                <button ad-button nzUpper nzColor="primary" (click)="submit()" [disabled]="loading || !valid"
+                    style="width: 150px;">
+                    {{ "common.report-download" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

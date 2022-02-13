@@ -1,0 +1,62 @@
+<form nz-form nzLayout="vertical" class="row" #filter="ngForm" *ngIf="display">
+    <div class="col-2">
+        <nz-form-item>
+            <nz-form-label>{{ "common.code" | translate }}</nz-form-label>
+            <nz-form-control>
+                <input type="text" nz-input [(ngModel)]="query.code" name="code" />
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div class="col-2">
+        <nz-form-item>
+            <nz-form-label>{{ "common.name" | translate }}</nz-form-label>
+            <nz-form-control>
+                <input type="text" nz-input [(ngModel)]="query.name" name="name" />
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div class="col-2">
+        <nz-form-item>
+            <nz-form-label>{{ "common.status" | translate }}</nz-form-label>
+            <nz-form-control>
+                <nz-select [(ngModel)]="query.status" name="status" style="width: 100%;" [nzAllowClear]="true">
+                    <nz-option *ngFor="let item of statuses" [nzLabel]="'common.status' + item | translate"
+                        [nzValue]="item">
+                    </nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div class="col-4">
+        <nz-form-item>
+            <nz-form-label nzFor="searchTime">{{
+                "common.createdAt" | translate
+            }}</nz-form-label>
+            <nz-form-control>
+                <nz-range-picker [nzShowTime]="false" [nzRanges]="ranges1" nzShowTime nzFormat="dd/MM/yyyy"
+                    [(ngModel)]="searchTime" name="searchTime" [nzPlaceHolder]="[
+                        'filter.fromDate' | translate,
+                        'filter.toDate' | translate
+                    ]">
+                </nz-range-picker>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div class="col-2 mrg-bt-10">
+        <nz-form-item>
+            <nz-form-label class="form-label--empty"></nz-form-label>
+            <nz-form-control>
+                <button ad-button style=" margin-left: 10px;" nzColor="red" (click)="searchEvent()">
+                    {{ "button.search" | translate }}
+                </button>
+                <button ad-button style=" margin-left: 10px;" (click)="reset()">
+                    {{ "button.clear" | translate }}
+                </button>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+</form>

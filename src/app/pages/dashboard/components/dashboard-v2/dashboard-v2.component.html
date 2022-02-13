@@ -1,0 +1,303 @@
+<nz-spin [nzSpinning]="applyFilter && statisticLoading$ | async" [nzSize]="'medium'">
+    <page-wrapper style="padding-left: 5px; padding-right: 5px">
+        <div class="row">
+            <div class="col-9 gmap__container">
+                <div class="servicer__filter">
+                    <div class="servicer__filter-item">
+                        <nz-select style="width: 100%" [(ngModel)]="statisticQueryModel.groupId" name="groupId">
+                            <nz-option [nzValue]="''" [nzLabel]="'filter.all' | translate"></nz-option>
+                            <nz-option *ngFor="let item of (group$ | async)" [nzLabel]="item.name" [nzValue]="item._id">
+                            </nz-option>
+                        </nz-select>
+                    </div>
+                    <div class="servicer__filter-item">
+                        <nz-select style="width: 100%" [(ngModel)]="statisticQueryModel.teamId" nzAllowClear>
+                            <nz-option [nzValue]="''" [nzLabel]="'filter.all' | translate"></nz-option>
+                            <nz-option *ngFor="let item of teams" [nzLabel]="item.name" [nzValue]="item._id">
+                            </nz-option>
+                        </nz-select>
+                    </div>
+                    <div class="servicer__filter-item">
+                        <nz-select style="width: 100%" [(ngModel)]="statisticQueryModel.state">
+                            <nz-option [nzLabel]="'filter.all' | translate" [nzValue]="''"></nz-option>
+                            <nz-option [nzLabel]="'common.online' | translate" nzValue="online"></nz-option>
+                            <nz-option [nzLabel]="'common.offline' | translate" nzValue="offline"></nz-option>
+                        </nz-select>
+                    </div>
+                    <div class="servicer__filter-item">
+                        <input nz-input [(ngModel)]="statisticQueryModel.servicerCodes"
+                            placeholder="{{ 'table.servicer-code' | translate}}">
+                    </div>
+                    <button ad-button (click)="filterStatistic()" nzColor="red">{{ 'table.apply' | translate }}</button>
+                </div>
+                <div class="servicer__statistic-footer">
+                    <nz-tag [nzColor]="'magenta'">{{'dashboard.status.incident'|translate}}:
+                        {{(totalServicerState$ | async)?.incident?.total}}</nz-tag>
+                    <nz-tag [nzColor]="'red'">{{'dashboard.status.in-debt'|translate}}:
+                        {{(totalServicerState$ | async)['collection-debt']?.total}}
+                    </nz-tag>
+                    <nz-tag [nzColor]="'volcano'">{{'dashboard.status.processing'|translate}}:
+                        {{(totalServicerState$ | async) && (totalServicerState$ | async)?.processing?.total}}
+                    </nz-tag>
+                    <nz-tag [nzColor]="'green'">{{'dashboard.status.idle'|translate}}:
+                        {{(totalServicerState$ | async) && (totalServicerState$ | async)?.free?.total}}
+                    </nz-tag>
+                    <nz-tag [nzColor]="'blue'">{{'common.online'|translate}}:
+                        {{(totalServicerState$ | async)?.online?.total || 0}}</nz-tag>
+                    <nz-tag>Offline: {{(totalServicerState$ | async)?.offline?.total || 0}}</nz-tag>
+                </div>
+                <agm-map [minZoom]="11" [zoom]="zoom" (mapReady)="mapLoaded()" [disableDefaultUI]="false"
+                    [zoomControl]="false" (boundsChange)="boundsChange($event)" [latitude]="lat" [longitude]="lng"
+                    (idle)="loadServicerOnMap()">
+                    <ng-template ngFor let-item [ngForOf]="locations">
+                        <ng-template [ngIf]="servicers[item.servicerId]">
+                            <ng-template [ngIf]="!servicerQueryModel.servicerStatus">
+                                <agm-marker
+                                    *ngIf="servicers[item.servicerId][0].type != 2 && servicers[item.servicerId][0].vehicle && vehicleTypes[servicers[item.servicerId][0].vehicle.typeId]"
+                                    (mouseOver)="selectedLocation = item; servicer = servicers[item.servicerId][0]"
+                                    [latitude]="item.location.latitude" [longitude]="item.location.longitude"
+                                    [iconUrl]="servicerMarker(servicers[item.servicerId][0].vehicle.typeId, item.state ? (doingServicers.includes(item.servicerId) ? 'markerProcessing' : 'markerGrooving') : 'markerOffline')"
+                                    [label]="collectionDebtWallets[item.servicerId] ? { text: '$', color: '#fff' } : ''">
+                                </agm-marker>
+                                <agm-marker *ngIf="servicers[item.servicerId][0].type === 2"
+                                    (mouseOver)="selectedLocation = item; servicer = servicers[item.servicerId][0];"
+                                    [latitude]="item.location.latitude" [longitude]="item.location.longitude"
+                                    [iconUrl]="'/assets/icon/enterprise.png'"
+                                    [label]="collectionDebtWallets[item._id] ? {text: '$$&nbsp;&nbsp;&nbsp;&nbsp;', color: '#bd0707'} : ''">
+                                </agm-marker>
+                            </ng-template>
+                            <ng-template [ngIf]="servicerQueryModel.servicerStatus">
+                                <ng-template
+                                    [ngIf]="servicerQueryModel.servicerStatus === 'processing' && item.state && doingServicers.includes(item.servicerId)">
+                                    <agm-marker
+                                        *ngIf="servicers[item.servicerId][0]?.type != 2 && vehicleTypes[servicers[item.servicerId][0]?.vehicle?.typeId]"
+                                        (mouseOver)="selectedLocation = item; servicer = servicers[item.servicerId][0]"
+                                        [latitude]="item.location.latitude" [longitude]="item.location.longitude"
+                                        [iconUrl]="servicerMarker(servicers[item.servicerId][0].vehicle.typeId, 'markerProcessing')"
+                                        [label]="collectionDebtWallets[item.servicerId] ? { text: '$', color: '#fff' } : ''">
+                                    </agm-marker>
+                                </ng-template>
+                                <ng-template
+                                    [ngIf]="servicerQueryModel.servicerStatus === 'free' && item.state && !doingServicers.includes(item.servicerId)">
+                                    <agm-marker
+                                        *ngIf="servicers[item.servicerId][0]?.type != 2 && vehicleTypes[servicers[item.servicerId][0]?.vehicle?.typeId]"
+                                        (mouseOver)="selectedLocation = item; servicer = servicers[item.servicerId][0]"
+                                        [latitude]="item.location.latitude" [longitude]="item.location.longitude"
+                                        [iconUrl]="servicerMarker(servicers[item.servicerId][0].vehicle.typeId, 'markerGrooving')"
+                                        [label]="collectionDebtWallets[item.servicerId] ? { text: '$', color: '#fff' } : ''">
+                                    </agm-marker>
+                                </ng-template>
+                                <ng-template
+                                    [ngIf]="servicerQueryModel.servicerStatus === 'collection-debt' && collectionDebtWallets[item.servicerId]">
+                                    <agm-marker
+                                        *ngIf="servicers[item.servicerId][0]?.type != 2 && vehicleTypes[servicers[item.servicerId][0]?.vehicle?.typeId]"
+                                        (mouseOver)="selectedLocation = item; servicer = servicers[item.servicerId][0]"
+                                        [latitude]="item.location.latitude" [longitude]="item.location.longitude"
+                                        [iconUrl]="servicerMarker(servicers[item.servicerId][0].vehicle.typeId, item.state ? (doingServicers.includes(item.servicerId) ? 'markerProcessing': 'markerGrooving') : 'markerOffline')"
+                                        [label]="{ text: '$', color: '#fff' }">
+                                    </agm-marker>
+                                </ng-template>
+                            </ng-template>
+                        </ng-template>
+                    </ng-template>
+                    <ng-template [ngIf]="servicerChosed?._id">
+                        <agm-marker *ngIf="vehicleTypes[servicerChosed.vehicle?.typeId]"
+                            (mouseOver)="selectedLocation = servicerChosed" [latitude]="lat" [longitude]="lng"
+                            [iconUrl]="servicerMarker(servicerChosed?.vehicle?.typeId, doingServicers.includes(servicerChosed._id) ? 'markerProcessing': 'markerGrooving')"
+                            [label]="collectionDebtWallets[servicerChosed._id]? { text: '$', color: '#fff' } : ''">
+                        </agm-marker>
+                    </ng-template>
+
+                    <agm-snazzy-info-window [wrapperClass]="'top-40'" *ngIf="selectedLocation"
+                        [isOpen]="selectedLocation" [closeOnMapClick]="true" [openOnMarkerClick]="true"
+                        [latitude]="selectedLocation.location && (selectedLocation.location.latitude || selectedLocation.location.coordinates[1])"
+                        [longitude]="selectedLocation.location && (selectedLocation.location.longitude || selectedLocation.location.coordinates[0])"
+                        [maxWidth]="450" [maxHeight]="320" [padding]="'0px'" [borderRadius]="'8px'"
+                        (beforeOpen)="onChangeInfoWindow()" (afterClose)="afterCloseInfoWindow()">
+                        <ng-template>
+                            <ng-template [ngIf]="servicer?._id">
+                                <servicer-profile
+                                    [collectionDebt]="collectionDebtWallets[servicer._id] ? collectionDebtWallets[servicer._id][0].collectionDebt : null"
+                                    [servicerModel]="servicer" [setIncidentOrders]="incidentOrders[servicer._id]"
+                                    [setProcessingOrders]="processingOrders[servicer._id]"></servicer-profile>
+                            </ng-template>
+                            <ng-template [ngIf]="servicerChosed?._id && !servicer._id">
+                                <servicer-profile [collectionDebt]="collectionDebtWallets[servicerChosed._id] ?
+                                     collectionDebtWallets[servicerChosed._id][0].collectionDebt : null"
+                                    [servicerModel]="servicerChosed"
+                                    [setIncidentOrders]="incidentOrders[servicerChosed._id]"
+                                    [setProcessingOrders]="processingOrders[servicerChosed._id]"></servicer-profile>
+                            </ng-template>
+
+                        </ng-template>
+                    </agm-snazzy-info-window>
+                </agm-map>
+            </div>
+            <div class="col-3 statistics__container">
+                <div class="total-statistics__container">
+                    <div class="row total-statistics__header">
+                        <div class="col-12 total-statistics__item" (click)="handleVisibleTotalCollectionDebt($event)">
+                            <strong
+                                class="total-statistics__value">{{ (statistic$ | async)?.totalCollectionFee | number}}
+                                đ</strong>
+                            <span
+                                class="total-statistics__label">{{'statistics.dashboard.total-collection-debt'|translate}}</span>
+                        </div>
+                    </div>
+                    <div class="row total-statistics__footer">
+                        <div class="total-statistics__item" (click)="handleShowAcceptedOrders()">
+                            <strong
+                                class="total-statistics__value">{{ (statistic$ | async)?.totalAcceptedOrders | number}}</strong>
+                            <span
+                                class="total-statistics__label">{{'statistics.dashboard-order.accepted'|translate}}</span>
+                        </div>
+                        <div class="total-statistics__item" (click)="handleShowInProgressOrders()">
+                            <strong
+                                class="total-statistics__value">{{ (statistic$ | async)?.totalInProgressOrders | number}}</strong>
+                            <span
+                                class="total-statistics__label">{{'statistics.dashboard-order.processing'|translate}}</span>
+                        </div>
+
+                        <div class="total-statistics__item" (click)="handleShowIncidentOrders()">
+                            <strong
+                                class="total-statistics__value">{{ (statistic$ | async)?.totalIncidentOrders | number}}</strong>
+                            <span
+                                class="total-statistics__label">{{'statistics.dashboard-order.incident'|translate}}</span>
+                        </div>
+                        <div class="total-statistics__item" (click)="handleShowReturnOrders()">
+                            <strong
+                                class="total-statistics__value">{{ (statistic$ | async)?.totalReturnOrders | number}}</strong>
+                            <span
+                                class="total-statistics__label">{{'statistics.dashboard-order.return'|translate}}</span>
+                        </div>
+
+                        <div class="total-statistics__item total-statistics__item--no-border">
+                            <strong class="total-statistics__value">
+                                {{(totalServicerState$ | async) && (totalServicerState$ | async)?.free?.total || 0}}
+                            </strong>
+                            <span
+                                class="total-statistics__label">{{'statistics.dashboard.idle-partner'|translate}}</span>
+                        </div>
+                        <div class="total-statistics__item total-statistics__item--no-border">
+                            <strong class="total-statistics__value">
+                                {{(totalServicerState$ | async) && (totalServicerState$ | async)?.offline?.total || 0}}
+                            </strong>
+                            <span
+                                class="total-statistics__label">{{'statistics.dashboard.offline-partner'|translate}}</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row servicer__container">
+                    <div class="servicer__header">
+                        <div class="servicer__company">
+                            {{(currentGroup$ | async)?.name || ('dashboard.all-group'|translate)}}</div>
+                        <div class="servicer__status-filter">
+                            <nz-select [(ngModel)]="servicerQueryModel.servicerStatus"
+                                (ngModelChange)="changeServicerState($event)" style="width: 100%">
+                                <nz-option [nzValue]="''" nzLabel="{{'common.all'|translate}}"></nz-option>
+                                <nz-option nzValue="processing" nzLabel="{{'dashboard.status.processing'|translate}}">
+                                </nz-option>
+                                <nz-option nzValue="free" nzLabel="{{'dashboard.status.idle'|translate}}">
+                                </nz-option>
+                                <nz-option nzValue="collection-debt" nzLabel="{{'dashboard.status.in-debt'|translate}}">
+                                </nz-option>
+                                <nz-option nzValue="incident" nzLabel="{{'dashboard.status.incident'|translate}}">
+                                </nz-option>
+                            </nz-select>
+
+                        </div>
+                    </div>
+                    <div class="servicer__list partners-infinite-container" infiniteScroll [infiniteScrollDistance]="2"
+                        [infiniteScrollThrottle]="50" (scrolled)="onScroll()" [scrollWindow]="false">
+                        <div *ngFor="let item of (servicersData$ | async)">
+                            <div class="servicer__item raw"
+                                [ngClass]="{'servicer__item--selected': servicer?._id === item.servicer._id}"
+                                (click)="setSelectedServicer(item.servicer._id)">
+                                <div class="col-2 servicer__image">
+                                    <ng-template [ngIf]="item.servicer.type === 2">
+                                        <img src="/assets/icon/enterprise.png" />
+                                    </ng-template>
+                                    <ng-template [ngIf]="item.servicer.type !== 2">
+                                        <ng-template [ngIf]="currentState === 'offline'">
+                                            <img
+                                                [src]="servicerMarker(item.servicer.vehicle.typeId, 'markerOffline')" />
+                                        </ng-template>
+                                        <ng-template [ngIf]="currentState !== 'offline'">
+                                            <img
+                                                [src]="servicerMarker(item.servicer.vehicle.typeId, (item.servicer.state ? (item.doing ? 'markerProcessing' : 'markerGrooving') : 'markerOffline' ))" />
+                                        </ng-template>
+                                    </ng-template>
+                                </div>
+                                <div class="col-10">
+                                    <div class="row" style="padding: 0px" style="display: flex">
+                                        <div class="col-5" style="padding-right: 0px; padding-left: 0px">
+                                            <span class="servicer__name">
+                                                <a target="_blank"
+                                                    [routerLink]="['/pages/servicer-management/servicer/detail', item.servicer._id]">
+                                                    {{item.servicer?.fullName}}
+                                                </a>
+                                            </span>
+                                            <ng-template [ngIf]="item.collectionDebt">
+                                                <div class="servicer__collectiondebt">{{item.collectionDebt | number}}đ
+                                                </div>
+                                                <div class="servicer__time">
+                                                    ({{ item.collectionTime | fromNow | timeAgo }})
+                                                </div>
+                                            </ng-template>
+                                        </div>
+                                        <div class="col-2 servicer__extra">
+                                            <nz-tooltip *ngIf="item.incidentTime"
+                                                [nzTitle]="'dashboard.incident-order'|translate">
+                                                <img nz-tooltip src="/assets/icon/icon-suco.png" />
+                                            </nz-tooltip>
+                                        </div>
+                                        <div class="servicer__time">
+                                            <span *ngIf="item.incidentTime">{{ item.incidentTime | fromNow | timeAgo}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 servicer__name" *ngIf="servicers[item.servicer._id]">
+                                            <span class="style__team"
+                                                *ngFor="let element of servicers[item.servicer._id][0]?.teams.slice(0, 3)">
+                                                <a style="color: black;" class="border__style" target="_blank"
+                                                    routerLink="/pages/servicer-management/team/detail/{{element._id}}">
+                                                    {{ element.name }}</a>&nbsp;
+                                            </span>
+                                            <a class="clicking__button"
+                                                *ngIf="servicers[item.servicer._id][0].teams?.length > 3"
+                                                (click)="setSelectedServicer(item.servicer._id)">
+                                                <img src='assets/icon/blue-add.png' />
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 servicer__code" *ngIf="processingOrders">
+                                            <span
+                                                *ngFor="let element of processingOrders[item.servicer._id]?.slice(0,5); let i = index">
+                                                <a class="code__order__style" target="_blank"
+                                                    routerLink="/pages/order/{{element._id}}">
+                                                    #{{ element.code }}
+                                                </a>
+                                                <span class="code__order__style"
+                                                    *ngIf="i != processingOrders[item.servicer._id]?.slice(0,5).length - 1">,&nbsp;</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <nz-spin [nzTip]="'common.fetchdata' | translate" [nzSpinning]="loadingServicer"
+                            [nzSize]="'small'" class="partners-infinite-loading"></nz-spin>
+                        <p *ngIf="!loadingServicer" style="text-align: center;">
+                            {{!(servicersData$ | async)?.length ? ('common.no-data'|translate) : ''}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </page-wrapper>
+    <servicers-with-collection-debt [(visible)]="visibleTotalCollectionDebt"></servicers-with-collection-debt>
+    <total-orders-statistic [queryModel]="statisticQueryModel" [(visible)]="visibleOrdersList"></total-orders-statistic>
+</nz-spin>

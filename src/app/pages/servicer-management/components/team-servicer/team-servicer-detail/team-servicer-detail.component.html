@@ -1,0 +1,14 @@
+<button class="page__button" ad-button nzColor="red" (click)="toggleFilter()">
+    {{'button.filter' | translate}}
+</button>
+<button class="page__button" ad-button>
+    {{'actions.export' | translate}}
+</button>
+<div class="row">
+    <div class="col-8 page__left-info">
+        <team-servicer-detail-list #list></team-servicer-detail-list>
+    </div>
+    <div class="col-4 page__right-info">
+        <team-servicer-detail-information></team-servicer-detail-information>
+    </div>
+</div>

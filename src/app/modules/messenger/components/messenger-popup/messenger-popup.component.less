@@ -1,0 +1,171 @@
+@import './../../../../../utils.less';
+
+@max-width: 284px;
+@max-height: 350px;
+
+button,
+nz-upload {
+    height: 30px;
+    width: 30px;
+}
+
+.overflow {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.messenger {
+    &__container {
+        width: @max-width;
+        height: @max-height;
+        background-color: #F3F3F3;
+        box-shadow: 1px 0px 5px 1px @shadow-color;
+    }
+
+    &__header {
+        position: relative;
+        height: 50px;
+        background-color: white;
+        cursor: pointer;
+
+        &__border {
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        &:hover {
+            background-color: #F2F3F5;
+        }
+
+        &__content {
+            margin: 7px 10px 7px 10px;
+            display: flex;
+        }
+
+        &__avatar {
+            width: 42px;
+            height: 42px;
+            margin: 4px 0 4px 0;
+        }
+
+        button {
+            margin: 10px 0 10px 0;
+            background-color: #E3E5E8;
+            padding-top: 3px;
+        }
+    }
+
+
+
+    &__conversation {
+        height: 250px;
+        background-color: white;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    &__footer {
+        margin: 7px 10px 7px 10px;
+        display: flex;
+    }
+}
+
+.title {
+    width: 192px;
+
+    &__name {
+        &:extend(.overflow);
+        margin: 6px 6px 0 6px;
+        font-size: 1.0em;
+        font-weight: bold;
+    }
+
+    &__order-code {
+        &:extend(.overflow);
+        margin: 0 6px 0 6px;
+        font-size: 0.9em;
+    }
+}
+
+.input {
+    height: 30px;
+    width: 188px;
+    border-radius: 30px;
+    background-color: white;
+    margin: 3px 10px 0 0;
+    font-size: 1em;
+    overflow: hidden;
+    resize: none;
+    vertical-align: center;
+}
+
+.file-upload {
+    margin: 3px 6px 0 0;
+}
+
+.send-image-button {
+    border: transparent;
+    background-color: #ED1C24;
+    padding: unset;
+}
+
+.send-button {
+    margin: 3px 0 3px 0;
+    border: transparent;
+    background-color: transparent;
+    padding: unset;
+}
+
+.message {
+    margin: 10px;
+}
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border-color: white;
+    border-style: solid;
+    border-width: 2px;
+
+    &__right {
+        &:extend(.avatar);
+        position: relative;
+        float: right;
+    }
+
+    &__left {
+        &:extend(.avatar);
+        position: absolute;
+        bottom: 0;
+        margin-bottom: 4px;
+    }
+}
+
+.block-message {
+    height: 36px;
+    width: @max-width;
+    text-align: center;
+    font-size: 0.8em;
+    line-height: 36px;
+}
+
+.empty-screen {
+    &__container {
+        height: 250px;
+        width: @max-width;
+        background-color: white;
+        position: relative;
+    }
+
+    &__content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: #E3E5E8;
+    }
+}

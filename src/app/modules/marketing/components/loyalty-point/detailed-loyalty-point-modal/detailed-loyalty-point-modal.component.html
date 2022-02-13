@@ -1,0 +1,118 @@
+<nz-modal nzWidth="600px" [(nzVisible)]="visible" [nzContent]="modalContent" [nzFooter]="modalFooter"
+    (nzOnCancel)="onCancelModal()">
+    <ng-template #modalContent>
+        <div class="row">
+            <div class="col-6">
+                <nz-form-item>
+                    <nz-form-label>{{
+                        "marketing.loyalty-point.orderType" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>{{
+                        data && data.name ? data.name : ""
+                    }}</nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-6">
+                <nz-form-item>
+                    <nz-form-label>{{
+                        "marketing.news.list-receiver" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>{{
+                        data && data.receiverName ? data.receiverName : ""
+                    }}</nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <nz-form-item>
+                    <nz-form-label>{{
+                        "common.date" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>{{
+                            data && data.createdAt
+                                ? (data.createdAt | date: "H:mm:ss - dd/MM/y")
+                                : ""
+                        }}
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-6">
+                <nz-form-item>
+                    <nz-form-label>{{
+                        "marketing.loyalty-point.receiverCode" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>{{
+                        data && data.receiverCode ? data.receiverCode : ""
+                    }}</nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <nz-form-item>
+                    <nz-form-label>{{
+                        "common.order" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>{{
+                        data && data.orderCode ? data.orderCode : ""
+                    }}</nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-6">
+                <nz-form-item>
+                    <nz-form-label>{{
+                        "marketing.loyalty-point.loyalty-point" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>{{
+                        data && data.point ? data.point : ""
+                    }}</nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <nz-form-item>
+                    <nz-form-label>{{
+                        "common.perform" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>{{
+                        data && data.staffName ? data.staffName : ""
+                    }}</nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-6">
+                <nz-form-item>
+                    <nz-form-label>{{
+                        "common.dueDate" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>{{
+                            data && data.expiredAt
+                                ? (data.expiredAt | date: "dd/MM/y")
+                                : ""
+                        }}
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <nz-form-item>
+                    <nz-form-label>{{
+                        "common.note" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>{{
+                        data && data.note ? data.note : ""
+                    }}</nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="footer">
+            <button ad-button nzUpper nzColor="gray" class="longButton" (click)="onCancelModal()">
+                {{ "button.close" | translate }}
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>

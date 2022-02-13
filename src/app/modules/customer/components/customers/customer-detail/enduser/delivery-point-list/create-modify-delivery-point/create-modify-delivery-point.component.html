@@ -1,0 +1,164 @@
+<nz-modal nzWidth="600px" [(nzVisible)]="visible" [nzTitle]="modelTitle" [nzContent]="modelContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="cancle()">
+    <ng-template #modelTitle>
+        {{
+            (modifyingModel
+                ? "end-user.sub-end-user.edit"
+                : "end-user.sub-end-user.create"
+            ) | translate
+        }}
+    </ng-template>
+    <ng-template #modelContent>
+        <form nz-form nzLayout="vertical" #createModifyForm="ngForm">
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "common.full-name" | translate
+                        }}</nz-form-label>
+                        <nz-form-control [ngClass]="{
+                                'has-error':
+                                    (name.dirty || name.touched) && name.errors
+                            }">
+                            <input name="name" [(ngModel)]="model.name" #name="ngModel" nz-input required />
+                            <nz-form-explain *ngIf="
+                                    (name.dirty || name.touched) &&
+                                    name.errors?.required
+                                ">{{
+                                    "end-user.validations.required-full-name"
+                                        | translate
+                                }}</nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "common.phone" | translate
+                        }}</nz-form-label>
+                        <nz-form-control [ngClass]="{
+                                'has-error':
+                                    (phone.dirty || phone.touched) &&
+                                    phone.errors
+                            }">
+                            <input type="text" nz-input name="phone" [(ngModel)]="model.phone" #phone="ngModel" required
+                                minlength="8" maxlength="14" />
+                            <nz-form-explain *ngIf="
+                                    (phone.dirty || phone.touched) &&
+                                    phone.errors?.required
+                                ">
+                                {{
+                                    "validations-form.phone.required"
+                                        | translate
+                                }}</nz-form-explain>
+                            <nz-form-explain *ngIf="
+                                    (phone.dirty || phone.touched) &&
+                                    phone.errors?.minlength
+                                ">
+                                {{
+                                    "validations-form.phone.minlength"
+                                        | translate: { min: 8 }
+                                }}
+                            </nz-form-explain>
+                            <nz-form-explain *ngIf="
+                                    (phone.dirty || phone.touched) &&
+                                    phone.errors?.maxlength
+                                ">
+                                {{
+                                    "validations-form.phone.maxlength"
+                                        | translate: { max: 14 }
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "common.address" | translate
+                        }}</nz-form-label>
+                        <nz-form-control [ngClass]="{
+                                'has-error':
+                                    (address.dirty || address.touched) &&
+                                    address.errors
+                            }">
+                            <input name="address" [(ngModel)]="model.address" #address="ngModel" nz-input required />
+                            <nz-form-explain *ngIf="
+                                    (address.dirty || address.touched) &&
+                                    address.errors?.required
+                                ">{{
+                                    "end-user.validations.required-address"
+                                        | translate
+                                }}</nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "common.mapAddress" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <autocomplete-gmap [nzValue]="model.mapAddress"
+                                (inputChange)="handleAutocompleteChange($event)" nzPlaceHolder="{{
+                                    'common.enterMap' | translate
+                                }}" (changePlace)="updateLocation($event)" #mapAddress>
+                            </autocomplete-gmap>
+                            <nz-form-explain *ngIf="showLocationExplain && !validLocation()" [style.color]="'#f5222d'">
+                                {{
+                                    "validations-form.mapAddress.invalid"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nzNoColon="true"> </nz-form-label>
+                        <nz-form-control>
+                            <button ad-button nzColor="red" (click)="toggleMapVisible()">
+                                {{
+                                    (mapVisible
+                                        ? "maps.disable-map"
+                                        : "maps.enable-map"
+                                    ) | translate
+                                }}
+                            </button>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div *ngIf="mapVisible">
+                        <mapp #mapInstance (center)="getMapsCenter($event)" [location]="modelLocation"
+                            [isDraggable]="true">
+                        </mapp>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div style="width: 350px; margin: 0 auto;">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" (click)="submit()">
+                    {{
+                        (modifyingModel ? "button.edit" : "button.create")
+                            | translate
+                    }}
+                </button>
+                <button ad-button nzUpper nzColor="gray" (click)="cancle()">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

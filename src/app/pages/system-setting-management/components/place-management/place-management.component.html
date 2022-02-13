@@ -1,0 +1,22 @@
+<page-wrapper [nzTitle]="'general-menu.city-province' | translate">
+    <nz-tabset [(nzSelectedIndex)]="selectedTabIndex" [nzType]="'card'" (nzClick)="selectedTabIndex = 0">
+        <nz-tab [nzTitle]="'general-menu.region' | translate">
+            <region-list *ngIf="selectedTabIndex === 0"></region-list>
+        </nz-tab>
+        <nz-tab [nzTitle]="'general-menu.city-province' | translate" (nzClick)="selectedTabIndex = 1">
+            <city-province-list *ngIf="selectedTabIndex === 1"></city-province-list>
+        </nz-tab>
+        <nz-tab [nzTitle]="'general-menu.district' | translate" (nzClick)="selectedTabIndex = 2">
+            <district-list *ngIf="selectedTabIndex === 2"></district-list>
+        </nz-tab>
+        <nz-tab [nzTitle]="'general-menu.wards' | translate" (nzClick)="selectedTabIndex = 3">
+            <wards-list *ngIf="selectedTabIndex === 3"></wards-list>
+        </nz-tab>
+        <nz-tab [nzTitle]="'general-menu.return-warehouse' | translate" (nzClick)="selectedTabIndex = 4">
+            <return-warehouse-list *ngIf="selectedTabIndex === 4"></return-warehouse-list>
+        </nz-tab>
+        <nz-tab [nzTitle]="'general-menu.adidi-branch' | translate" (nzClick)="selectedTabIndex = 5">
+            <adidi-branch-list *ngIf="selectedTabIndex === 5"></adidi-branch-list>
+        </nz-tab>
+    </nz-tabset>
+</page-wrapper>

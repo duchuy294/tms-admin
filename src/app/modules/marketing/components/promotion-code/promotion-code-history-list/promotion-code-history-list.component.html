@@ -1,0 +1,13 @@
+<div class="grid__container">
+    <div class="grid__header">
+        <div class="grid__action__left">
+            <button ad-button nzColor="red" class="longButton" (click)="toggleVisibleFilter()">
+                {{ "filter.filter" | translate }}
+            </button>
+        </div>
+    </div>
+</div>
+<promotion-code-history-filter [display]="filterVisible" (search)="search($event)">
+</promotion-code-history-filter>
+<promotion-code-history-grid #grid>
+</promotion-code-history-grid>

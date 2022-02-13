@@ -1,0 +1,84 @@
+<nz-modal nzWidth="850px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal()">
+    <ng-template #modalTitle>
+        {{
+            (!model?._id
+                ? "form.categories.titleCreate"
+                : "form.categories.titleEdit"
+            ) | translate
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #form="ngForm">
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "form.categories.nameVi" | translate
+                        }}</nz-form-label>
+                        <nz-form-control [nzErrorTip]="
+                                'form.categories.validations-name' | translate
+                            ">
+                            <input nz-input [(ngModel)]="model.name.vi" name="nameVi" required #name="ngModel"
+                                [placeholder]="
+                                    'form.categories.placeholderName'
+                                        | translate
+                                " />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "form.categories.nameEn" | translate
+                        }}</nz-form-label>
+                        <nz-form-control [nzErrorTip]="
+                                'form.categories.validations-name' | translate
+                            ">
+                            <input nz-input [(ngModel)]="model.name.en" name="nameEn" required #name="ngModel"
+                                [placeholder]="
+                                    'form.categories.placeholderName'
+                                        | translate
+                                " />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "form.categories.order" | translate }}
+                        </nz-form-label>
+                        <nz-form-control [nzErrorTip]="
+                                'form.categories.validations-order' | translate
+                            ">
+                            <nz-input-group>
+                                <input required nz-input required type="number" min="1" step="1" max="100"
+                                    [placeholder]="
+                                        'form.vehicle.placeholderOrder'
+                                            | translate
+                                    " [(ngModel)]="model.order" name="order" />
+                            </nz-input-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div style="width: 380px; margin: 0 auto;">
+            <div class="buttonActions">
+                <button (click)="onCreate()" ad-button nzUpper nzColor="primary">
+                    {{
+                        (model?._id ? "button.edit" : "button.add") | translate
+                    }}
+                </button>
+                <button ad-button nzUpper (click)="handleVisibleModal()" nzColor="gray">
+                    {{ "actions.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

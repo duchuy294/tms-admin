@@ -1,0 +1,89 @@
+<page-wrapper [nzTitle]="modelData?.name">
+    <div class="row">
+        <div class="col-8">
+            <h2 class="page__heading"> {{'marketing.promotion-policy-detail.detail' | translate}}</h2>
+            <nz-table #table [nzData]="tableData?.data" [nzFrontPagination]="false" nzShowSizeChanger
+                [nzTotal]="tableData?.total" [nzScroll]="{ x: '800px' }">
+                <thead>
+                    <tr>
+                        <th [nzWidth]="'20%'">{{'common.condition' | translate}}</th>
+                        <th [nzWidth]="'30%'">{{'marketing.loyalty-point.point-values' | translate}}</th>
+                        <th [nzWidth]="'30%'">{{'common.note' | translate}}</th>
+                        <th [nzWidth]="'20%'" nzRight="0px">{{'table.more-action' | translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of table.data">
+                        <td>{{data.name}}</td>
+                        <td>{{data.pointValue | number}}đ = {{'marketing.loyalty-point.one-point' | translate}}</td>
+                        <td>{{data.note}}</td>
+                        <td nzRight="0px">
+                            <button ad-button>{{'table.detail' | translate}}</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+            <h2 class="page__heading">{{'common.history' | translate}}</h2>
+        </div>
+        <div class="col-4">
+            <h2 class="page__heading">{{'marketing.promotion-policy-detail.infor' | translate}}</h2>
+            <div class="row">
+                <div class="col-4">
+                    {{'table.referral-policy-code' | translate}}
+                </div>
+                <div class="col-8">
+                    {{modelData.code}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    {{'table.referral-policy-name' | translate}}
+                </div>
+                <div class="col-8">
+                    {{modelData.name}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    {{'table.priority-level' | translate}}
+                </div>
+                <div class="col-8">
+                    {{modelData.priority}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    {{'common.time' | translate}}
+                </div>
+                <div class="col-8">
+                    {{modelData.effectedAt | date:'dd/MM/yyyy'}} - {{modelData.expiredAt | date:'dd/MM/yyyy'}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    {{'common.status' | translate}}
+                </div>
+                <div class="col-8">
+                    {{'marketing.promotion-policy-status.' + modelData.status | translate}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    {{'marketing.promotion-policy.content' | translate}}
+                </div>
+                <div class="col-8">
+                    {{modelData.content}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12" style="text-align: center">
+                    <button style="margin-top: 30px" nzUpper="true" ad-button nzColor="primary"
+                        (click)="editLoyaltyPoint()">{{'button.edit' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <loyalty-point-policy-modification-modal [model]="modelData" [visible]="visibleModal"
+        (handleVisible)="handleVisibleModal($event)" (onFinished)="handleAfterModification()">
+    </loyalty-point-policy-modification-modal>
+</page-wrapper>

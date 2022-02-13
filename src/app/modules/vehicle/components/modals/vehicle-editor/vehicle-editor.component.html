@@ -1,0 +1,290 @@
+<nz-modal nzWidth="850px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal()">
+    <ng-template #modalTitle>
+        {{
+            (!model?._id
+                ? "form.vehicle.titleCreate"
+                : "form.vehicle.titleEdit"
+            ) | translate
+        }}
+    </ng-template>
+
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #form="ngForm">
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "form.vehicle.nameVi" | translate
+                        }}</nz-form-label>
+                        <nz-form-control [nzErrorTip]="
+                                'form.vehicle-validations.name' | translate
+                            ">
+                            <input *ngIf="model.name" nz-input [(ngModel)]="model.name.vi" name="nameVi" required
+                                #name="ngModel" [placeholder]="
+                                    'form.vehicle.placeholderName' | translate
+                                " />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "form.vehicle.nameEn" | translate
+                        }}</nz-form-label>
+                        <nz-form-control [nzErrorTip]="
+                                'form.vehicle-validations.name' | translate
+                            ">
+                            <input *ngIf="model.name" nz-input [(ngModel)]="model.name.en" name="nameEn" required
+                                #name="ngModel" [placeholder]="
+                                    'form.vehicle.placeholderName' | translate
+                                " />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "settings.vehicle.type" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-select style="width: 100%" [(ngModel)]="model.type" name="type" required>
+                                <nz-option *ngFor="let item of vehicleTypeList" [nzValue]="item.type"
+                                    [nzLabel]="item.name"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "settings.vehicle.size" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-select style="width: 100%" [(ngModel)]="model.sizeId" name="size" required>
+                                <nz-option *ngFor="let item of vehicleSizeList" [nzValue]="item._id"
+                                    [nzLabel]="item.name"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label>
+                            {{ "settings.vehicle.capacity" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-input-group nzSuffix="Kg">
+                                <input nz-input maxlength="10" type="number" min="0" step="1" max="1000000000"
+                                    [placeholder]="
+                                        'form.vehicle.placeholderCapacity'
+                                            | translate
+                                    " [(ngModel)]="model.maxWeight" name="maxWeight" />
+                            </nz-input-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "settings.vehicle.order" | translate }}
+                        </nz-form-label>
+                        <nz-form-control [nzErrorTip]="
+                                'form.vehicle-validations.order' | translate
+                            ">
+                            <nz-input-group>
+                                <input required nz-input required type="number" min="1" step="1" max="100"
+                                    [placeholder]="
+                                        'form.vehicle.placeholderOrder'
+                                            | translate
+                                    " [(ngModel)]="model.order" name="order" />
+                            </nz-input-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "form.vehicle.imageNormal" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-file-uploader [nzFileList]="imageNormal" [nzData]="{ path: 'vehicle' }" (nzChange)="
+                                    updateContentImg($event, 'imageNormal')
+                                " [nzShowButton]="!model.imgUrl">
+                            </nz-file-uploader>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "form.vehicle.imageSelected" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-file-uploader [nzFileList]="imageSelected" [nzData]="{ path: 'vehicle' }" (nzChange)="
+                                    updateContentImg($event, 'imageSelected')
+                                " [nzShowButton]="!model.selectedImgUrl">
+                            </nz-file-uploader>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "form.vehicle.markerNormal" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-file-uploader [nzFileList]="imageMarkerNormal" [nzData]="{ path: 'vehicle' }"
+                                (nzChange)="
+                                    updateContentImg(
+                                        $event,
+                                        'imageMarkerNormal'
+                                    )
+                                " [nzShowButton]="!model.markerIcon">
+                            </nz-file-uploader>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "form.vehicle.markerLarge" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-file-uploader [nzFileList]="imageMarkerLarge" [nzData]="{ path: 'vehicle' }" (nzChange)="
+                                    updateContentImg($event, 'imageMarkerLarge')
+                                " [nzShowButton]="!model.markerSmIcon">
+                            </nz-file-uploader>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "form.vehicle.processing" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-file-uploader [nzFileList]="imageMarkerProcessing" [nzData]="{ path: 'vehicle' }"
+                                (nzChange)="
+                                    updateContentImg(
+                                        $event,
+                                        'imageMarkerProcessing'
+                                    )
+                                " [nzShowButton]="!model.markerProcessing">
+                            </nz-file-uploader>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "form.vehicle.grooving" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-file-uploader [nzFileList]="imageMarkerGrooving" [nzData]="{ path: 'vehicle' }"
+                                (nzChange)="
+                                    updateContentImg(
+                                        $event,
+                                        'imageMarkerGrooving'
+                                    )
+                                " [nzShowButton]="!model.markerGrooving">
+                            </nz-file-uploader>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "form.vehicle.return" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-file-uploader [nzFileList]="imageMarkerReturn" [nzData]="{ path: 'vehicle' }"
+                                (nzChange)="
+                                    updateContentImg(
+                                        $event,
+                                        'imageMarkerReturn'
+                                    )
+                                " [nzShowButton]="!model.markerReturn">
+                            </nz-file-uploader>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "form.vehicle.cod" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-file-uploader [nzFileList]="imageMarkerCod" [nzData]="{ path: 'vehicle' }" (nzChange)="
+                                    updateContentImg($event, 'imageMarkerCod')
+                                " [nzShowButton]="!model.markerCod">
+                            </nz-file-uploader>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "form.vehicle.incident" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-file-uploader [nzFileList]="imageMarkerIncident" [nzData]="{ path: 'vehicle' }"
+                                (nzChange)="
+                                    updateContentImg(
+                                        $event,
+                                        'imageMarkerIncident'
+                                    )
+                                " [nzShowButton]="!model.markerIncident">
+                            </nz-file-uploader>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "form.vehicle.offline" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-file-uploader [nzFileList]="imageMarkerOffline" [nzData]="{ path: 'vehicle' }"
+                                (nzChange)="
+                                    updateContentImg(
+                                        $event,
+                                        'imageMarkerOffline'
+                                    )
+                                " [nzShowButton]="!model.markerOffline">
+                            </nz-file-uploader>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div style="width: 380px; margin: 0 auto;">
+            <div class="buttonActions">
+                <button (click)="onCreate()" ad-button nzUpper nzColor="primary">
+                    {{
+                        (model?._id ? "button.edit" : "button.add") | translate
+                    }}
+                </button>
+                <button ad-button nzUpper (click)="handleVisibleModal()" nzColor="gray">
+                    {{ "actions.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-flex-svc
+  namespace: prod
+spec:
+  type: NodePort
+  ports:
+  - name: nodes
+    port: 80
+    targetPort: node
+  selector:
+    app: admin-flex
+

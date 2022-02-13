@@ -1,0 +1,18 @@
+<page-wrapper [nzTitle]="'settings.admins-title' | translate">
+    <div class="grid__container">
+        <div class="grid__header">
+            <button class="grid__action__right" ad-button nzUpper nzColor="primary"
+                (click)="create()">{{'button.add' | translate }}</button>
+        </div>
+    </div>
+    <admins-grid #adminGrid (modify)=" modify($event)" (activate)="confirmActivate($event)"
+        (password)="resetPassword($event)" (delete)="confirmDelete($event)"></admins-grid>
+</page-wrapper>
+<reset-password [model]="adminId" [type]="type" [visible]="visiblePasswordForm"
+    (handleVisible)="handleShowPasswordForm($event)" [loading]="loadingPasswordForm"
+    (handleLoading)="handleLoading($event)" (submit)="submit($event)" #adminResetPassword>
+</reset-password>
+
+<create-account [modifyingModel]="modifyingModel" [visible]="createModifyModalVisible"
+    (handleVisible)="handleModelVisible($event)" (afterSubmit)="handleAfterSubmit($event)">
+</create-account>

@@ -1,0 +1,11 @@
+<page-wrapper [nzTitle]="'general-menu.loyalty-point' | translate">
+    <nz-tabset [(nzSelectedIndex)]="selectedTabIndex" [nzType]="'card'">
+        <nz-tab [nzTitle]="'common.loyaltyPointPolicy' | translate">
+            <loyalty-point-policy-list>
+            </loyalty-point-policy-list>
+        </nz-tab>
+        <nz-tab [nzTitle]="'general-menu.loyalty-point' | translate">
+            <loyalty-point-history-list></loyalty-point-history-list>
+        </nz-tab>
+    </nz-tabset>
+</page-wrapper>

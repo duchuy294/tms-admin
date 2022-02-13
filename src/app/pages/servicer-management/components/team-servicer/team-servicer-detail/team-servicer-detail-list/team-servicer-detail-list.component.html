@@ -1,0 +1,12 @@
+<div class="page__container">
+    <div class="page__title">
+        {{'common.servicer-list' | translate | uppercase}} <br />
+        {{'servicer.team.total-members' | translate}} {{totalNumberServicers}}
+    </div>
+    <nz-divider></nz-divider>
+    <div class="page__item">
+        <team-servicer-detail-filter *ngIf="visibleFilter" (onSearch)="search($event)"></team-servicer-detail-filter>
+        <team-servicer-detail-grid #grid (totalServicers)="assignTotalNumberServicers($event)" [(queryModel)]="query">
+        </team-servicer-detail-grid>
+    </div>
+</div>

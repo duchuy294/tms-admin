@@ -1,0 +1,11 @@
+<div class="image-uploader size-{{size}}">
+    <label>
+        <div class="picture-wrapper">
+            <img [src]="picture" *ngIf="picture">
+            <img src="{{prefixUrl != null? prefixUrl + '/': ''}}{{defaultPicture}}"
+                *ngIf="!picture && !!defaultPicture">
+        </div>
+        <input #fileUpload ngFileSelect (change)="changePicture()" type="file" hidden="true" accept="image/*">
+    </label>
+    <i class="ion-ios-close-outline remove-btn" (click)="removePicture();" *ngIf="picture"></i>
+</div>

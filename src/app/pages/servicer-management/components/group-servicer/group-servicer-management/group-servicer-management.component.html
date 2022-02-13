@@ -1,0 +1,21 @@
+<page-wrapper [nzTitle]="'servicer.group.title' | translate">
+    <div>
+        <div class="grid__header">
+            <button class="grid__action__left" ad-button nzUpper nzColor="red" (click)="displayFilter = !displayFilter">
+                {{'filter.filter'|translate}}
+            </button>
+            <button class="grid__action__right" ad-button nzUpper nzColor="primary" (click)="create()">{{'button.create-group' |
+                    translate }}</button>
+        </div>
+        <br>
+        <group-servicer-filter (search)="search($event)" (onReset)="search($event)" [display]="displayFilter"
+            #groupServicerFilter>
+        </group-servicer-filter>
+        <group-servicer-grid #groupServicerGrid (delete)="confirmDelete($event)">
+        </group-servicer-grid>
+    </div>
+</page-wrapper>
+
+<group-servicer-modify [modifyingModel]="modifyingModel" [visible]="createModifyModalVisible"
+    (handleVisible)="handleModelVisible($event)" (afterSubmit)="handleAfterSubmit($event)">
+</group-servicer-modify>

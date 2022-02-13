@@ -1,0 +1,74 @@
+<nz-modal nzWidth="550px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="cancel()">
+    <ng-template #modalTitle>
+        {{
+            services.length
+                ? ((services[0].style == ServiceStyle.Delivery_Porters
+                      ? "order.choosing-loading"
+                      : "order.choosing-installation"
+                  ) | translate)
+                : ""
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #serviceForm="ngForm">
+            <nz-checkbox-wrapper class="match-width layout-selections" (nzOnChange)="onServicesChanges($event)">
+                <div class="layout-services" *ngFor="let service of services">
+                    <div class="row" *ngIf="!service.children">
+                        <div class="col-9">
+                            <label nz-checkbox [nzValue]="service">{{
+                                service.name
+                            }}</label>
+                        </div>
+                        <div class="col-3">
+                            {{ service.value }}
+                        </div>
+                    </div>
+                    <ng-template [ngIf]="service.children">
+                        <div style="font-weight: bold">{{ service.name }}</div>
+                        <ng-template ngFor let-item [ngForOf]="service.children">
+                            <div *ngIf="!item.children" class="row layout-settings">
+                                <div class="col-7">
+                                    <label nz-checkbox [nzValue]="item">{{
+                                        item.name
+                                    }}</label>
+                                </div>
+                                <div class="col-4">
+                                    {{ item.value }}
+                                </div>
+                            </div>
+                            <ng-template [ngIf]="item.children">
+                                <div class="row layout-settings">
+                                    <div class="col-12 bold">
+                                        {{ item.name }}
+                                    </div>
+                                </div>
+                                <div *ngFor="let child of item.children" class="row layout-settings">
+                                    <div class="col-1"></div>
+                                    <div class="col-6">
+                                        <label nz-checkbox [nzValue]="child">{{
+                                            child.name
+                                        }}</label>
+                                    </div>
+                                    <div class="col-4">
+                                        {{ child.value }}
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ng-template>
+                    </ng-template>
+                </div>
+            </nz-checkbox-wrapper>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" (click)="update()"
+                    [disabled]="selectedServices.length === 0">
+                    {{ "button.agree" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

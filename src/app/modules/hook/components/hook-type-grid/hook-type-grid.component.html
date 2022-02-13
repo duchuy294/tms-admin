@@ -1,0 +1,47 @@
+<nz-table #table [nzData]="tableData.data" [nzFrontPagination]="false" nzShowSizeChanger [nzLoading]="loading"
+    [nzTotal]="tableData.total" [(nzPageIndex)]="modelQuery.page" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [nzScroll]="{x:'1000px'}" [(nzPageSize)]="modelQuery.limit" (nzPageIndexChange)="loadDataByPage($event)"
+    nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th [nzWidth]="'40%'">{{ 'common.type' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.createdAt' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.status' | translate }}</th>
+            <th [nzWidth]="'30%'">{{ 'hook.hook-type.requiredFields' | translate }}</th>
+            <th [nzWidth]="'10%'" nzRight="0px">{{'common.action' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of table.data">
+            <td>{{'hook.hook-type-type.' + data.type | translate}}</td>
+            <td>{{data.createdAt | date:'h:mm:ss a dd/MM/yyyy'}}</td>
+            <td>
+                <nz-switch [ngModel]="statuses[data._id]" [nzLoading]="loadingStatus" [nzControl]="true"
+                    (click)="onChangeStatus(data)"></nz-switch>
+            </td>
+            <td>{{data.requiredFields}}</td>
+            <td nzRight="0px">
+                <ng-container>
+                    <button nz-dropdown ad-button nzType="dashed" [nzDropdownMenu]="menu"
+                        [nzPlacement]="'bottomCenter'">
+                        {{'common.action' | translate}}
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                            <li nz-menu-item>
+                                <a (click)="edit(data._id)">{{'button.update' | translate}}</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a (click)="delete(data._id)">{{'common.delete' | translate}}</a>
+                            </li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{ 'table.total' | translate }} {{ total }}
+    {{ 'table.result' | translate | lowercase}}
+</ng-template>

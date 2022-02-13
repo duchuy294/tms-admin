@@ -1,0 +1,44 @@
+<nz-table #table (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [(nzPageIndex)]="queryModel.page" [(nzPageSize)]="queryModel.limit" [nzData]="tableData.data"
+    [nzFrontPagination]="false" [nzLoading]="loadingGrid" [nzScroll]="{ x: '900px' }" [nzTotal]="tableData.total"
+    nzShowSizeChanger nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th [nzWidth]="'25%'">{{'common.full-name' | translate }}</th>
+            <th [nzWidth]="'20%'">{{'table.phone-number' | translate }}</th>
+            <th [nzWidth]="'45'">{{'table.address' | translate }}</th>
+            <th [nzWidth]="'10%'">{{ 'common.action' | translate }} </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of table.data">
+            <td>{{item.name}}</td>
+            <td>{{item.phone}}</td>
+            <td>{{item.address}}</td>
+            <td nzRight="0px">
+                <ng-container>
+                    <button nz-dropdown ad-button nzType="dashed" [nzDropdownMenu]="menu"
+                        [nzPlacement]="'bottomCenter'">
+                        {{'common.action' | translate}}
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                            <ul nz-menu nzSelectable>
+                                <li nz-menu-item>
+                                    <a (click)="handleEdit(item._id)">{{'button.update' | translate}}</a>
+                                </li>
+                                <li nz-menu-item>
+                                    <a (click)="handleDelete(item._id)">{{'common.delete' | translate}}</a>
+                                </li>
+                            </ul>
+                        </ul>
+                    </nz-dropdown-menu>
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{ 'table.total' | translate }} {{ total }}
+    {{ 'table.result' | translate | lowercase}}
+</ng-template>

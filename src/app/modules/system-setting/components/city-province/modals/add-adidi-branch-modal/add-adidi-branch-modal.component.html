@@ -1,0 +1,160 @@
+<nz-modal nzWidth="900px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="cancel()">
+    <ng-template #modalTitle>
+        {{
+            ((branchModel ? "actions.edit" : "actions.add") | translate) +
+                " " +
+                ("common.branch" | translate)
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #addBranchForm="ngForm">
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{
+                                ("common.name" | translate) +
+                                    " " +
+                                    ("common.branch" | translate | lowercase)
+                            }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <input name="name" [(ngModel)]="model.name" #branchName="ngModel" nz-input required />
+                            <nz-form-explain *ngIf="
+                                    (branchName.dirty || branchName.touched) &&
+                                    branchName.errors?.required
+                                ">
+                                {{
+                                    "validations-form.branchName.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "common.orderNo" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-input-number name="branchOrder" style="width: 100%" [(ngModel)]="model.order"
+                                [nzMin]="0" [nzStep]="1">
+                            </nz-input-number>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "common.city" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-select name="city" nzShowSearch nzAllowClear style="width: 100%;"
+                                [(ngModel)]="modelCity" (ngModelChange)="onChangeCity($event)">
+                                <nz-option *ngFor="let item of cityOptions" [nzValue]="item.code" [nzLabel]="item.name">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "common.district" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-select name="district" nzShowSearch nzAllowClear style="width: 100%;"
+                                [(ngModel)]="modelDistrict" (ngModelChange)="onChangeDistrict($event)">
+                                <nz-option *ngFor="let item of districtOptions" [nzValue]="item.code"
+                                    [nzLabel]="item.name">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "common.wards" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-select name="ward" nzShowSearch nzAllowClear style="width: 100%;"
+                                [(ngModel)]="modelWards">
+                                <nz-option *ngFor="let item of wardsOptions" [nzValue]="item.code"
+                                    [nzLabel]="item.name">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "common.contactAddress" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <input name="contactAddress" [(ngModel)]="model.address.street" nz-input />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "common.mapAddress" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <autocomplete-gmap [nzValue]="model.mapAddress"
+                                (inputChange)="handleAutocompleteChange($event)" nzPlaceHolder="Nhập địa chỉ"
+                                (changePlace)="updateLocation($event)" #mapAddress>
+                            </autocomplete-gmap>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label class="form-label--empty"></nz-form-label>
+                        <nz-form-control>
+                            <button ad-button nzColor="red" (click)="toggleDraggableFunction()">
+                                {{
+                                    (isDraggable
+                                        ? "maps.disable-dragging"
+                                        : "maps.enable-dragging"
+                                    ) | translate
+                                }}
+                            </button>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <mapp #mapInstance (center)="getMapsCenter($event)" [location]="modelLocation"
+                        [isDraggable]="isDraggable"></mapp>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="footer">
+            <div class="buttonContainer" style="width: 10%">
+                <button ad-button nzUpper nzColor="primary" (click)="submit()">
+                    {{
+                        (branchModel ? "button.edit" : "button.add") | translate
+                    }}
+                </button>
+                <button ad-button nzUpper nzColor="gray" (click)="cancel()">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

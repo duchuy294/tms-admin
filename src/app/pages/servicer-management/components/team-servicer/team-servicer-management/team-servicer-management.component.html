@@ -1,0 +1,19 @@
+<page-wrapper [nzTitle]="'servicer.team.title' | translate">
+    <div>
+        <div class="grid__header">
+            <button class="grid__action__left" ad-button nzUpper nzColor="red" (click)="displayFilter = !displayFilter">
+                {{'filter.filter'|translate}}
+            </button>
+            <button class="grid__action__right" ad-button nzUpper nzColor="primary" (click)="create()">{{'button.add' |
+                    translate }}</button>
+        </div>
+        <br>
+        <team-servicer-filter #teamServicerFilter (search)="search($event)" (onReset)="search($event)"
+            [display]="displayFilter">
+        </team-servicer-filter>
+        <team-servicer-grid #teamServicerGrid (delete)="confirmDelete($event)"></team-servicer-grid>
+    </div>
+</page-wrapper>
+<team-servicer-modify [modifyingModel]="modifyingModel" [visible]="createModifyModalVisible"
+    (handleVisible)="handleModelVisible($event)" (afterSubmit)="handleAfterSubmit()">
+</team-servicer-modify>

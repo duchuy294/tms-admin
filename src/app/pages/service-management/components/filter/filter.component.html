@@ -1,0 +1,74 @@
+<div style="margin: 10px 0">
+    <form nz-form nzLayout="vertical" [style.display]="display ? 'block' : 'none'">
+        <div class="row">
+            <div class="col-2">
+                <nz-form-item>
+                    <nz-form-label>{{
+                        "common.code" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input class="form-control" name="code" [(ngModel)]="model.code"
+                            placeholder="{{ 'common.code' | translate }}" (ngModelChange)="searchEvent()" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-2">
+                <nz-form-item>
+                    <nz-form-label>{{
+                        "filter.fromDate" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>
+                        <nz-date-picker name="from" [(ngModel)]="startTime">
+                        </nz-date-picker>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-2">
+                <nz-form-item>
+                    <nz-form-label>{{
+                        "filter.toDate" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>
+                        <nz-date-picker name="to" [(ngModel)]="endTime">
+                        </nz-date-picker>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-2">
+                <nz-form-item>
+                    <nz-form-label>{{
+                        "filter.collectionStatus" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>
+                        <nz-select name="filterType" [(ngModel)]="collectionFilterType"
+                            (ngModelChange)="onCollectionFilterTypeChange()">
+                            <nz-option *ngFor="let type of collectionFilterTypes" [nzValue]="type" [nzLabel]="
+                                    'collectionFilterType.' + type | translate
+                                "></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-2">
+                <nz-form-item>
+                    <nz-form-label>{{
+                        "filter.servicer" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>
+                        <servicer-input (select)="onSelectServicers($event)"></servicer-input>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-2">
+                <nz-form-item>
+                    <nz-form-label class="form-label form-label--empty"></nz-form-label>
+                    <nz-form-control>
+                        <button ad-button nzColor="red" (click)="searchEvent()">
+                            {{ "button.search" | translate }}
+                        </button>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </form>
+</div>

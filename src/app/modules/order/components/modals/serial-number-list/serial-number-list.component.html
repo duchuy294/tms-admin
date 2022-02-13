@@ -1,0 +1,60 @@
+<nz-modal nzWidth="480px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+    <ng-template #modalTitle>{{'order.serialNumber.list' | translate}}</ng-template>
+
+    <ng-template #modalContent>
+        <div class="row table-header">
+            <div class="col-9">
+                <div class="table-title">
+                    {{'order.serialNumber.title' | translate}}
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="table-title">
+                    {{'order.serialNumber.quantity' | translate}}
+                </div>
+            </div>
+        </div>
+        <div *ngFor="let data of productData">
+            <div class="row row-space">
+                <div class="col-9">
+                    <div class="serial-number">
+                        <div class="btn-delete">
+                            <button ad-button nzSize="small" nzShape="circle" nzType="primary"
+                                (click)="deleteProduct(data.key)">
+                                <i class="material-icons">close</i>
+                            </button>
+                        </div>
+                        &nbsp;
+                        <div *ngIf="data.editable" width="100px">
+                            <input type="text" nz-input [(ngModel)]="data.serialNumber"
+                                [placeholder]="'order.serialNumber.input' | translate">
+                        </div>
+                        <div *ngIf="!data.editable">{{data.serialNumber}}</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <input type="number" nz-input [(ngModel)]="data.quantity">
+                </div>
+            </div>
+        </div>
+        <div class="text-right action">
+            <button ad-button nzColor="red" (click)="addProduct()">
+                {{'button.add'|translate}}
+            </button>
+        </div>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" [nzLoading]="loadingModal" (click)="onUpdateProducts()">
+                    {{ 'button.confirm' | translate }}
+                </button>
+                <button ad-button nzUpper nzColor="default" (click)="handleVisibleModal(false)">
+                    {{ 'button.close' | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

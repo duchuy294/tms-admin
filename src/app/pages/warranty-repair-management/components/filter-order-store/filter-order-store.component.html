@@ -1,0 +1,75 @@
+<form nz-form nzLayout="vertical" #filterOrderStore="ngForm">
+    <div class="row">
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="userCode">{{
+                    "filter.customer-code" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input nz-input [(ngModel)]="modelQuery.userCode" name="userCode" id="userCode" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="servicerCode">{{
+                    "filter.staff-code" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input nz-input [(ngModel)]="modelQuery.servicerCode" name="servicerCode" id="servicerCode" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="status">{{
+                    "common.status" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select [(ngModel)]="modelQuery.status" name="status">
+                        <nz-option *ngFor="let item of status" [nzLabel]="'order.statusCode.' + item | translate"
+                            [nzValue]="item">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="from">{{
+                    "filter.fromDate" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-date-picker [ngStyle]="{ width: '100%' }" [(ngModel)]="modelQuery.from" name="from">
+                    </nz-date-picker>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label nzFor="to">{{
+                    "filter.toDate" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-date-picker [ngStyle]="{ width: '100%' }" [(ngModel)]="modelQuery.to" name="to">
+                    </nz-date-picker>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col">
+            <nz-form-item>
+                <nz-form-label class="form-label form-label--empty"></nz-form-label>
+                <nz-form-control>
+                    <button ad-button nzColor="primary" (click)="search()">
+                        {{ "actions.search" | translate }}
+                    </button>
+                    <button ad-button (click)="reset()">
+                        {{ "actions.remove" | translate }}
+                    </button>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+</form>

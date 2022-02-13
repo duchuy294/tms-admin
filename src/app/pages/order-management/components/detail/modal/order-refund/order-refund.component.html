@@ -1,0 +1,11 @@
+<div class="padding-10">
+    <div class="form-group">
+        <h4>{{'order.modal.refund' | translate}}</h4>
+        <label>{{'order.modal.reason-refund' | translate}}</label>
+        <textarea class="form-control" rows="5"></textarea>
+    </div>
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-sm btn-warning">{{'button.yes' | translate}}</button>
+        <button class="btn btn-sm btn-secondary" (click)="activeModal.close('Close click')">{{'button.cancel' | translate}}</button>
+    </div>
+</div>

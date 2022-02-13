@@ -1,0 +1,46 @@
+<page-wrapper>
+    <h2>{{'profile-info.title' | translate }}</h2>
+    <div class="row bg-white">
+        <div class="col-4">
+            <div class="admin-avatar">
+                <button ad-button nzType="default" nzShape="circle" class="edit-avatar" (click)="fileInput.click()"><i
+                        class="material-icons">
+                        edit
+                    </i></button>
+                <div class="admin-avatar__cover">
+                    <img [src]="model.avatar || '/assets/images/img-default.png'" alt="" width="100%">
+                </div>
+            </div>
+            <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
+            <div style="text-align: center">
+
+                <button ad-button type="button" nzColor="red"
+                    (click)="onUpload()">{{'button.update' | translate }}</button>
+            </div>
+        </div>
+        <div class="col-8">
+            <h5>{{'profile-info.detail' | translate }}</h5>
+            <div class="row">
+                <label class="col-3">{{'common.full-name' | translate }}:</label>
+                <div class="col-9">{{model.fullName}}</div>
+
+                <label class="col-3">{{'profile-info.register-date' | translate }}:</label>
+                <div class="col-9">{{model.createdAt | date:'HH:mm dd/MM/yyyy'}}</div>
+
+                <label class="col-3">{{'common.password' | translate }}</label>
+                <div class="col-9">
+                    <a class="link"
+                        (click)="openChangePasswordModal()">{{'profile-info.change-password' | translate }}</a>
+                </div>
+
+                <label class="col-3">{{'common.email' | translate }}:</label>
+                <div class="col-9">{{model.email}}</div>
+                <label class="col-3">{{'common.phone' | translate }}:</label>
+                <div class="col-9">{{model.phone}}</div>
+                <label class="col-3">{{'common.address' | translate }}:</label>
+                <div class="col-9">{{model.address}}</div>
+                <a class="col-12 link" (click)="openUpdateProfileInfoModal()">{{'profile-info.update' | translate }}</a>
+            </div>
+        </div>
+    </div>
+</page-wrapper>

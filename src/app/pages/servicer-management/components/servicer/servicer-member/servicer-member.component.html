@@ -1,0 +1,16 @@
+<nz-modal nzWidth="1300px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+    <ng-template #modalTitle>{{ 'common.members' | translate }}</ng-template>
+    <ng-template #modalContent>
+        <servicer-grid [servicerId]="servicer?._id" [hasActions]="false"></servicer-grid>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="gray" (click)="handleVisibleModal(false)">
+                    {{ 'button.close' | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

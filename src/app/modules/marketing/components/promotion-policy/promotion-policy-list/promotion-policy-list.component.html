@@ -1,0 +1,15 @@
+<div class="grid__container">
+    <div class="grid__header">
+        <button class="grid__action__left" ad-button nzColor="red" (click)="toggleVisibleFilter()">
+            {{ "filter.filter" | translate }}
+        </button>
+        <button class="grid__action__right" ad-button nzColor="primary" (click)="onClickCreate()">
+            {{ "filter.createNew" | translate }}
+        </button>
+    </div>
+    <promotion-policy-filter [display]="visibleFilter" (search)="search($event)">
+    </promotion-policy-filter>
+    <promotion-policy-grid #grid></promotion-policy-grid>
+</div>
+<create-promotion-modal [visible]="visibleModal" (handleVisible)="handleVisibleModal($event)"
+    (onFinished)="handleAfterSubmit()" type="create"></create-promotion-modal>

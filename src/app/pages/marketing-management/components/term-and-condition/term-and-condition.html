@@ -1,0 +1,36 @@
+<page-wrapper [nzTitle]="'term-and-condition.title' | translate">
+    <div style="margin: 15px 0">
+        <button ad-button nzColor="red" (click)="create()">{{'button.add' | translate}}</button>
+    </div>
+    <nz-tabset [(nzSelectedIndex)]="selectedTabIndex" [nzType]="'card'">
+        <nz-tab [nzTitle]="'term-and-condition.forUser' | translate">
+            <table class="table">
+                <tr>
+                    <th>{{'term-and-condition.modal.title' | translate}}</th>
+                    <th>{{'term-and-condition.modal.order' | translate}}</th>
+                </tr>
+                <tr *ngFor="let tad of userTads">
+                    <td class="link" (click)="update(tad)">{{tad.title}}</td>
+                    <td>{{tad.order}}</td>
+                </tr>
+            </table>
+        </nz-tab>
+
+        <nz-tab [nzTitle]="'term-and-condition.forServicer' | translate">
+            <table class="table">
+                <tr>
+                    <th>{{'term-and-condition.modal.title' | translate}}</th>
+                    <th>{{'term-and-condition.modal.order' | translate}}</th>
+                </tr>
+                <tr *ngFor="let tad of servicerTads">
+                    <td class="link" (click)="update(tad)">{{tad.title}}</td>
+                    <td>{{tad.order}}</td>
+                </tr>
+            </table>
+        </nz-tab>
+    </nz-tabset>
+</page-wrapper>
+
+<tad-modal [modifyingModel]="modifyingModel" [visible]="createModifyModalVisible"
+    (handleVisible)="handleModelVisible($event)" (afterSubmit)="_reloadTads()">
+</tad-modal>

@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col">
+        <h3 class="modelSection">{{'order.moreDetails' | translate | uppercase}}</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <label>{{'common.product' | translate}}:</label>
+        <span>{{ model.productCodes }}</span>
+    </div>
+    <div class="col-6">
+        <label>{{'order.serialNumber.title' | translate}}:</label>
+        <span>{{ model.productSerialCodes }}</span>
+    </div>
+    <div class="col-6">
+        <label>{{'common.service' | translate}}:</label>
+        <span>{{'order.requestType.' + model.requestType | translate}}</span>
+    </div>
+    <div *ngIf="model?.scheduleTime" class="col-6">
+        <label>{{'common.schedule-appointment' | translate}}:</label>
+        <span class="time">{{model.scheduleTime | date: 'hh:mm dd/MM/yyyy'}}</span>
+    </div>
+</div>

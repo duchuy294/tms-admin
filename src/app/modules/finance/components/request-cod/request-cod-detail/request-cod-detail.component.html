@@ -1,0 +1,231 @@
+<div class="row">
+    <div class="col">
+        <div class="titleCode"
+            style="padding: 25px 0px 25px 15px; font-weight: bold; background-color: white; font-size: 1.5em;">
+            <span>{{model.code}}</span>
+            <a routerLink="/pages/finance/collection" ad-button nzColor="blue"
+                style="float: right; margin-right: 8px;"><i nz-icon nzType="left"></i>
+                {{ 'button.back' | translate }}</a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-8" style="padding: 8px 8px 0px 15px;">
+
+        <page-wrapper [nzTitle]="pageTitleInformation">
+            <ng-template #pageTitleInformation>
+                <h3 class="title">
+                    {{ "order.list" | translate }}
+                </h3>
+            </ng-template>
+            <nz-table #table (nzPageIndexChange)="loadDataByPage($event)" nzShowSizeChanger nzShowQuickJumper
+                (nzPageSizeChange)="loadDataByPageSize($event)" [(nzPageIndex)]="orderQueryModel.page"
+                [(nzPageSize)]="orderQueryModel.limit" [nzData]="tableData.data" [nzFrontPagination]="false"
+                [nzLoading]="loading" [nzScroll]="{ x: '900px' }" [nzTotal]="tableData.total"
+                [nzShowTotal]="totalTemplate">
+                <thead>
+                    <tr>
+                        <th nzWidth="15%" nzLeft="0px">{{'order.code' | translate }}/
+                            <br />{{'order.external-code' | translate }}</th>
+                        <th [nzWidth]="'15%'">{{'common.orderType' | translate}}</th>
+                        <th [nzWidth]="'15%'">{{'common.customer' | translate}}</th>
+                        <th [nzWidth]="'8%'">{{ 'filter.finishDate' | translate }}</th>
+                        <th [nzWidth]="'8%'" nzAlign="right">{{ 'common.collection-money' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of table.data">
+                        <td>
+                            <a target="_blank" routerLink="/pages/order/{{order._id}}">{{ order.code}}</a> <br />
+                            <span *ngIf="order.externalCode">({{order.externalCode}})</span>
+                        </td>
+                        <td> {{'order.type.'+order?.serviceType | translate}} </td>
+                        <td>
+                            <span *ngIf="users &&
+                                users[order?.userId]"><a target="_blank"
+                                    routerLink="/pages/customer-management/personal/detail/{{users[order?.userId][0]?._id}}">{{ users[order?.userId] && users[order?.userId][0]?.fullName }}</a>
+                                <br /> {{users[order?.userId] && users[order?.userId][0]?.phone}}</span>
+                        </td>
+                        <td>{{ order.finishedAt | date:'HH:mm dd/MM/yyyy' }}</td>
+                        <td nzAlign="right">
+                            {{ order?.cod?.total | number }}đ
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+            <ng-template #totalTemplate let-range="range" let-total>
+                {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{ 'table.total' | translate }}
+                {{ total }}
+                {{ 'table.result' | translate | lowercase}}
+            </ng-template>
+        </page-wrapper>
+
+    </div>
+    <div class="col-4" style="padding:8px 15px 0px 0px">
+        <page-wrapper [nzTitle]="sessionDetail">
+            <ng-template #sessionDetail>
+                <h3 class="title">
+                    {{ "collectionTab.titleDetail" | translate }}
+                </h3>
+            </ng-template>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'collectionTab.code' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession">{{model?.code}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'table.status' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession">
+                        <nz-tag *ngIf="requestCod[model.status]" [nzColor]="requestCod[model.status].color">
+                            {{'collectionTab.statusLabel.' + model.status | translate}}
+                        </nz-tag>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'table.create-date' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession">
+                        {{ model?.createdAt | date:'HH:mm dd/MM/yyyy' }}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'collectionTab.dateConfirm' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession">
+                        {{ model?.performedAt | date:'HH:mm dd/MM/yyyy' }}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'collectionTab.typeConfirm' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession" *ngIf="model?.confirmationMethod">
+                        {{'collectionTab.confirmationMethod.' + model.confirmationMethod | translate}}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'table.processing-staff' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession">
+                        {{ performer?.fullName || '' }}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'collectionTab.transactionCode' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession">
+                        {{ model?.transCode || ''}}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'collectionTab.amount' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession" *ngIf="model?.paid">
+                        {{ model.paid | number  }}đ
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'common.collection-money' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession" *ngIf=" model?.amount">
+                        {{ model.amount | number  }}đ
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'collectionTab.amountTextConfirm' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession" *ngIf="model?.confirmedPaid > 0">
+                        {{ model.confirmedPaid | number  }}đ
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'collectionTab.bank' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession">
+                        {{bank?.name || null}}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'common.servicer' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession">
+                        {{ servicer?.fullName || '' }}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'common.images' | translate }} :</span>
+                </div>
+                <div class="col codImage">
+                    <nz-file-uploader [nzFileList]="images" *ngIf="images.length > 0"
+                        [nzShowUploadList]="{showPreviewIcon: true, showRemoveIcon: false}" [nzShowButton]="!images"
+                        style="float: right; width: 100px;">
+                    </nz-file-uploader>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="labelSession">{{ 'collectionTab.noteLabel' | translate }} :</span>
+                </div>
+                <div class="col">
+                    <span class="valueSession">
+                        {{ model?.note || '' }}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col" style="text-align: center; margin-top: 1rem;">
+                    <button (click)="visibleModalConfirm=true" ad-button style="background-color: #FF6A1A; color:
+                        #fff;" *ngIf="checkVisibleAction(model.status)">{{'button.confirm'  | translate | uppercase}}</button>
+                    <button (click)="visibleModalConfirm=true" ad-button style="background-color: #FF6A1A; color:
+                        #fff;" *ngIf="checkVisibleEnterCodeTransaction(model.status)">{{'collectionTab.enterTransCode'  | translate | uppercase}}</button>
+                    <button (click)="visibleModalReject=true" ad-button style="background-color: red; color:
+                    #fff;" *ngIf="checkVisibleAction(model.status)">{{'actions.reject'  | translate | uppercase}}</button>
+                </div>
+            </div>
+        </page-wrapper>
+
+    </div>
+</div>
+<request-cod-confirm [visibleModal]="visibleModalConfirm" (handleVisible)="handelVisibleModalConfirm($event)"
+    [model]="modelForm" [visibleAction]="checkUpdate(model?.status)" (loadData)="loadData()">
+</request-cod-confirm>
+<request-cod-reject [visibleModal]="visibleModalReject" (handleVisible)="handelVisibleModalReject($event)"
+    [model]="modelForm" [visibleAction]="checkVisibleAction(model?.status)" (loadData)="loadData()">
+</request-cod-reject>

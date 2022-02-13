@@ -1,0 +1,25 @@
+<div class="grid__container">
+    <div class="grid__header">
+        <div>
+            <button class="grid__action__left" ad-button nzColor="red" (click)="toggleFilter()">
+                {{'filter.filter'|translate}}
+            </button>
+            <button class="grid__action__right" ad-button nzColor="primary" (click)="handleVisible(true)">
+                {{'button.add'|translate}}
+            </button>
+        </div>
+    </div>
+    <filter-email-account (onSearch)="search($event)" (onReset)="search($event)"
+        [style.display]="showFilter?'block':'none'">
+    </filter-email-account>
+    <br>
+    <email-account-grid [(model)]="modelQuery" (detail)="edit($event)" (password)="changePassword($event)"
+        #emailAccountGrid>
+    </email-account-grid>
+</div>
+<create-email-account [model]="model" [visible]="visibleModel" (handleVisible)="handleVisible($event)"
+    [loading]="loadingModel" (handleLoading)="handleLoading($event)" (submit)="submit($event)" #createEmailAccount>
+</create-email-account>
+<change-password-email-account [model]="password" [visible]="changePasswordVisibleModel"
+    (handleVisible)="handleChangePasswordVisible($event)" #changePasswordEmailAccount>
+</change-password-email-account>

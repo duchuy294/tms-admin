@@ -1,0 +1,136 @@
+<form #form nz-form [style.display]="visible ? 'block' : 'none'" style="margin: 10px 0">
+    <div class="row">
+        <div class="col-2">
+            <nz-form-item>
+                <nz-form-label>
+                    {{ 'finance.transaction-walletType.main' | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <input-currency [(model)]="model.fromMain" [suffix]="'common.currency-unit' | translate | uppercase"
+                        [placeholder]="'common.from' | translate">
+                    </input-currency>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-2">
+            <nz-form-item>
+                <nz-form-label nzNoColon></nz-form-label>
+                <nz-form-control>
+                    <input-currency [(model)]="model.toMain" [suffix]="'common.currency-unit' | translate | uppercase"
+                        [placeholder]="'common.to' | translate">
+                    </input-currency>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-2">
+            <nz-form-item>
+                <nz-form-label>
+                    {{ 'finance.transaction-walletType.sub' | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <input-currency [(model)]="model.fromSub" [suffix]="'common.currency-unit' | translate | uppercase"
+                        [placeholder]="'common.from' | translate">
+                    </input-currency>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-2">
+            <nz-form-item>
+                <nz-form-label nzNoColon></nz-form-label>
+                <nz-form-control>
+                    <input-currency [(model)]="model.toSub" [suffix]="'common.currency-unit' | translate | uppercase"
+                        [placeholder]="'common.to' | translate">
+                    </input-currency>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-2">
+            <nz-form-item>
+                <nz-form-label>
+                    {{ 'finance.transaction-walletType.deposit' | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <input-currency [(model)]="model.fromDeposit"
+                        [suffix]="'common.currency-unit' | translate | uppercase"
+                        [placeholder]="'common.from' | translate">
+                    </input-currency>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-2">
+            <nz-form-item>
+                <nz-form-label nzNoColon></nz-form-label>
+                <nz-form-control>
+                    <input-currency [(model)]="model.toDeposit"
+                        [suffix]="'common.currency-unit' | translate | uppercase"
+                        [placeholder]="'common.to' | translate">
+                    </input-currency>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <nz-form-item>
+                <nz-form-label>
+                    {{ 'finance.transaction-walletType.collection' | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <input-currency [(model)]="model.fromCollection"
+                        [suffix]="'common.currency-unit' | translate | uppercase"
+                        [placeholder]="'common.from' | translate">
+                    </input-currency>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-2">
+            <nz-form-item>
+                <nz-form-label nzNoColon></nz-form-label>
+                <nz-form-control>
+                    <input-currency [(model)]="model.toCollection"
+                        [suffix]="'common.currency-unit' | translate | uppercase"
+                        [placeholder]="'common.to' | translate">
+                    </input-currency>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label>{{ 'filter.userServicerCode' | translate }}</nz-form-label>
+                <nz-form-control>
+                    <search-and-suggest-account-component mode="multiple" [(ngModel)]="selectedPerson" ngDefaultControl
+                        [ngModelOptions]="{standalone:true}" #user="ngModel" [allowCustomer]="true" [valueType]="'_id'"
+                        [allowServicer]="true" [customerSearchCondition]="customerSearchCondition"
+                        [servicerSearchCondition]="servicerSearchCondition"
+                        [placeHolder]="('actions.enter' | translate) + ' ' + ('common.id' | translate | uppercase) + '/' + ('common.name' | translate) + '/' + ('common.phone' | translate)">
+                    </search-and-suggest-account-component>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-4">
+            <nz-form-item>
+                <nz-form-label>{{ 'common.target' | translate }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select name="userType" [(ngModel)]="model.userType" nzAllowClear
+                        [nzPlaceHolder]="'common.all' | translate">
+                        <nz-option *ngFor="let item of targets" [nzValue]="item"
+                            [nzLabel]="'common.userType.' + item | translate"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <nz-form-control>
+                <button [style.width]="'25%'" ad-button nzColor="red" (click)="searchFilter()">
+                    {{ 'button.find' | translate }}
+                </button>
+                &nbsp;
+                <button [style.width]="'25%'" ad-button nzColor="white" (click)="resetFilter()">
+                    {{ 'button.remove' | translate }}
+                </button>
+            </nz-form-control>
+        </div>
+    </div>
+</form>

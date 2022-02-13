@@ -1,0 +1,7 @@
+<ng-template [ngIf]="order">
+    <order-detail *ngIf="order?.serviceType !== OrderType.SHARING_WAREHOUSE" [order]="order" (onChange)="loadData()">
+    </order-detail>
+    <warehouse-order-detail *ngIf="order?.serviceType === OrderType.SHARING_WAREHOUSE" [order]="order"
+        (onChange)="loadData()"></warehouse-order-detail>
+    <messenger-bar [order]="order"></messenger-bar>
+</ng-template>

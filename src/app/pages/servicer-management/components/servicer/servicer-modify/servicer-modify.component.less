@@ -1,0 +1,43 @@
+@import 'utils.less';
+
+::ng-deep {
+    .vehicle {
+        &__list {
+            margin: 10px 0;
+        }
+
+        &__item {
+            margin-bottom: 20px;
+        }
+
+        &__heading {
+            text-transform: uppercase;
+            .em(font-size, 18px);
+            .em(margin-bottom, 20px, 18px);
+            .em(padding, 10px, 18px);
+            background-color: #F6F6F6;
+        }
+
+        &__active__remove {
+            font-weight: normal;
+            .em(font-size, 14px);
+            float: right;
+            text-transform: none;
+            position: relative;
+            top: 0;
+            color: red !important;
+        }
+
+        &__title__active {
+            color: red !important;
+            text-transform: none;
+            font-weight: normal;
+            .em(font-size, 14px);
+        }
+
+        &__delete__cursor {
+            cursor: pointer;
+            color: red !important;
+        }
+    }
+}

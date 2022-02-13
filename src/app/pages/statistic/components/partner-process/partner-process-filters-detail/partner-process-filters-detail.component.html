@@ -1,0 +1,48 @@
+<form nz-form nzLayout="vertical" #form="ngForm">
+    <div class="row justify-content-start" style="margin-bottom: 10px">
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label nzFor="servicer">{{ "common.servicer" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <search-and-suggest-account-component [mode]="'multiple'" [(ngModel)]="selectedServicer"
+                        [selectedId]="_selectedServicer" ngDefaultControl [ngModelOptions]="{ standalone: true }"
+                        #servicer="ngModel" [allowCustomer]="false" [allowServicer]="true"
+                        [servicerSearchCondition]="servicerSearchCondition" [valueType]="'_id'" [placeHolder]="
+                            ('actions.enter' | translate) +
+                            ' ' +
+                            ('common.id' | translate | uppercase) +
+                            '/' +
+                            ('common.name' | translate) +
+                            '/' +
+                            ('common.phone' | translate)
+                        ">
+                    </search-and-suggest-account-component>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label>{{ "filter.timePeriod" | translate }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select [(ngModel)]="queryModel.duration" ngDefaultControl
+                        [ngModelOptions]="{ standalone: true }" #source="ngModel">
+                        <nz-option nzValue="" [nzLabel]="'common.all' | translate"></nz-option>
+                        <nz-option *ngFor="let i of timesData " [nzValue]="i"
+                            [nzLabel]="i + ' ' +('common.hours' | translate) "></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-label></nz-form-label>
+            <nz-form-control>
+                <button ad-button nzColor="red" class="btn btn-warning"
+                    (click)="search()">{{ "actions.search" | translate }}</button>
+                &nbsp;
+                <button (click)="reset()" ad-button nzColor="#fffff"
+                    class="btn btn-warning">{{ "button.reset" | translate }}</button>
+            </nz-form-control>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,20 @@
+<div class="grid__container">
+    <div style="display: flex; width: 100%;">
+        <div style="font-size: 1.5em">
+            {{ ('common.list' | translate) + ' ' + ('common.branch' | translate | lowercase) + ' ' + ('common.adidi' | translate) }}
+        </div>
+        <div style="display: flex; position: absolute; right: 0px">
+            <nz-input-group nzSuffixIcon="anticon anticon-search">
+                <input name="searchBox" type="text" [(ngModel)]="cityName" (ngModelChange)="onCityNameChange($event)"
+                    nz-input [placeholder]="'common.province-name' | translate">
+            </nz-input-group>
+            &nbsp;
+            <button ad-button nzUpper nzColor="primary" (click)="addBranch()">{{ 'button.add' | translate }}</button>
+        </div>
+    </div>
+    <br>
+    <adidi-branch-grid #branchGrid (delete)="confirmDelete($event)" (edit)="editBranch($event)"></adidi-branch-grid>
+</div>
+<add-adidi-branch-modal [branchModel]="branchToEdit" [visible]="addBranchModalVisible"
+    (handleVisible)="handleAddBranchModalVisible($event)" (afterSubmit)="handleAfterSubmit()">
+</add-adidi-branch-modal>

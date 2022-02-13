@@ -1,0 +1,106 @@
+<nz-modal nzWidth="550px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+    <ng-template #modalTitle>
+        {{
+            (modelQuery?._id
+                ? "finance.systemBankAccount.edit"
+                : "finance.systemBankAccount.create"
+            ) | translate
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #systemBankAccountForm="ngForm">
+            <nz-form-item>
+                <nz-form-label nzFor="bank" nzRequired>{{
+                    "bank.bank" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <nz-select style="width: 100%" [(ngModel)]="modelQuery.bank" name="bank" required #bank="ngModel">
+                        <nz-option *ngFor="let item of banks" [nzLabel]="item.name" [nzValue]="item._id">
+                        </nz-option>
+                    </nz-select>
+                    <nz-form-explain *ngIf="
+                            (bank.dirty || bank.touched) &&
+                            bank.errors?.required
+                        ">
+                        {{ "validations-form.bank.selected" | translate }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzFor="agency" nzRequired>{{
+                    "bank.agency" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input type="text" nz-input [(ngModel)]="modelQuery.agency" name="agency" #agency="ngModel"
+                        required />
+                    <nz-form-explain *ngIf="
+                            (agency.dirty || agency.touched) &&
+                            agency.errors?.required
+                        ">
+                        {{ "validations-form.agency.required" | translate }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzFor="accountNumber" nzRequired>{{
+                    "bank.account-number" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input type="text" nz-input [(ngModel)]="modelQuery.accountNumber" name="accountNumber"
+                        #accountNumber="ngModel" required pattern="[0-9]*" />
+                    <nz-form-explain *ngIf="
+                            (accountNumber.dirty || accountNumber.touched) &&
+                            accountNumber.errors?.required
+                        ">
+                        {{
+                            "validations-form.accountNumber.required"
+                                | translate
+                        }}
+                    </nz-form-explain>
+                    <nz-form-explain *ngIf="
+                            (accountNumber.dirty || accountNumber.touched) &&
+                            accountNumber.errors?.pattern
+                        ">
+                        {{
+                            "validations-form.accountNumber.number" | translate
+                        }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzFor="customerName" nzRequired>{{
+                    "bank.customer-name" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input type="text" nz-input [(ngModel)]="modelQuery.customerName" name="customerName"
+                        #customerName="ngModel" required />
+                    <nz-form-explain *ngIf="
+                            (customerName.dirty || customerName.touched) &&
+                            customerName.errors?.required
+                        ">
+                        {{
+                            "validations-form.customerName.required" | translate
+                        }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" (click)="onCreateSystemBankAccount()"
+                    [nzLoading]="loadingModal">
+                    {{
+                        (modelQuery?._id ? "button.update" : "button.add")
+                            | translate
+                    }}
+                </button>
+                <button ad-button nzUpper nzColor="default" (click)="handleVisibleModal(false)">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

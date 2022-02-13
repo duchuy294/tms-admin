@@ -1,0 +1,92 @@
+<nz-modal nzWidth="450px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="cancel()">
+    <ng-template #modalTitle>
+        {{
+            ((bannerModel ? "actions.edit" : "actions.add") | translate) +
+                " " +
+                ("marketing.news-banner.banner" | translate)
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #addBannerForm="ngForm">
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "common.title" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <input name="name" [(ngModel)]="model.title" #bannerTitle="ngModel" nz-input required />
+                            <nz-form-explain *ngIf="
+                                    (bannerTitle.dirty ||
+                                        bannerTitle.touched) &&
+                                    bannerTitle.errors?.required
+                                ">{{
+                                    "validations-form.title.required"
+                                        | translate
+                                }}</nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "common.status" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-select [(ngModel)]="model.active" name="status" [nzDisabled]="bannerModel">
+                                <nz-option [nzLabel]="
+                                        'marketing.news.status-active'
+                                            | translate
+                                    " [nzValue]="true">
+                                </nz-option>
+                                <nz-option [nzLabel]="
+                                        'marketing.news.status-inactive'
+                                            | translate
+                                    " [nzValue]="false">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label>Url</nz-form-label>
+                        <nz-form-control>
+                            <input name="url" [(ngModel)]="model.url" nz-input />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "common.images" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-file-uploader [(nzFileList)]="_avatar" [nzData]="{ path: 'store/images' }"
+                                [nzShowButton]="!model.image" (nzChange)="updateAvatarImg($event)" #image>
+                            </nz-file-uploader>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="footer">
+            <button ad-button nzUpper style="width: 150%" nzColor="primary" (click)="submit()">
+                {{ (bannerModel ? "button.edit" : "button.add") | translate }}
+            </button>
+            <button ad-button nzUpper style="width: 150%" nzColor="gray" (click)="cancel()">
+                {{ "button.close" | translate }}
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

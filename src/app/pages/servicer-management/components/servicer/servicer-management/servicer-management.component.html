@@ -1,0 +1,21 @@
+<page-wrapper [nzTitle]="'common.servicer' | translate">
+    <div>
+        <div class="grid__header">
+            <button class="grid__action__left" ad-button nzUpper nzColor="red" (click)="displayFilter = !displayFilter">
+                {{'filter.filter'|translate}}
+            </button>
+            <button class="grid__action__right" ad-button nzUpper nzColor="primary" (click)="openServicerModal()">{{'button.add' |
+                    translate }}</button>
+        </div>
+        <br>
+        <filter-servicer-new (search)="search($event)" (onReset)="search($event)" [display]="displayFilter">
+        </filter-servicer-new>
+        <servicer-grid #servicerGrid [hasActions]="true" (password)="resetPassword($event)"
+            (delete)="confirmDelete($event)"></servicer-grid>
+        <servicer-modify [(visible)]="visibleModal" (update)="search()"></servicer-modify>
+    </div>
+</page-wrapper>
+<reset-password [model]="servicerId" [type]="type" [visible]="visiblePasswordForm"
+    (handleVisible)="handleShowPasswordForm($event)" [loading]="loadingPasswordForm"
+    (handleLoading)="handleLoading($event)" (submit)="submit($event)" #servicerResetPassword>
+</reset-password>

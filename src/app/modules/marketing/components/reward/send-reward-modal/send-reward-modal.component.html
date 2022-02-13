@@ -1,0 +1,147 @@
+<nz-modal nzWidth="450px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="cancel()">
+    <ng-template #modalTitle>
+        {{ "marketing.news.send-news-noti" | translate }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #sendRewardForm="ngForm">
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "common.method" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-radio-group name="method" [(ngModel)]="methodType"
+                                (ngModelChange)="onChangeMethodType()" style="width: 100%">
+                                <label nz-radio nzValue="individual">{{
+                                    "finance.transaction-bonus-forfeit.individual"
+                                        | translate
+                                }}</label>
+                                <br />
+                                <div class="row" *ngIf="methodType === 'individual'">
+                                    <div class="col">
+                                        <div>
+                                            <search-and-suggest-account-component mode="multiple"
+                                                [(ngModel)]="selectedUser" ngDefaultControl [ngModelOptions]="{
+                                                    standalone: true
+                                                }" #userValue="ngModel" [allowCustomer]="
+                                                    allowCustomer()
+                                                " [allowServicer]="
+                                                    allowServicer()
+                                                " [placeHolder]="
+                                                    ('actions.enter'
+                                                        | translate) +
+                                                    ' ' +
+                                                    ('common.id'
+                                                        | translate
+                                                        | uppercase) +
+                                                    '/' +
+                                                    ('common.name'
+                                                        | translate) +
+                                                    '/' +
+                                                    ('common.phone' | translate)
+                                                " [servicerSearchCondition]="
+                                                    servicerSearchCondition
+                                                " [customerSearchCondition]="
+                                                    customerSearchCondition
+                                                ">
+                                            </search-and-suggest-account-component>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label nz-radio [nzValue]="userType.SERVICER" [nzDisabled]="!allowServicer()">{{
+                                        "finance.transaction-bonus-forfeit.every-servicer"
+                                            | translate
+                                    }}</label>
+                                <br />
+                                <div class="row" *ngIf="methodType === userType.SERVICER">
+                                    <div class="col-6">
+                                        <div>
+                                            <label>{{
+                                                ("actions.select" | translate) +
+                                                    " " +
+                                                    ("common.group"
+                                                        | translate
+                                                        | lowercase)
+                                            }}</label>
+                                            <nz-select name="groupId" [(ngModel)]="model.groupId"
+                                                (ngModelChange)="changeGroup()">
+                                                <nz-option [nzValue]="'all'" [nzLabel]="
+                                                        'common.all' | translate
+                                                    ">
+                                                </nz-option>
+                                                <nz-option *ngFor="let item of groups" [nzValue]="item._id"
+                                                    [nzLabel]="item.name">
+                                                </nz-option>
+                                            </nz-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div *ngIf="
+                                                model &&
+                                                model.groupId &&
+                                                model.groupId !== 'all'
+                                            ">
+                                            <label>{{
+                                                ("actions.select" | translate) +
+                                                    " " +
+                                                    ("common.team"
+                                                        | translate
+                                                        | lowercase)
+                                            }}</label>
+                                            <nz-select name="team" [(ngModel)]="model.teamId">
+                                                <nz-option [nzValue]="'all'" [nzLabel]="
+                                                        'common.all' | translate
+                                                    ">
+                                                </nz-option>
+                                                <nz-option *ngFor="let item of teams" [nzValue]="item._id"
+                                                    [nzLabel]="item.name"></nz-option>
+                                            </nz-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label nz-radio [nzValue]="userType.USER" [nzDisabled]="!allowCustomer()">{{
+                                        "finance.transaction-bonus-forfeit.every-customer"
+                                            | translate
+                                    }}</label>
+                                <div class="row" *ngIf="methodType === userType.USER">
+                                    <div class="col-6">
+                                        <label>{{
+                                            ("actions.select" | translate) +
+                                                " " +
+                                                ("common.userLevel"
+                                                    | translate
+                                                    | lowercase)
+                                        }}</label>
+                                        <nz-select name="userLevel" [(ngModel)]="model.userLevelId">
+                                            <nz-option [nzValue]="'all'" [nzLabel]="
+                                                    'common.all' | translate
+                                                ">
+                                            </nz-option>
+                                            <nz-option *ngFor="
+                                                    let item of userLevelOptionList
+                                                " [nzValue]="item._id" [nzLabel]="item.name">
+                                            </nz-option>
+                                        </nz-select>
+                                    </div>
+                                </div>
+                            </nz-radio-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="footer">
+            <button ad-button nzUpper style="width: 150%" nzColor="primary" (click)="submit()">
+                {{ "button.send" | translate }}
+            </button>
+            <button ad-button nzUpper style="width: 150%" nzColor="gray" (click)="cancel()">
+                {{ "button.close" | translate }}
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

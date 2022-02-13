@@ -1,0 +1,22 @@
+<div class="grid__container">
+    <div style="display: flex; width: 100%; margin: 10px 0px">
+        <div style="font-size: 1.5em">
+            {{ 'telecom.providers.list' | translate }}
+        </div>
+        <div style="display: flex; position: absolute; right: 0px">
+            <button class="grid__action__right" ad-button nzColor="primary" (click)="handleCreateProvider()">
+                {{'button.add'|translate}}
+            </button>
+        </div>
+    </div>
+    <provider-filter (onSearch)="handleSearch($event)" (onReset)="handleReset($event)"></provider-filter>
+    <provider-grid #providerGrid (activate)="confirmActivate($event)" (delete)="confirmDelete($event)"
+        (edit)="handleEditProvider($event)" (password)="changePassword($event)">
+    </provider-grid>
+</div>
+<add-provider-modal [providerModel]="providerToEdit" [visible]="createProviderModalVisible"
+    (handleVisible)="handleCreateProviderModalVisible($event)" (afterSubmit)="handleAfterSubmit()">
+</add-provider-modal>
+<change-provider-password #changePasswordModal [providerId]="changePasswordId" [visible]="changePasswordModalVisible"
+    (handleVisible)="handleChangePasswordVisible($event)">
+</change-provider-password>

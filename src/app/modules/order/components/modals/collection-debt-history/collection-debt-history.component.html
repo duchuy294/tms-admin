@@ -1,0 +1,29 @@
+<nz-modal nzWidth="1300px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+
+    <ng-template #modalTitle>{{ 'collectionDebt.history' | translate }}</ng-template>
+
+    <ng-template #modalContent>
+        <div style="display: flex" class="text">
+            <div>
+                {{'collectionDebt.unsubmittedMoney' | translate}}:
+            </div>
+            &nbsp;
+            <div class="number">
+                {{collectionDebt | number}} {{modelCurrency}}
+            </div>
+        </div>
+        <collection-debt-grid [userId]="customerId">
+        </collection-debt-grid>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="default" (click)="handleVisibleModal(false)">
+                    {{ 'button.close' | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

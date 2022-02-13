@@ -1,0 +1,9 @@
+<nz-skeleton [nzActive]="true" [nzLoading]="loading" [nzParagraph]="{ rows: 20 }">
+    <div class="modal-body">
+        <servicer-grid [model]="servicers" [flagReachModal]="true"></servicer-grid>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="activeModal.close()"
+            translate="actions.close"></button>
+    </div>
+</nz-skeleton>

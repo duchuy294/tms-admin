@@ -1,0 +1,11 @@
+<div class="padding-10">
+    <div class="form-group">
+        <h4>{{'order.modal.cancel-order' | translate}}</h4>
+        <label>{{'order.modal.reason-cancel-order' | translate}}</label>
+        <textarea class="form-control" rows="5" [(ngModel)]="reason"></textarea>
+    </div>
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-danger btn-sm mrg-right-10" (click)="confirm()">{{'button.yes'| translate}}</button>
+        <button type="button" class="btn btn-dark btn-sm" (click)="activeModal.close('Close click')">{{'button.cancel'| translate}}</button>
+    </div>
+</div>

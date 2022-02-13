@@ -1,0 +1,69 @@
+<nz-modal nzWidth="550px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="cancel()">
+    <ng-template #modalTitle>
+        {{ "revertOrderStatus" | translate }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #revertStatusOrderForm="ngForm">
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nz-form-label nzRequired>
+                            <b>{{ "afterReversionStatus" | translate }}</b>
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-select style="width: 100%" [(ngModel)]="prevStatus" nzDisabled name="prevStatus"
+                                [nzPlaceHolder]="
+                                    'afterReversionStatus' | translate
+                                ">
+                                <nz-option [nzLabel]="
+                                        'order.statusCode.' + prevStatus
+                                            | translate
+                                    " [nzValue]="prevStatus">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nz-form-label nzFor="reasonModel" nzRequired>
+                            <b>{{ "reason" | translate }}</b>
+                        </nz-form-label>
+                        <nz-form-control [ngClass]="{
+                                'has-error':
+                                    (reasonModel.dirty ||
+                                        reasonModel.touched) &&
+                                    reasonModel.errors
+                            }">
+                            <textarea name="reason" [(ngModel)]="reason" rows="5" nz-input required
+                                #reasonModel="ngModel"></textarea>
+                            <nz-form-explain *ngIf="
+                                    (reasonModel.dirty ||
+                                        reasonModel.touched) &&
+                                    reasonModel.errors?.required
+                                ">
+                                {{ "order.error-reason" | translate }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" (click)="update()">
+                    {{ "button.confirm" | translate }}
+                </button>
+                <button ad-button nzUpper nzColor="gray" (click)="cancel()">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

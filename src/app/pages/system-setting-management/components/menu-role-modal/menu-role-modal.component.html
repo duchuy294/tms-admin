@@ -1,0 +1,29 @@
+<div class="form-body">
+    <select class="form-control" [(ngModel)]="groupId" (ngModelChange)="loadRoles()">
+        <option *ngFor="let item of groups" [ngValue]="item._id">{{item.name}}</option>
+    </select>
+
+    <hr />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td>{{'common.title' | translate}}</td>
+                <td>{{'common.link' | translate}}</td>
+                <td>{{'common.selected' | translate}}</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of menuItems">
+                <td>{{item.title}}</td>
+                <td>{{item.path}}</td>
+                <td><input type="checkbox" [(ngModel)]="item.selected"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger btn-sm" (click)="confirm()">{{'button.yes'| translate}}</button>
+    <button type="button" class="btn btn-dark btn-sm" (click)="activeModal.close('Close click')">{{'button.cancel'|
+        translate}}</button>
+</div>

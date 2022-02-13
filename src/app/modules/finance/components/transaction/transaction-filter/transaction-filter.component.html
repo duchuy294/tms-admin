@@ -1,0 +1,148 @@
+<div style="margin: 10px 0;">
+    <form nz-form nzLayout="vertical" #form="ngForm" *ngIf="display">
+        <div class="row">
+            <div class="col-3">
+                <nz-form-item>
+                    <nz-form-label nzFor="">{{
+                            "marketing.referral-history.transaction-code"
+                                | translate
+                        }}
+                    </nz-form-label>
+                    <nz-form-control>
+                        <input nz-input [(ngModel)]="queryModel.code" name="code" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-3">
+                <nz-form-item>
+                    <nz-form-label nzFor="searchTime">{{
+                        "common.createdAt" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>
+                        <nz-range-picker [nzShowTime]="false" [nzRanges]="ranges1" nzShowTime nzFormat="dd/MM/yyyy"
+                            [(ngModel)]="searchTime" name="searchTime" [nzPlaceHolder]="[
+                                'filter.fromDate' | translate,
+                                'filter.toDate' | translate
+                            ]" class="ant-calendar-picker-full-width">
+                        </nz-range-picker>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-3">
+                <nz-form-item>
+                    <nz-form-label nzFor="">{{
+                        "common.type" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>
+                        <nz-select style="width: 100%" [(ngModel)]="queryModel.type" name="type" nzShowSearch
+                            nzPlaceHolder="{{ 'common.all' | translate }}" nzAllowClear>
+                            <nz-option *ngFor="let item of wallets" [nzLabel]="'common.wallet-' + item | translate"
+                                [nzValue]="item">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-3">
+                <nz-form-item>
+                    <nz-form-label nzFor="">{{
+                        "filter.action" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>
+                        <nz-select style="width: 100%" [(ngModel)]="queryModel.action" name="action" nzShowSearch
+                            nzPlaceHolder="{{ 'common.all' | translate }}" nzAllowClear>
+                            <nz-option *ngFor="let item of actions" [nzLabel]="
+                                    'finance.transaction-action.' + item
+                                        | translate
+                                " [nzValue]="item">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-3">
+                <nz-form-item>
+                    <nz-form-label nzFor="">{{
+                        "filter.userType" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>
+                        <nz-select style="width: 100%" [(ngModel)]="queryModel.userType" name="userType" nzShowSearch
+                            nzPlaceHolder="{{ 'common.all' | translate }}" nzAllowClear>
+                            <nz-option *ngFor="let item of userTypes" [nzLabel]="
+                                    'finance.transaction-userType.' + item
+                                        | translate
+                                " [nzValue]="item">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-3">
+                <nz-form-item>
+                    <nz-form-label nzFor="">{{ "common.orderCode" | translate }}
+                    </nz-form-label>
+                    <nz-form-control>
+                        <input nz-input [(ngModel)]="queryModel.orderCode" name="code" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-3">
+                <nz-form-item>
+                    <nz-form-label nzFor="">{{
+                        "common.status" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>
+                        <nz-select style="width: 100%" [(ngModel)]="queryModel.status" name="status" nzShowSearch
+                            nzPlaceHolder="{{ 'common.all' | translate }}" nzAllowClear>
+                            <nz-option *ngFor="let item of statuses" [nzLabel]="
+                                    'finance.transaction-status.' + item
+                                        | translate
+                                " [nzValue]="item">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-3">
+                <nz-form-item>
+                    <nz-form-label nzFor="customer">{{
+                        "messenger.customer-partner" | translate
+                    }}</nz-form-label>
+                    <nz-form-control>
+                        <search-and-suggest-account-component mode="multiple" [(ngModel)]="selectedUser" #user="ngModel"
+                            [valueType]="'_id'" ngDefaultControl [customerSearchCondition]="customerSearchCondition"
+                            [allowCustomer]="true" [allowServicer]="true" [ngModelOptions]="{ standalone: true }"
+                            [servicerSearchCondition]="customerSearchCondition" [placeHolder]="
+                                ('actions.enter' | translate) +
+                                ' ' +
+                                ('common.id' | translate | uppercase) +
+                                '/' +
+                                ('common.name' | translate) +
+                                '/' +
+                                ('common.phone' | translate)
+                            ">
+                        </search-and-suggest-account-component>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-3">
+                <nz-form-item>
+                    <nz-form-label class="form-label--empty"></nz-form-label>
+                    <nz-form-control>
+                        <button ad-button nzColor="red" (click)="searchEvent()">
+                            {{ "button.search" | translate }}
+                        </button>
+                        &nbsp;
+                        <button ad-button nzColor="white" (click)="reset()">
+                            {{ "button.clear" | translate }}
+                        </button>
+                        &nbsp;
+                        <button ad-button nzColor="yellow" (click)="exportEvent()">
+                            {{ "button.export" | translate }}
+                        </button>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </form>
+</div>

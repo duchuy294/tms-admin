@@ -1,0 +1,185 @@
+<nz-modal nzWidth="900px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="cancel()">
+    <ng-template #modalTitle>
+        {{
+            ((providerModel ? "actions.edit" : "actions.add") | translate) +
+                " " +
+                ("telecom.provider" | translate)
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #addProviderForm="ngForm">
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "telecom.provider-name" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <input name="name" [(ngModel)]="model.name" #providerName="ngModel" nz-input required />
+                            <nz-form-explain *ngIf="
+                                    (providerName.dirty ||
+                                        providerName.touched) &&
+                                    providerName.errors?.required
+                                ">
+                                {{
+                                    "telecom.providers-validations.name.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "common.type" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-select [(ngModel)]="model.type" [nzPlaceHolder]="'filter.all' | translate"
+                                name="smsProvider">
+                                <nz-option *ngFor="let item of typeOptionList" [nzValue]="item" [nzLabel]="
+                                        'telecom.providers.type-' + item
+                                            | translate
+                                    "></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>URL</nz-form-label>
+                        <nz-form-control>
+                            <input name="url" [(ngModel)]="model.url" #urlLink="ngModel" nz-input required />
+                            <nz-form-explain *ngIf="
+                                    (urlLink.dirty || urlLink.touched) &&
+                                    urlLink.errors?.required
+                                ">
+                                {{
+                                    "telecom.providers-validations.url.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "telecom.providers.prefix" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <input name="prefix" [(ngModel)]="model.from" #prefix="ngModel" nz-input required />
+                            <nz-form-explain *ngIf="
+                                    (prefix.dirty || prefix.touched) &&
+                                    prefix.errors?.required
+                                ">
+                                {{
+                                    "telecom.providers-validations.prefix.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "telecom.providers.account" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <input name="account" [(ngModel)]="model.u" #account="ngModel" nz-input required />
+                            <nz-form-explain *ngIf="
+                                    (account.dirty || account.touched) &&
+                                    account.errors?.required
+                                ">
+                                {{
+                                    "telecom.providers-validations.account.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row" *ngIf="!providerModel">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "common.password" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <input [type]="visiblePassword ? 'text' : 'password'" name="password"
+                                [(ngModel)]="model.pwd" #password="ngModel" nz-input required />
+                            <nz-form-explain *ngIf="
+                                    (password.dirty || password.touched) &&
+                                    password.errors?.required
+                                ">
+                                {{
+                                    "validations-form.password.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "telecom.providers.confirm-password" | translate
+                        }}</nz-form-label>
+                        <nz-form-control [ngClass]="{
+                                'has-error':
+                                    model?.pwd &&
+                                    model?.confirmPwd &&
+                                    model?.confirmPwd !== model?.pwd
+                            }">
+                            <input [type]="visiblePassword ? 'text' : 'password'" name="confirmPassword"
+                                [(ngModel)]="model.confirmPwd" #confirmPassword="ngModel" nz-input required />
+                            <nz-form-explain *ngIf="
+                                    (confirmPassword.dirty ||
+                                        confirmPassword.touched) &&
+                                    confirmPassword.errors?.required
+                                ">
+                                {{
+                                    "validations-form.password.confirm-required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                            <nz-form-explain *ngIf="
+                                    model?.pwd &&
+                                    model?.confirmPwd &&
+                                    model?.confirmPwd !== model?.pwd
+                                ">
+                                {{
+                                    "validations-form.password.confirm"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="footer">
+            <div class="buttonContainer" style="width: 10%">
+                <button ad-button nzUpper nzColor="primary" (click)="submit()">
+                    {{
+                        (providerModel ? "button.edit" : "button.add")
+                            | translate
+                    }}
+                </button>
+                <button ad-button nzUpper nzColor="gray" (click)="cancel()">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

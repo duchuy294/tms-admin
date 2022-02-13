@@ -1,0 +1,47 @@
+<page-wrapper [nzTitle]="'general-menu.vehicle' | translate">
+    <div class="row">
+        <div class="col">
+            <h2 class="page-title">{{'settings.vehicle.title'|translate}}</h2>
+        </div>
+    </div>
+    <nz-table #table [nzData]="tableModel" [nzLoading]="loading" [nzShowPagination]="false"
+        [nzScroll]="{ x: '1300px' }">
+        <thead>
+            <tr>
+                <th>{{'settings.vehicle.name'|translate}}</th>
+                <th>{{'settings.vehicle.root'|translate}}</th>
+                <th>{{'settings.vehicle.size'|translate}}</th>
+                <th>{{'settings.vehicle.capacity'|translate}}</th>
+                <th>{{'settings.vehicle.type'|translate}}</th>
+                <th>{{'settings.vehicle.order'|translate}}</th>
+                <th [nzWidth]="'100px'" nzRight="0px">{{'common.action'|translate}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let data of tableModel">
+                <tr *ngIf="!isParentVehicle(data._id)">
+                    <td>{{ data.name[lang] }}</td>
+                    <td>{{ getVehicleNameBy(data.parentId) }}</td>
+                    <td>{{ getSizeNameBy(data.sizeId) }}</td>
+                    <td>{{ data.maxWeight }} Kg</td>
+                    <td>{{ getVehicleNameBye(data.type) }}</td>
+                    <td>{{ data.order }}</td>
+                    <td nzRight="0px">
+                        <nz-dropdown>
+                            <button nz-dropdown ad-button nzType="dashed">
+                                {{'common.action'|translate}}
+                            </button>
+                            <ul nz-menu nzSelectable>
+                                <li nz-menu-item>
+                                    <a (click)="onEdit(data)">{{'button.modify'|translate}}</a>
+                                </li>
+                            </ul>
+                        </nz-dropdown>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </nz-table>
+    <vehicle-editor [(model)]="vehicleModel" [(visibleModal)]="visibleModal" (update)="onUpdate()">
+    </vehicle-editor>
+</page-wrapper>

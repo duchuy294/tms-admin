@@ -1,0 +1,134 @@
+<page-wrapper [nzTitle]="servicer?.fullName">
+    <div *ngIf="servicer" class="servicer-detail">
+        <div style="text-align: right;">
+            <button class="floatingRight" ad-button nzUpper nzColor="orange" (click)="handleVisibleStaffDetail(true)"
+                *ngIf="servicer && isEnterpriseServicer">
+                {{'common.staff'|translate}}
+            </button>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="row">
+                    <div class="col-3">
+                        {{ 'servicer.servicer.total-orders' | translate }}
+                        {{ orderPaging.total }}
+                    </div>
+                </div>
+                <order-grid [(model)]="query"
+                    [hiddenFields]="['totalCost', 'payment', 'servicer','processingStaff', 'createdAt']" #orderGrid>
+                </order-grid>
+            </div>
+            <div class="col-4">
+                <div style="display: flex">
+                    <div>
+                        <div>
+                            <img style="border-radius: 10px" [src]="servicer.images[0]" />
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; text-align: left; margin-left: 5%; width: 100%">
+                        <div style="font-size: 1.2em">{{ servicer?.fullName }}</div>
+                        <div>{{ servicer.createdAt | date: 'HH:mm dd/MM/yyyy' }}</div>
+                        <div>
+                            <nz-rate [ngModel]="servicerRating" [nzCharacter]="characterIcon" nzAllowHalf nzDisabled>
+                            </nz-rate>
+                            {{ '(' + (notRated ? ('common.not-rated' | translate ) : servicer.rate ) + ')' }}
+                            <a style="float: right" class="detail-link"
+                                (click)="handleRatingListVisibleModal()">{{ ('table.detail' | translate) }}</a>
+                        </div>
+                        <ng-template #characterIcon>
+                            <i nz-icon nzType="star" nzTheme="fill"></i>
+                        </ng-template>
+                        <div>{{ '#' + servicer.code }}</div>
+                        <div>{{ servicer.phone + ' | ' + servicer.email }}</div>
+                    </div>
+                </div>
+                <hr />
+                <div class="d-flex justify-content-between">
+                    <label>{{ 'common.servicer-type' | translate }}:</label>
+                    <label>{{
+                        'servicer.type.' + servicer.type | translate
+                    }}</label>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <label>{{ 'table.status' | translate }}:</label>
+                    <label>{{'common.status' + servicer.status | translate}}</label>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <label>{{ 'servicer.servicer.user-level-to-serve' | translate }}:</label>
+                    <label *ngIf="servicer.userLevelIds && servicer.userLevelIds.length > 0">
+                        <span *ngFor="let item of servicer.userLevelIds">
+                            {{ userLevelName[item] + (item !== servicer.userLevelIds[servicer.userLevelIds.length-1] ? ',' : '') }}
+                        </span>
+                    </label>
+                </div>
+                <div *ngIf="!isEnterpriseStaffServicer">
+                    <div class="d-flex justify-content-between">
+                        <label>{{ 'common.group' | translate }}:</label>
+                        <label>{{ groupName[servicer.groupId] }}</label>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <label>{{ 'table.team-servicer-name' | translate }}:</label>
+                    </div>
+                    <div class="d-flex justify-content-end row ">
+                        <span class="badge badge-primary" *ngFor="let item of servicer.teams">
+                            {{ item.name }}
+                        </span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between" *ngIf="!isEnterpriseServicer">
+                    <label>{{ 'table.vehicle' | translate }}:</label>
+                    <div class="form-group mx-sm-6">
+                        <span class="badge badge-pill badge-info" *ngFor="let item of servicer.vehicles">
+                            {{ vehicleName[item.typeId][lang] + ' | ' + item.name + ' | ' + item.number }}
+                        </span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between" *ngIf="servicer.referralId">
+                    <label>{{ 'common.the-referrer' | translate }}:</label>
+                    <label><a class="referral-code" target="_blank"
+                            routerLink="/pages/servicer-management/servicer/detail/{{servicer.referralId}}">{{ servicer.referralCode }}</a>
+                    </label>
+                </div>
+                <hr />
+                <div class="cost-area">
+                    <div class="d-flex justify-content-between">
+                        <label>{{ 'servicer.servicer.collection-money' | translate }}:</label>
+                        <label style="color: red">{{ wallet.collectionDebt | number }} {{ servicer.currency }} |
+                            <a class="detail-link"
+                                (click)="openCollectionOrderModal()">{{ ('table.detail' | translate) }}</a>
+                        </label>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <label>{{ 'servicer.servicer.main-account' | translate }}:</label>
+                        <label>{{ wallet.mainBalance | number }} {{ servicer.currency }}</label>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <label>{{ 'servicer.servicer.sub-account' | translate }}:</label>
+                        <label>{{ wallet.subBalance | number }} {{ servicer.currency }}</label>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <label>{{ 'table.deposit' | translate }}:</label>
+                        <label>{{ wallet.depositBalance | number }} {{ servicer.currency }}</label>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div class="buttonActions">
+                        <button ad-button nzColor="primary" (click)="openModificationModal()">
+                            {{ ('button.modify' | translate) + ' ' + ('common.information' | translate) }} </button>
+                        <button ad-button nzColor="gray" (click)="openFinanceHistoryModal()">
+                            {{ 'finance.history' | translate }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <servicer-modify [(visible)]="visibleModal" [model]="model" (update)="_loadServicer()"></servicer-modify>
+    <rating-list [visible]="ratingListVisibleModal " (handleVisible)="handleRatingListVisibleModal($event)"
+        [userId]="servicer._id" userType="servicer"></rating-list>
+    <servicer-member [visible]="visibleStaffDetail" (handleVisible)="handleVisibleStaffDetail($event)"
+        [servicer]="servicer">
+    </servicer-member>
+    <servicer-balance-modal [queryModel]="historyTransactionQuery" [visible]="historyTransactionGridVisible"
+        (handleVisible)="handleHistoryTransactionGridVisible($event)"></servicer-balance-modal>
+</page-wrapper>

@@ -1,0 +1,18 @@
+<div class="grid__container">
+    <div class="grid__header">
+        <button class="grid__action__left" ad-button nzColor='red'
+            (click)="toggleVisibleFilter()">{{ 'tab.filter' | translate }}
+        </button>
+        <button class="grid__action__right" ad-button nzColor='primary'
+            (click)="onClickCreate()">{{ 'marketing.loyalty-point.modify-point' | translate }}
+        </button>
+    </div>
+    <loyalty-point-history-filter [display]="visibleFilter" (search)="search($event)"></loyalty-point-history-filter>
+    <loyalty-point-history-grid #grid (detail)="detail($event)"></loyalty-point-history-grid>
+</div>
+<modify-loyalty-point-modal (change)="onChangeLoyaltyPoint()" [visible]="visibleModal"
+    (handleVisible)="handleVisibleModal($event)">
+</modify-loyalty-point-modal>
+<detailed-loyalty-point-modal [visible]="visibleDetailModal" [data]="itemToShow"
+    (handleVisible)="handleVisibleDetailModal($event)">
+</detailed-loyalty-point-modal>

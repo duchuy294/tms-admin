@@ -1,0 +1,35 @@
+<nz-table #table [nzData]="model?.data" [nzFrontPagination]="false" [nzLoading]="loadingGrid" [nzTotal]="model?.total"
+    [(nzPageIndex)]="queryModel.page" [(nzPageSize)]="queryModel.limit" nzShowSizeChanger
+    (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [nzScroll]="{x: '800px'}" nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th nzLeft="0px" [nzWidth]="'15%'">{{'table.servicer-code' | translate}}</th>
+            <th [nzWidth]="'15%'">{{'common.createdAt' | translate}}</th>
+            <th [nzWidth]="'20%'">{{'common.full-name' | translate}}</th>
+            <th [nzWidth]="'20%'">{{'common.phone' | translate}}</th>
+            <th [nzWidth]="'20%'">{{'table.status' | translate}}</th>
+            <th [nzWidth]="'10%'" nzRight="0px">{{'common.action' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of table.data">
+            <td>
+                <a target="_blank"
+                    routerLink="/pages/servicer-management/servicer/detail/{{item._id}}">{{item.code}}</a>
+            </td>
+            <td>{{item.createdAt | date:'HH:mm dd/MM/yyyy'}}</td>
+            <td>{{item.fullName}}</td>
+            <td>{{item.phone}}</td>
+            <td>{{'common.status' + item.status | translate}}</td>
+            <td nzRight="0px" width="10%" *ngIf="item.status !== 4">
+                <button ad-button nzUpper nzColor="red"
+                    (click)="confirmDelete(item._id)">{{'button.remove' |translate }}</button>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{'table.show' | translate}} {{range[0]}}-{{range[1]}}. {{'table.total' | translate}} {{total}}
+    {{'table.result' | translate | lowercase}}
+</ng-template>

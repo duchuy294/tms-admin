@@ -1,0 +1,35 @@
+<statistic-tile [data]="statisticData" [style]="{ width: '20%' }"></statistic-tile>
+<nz-table #table (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [(nzPageIndex)]="queryModel.page" [(nzPageSize)]="queryModel.limit" [nzData]="tableData.data"
+    [nzFrontPagination]="false" [nzLoading]="loadingGrid" [nzScroll]="{ x: '900px' }" [nzTotal]="tableData.total"
+    nzShowSizeChanger nzShowQuickJumper [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th [nzWidth]="'180px'"> {{'marketing.promotion-policy.promotion-code' | translate}}</th>
+            <th>{{ 'table.create-date' | translate }}</th>
+            <th>{{ 'table.user' | translate }}</th>
+            <th>{{ 'table.order' | translate }}</th>
+            <th>{{ 'table.money' | translate }}</th>
+            <th>{{ 'table.program' | translate }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of table.data">
+            <td>{{ item.promotionCode}}</td>
+            <td>{{ item.createdAt | date: "h:mm a d/M/y" }}</td>
+            <td><a routerLink="/pages/customer-management/personal/detail/{{item.userId}}">{{accounts[item.userId]?.fullName}}
+                </a></td>
+            <td><a routerLink="/pages/order/{{orderIds[item.transCode]}}">{{orderCodes[item.transCode] ? orderCodes[item.transCode] : '' }}
+                </a></td>
+            <td>{{ (!item.promotionAmount || !item.usedQuantity) ? 0 : item.promotionAmount* item.usedQuantity}}đ
+            </td>
+            <td><a
+                    routerLink="/pages/marketing/promotion-policy/{{item.promotionCodeId && promotionPolicies[item.promotionCodeId] ? promotionPolicies[item.promotionCodeId]._id : ''}}">{{item.promotionCodeId && promotionPolicies[item.promotionCodeId] ? promotionPolicies[item.promotionCodeId].name : ''}}
+                </a> </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{ 'table.show' | translate }} {{ range[0] }}-{{ range[1] }}. {{ 'table.total' | translate }} {{ total }}
+    {{ 'table.result' | translate | lowercase}}
+</ng-template>

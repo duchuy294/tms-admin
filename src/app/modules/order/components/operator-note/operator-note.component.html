@@ -1,0 +1,44 @@
+<nz-modal nzWidth="550px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="cancel()">
+    <ng-template #modalTitle>
+        {{ "warehouse.warehouse-order.note-operator" | translate }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #noteOperator="ngForm">
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nz-form-label nzFor="noteByAdmin" nzRequired>
+                            <b>{{
+                                "warehouse.warehouse-order.content-edit-operator"
+                                    | translate
+                            }}</b>
+                        </nz-form-label>
+                        <nz-form-control>
+                            <textarea name="notiContent" [(ngModel)]="adminNoteEdit" rows="5" nz-input required
+                                #noteAdmin="ngModel"></textarea>
+                            <nz-form-explain *ngIf="
+                                    (noteAdmin.dirty || noteAdmin.touched) &&
+                                    noteAdmin.errors?.required
+                                ">
+                                {{ "order.error-admin-note" | translate }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" (click)="update()">
+                    {{ "button.confirm" | translate }}
+                </button>
+                <button ad-button nzUpper nzColor="gray" (click)="cancel()">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

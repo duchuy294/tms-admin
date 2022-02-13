@@ -1,0 +1,32 @@
+<nz-table #table [nzData]="tableData.data" [nzFrontPagination]="false" nzShowSizeChanger [nzLoading]="loading"
+    [nzTotal]="tableData.total" [(nzPageIndex)]="modelQuery.page" [(nzPageSize)]="modelQuery.limit"
+    (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)" nzShowQuickJumper
+    [nzScroll]="{ x: '1200px' }" [nzShowTotal]="totalTemplate">
+    <thead>
+        <tr>
+            <th [nzWidth]="'10%'">{{'customer.id-staff' | translate }}</th>
+            <th [nzWidth]="'15%'">{{'table.create-date' | translate}}</th>
+            <th [nzWidth]="'20%'">{{'common.full-name' | translate}}</th>
+            <th [nzWidth]="'20%'">{{'common.phone' | translate }}</th>
+            <th [nzWidth]="'20%'">{{'table.star-numbers' | translate }}</th>
+            <th [nzWidth]="'20%'">{{'common.order' | translate }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of tableData.data">
+            <td>{{data.code}}</td>
+            <td>{{data.createdAt | date:'HH:mm dd/MM/yyyy'}}</td>
+            <td>{{data.fullName}}</td>
+            <td> {{data.phone}} </td>
+            <td>
+                <nz-rate [ngModel]="data.rate?data.rate:5" [nzCharacter]="characterIcon" nzAllowHalf nzDisabled>
+                </nz-rate>
+            </td>
+            <td> {{data.numberOfOrders}} </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-total let-range="range">
+    {{'table.show' | translate}} {{range[0]}}-{{range[1]}}. {{'table.total' | translate}} {{ total }}
+    {{'table.result' | translate | lowercase}}
+</ng-template>

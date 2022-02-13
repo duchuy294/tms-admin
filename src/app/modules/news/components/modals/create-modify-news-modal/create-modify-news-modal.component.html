@@ -1,0 +1,205 @@
+<nz-modal nzWidth="900px" [(nzVisible)]="visible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="cancel()">
+    <ng-template #modalTitle>
+        {{
+            "marketing.news." + (newsModel ? "edit" : "create") + "-news"
+                | translate
+        }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #addNewsForm="ngForm">
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>{{
+                            "common.title" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <input nz-input [(ngModel)]="model.title" name="title" required #titleValue="ngModel" />
+                            <nz-form-explain *ngIf="
+                                    (titleValue.dirty || titleValue.touched) &&
+                                    titleValue.errors?.required
+                                ">
+                                {{
+                                    "validations-form.title.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "common.category" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-select nzMode="multiple" [(ngModel)]="model.catIds" name="catId">
+                                <nz-option *ngFor="let item of categoryOptionList" [nzLabel]="item.name"
+                                    [nzValue]="item._id">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "common.status" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-select [(ngModel)]="model.status" name="status" [nzDisabled]="newsModel">
+                                <nz-option [nzLabel]="
+                                        'marketing.news.status-active'
+                                            | translate
+                                    " [nzValue]="true">
+                                </nz-option>
+                                <nz-option [nzLabel]="
+                                        'marketing.news.status-inactive'
+                                            | translate
+                                    " [nzValue]="false">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label>{{
+                            "common.orderNumber" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-input-number class="order" type="text" nz-input [(ngModel)]="model.order" name="order"
+                                #order="ngModel" [nzPlaceHolder]="
+                                    'placeholder.order' | translate
+                                ">
+                            </nz-input-number>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label>
+                            {{ "common.target" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-select nzMode="multiple" [(ngModel)]="model.targets" name="target">
+                                <nz-option [nzLabel]="'common.customer' | translate" nzValue="user">
+                                </nz-option>
+                                <nz-option [nzLabel]="'common.servicer' | translate" nzValue="servicer">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label>
+                            {{ "marketing.news.featured-news" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <label nz-checkbox [(nzChecked)]="model.featured"></label>
+                            {{ "marketing.news.featured" | translate }}
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-4">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "common.avatar" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-file-uploader [(nzFileList)]="_image" [nzData]="{ path: 'store/images' }"
+                                [nzShowButton]="!model.image" (nzChange)="updateAvatarImg($event)" #image>
+                            </nz-file-uploader>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "common.summary" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <textarea name="notiContent" [(ngModel)]="model.notiContent" rows="5" required nz-input
+                                #notiContentValue="ngModel"></textarea>
+                            <nz-form-explain *ngIf="
+                                    (notiContentValue.dirty ||
+                                        notiContentValue.touched) &&
+                                    notiContentValue.errors?.required
+                                ">
+                                {{
+                                    "validations-form.noti-content.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "common.description" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <textarea name="description" [(ngModel)]="model.description" rows="5" required nz-input
+                                #descriptionValue="ngModel"></textarea>
+                            <nz-form-explain *ngIf="
+                                    (descriptionValue.dirty ||
+                                        descriptionValue.touched) &&
+                                    descriptionValue.errors?.required
+                                ">
+                                {{
+                                    "validations-form.description.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>
+                            {{ "common.content" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-form-explain *ngIf="
+                                    (contentValue.dirty ||
+                                        contentValue.touched) &&
+                                    contentValue.errors?.required
+                                ">
+                                {{
+                                    "validations-form.content.required"
+                                        | translate
+                                }}
+                            </nz-form-explain>
+                            <ck-editor name="content" [(ngModel)]="model.content" #contentValue="ngModel" required>
+                            </ck-editor>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="footer">
+            <button ad-button nzUpper style="width: 150%" nzColor="primary" (click)="submit()">
+                {{ (newsModel ? "button.edit" : "button.create") | translate }}
+            </button>
+            <button ad-button nzUpper style="width: 150%" nzColor="gray" (click)="cancel()">
+                {{ "button.close" | translate }}
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>
+<spinner-processing-modal [visible]="isProcessing"></spinner-processing-modal>

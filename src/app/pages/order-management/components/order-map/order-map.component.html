@@ -1,0 +1,43 @@
+<div class="detail-maps">
+    <agm-map [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false" [style.height]="height"
+        [fitBounds]="fitBounds">
+        <agm-marker *ngFor="let m of markers; let i = index" [latitude]="m.lat" [longitude]="m.lng" [label]="m.label"
+            [markerDraggable]="m.draggable">
+            <agm-info-window>
+                <strong>{{m.address}}</strong>
+            </agm-info-window>
+        </agm-marker>
+        <ng-template [ngIf]="info?._id != '' && current">
+            <agm-marker [latitude]="current.lat" [longitude]="current.lng" [iconUrl]="'assets/icon/dang-thuc-hien.png'"
+                (mouseOver)="changeStatus()">
+            </agm-marker>
+            <agm-snazzy-info-window #test [isOpen]="statusServicerMarker" [closeOnMapClick]="true"
+                [wrapperClass]="'top-40'" [latitude]="current.lat" [longitude]="current.lng" [maxWidth]="400"
+                [maxHeight]="400" [padding]="'5px'" [borderRadius]="'8px'" [showCloseButton]="true"
+                (isOpenChange)="isOpenChange($event)"
+                [shadow]="{ h: '0px', v: '3px', blur: '6px', spread: '0px', opacity: 0.5, color: '#000'}">
+                <ng-template>
+                    <img style="position: relative; left: 50%; transform: translateX(-50%)"
+                        *ngIf="servicer.images && servicer.images.length > 0" class="img-info-window"
+                        src="{{ servicer.images[0] }}" />
+                    <div class="user-info">
+                        <a class="content-info-window" style="text-align: center" target="_blank"
+                            routerLink="/pages/servicer-management/servicer/detail/{{servicer._id}}">{{ servicer.fullName }}</a>
+                        <div *ngIf="servicer.vehicle && servicer.vehicle.name">
+                            <div>{{ servicer.vehicle.name }}</div>
+                            <div>{{ servicer.vehicle.number}}</div>
+                        </div>
+                    </div>
+                </ng-template>
+            </agm-snazzy-info-window>
+        </ng-template>
+        <ng-template [ngIf]="processingDirection && processingDirection.length > 0">
+            <agm-direction *ngFor="let item of processingDirection" [origin]="item?.origin"
+                [destination]="item?.destination" [renderOptions]="renderGreenOptions"></agm-direction>
+        </ng-template>
+        <agm-polyline>
+            <agm-polyline-point *ngFor="let point of locations" [latitude]="point.lat" [longitude]="point.lng">
+            </agm-polyline-point>
+        </agm-polyline>
+    </agm-map>
+</div>

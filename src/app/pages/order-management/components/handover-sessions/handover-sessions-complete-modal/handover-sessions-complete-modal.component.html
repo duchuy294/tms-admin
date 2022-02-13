@@ -1,0 +1,24 @@
+<nz-modal #modalHandoverSessionsComplete nzWidth="600px" [(nzVisible)]="visibleModal"
+    [nzTitle]="'handoverSessions.titleModal' | translate" [nzContent]="modalContent" [nzFooter]="modalFooter"
+    [nzMaskClosable]="false" [nzClosable]="false">
+    <ng-template #modalContent>
+        <div class="conten-modal">
+            <div><strong>{{'reason' | translate}} <span style="color: #f00;">*</span></strong> </div>
+            <div>
+                <textarea rows="4" [(ngModel)]="reason" nz-input></textarea>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="grid__footer" style="width: 20%; margin: 0 auto;">
+            <div class="buttonActions" style="margin-top: 15px; margin-bottom: 15px; justify-content: center">
+                <button ad-button nzUpper nzColor="primary" (click)="confirm()" [disabled]="loading || !reason ">
+                    {{ "button.confirm" | translate }}
+                </button>
+                <button ad-button nzUpper nzColor="default" (click)="handleVisibleModal(false)" [disabled]="loading">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

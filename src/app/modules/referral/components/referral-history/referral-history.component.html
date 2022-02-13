@@ -1,0 +1,14 @@
+<div class="grid__container">
+    <div class="grid__header">
+        <button class="grid__action__left" ad-button nzColor="red" (click)="toggleFilter()">
+            {{'filter.filter'|translate}}
+        </button>
+    </div>
+    <filter-referral-history (onSearch)="search($event)" (onReset)="search($event)"
+        [style.display]="showFilter?'block':'none'">
+    </filter-referral-history>
+    <referral-history-statistic #referralHistoryStatistic></referral-history-statistic>
+    <div style="clear:both"></div>
+    <referral-history-grid [(model)]="modelQuery" #referralHistoryGrid>
+    </referral-history-grid>
+</div>

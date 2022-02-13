@@ -1,0 +1,83 @@
+<nz-table #table [nzData]="model?.data" [nzFrontPagination]="false" [nzLoading]="loadingGrid" [nzTotal]="model?.total"
+    [(nzPageIndex)]="queryModel.page" [(nzPageSize)]="queryModel.limit" nzShowSizeChanger
+    (nzPageIndexChange)="loadDataByPage($event)" (nzPageSizeChange)="loadDataByPageSize($event)"
+    [nzScroll]="{x: '1000px'}" nzShowQuickJumper [nzShowTotal]="totalTemplate" [nzShowPagination]="!flagReachModal">
+    <thead>
+        <tr>
+            <th nzLeft="0px" [nzWidth]="'8%'">{{'table.servicer-code' | translate}}</th>
+            <th [nzWidth]="'12%'">{{'common.servicer-type' | translate}}</th>
+            <th [nzWidth]="'17%'">{{'common.full-name' | translate}}</th>
+            <th [nzWidth]="'10%'">{{'table.phone-number' | translate}}</th>
+            <th [nzWidth]="'8%'">{{'common.group' | translate}}</th>
+            <th [nzWidth]="'15%'">{{'common.team' | translate}}</th>
+            <th [nzWidth]="'12%'">{{'table.status' | translate}}</th>
+            <th [nzWidth]="'8%'">{{'table.total-orders' | translate}}</th>
+            <th nzRight="0px" nzWidth="10%" *ngIf="hasActions">{{'common.action' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of table.data">
+            <td>
+                <a target="_blank"
+                    routerLink="/pages/servicer-management/servicer/detail/{{item._id}}">{{item.code}}</a>
+            </td>
+            <td>{{'servicer.type.' + item.type | translate}}</td>
+            <td>
+                <div style="display:flex; flex-direction: column">
+                    <div>{{item.fullName}}</div>
+                    <nz-rate [ngModel]="item.rate > 0 ? item.rate : 5" [nzCharacter]="characterIcon" nzAllowHalf
+                        nzDisabled></nz-rate>
+                </div>
+                <ng-template #characterIcon>
+                    <i nz-icon nzType="star" nzTheme="fill"></i>
+                </ng-template>
+            </td>
+            <td>{{item.phone}}</td>
+            <td><a *ngIf="groups[item.groupId]"
+                    routerLink="/pages/servicer-management/group/detail/{{item.groupId}}">{{groups[item.groupId].name}}</a>
+            </td>
+            <td *ngIf="item.teams.length > 2">
+                <ng-template ngFor let-team [ngForOf]="item.teams" let-i="index">
+                    <a *ngIf="i < 2 || openTeam[item._id]"
+                        routerLink="/pages/servicer-management/team/detail/{{team._id}}">{{team.name}}</a>
+                    <br *ngIf="i < 2 || openTeam[item._id]" />
+                </ng-template>
+                <button class="btn btn-primary"
+                    (click)="openTeam[item._id]=!openTeam[item._id]">{{openTeam[item._id]?'-': '+'}}</button>
+            </td>
+            <td *ngIf="item.teams.length <= 2">
+                <ng-template ngFor let-team [ngForOf]="item.teams">
+                    <a routerLink="/pages/servicer-management/team/detail/{{team._id}}">{{team.name}}</a> <br />
+                </ng-template>
+            </td>
+            <td>{{'common.status' + item.status | translate}}</td>
+            <td>{{item.numberOfOrders}}</td>
+            <td nzRight="0px" *ngIf="hasActions">
+                <ng-container>
+                    <button nz-dropdown ad-button nzType="dashed" [nzDropdownMenu]="menu"
+                        [nzPlacement]="'bottomCenter'">
+                        {{'common.action' | translate}}
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                            <li nz-menu-item>
+                                <a target="_blank"
+                                    routerLink="/pages/servicer-management/servicer/detail/{{item._id}}">{{'table.view-detail' | translate}}</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a (click)="handlePassword(item._id)">{{'button.change-password' | translate}}</a>
+                            </li>
+                            <li nz-menu-item *ngIf='item.status !== 4'>
+                                <a (click)="handleDelete(item._id)">{{'common.delete' | translate}}</a>
+                            </li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<ng-template #totalTemplate let-range="range" let-total>
+    {{'table.show' | translate}} {{range[0]}}-{{range[1]}}. {{'table.total' | translate}} {{total}}
+    {{'table.result' | translate | lowercase}}
+</ng-template>

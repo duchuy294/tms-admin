@@ -1,0 +1,128 @@
+<nz-modal nzWidth="550px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+    <ng-template #modalTitle>
+        {{
+            (modelQuery?._id
+                ? "marketing.news-category.edit"
+                : "marketing.news-category.create"
+            ) | translate
+        }}
+    </ng-template>
+
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" #newsCategoryForm="ngForm">
+            <nz-form-item>
+                <nz-form-label nzFor="name" nzRequired>{{
+                    "common.title" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input type="text" nz-input [(ngModel)]="modelQuery.name" name="name" #name="ngModel" required />
+                    <nz-form-explain *ngIf="
+                            (name.dirty || name.touched) &&
+                            name.errors?.required
+                        ">
+                        {{ "validations-form.title.required" | translate }}
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzFor="status">{{
+                            "common.status" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-select [(ngModel)]="modelQuery.status" name="status" #status="ngModel"
+                                [nzDisabled]="modelQuery?._id">
+                                <nz-option [nzLabel]="
+                                        'marketing.news.status-active'
+                                            | translate
+                                    " [nzValue]="true">
+                                </nz-option>
+                                <nz-option [nzLabel]="
+                                        'marketing.news.status-inactive'
+                                            | translate
+                                    " [nzValue]="false">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzFor="requiredFields">{{ "common.target" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-select name="targets" [(ngModel)]="modelQuery.targets" nzMode="multiple"
+                                #requiredFields="ngModel" nzAllowClear>
+                                <nz-option *ngFor="let type of userType" [nzLabel]="
+                                        'common.userType.' + type | translate
+                                    " [nzValue]="type">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzFor="order">{{
+                            "common.orderNo" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-input-number class="order" type="text" nz-input [(ngModel)]="modelQuery.order"
+                                name="order" #order="ngModel" [nzPlaceHolder]="
+                                    'placeholder.order' | translate
+                                ">
+                            </nz-input-number>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzFor="featured">
+                            {{ "marketing.news.featured-category" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <label nz-checkbox [(ngModel)]="modelQuery.featured" name="featured">{{
+                                    "marketing.news.featured" | translate
+                                }}</label>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label nzFor="image">{{
+                            "common.avatar" | translate
+                        }}</nz-form-label>
+                        <nz-form-control>
+                            <nz-file-uploader [nzFileList]="image" [nzShowButton]="!modelQuery.image"
+                                [nzData]="{ path: 'newsCategory' }" (nzChange)="updateContentImg($event)"
+                                [nzFileType]="fileType">
+                            </nz-file-uploader>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" [nzLoading]="loadingModal" (click)="onCreateNewsCategory()">
+                    {{
+                        (modelQuery?._id ? "button.update" : "button.add")
+                            | translate
+                    }}
+                </button>
+                <button ad-button nzUpper nzColor="default" (click)="handleVisibleModal(false)">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

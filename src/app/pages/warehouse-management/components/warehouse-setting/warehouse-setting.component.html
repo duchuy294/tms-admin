@@ -1,0 +1,13 @@
+<page-wrapper [nzTitle]="'general-menu.warehouse-setting' | translate">
+    <nz-tabset [(nzSelectedIndex)]="selectedTabIndex" [nzType]="'card'">
+        <nz-tab [nzTitle]="'warehouse.service.title' | translate">
+            <warehouse-service-list></warehouse-service-list>
+        </nz-tab>
+        <nz-tab [nzTitle]="'warehouse.utility.title' | translate">
+            <warehouse-utility-list></warehouse-utility-list>
+        </nz-tab>
+        <nz-tab [nzTitle]="'warehouse.timeline.title' | translate">
+            <warehouse-timeline-list></warehouse-timeline-list>
+        </nz-tab>
+    </nz-tabset>
+</page-wrapper>

@@ -1,0 +1,60 @@
+<form nz-form nzLayout="vertical" #providerFilterForm="ngForm">
+    <div class="row">
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label>
+                    {{ "filter.providers" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <input nz-input [(ngModel)]="queryModel.name" name="phone" #phoneValue="ngModel" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label>
+                    {{ "filter.type" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <nz-select [(ngModel)]="queryModel.type" [nzPlaceHolder]="'filter.all' | translate"
+                        name="smsProvider" nzAllowClear>
+                        <nz-option *ngFor="let item of typeOptionList" [nzValue]="item" [nzLabel]="
+                                'telecom.providers.type-' + item | translate
+                            "></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-3">
+            <nz-form-item>
+                <nz-form-label>
+                    {{ "filter.status" | translate }}
+                </nz-form-label>
+                <nz-form-control>
+                    <nz-select [(ngModel)]="queryModel.status" [nzPlaceHolder]="'filter.all' | translate" name="status"
+                        nzAllowClear>
+                        <nz-option *ngFor="let item of statusOptionList" [nzValue]="item" [nzLabel]="
+                                'telecom.providers.status' + item | translate
+                            "></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-2">
+            <nz-form-item>
+                <nz-form-label class="form-label form-label--empty"></nz-form-label>
+                <nz-form-control>
+                    <div class="button__right">
+                        <button ad-button nzColor="red" (click)="search()">
+                            {{ "button.find" | translate }}
+                        </button>
+                        &nbsp;
+                        <button ad-button (click)="reset()">
+                            {{ "button.remove" | translate }}
+                        </button>
+                    </div>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+</form>

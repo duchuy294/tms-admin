@@ -1,0 +1,17 @@
+<div class="store-statistic__container">
+    <div class="store-statistic__item store-statistic__item--color1">
+        <h4 class="store-statistic__title">
+            {{'customer.statistic.sum-of-order' | translate}}:</h4>
+        <span class="store-statistic__total">{{( data?.totalOrder || 0) | number}}</span>
+    </div>
+    <div class="store-statistic__item store-statistic__item--color2">
+        <h4 class="store-statistic__title">
+            {{'customer.statistic.sum-of-successfulOrder' | translate}}:</h4>
+        <span class="store-statistic__total">{{( data?.totalSuccessfulOrder || 0) | number}}</span>
+    </div>
+    <div class="store-statistic__item statistic__item--last store-statistic__item--color3">
+        <h4 class="store-statistic__title">
+            {{ 'order.totalCost' | translate}}:</h4>
+        <span class="store-statistic__total">{{( data?.totalBaseUserCost || 0) | number}} </span>
+    </div>
+</div>

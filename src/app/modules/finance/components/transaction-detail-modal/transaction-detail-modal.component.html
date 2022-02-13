@@ -1,0 +1,84 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="row justify-content-between">
+                <div class="col-3">{{'finance.transaction-top-up-detail.code'|translate}}:</div>
+                <div class="col-9">{{model.code}}</div>
+
+                <div class="col-3">{{'finance.transaction-top-up-detail.id'|translate}}:</div>
+                <div class="col-9">{{user? user.code: ''}}</div>
+
+                <div class="col-3">{{'finance.transaction-top-up-detail.name'|translate}}:</div>
+                <div class="col-9"><span *ngIf="user">{{user?.fullName}}</span></div>
+
+                <div class="col-3">{{'finance.transaction-top-up-detail.time'|translate}}:</div>
+                <div class="col-9">{{model.createdAt | date:'HH:mm dd/MM/yyyy'}}</div>
+
+                <div class="col-3">{{'finance.transaction-top-up-detail.money'|translate}}:</div>
+                <div class="col-9">{{model.value | number}}</div>
+
+                <ng-template [ngIf]="model.orderCode && model.orderId">
+                    <div class="col-3">{{'common.order'|translate}}:</div>
+                    <div class="col-9">
+                        <a routerLink="/pages/order/{{model.orderId}}"
+                            (click)="modalRef.close()">{{model.orderCode}}</a>
+                    </div>
+                </ng-template>
+
+                <div class="col-3">{{'finance.transaction-top-up-detail.remark'|translate}}:</div>
+                <div class="col-9"><textarea class="form-control" [ngModel]="model.note" disabled></textarea></div>
+            </div>
+        </div>
+        <div class="col-12 justify-content-between">
+            <div class="row">
+                <ng-template [ngIf]="model.action==='deposit'">
+                    <div class="col-3">{{'common.method'|translate}}:</div>
+                    <div class="col-9">{{'finance.transaction-walletType.' + model.from | translate}}</div>
+                </ng-template>
+
+                <ng-template [ngIf]="model.action==='withdraw'">
+                    <div class="col-3">{{'common.method'|translate}}:</div>
+                    <div class="col-9" *ngIf="model.status !== 'processing'">
+                        {{'finance.transaction-walletType.' + model.to | translate}}</div>
+                    <div class="col-9" *ngIf="model.status === 'processing'">
+                        <select class="form-control" [(ngModel)]="model.to">
+                            <option *ngFor="let item of from" [ngValue]="item">
+                                {{'finance.transaction-walletType.' +  item | translate}}</option>
+                        </select>
+                    </div>
+                </ng-template>
+                <ng-template [ngIf]="model.to === 'bank'">
+                    <div class="col-3">{{'finance.transaction-top-up.bank'|translate}}:</div>
+                    <div class="col-9" *ngIf="model.action!=='withdraw' || model.status !== 'processing'">
+                        {{model.bankCode}}</div>
+                    <div class="col-9" *ngIf="model.action==='withdraw' && model.status === 'processing'">
+                        <input type="text" [(ngModel)]="model.bankCode" class="form-control" />
+                    </div>
+                </ng-template>
+
+                <ng-template [ngIf]="performer">
+                    <div class="col-3">{{'finance.transaction-top-up-detail.staff-action'|translate}}:</div>
+                    <div class="col-9">{{performer?.fullName}}</div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="buttonActions buttonActionsInBody">
+    <ng-template [ngIf]="model.action === 'withdraw'">
+        <button *ngIf="model.status === 'request'" ad-button nzUpper nzColor="primary" nzType="default"
+            (click)="handle()">
+            {{'actions.accept'| translate}}
+        </button>
+        <button *ngIf="model.status === 'processing'" ad-button nzUpper nzColor="primary" nzType="default"
+            (click)="process()">
+            {{'actions.process' | translate}}
+        </button>
+        <button *ngIf="model.status !== 'success'" ad-button nzUpper nzType="default" nzColor="red" (click)="reject()">
+            {{'actions.reject' | translate}}
+        </button>
+    </ng-template>
+    <button ad-button nzUpper nzType="default" (click)="modalRef.close()">
+        {{'actions.close' | translate}}
+    </button>
+</div>

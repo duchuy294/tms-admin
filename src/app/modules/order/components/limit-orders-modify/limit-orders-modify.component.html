@@ -1,0 +1,50 @@
+<nz-modal nzWidth="600px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+    <ng-template #modalTitle>
+        {{ "common.editLimitOrders" | translate }}
+    </ng-template>
+
+    <ng-template #modalContent>
+        <form nz-form nzLayout="vertical" class="row" #limitOrdersModifyForm="ngForm">
+            <div class="col-6">
+                <nz-form-item>
+                    <nz-form-label nzFor="limitOrders">
+                        {{ "common.limitOrders" | translate }}
+                    </nz-form-label>
+                    <nz-form-control>
+                        <nz-input-group>
+                            <input name="limitOrders" [(ngModel)]="model.limitOrder" min="0" placeholder="{{
+                                    'form.placeholderLimitOrders' | translate
+                                }}" required nz-input #limitOrders="ngModel" [textMask]="{ mask: numberMask }" />
+                        </nz-input-group>
+                        <nz-form-explain *ngIf="
+                                (limitOrders.dirty || limitOrders.touched) &&
+                                limitOrders.errors?.required
+                            ">
+                            {{
+                                "validations-form.limitOrders.required"
+                                    | translate
+                            }}
+                        </nz-form-explain>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" (click)="confirm()" [nzLoading]="loadingModal">
+                    {{
+                        (model?._id ? "button.update" : "button.add")
+                            | translate
+                    }}
+                </button>
+                <button ad-button nzUpper nzColor="default" (click)="handleVisibleModal(false)">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

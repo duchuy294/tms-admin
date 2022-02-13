@@ -1,0 +1,15 @@
+<div class="modal-body padding-10">
+    <h4>{{'service.collection-modal.title'|translate}}</h4>
+    <label>{{'service.collection-modal.input'|translate}} (<span class="link" (click)="money = maxMoney;">{{maxMoney |
+            number}}</span>):</label>
+    <input type="number" class="form-control" placeholder="{{'service.collection-modal.placeholder'|translate}}" min="0"
+        [(ngModel)]="money" max="{{maxMoney}}" />
+    <div class="alert alert-danger" *ngIf="money < 0 || money > maxMoney">{{'service.collection-modal.error-moneyIsInvalid'|translate:errorParams
+        }}</div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close()" translate="actions.close"></button>
+    <button type="button" class="btn btn-danger" (click)="confirm()" [disabled]="money < 0 || money > maxMoney">{{'button.payment'|
+        translate}}</button>
+</div>

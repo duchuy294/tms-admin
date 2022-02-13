@@ -1,0 +1,74 @@
+<nz-modal nzWidth="600px" [(nzVisible)]="visibleModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleVisibleModal(false)">
+    <ng-template #modalTitle>
+        {{ "collectionTab.deleteDebt" | translate }}
+    </ng-template>
+    <ng-template #modalContent>
+        <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+            <nz-form-item>
+                <nz-form-label>{{
+                    "collectionTab.amountDebt" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input nz-input [disabled]="true" style="width: 100%" [value]="model.amount | number" />
+                </nz-form-control>
+            </nz-form-item>
+            <div class="row">
+                <div class="col-6">
+                    <nz-form-item>
+                        <nz-form-label>
+                            {{ "common.method" | translate }}
+                        </nz-form-label>
+                        <nz-form-control>
+                            <nz-select name="method" style="width: 100%;" [(ngModel)]="model.type"
+                                formControlName="type" (ngModelChange)="requiredChange(model.type)">
+                                <nz-option *ngFor="let item of methodList" [nzValue]="item" [nzLabel]="
+                                        'common.wallet-' + item | translate
+                                    ">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-6" *ngIf="model.type === 'bank'">
+                    <nz-form-item>
+                        <nz-form-label nzFor="bankName" nzRequired>{{ "common.wallet-bank" | translate }}
+                        </nz-form-label>
+                        <nz-form-control [nzErrorTip]="
+                                'validations-form.bank.selected' | translate
+                            ">
+                            <nz-select name="bankName" [(ngModel)]="model.bank" formControlName="bank">
+                                <nz-option *ngFor="let item of bankList" [nzValue]="item.name" [nzLabel]="item.name">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <nz-form-item>
+                <nz-form-label nzFor="code">{{
+                    "common.note" | translate
+                }}</nz-form-label>
+                <nz-form-control>
+                    <textarea rows="4" maxlength="500" nz-input formControlName="note" [(ngModel)]="model.note"
+                        [placeholder]="
+                            'collectionTab.notePlaceholder' | translate
+                        "></textarea>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="grid__footer">
+            <div class="buttonActions">
+                <button ad-button nzUpper nzColor="primary" (click)="submitForm()" [nzLoading]="loading"
+                    *ngIf="visibleAction">
+                    {{ "button.confirm" | translate }}
+                </button>
+                <button ad-button nzUpper nzColor="gray" (click)="handleVisibleModal(false)">
+                    {{ "button.close" | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

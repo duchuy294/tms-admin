@@ -1,0 +1,13 @@
+<div class="page__container">
+    <div class="page__title">
+        {{'common.group-list' | translate | uppercase}} <br />
+        {{'servicer.group.total-teams' | translate}} {{totalNumberTeams}}
+    </div>
+    <nz-divider></nz-divider>
+    <div class="page__item">
+        <group-servicer-detail-filter *ngIf="visibleFilter" (onSearch)="search($event)"></group-servicer-detail-filter>
+        <group-servicer-detail-grid #grid (totalTeams)="assignTotalNumberTeams($event)"
+            (groupServiceDetail)="getGroupServiceDetail($event)" [(queryModel)]="query">
+        </group-servicer-detail-grid>
+    </div>
+</div>

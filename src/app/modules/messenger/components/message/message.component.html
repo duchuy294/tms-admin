@@ -1,0 +1,41 @@
+<div>
+    <div *ngIf="showDate" class="message-item__date">{{time | date:'dd/MM/yyyy'}}</div>
+    <div class="message-item">
+        <div class="message-item__avatar">
+            <img nz-tooltip [nzTooltipTitle]="name" nzTooltipPlacement="left" *ngIf="avatar && position==='left'"
+                class="message-item__avatar" [src]="avatar">
+        </div>
+        <div class="message-item__container">
+            <div *ngIf="content && position" [class]="position">
+                <div style="white-space: pre-line" [innerHTML]="content | urlify"></div>
+                <div class="time">
+                    {{time | date:'HH:mm'}}
+                    <i *ngIf="status" class="material-icons">{{icon[status]}}</i>
+                </div>
+            </div>
+            <div *ngIf="image && position" [class]="'image__'+position">
+                <div>
+                    <img *ngIf="isImageOrVideo() === 'image'" class="image" [defaultImage]="defaultImage"
+                        [lazyLoad]="image" (click)="setVisible()" [scrollTarget]="scrollTarget">
+                    <video *ngIf="isImageOrVideo() === 'video'" class="video" controls>
+                        <source [src]="image" type="video/mp4">
+                    </video>
+                </div>
+                <div class="time">
+                    {{time | date:'HH:mm'}}
+                    <i *ngIf="status" class="material-icons">{{icon[status]}}</i>
+                </div>
+            </div>
+        </div>
+        <div class="message-item__avatar">
+            <img *ngIf="avatar && position==='right'" class="message-item__avatar" [src]="avatar">
+        </div>
+    </div>
+</div>
+
+<nz-modal *ngIf="previewVisible" [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
+    (nzOnCancel)="onCancel()">
+    <ng-template #modalContent>
+        <img class="popup-content" [src]="image" [ngStyle]="{ width: '100%' }" *ngIf="image" />
+    </ng-template>
+</nz-modal>

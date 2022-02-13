@@ -1,0 +1,48 @@
+<div class="row">
+    <ng-template ngFor let-lang [ngForOf]="langs">
+        <div class="col-3 text-right">
+            {{'common.title'| translate}} ({{lang}}):
+        </div>
+        <div class="col-9">
+            <input class="form-control mrg-bt-10" type="text" [(ngModel)]="model.title[lang]">
+            <span *ngIf="error.title[lang]" class="text-danger">{{error.title}}</span>
+        </div>
+    </ng-template>
+
+    <div class="col-3 text-right">
+        {{'common.link'| translate}}:
+    </div>
+    <div class="col-9">
+        <input class="form-control mrg-bt-10" type="text" [(ngModel)]="model.path">
+        <span *ngIf="error.path" class="text-danger">{{error.path}}</span>
+    </div>
+
+    <div class="col-3 text-right">
+        {{'common.icon'| translate}}:
+    </div>
+    <div class="col-9">
+        <nz-file-uploader [nzFileList]="images" [nzShowButton]="!model.icon" (nzChange)="model.icon = $event[0] || ''"
+            [nzFileType]="fileType" [nzAccept]="fileType">
+        </nz-file-uploader>
+        <span *ngIf="error.icon" class="text-danger">{{error.icon}}</span>
+    </div>
+
+    <div class="col-3 text-right">
+        {{'common.parent'| translate}}:
+    </div>
+    <div class="col-9">
+        <select class="form-control mrg-bt-10" [(ngModel)]="model.parentId">
+            <option [ngValue]="''">{{'common.none' | translate}}</option>
+            <option *ngFor="let item of menuItems" [ngValue]="item._id">{{item.title[lang]}}</option>
+        </select>
+        <span *ngIf="error.parentId" class="text-danger">{{error.parentId}}</span>
+    </div>
+
+    <div class="col-3 text-right">
+        {{'common.orderNo'| translate}}:
+    </div>
+    <div class="col-9">
+        <input class="form-control mrg-bt-10" type="number" [(ngModel)]="model.order">
+        <span *ngIf="error.order" class="text-danger">{{error.order}}</span>
+    </div>
+</div>

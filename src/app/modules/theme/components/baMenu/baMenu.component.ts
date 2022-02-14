@@ -27,6 +27,7 @@ export class BaMenuComponent implements OnInit, OnDestroy {
     public hoverElemTop: number;
     protected _onRouteChange: Subscription;
     public outOfArea: number = -200;
+    public fullImagePath: string;
 
     constructor(
         private _router: Router,
@@ -36,6 +37,21 @@ export class BaMenuComponent implements OnInit, OnDestroy {
 
     public updateMenu(newMenuItems) {
         this.menuItems = newMenuItems;
+        this.fullImagePath = '../../assets/icon/'
+        let iconName = []
+        let count = 0
+        
+        newMenuItems.forEach(item => {
+            if (item.icon) {
+                iconName.push(item.icon.split('/').pop())
+            }
+        });
+        for (let item of this.menuItems) {
+            if (item.icon) {
+                item.icon = this.fullImagePath + iconName[count]
+                count++
+             }
+        }
         this.selectMenuAndNotify();
     }
 

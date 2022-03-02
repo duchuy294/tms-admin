@@ -1,5 +1,5 @@
 <page-wrapper *ngIf="customer && customer._id" [nzTitle]="'end-user.management' | translate">
-    <button style="margin-right: 5px;" ad-button nzColor="red" (click)="toggleFilter()">
+    <button style="margin-right: 5px;" ad-button nzColor="primary" (click)="toggleFilter()">
         {{'filter.filter' | translate}}
     </button>
     <nz-upload nzName="file" (nzChange)="onFileChange($event)" [nzBeforeUpload]="beforeUpload"

@@ -2,7 +2,7 @@
 
 :host ::ng-deep {
     .page-top {
-        background-color: $sidebar;
+        background-color: #ffffff;
         position: fixed;
         z-index: 904;
         box-shadow: 2px 0 3px rgba(0, 0, 0, 0.5);
@@ -25,14 +25,13 @@
     a.al-logo {
         color: $sidebar-text;
         display: block;
-        font-size: 24px;
         white-space: nowrap;
         float: left;
+        padding-left: 35px;
         outline: none !important;
         line-height: $top-height;
         width: 230px;
-        padding: 0 12px;
-        background-color: #002140;
+        background-color: #2c2c2c;
 
         img {
             height: $logo-height;

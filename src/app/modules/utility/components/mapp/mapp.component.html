@@ -1,6 +1,6 @@
     <nz-spin [nzSpinning]="loading" nzTip="Đang lấy dữ liệu">
         <div *ngIf="showButton" class="buttonContainer">
-            <button ad-button nzColor="red" (click)="toggleDraggableFunction()">
+            <button ad-button nzColor="primary" (click)="toggleDraggableFunction()">
                 {{ (isDraggable ? 'maps.disable-dragging' : 'maps.enable-dragging') | translate }}
             </button>
         </div>

@@ -23,7 +23,7 @@
             <td>{{item.phone}}</td>
             <td>{{'common.status' + item.status | translate}}</td>
             <td nzRight="0px" width="10%" *ngIf="item.status !== 4">
-                <button ad-button nzUpper nzColor="red"
+                <button ad-button nzUpper nzColor="primary"
                     (click)="confirmDelete(item._id)">{{'button.remove' |translate }}</button>
             </td>
         </tr>

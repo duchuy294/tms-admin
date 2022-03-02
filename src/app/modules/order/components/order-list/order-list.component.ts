@@ -49,7 +49,7 @@ export class OrderListComponent implements OnInit, OnDestroy {
     modelQuery: OrderQueryModel;
     currentUser: Profile = null;
     loading = false;
-    showFilter = false;
+    showFilter = true;
     visibleModel = false;
     loadingModel = false;
     exporting = false;
@@ -160,6 +160,7 @@ export class OrderListComponent implements OnInit, OnDestroy {
                 'code,createdAt,userId,status,progress,services,userCost,baseUserCost,servicerCost,payment,servicerId,serviceType,costDetail,prePaid,processedBy,adminNote,externalCode,detail,deliveryType,clientBranchId,packages,clientHandoverCode'
         });
         this.currentUser = this.sessionService.getCurrentUser();
+        console.log(this.currentUser);
         this.customerService
             .getCustomers(new QueryModel({ isHub: true }))
             .then(customerPaging => {

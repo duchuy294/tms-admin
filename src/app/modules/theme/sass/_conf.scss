@@ -3,9 +3,9 @@ $body-bg: #eaeff3; // default bg color
 $default-text: $default; // default text color layout (usually is the same as $default)
 // sidebar colors
 $sidebar: #fff;
-$sidebar-text: hsla(0, 0%, 100%, 0.65);
+$sidebar-text: hsl(0, 0%, 100%);
 // color scheme
-$primary: #ed1c24 !default;
+$primary: #f3c74c !default;
 $info: #40daf1 !default;
 $success: #8bd22f !default;
 $warning: #e7ba08 !default;
@@ -14,12 +14,12 @@ $resM: 768px;
 $resXS: 500px;
 $resXXS: 435px;
 $resMin: 320px;
-$top-height: 50px;
-$logo-height: 35px;
+$top-height: 60px;
+$logo-height: 40px;
 $sidebar-width: 230px;
 $assets-root: "/assets";
 $images-root: "/img/";
-$menu-background-color: #001529;
+$menu-background-color: #2c2c2c;
 
 @mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
     ::-webkit-scrollbar {

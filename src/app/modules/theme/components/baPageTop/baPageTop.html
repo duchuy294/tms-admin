@@ -8,7 +8,7 @@
             <nz-badge [nzCount]="totalUnreadMessenger" nz-popover nzPopoverTrigger="click" nzPopoverPlacement="bottomRight"
                 [nzPopoverContent]="messenger" [nzPopoverOverlayStyle]="{left:'8px'}" [nzOverflowCount]="9"
                 [nzStyle]="{top:'5px',right:'-1px'}" (click)="loadMessenger()">
-                <i class="material-icons pointer">
+                <i style="color:#303030"class="material-icons pointer">
                     mail_outline
                 </i>
             </nz-badge>
@@ -46,7 +46,7 @@
             <nz-badge [nzCount]="totalUnreadNotification" nz-popover nzPopoverTrigger="click" nzPopoverPlacement="bottomRight"
                 [nzPopoverContent]="notification" [nzPopoverOverlayStyle]="{left:'8px'}" [nzOverflowCount]="9"
                 [nzStyle]="{top: '5px',right:'-1px'}" (click)="loadNotifications()">
-                <i class="material-icons pointer">
+                <i style="color:#303030" class="material-icons pointer">
                     notifications_none
                 </i>
             </nz-badge>
@@ -84,15 +84,16 @@
         <div>
             <a nz-dropdown class="page-top__item" [nzDropdownMenu]="profileMenu" [nzPlacement]="'bottomRight'"
                 [routerLink]="['/pages/profile-info/profile']">
+                <span style="color:#303030; font-weight: bold;padding-right: 20px;">{{ profile?.fullName }}</span>
                 <nz-avatar nz-avatar nzIcon="user" [nzSrc]="(profile?.avatar)?profile.avatar:''" nzSize="small">
                 </nz-avatar>
-                <span>{{ profile?.fullName }}</span>
+               
             </a>
             <nz-dropdown-menu #profileMenu="nzDropdownMenu">
                 <ul nz-menu>
                     <li nz-menu-item>
                         <a [routerLink]="['/pages/profile-info/profile']" style="display: flex;">
-                            <i class="material-icons">
+                            <i style="color:#f3c74c" class="material-icons">
                                 person
                             </i>
                             &nbsp;
@@ -103,7 +104,7 @@
                     </li>
                     <li nz-menu-item>
                         <a (click)="signout()" style="display: flex;">
-                            <i class="material-icons">
+                            <i style="color:#f3c74c" class="material-icons">
                                 exit_to_app
                             </i>
                             &nbsp;
@@ -117,7 +118,7 @@
         </div>
         <div>
             <a nz-dropdown class="page-top__item" [nzDropdownMenu]="languageMenu" [nzPlacement]="'bottomRight'">
-                <i class="material-icons">
+                <i style="color:#303030" class="material-icons">
                     language
                 </i>
             </a>

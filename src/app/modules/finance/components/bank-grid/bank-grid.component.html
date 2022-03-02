@@ -5,7 +5,7 @@
                 <input type="text" [(ngModel)]="searchKey" nz-input placeholder="{{'finance.bank.search' | translate}}"
                     (ngModelChange)="onFind($event)" />
             </nz-input-group>
-            <button ad-button nzColor="red" (click)="handleVisible(true)">
+            <button ad-button nzColor="primary" (click)="handleVisible(true)">
                 {{'button.add'|translate}}
             </button>
         </div>

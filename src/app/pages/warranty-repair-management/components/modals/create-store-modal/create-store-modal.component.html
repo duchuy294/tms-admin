@@ -215,7 +215,7 @@
                                     <nz-form-label nzNoColon="true">
                                     </nz-form-label>
                                     <nz-form-control>
-                                        <button ad-button nzColor="red" (click)="toggleMapVisible()">
+                                        <button ad-button nzColor="primary" (click)="toggleMapVisible()">
                                             {{
                                                 (mapVisible
                                                     ? "maps.disable-map"
@@ -389,10 +389,10 @@
                             <div class="col">
                                 <nz-form-label class="form-label form-label--empty" nzFor="teamIds"></nz-form-label>
                                 <nz-form-control>
-                                    <button ad-button nzColor="red" (click)="addTeam()">
+                                    <button ad-button nzColor="primary" (click)="addTeam()">
                                         {{ "button.add" | translate }}
                                     </button>
-                                    <button ad-button nzColor="red" (click)="addAllTeam()">
+                                    <button ad-button nzColor="primary" (click)="addAllTeam()">
                                         {{ "button.addAll" | translate }}
                                     </button>
                                 </nz-form-control>
@@ -636,7 +636,7 @@
                                                     " [nzValue]="item">
                                                 </nz-option>
                                             </nz-select>
-                                            <button ad-button nzColor="red" (click)="addWorkingHours()">
+                                            <button ad-button nzColor="primary" (click)="addWorkingHours()">
                                                 {{ "button.add" | translate }}
                                             </button>
                                         </div>
@@ -676,7 +676,7 @@
                                             <input nz-input placeholder="ABCD1234" [(ngModel)]="
                                                     servicerQueryModel.code
                                                 " name="code" />
-                                            <button ad-button nzColor="red" (click)="addOwner()">
+                                            <button ad-button nzColor="primary" (click)="addOwner()">
                                                 {{ "button.add" | translate }}
                                             </button>
                                         </div>
@@ -719,7 +719,7 @@
                                     <td></td>
                                     <td>
                                         <a nz-popconfirm (nzOnConfirm)="deleteOwner()">
-                                            <button ad-button nzColor="red" nzType="dashed">
+                                            <button ad-button nzColor="primary" nzType="dashed">
                                                 {{
                                                     "common.delete" | translate
                                                 }}
@@ -749,10 +749,10 @@
                                                     </nz-option>
                                                 </nz-select>
                                             </nz-form-control>
-                                            <button ad-button nzColor="red" (click)="addOneStaff()">
+                                            <button ad-button nzColor="primary" (click)="addOneStaff()">
                                                 {{ "button.add" | translate }}
                                             </button>
-                                            <button ad-button nzColor="red" (click)="addAllStaffs()">
+                                            <button ad-button nzColor="primary" (click)="addAllStaffs()">
                                                 {{
                                                     "button.addAll" | translate
                                                 }}

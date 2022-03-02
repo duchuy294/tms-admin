@@ -4,35 +4,35 @@
     [nzShowTotal]="totalTemplate">
     <thead>
         <tr>
-            <th nzWidth="205px" nzLeft>{{'order.code' | translate }} / <br>{{'order.external-code' | translate}}
+            <th class="order-grid-header" nzWidth="205px" nzLeft>{{'order.code' | translate }} / <br>{{'order.external-code' | translate}}
             </th>
-            <th nzWidth="60px" *ngIf="!hiddenFields.includes('totalPackage')">{{'handoverSessions3PL.toltalPackage' |
+            <th class="order-grid-header" nzWidth="60px" *ngIf="!hiddenFields.includes('totalPackage')">{{'handoverSessions3PL.toltalPackage' |
                 translate }}</th>
-            <th nzWidth="90px" *ngIf="!hiddenFields.includes('createdAt') || visibleFields.includes('finishedAt')">
+            <th class="order-grid-header" nzWidth="90px" *ngIf="!hiddenFields.includes('createdAt') || visibleFields.includes('finishedAt')">
                 <span *ngIf="!hiddenFields.includes('createdAt')">{{'common.createdAt' | translate }}</span>
                 <ng-template [ngIf]="!hiddenFields.includes('createdAt') && visibleFields.includes('finishedAt')">
                     /<br />
                 </ng-template>
                 <span *ngIf="visibleFields.includes('finishedAt')">{{'filter.finishDate' | translate }}</span>
             </th>
-            <th nzWidth="90px">{{'common.type' | translate }}</th>
-            <th nzWidth="80px">{{ "common.deliveryType" | translate }}</th>
-            <th nzWidth="150px" *ngIf="!hiddenFields.includes('user')">{{'order.customer' | translate }}</th>
-            <th nzWidth="90px" *ngIf="visibleFields.includes('incident')">{{'order.incident' | translate }}</th>
-            <th nzWidth="160px" *ngIf="!hiddenFields.includes('status')">{{'order.status' | translate }}</th>
-            <th nzWidth="100px" *ngIf="!hiddenFields.includes('services')">{{'order.addonServices' | translate }}</th>
-            <th nzWidth="80px" *ngIf="visibleFields.includes('collectionMoney')">
+            <th class="order-grid-header" nzWidth="90px">{{'common.type' | translate }}</th>
+            <th class="order-grid-header" nzWidth="80px">{{ "common.deliveryType" | translate }}</th>
+            <th class="order-grid-header" nzWidth="150px" *ngIf="!hiddenFields.includes('user')">{{'order.customer' | translate }}</th>
+            <th class="order-grid-header" nzWidth="90px" *ngIf="visibleFields.includes('incident')">{{'order.incident' | translate }}</th>
+            <th class="order-grid-header" nzWidth="160px" *ngIf="!hiddenFields.includes('status')">{{'order.status' | translate }}</th>
+            <th class="order-grid-header" nzWidth="100px" *ngIf="!hiddenFields.includes('services')">{{'order.addonServices' | translate }}</th>
+            <th class="order-grid-header" nzWidth="80px" *ngIf="visibleFields.includes('collectionMoney')">
                 {{'order.collectionMoney' | translate }}
             </th>
-            <th nzWidth="110px" *ngIf="!hiddenFields.includes('totalCost')">{{'order.cost' | translate }}</th>
-            <th nzWidth="110px">3PL</th>
-            <th nzWidth="150px" *ngIf="!hiddenFields.includes('servicer')">{{'order.servicer' | translate }}</th>
-            <th nzWidth="90px" *ngIf="!hiddenFields.includes('clientHandoverCode')">{{'order.clientHandoverCode' |
+            <th class="order-grid-header" nzWidth="110px" *ngIf="!hiddenFields.includes('totalCost')">{{'order.cost' | translate }}</th>
+            <th class="order-grid-header" nzWidth="110px">3PL</th>
+            <th class="order-grid-header" nzWidth="150px" *ngIf="!hiddenFields.includes('servicer')">{{'order.servicer' | translate }}</th>
+            <th class="order-grid-header" nzWidth="90px" *ngIf="!hiddenFields.includes('clientHandoverCode')">{{'order.clientHandoverCode' |
                 translate }}</th>
-            <th nzWidth="110px" *ngIf="!hiddenFields.includes('processingStaff')">
+            <th class="order-grid-header" nzWidth="110px" *ngIf="!hiddenFields.includes('processingStaff')">
                 {{'table.processing-staff' | translate }}
             </th>
-            <th *ngIf="actions.length > 0" nzRight="0px" nzWidth="110px" class="align-center">
+            <th *ngIf="actions.length > 0" nzRight="0px" nzWidth="110px" class="align-center order-grid-header">
                 {{'common.action' | translate}}</th>
         </tr>
     </thead>

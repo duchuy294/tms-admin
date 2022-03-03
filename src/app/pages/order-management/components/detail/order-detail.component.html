@@ -1,5 +1,5 @@
 <div class="titleCode">
-    {{ "common.orderCode" | translate}}: <span>#{{ order?.code | uppercase }}</span>
+    {{ "common.orderCode" | translate}}: <span style="color: #f7cb1e;">#{{ order?.code | uppercase }}</span>
 </div>
 
 <div class="row">
@@ -10,7 +10,7 @@
                     {{ "order.information-order" | translate }}
                 </div>
             </ng-template>
-            <div *ngIf="order" style="padding-bottom: 40px;">
+            <div *ngIf="order">
                 <nz-skeleton [nzActive]="true" [nzLoading]="isLoaded" [nzTitle]="false" [nzParagraph]="{ rows: 15 }">
                     <div class="row">
                         <div class="col-6">
@@ -323,54 +323,6 @@
                             </div>
                         </div>
                     </div>
-
-
-                    <div class="title">{{'common.detail' | translate | uppercase}}</div>
-                    <nz-divider></nz-divider>
-
-                    <div class="row">
-                        <div class="col-2 bold" style="padding-right: 0px">
-                            <div class="fillColorTitle" style="padding-left: 10px">
-                                {{ "order.point" | translate }}
-                            </div>
-                        </div>
-                        <div class="col-4 bold text-left fillColorTitle"> {{ "order.address" | translate }}</div>
-                        <div class="col-2 bold text-left fillColorTitle">{{ "order.customer" | translate }}</div>
-                        <div class="col-2 bold text-left fillColorTitle">{{'common.status' | translate}}</div>
-                        <div class="col-2 bold text-left" style="padding-left: 0px">
-                            <div class="fillColorTitle">
-                                {{'common.detail' | translate}}</div>
-                        </div>
-                    </div>
-                    <div *ngFor="let point of order?.detail?.points; index as index">
-                        <div class="row" style="margin-top: 10px">
-                            <div *ngIf="![PointType.PickUp, PointType.Delivery, PointType.Return].includes(point.type); else newPointTitle"
-                                class="col-2" style="padding-left: 25px">
-                                {{ index + 1}}
-                            </div>
-                            <ng-template #newPointTitle>
-                                <div class="col-2 firstUppercase" style="padding-left: 25px" [style.color]="point.type === PointType.PickUp
-                            ? pointColorList[point.id] : pointColorList[point.pickPointId]">
-                                    {{ 'order.information-type-status.'+ point.type | translate }}
-                                    {{indexPointsList[point.id]}}
-                                </div>
-                            </ng-template>
-                            <div class="col-4 text-left">{{ point?.location?.address }} </div>
-                            <div class="col-2 text-left">
-                                <div> {{ point?.contact?.name }} </div>
-                                <div> {{ point?.contact?.phone }} </div>
-                            </div>
-                            <div class="col-2 text-left">
-                                {{ ('order.pointStatus.' + point?.status + (PointStatus.COMPLETE_LATER === point.status
-                                ? ('.' + point.type) : '')) | translate }}
-                            </div>
-                            <div class="col-2 text-left" style="padding-left: 0px">
-                                <span class="link" (click)="showPointDetail(point, index + 1)">{{ "order.detailPoint" |
-                                    translate }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <warehouse-order-history #history [order]="order"></warehouse-order-history>
                 </nz-skeleton>
             </div>
         </page-wrapper>
@@ -405,7 +357,8 @@
                             </button>
                         </div>
                         <div *ngIf="!checkAuthority()" class="buttonActions">
-                            <button ad-button nzColor="primary" (click)="acceptHandle()">{{ 'button.process' | translate }}
+                            <button ad-button nzColor="primary" (click)="acceptHandle()">{{ 'button.process' | translate
+                                }}
                             </button>
                         </div>
                         <div class="buttonActions" *ngIf="displayCancelButton()">
@@ -429,6 +382,60 @@
                     </div>
                 </div>
             </nz-skeleton>
+        </page-wrapper>
+    </div>
+    <div class="col-8 content-left">
+        <page-wrapper>
+            <div class="title">{{'common.detail' | translate | uppercase}}</div>
+            <nz-skeleton [nzActive]="true" [nzLoading]="isLoaded" [nzTitle]="false" [nzParagraph]="{ rows: 15 }">
+                <div class="row">
+                    <div class="col-2 bold" style="padding-right: 0px">
+                        <div class="fillColorTitle" style="padding-left: 10px">
+                            {{ "order.point" | translate }}
+                        </div>
+                    </div>
+                    <div class="col-4 bold text-left fillColorTitle"> {{ "order.address" | translate }}</div>
+                    <div class="col-2 bold text-left fillColorTitle">{{ "order.customer" | translate }}</div>
+                    <div class="col-2 bold text-left fillColorTitle">{{'common.status' | translate}}</div>
+                    <div class="col-2 bold text-left" style="padding-left: 0px">
+                        <div class="fillColorTitle">
+                            {{'common.detail' | translate}}</div>
+                    </div>
+                </div>
+                <div *ngFor="let point of order?.detail?.points; index as index">
+                    <div class="row" style="margin-top: 10px">
+                        <div *ngIf="![PointType.PickUp, PointType.Delivery, PointType.Return].includes(point.type); else newPointTitle"
+                            class="col-2" style="padding-left: 25px">
+                            {{ index + 1}}
+                        </div>
+                        <ng-template #newPointTitle>
+                            <div class="col-2 firstUppercase" style="padding-left: 25px" [style.color]="point.type === PointType.PickUp
+                        ? pointColorList[point.id] : pointColorList[point.pickPointId]">
+                                {{ 'order.information-type-status.'+ point.type | translate }}
+                                {{indexPointsList[point.id]}}
+                            </div>
+                        </ng-template>
+                        <div class="col-4 text-left">{{ point?.location?.address }} </div>
+                        <div class="col-2 text-left">
+                            <div> {{ point?.contact?.name }} </div>
+                            <div> {{ point?.contact?.phone }} </div>
+                        </div>
+                        <div class="col-2 text-left">
+                            {{ ('order.pointStatus.' + point?.status + (PointStatus.COMPLETE_LATER === point.status
+                            ? ('.' + point.type) : '')) | translate }}
+                        </div>
+                        <div class="col-2 text-left" style="padding-left: 0px">
+                            <span class="link" (click)="showPointDetail(point, index + 1)">{{ "order.detailPoint" |
+                                translate }}</span>
+                        </div>
+                    </div>
+                </div>
+            </nz-skeleton>
+        </page-wrapper>
+    </div>
+    <div class="col-8 content-left">
+        <page-wrapper>
+            <warehouse-order-history #history [order]="order"></warehouse-order-history>
         </page-wrapper>
     </div>
 </div>

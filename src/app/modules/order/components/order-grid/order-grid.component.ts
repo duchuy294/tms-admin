@@ -127,6 +127,7 @@ export class OrderGridComponent implements OnInit {
             await this.getAdmins();
         }
         this.loading = false;
+        console.log(this.tableData)
     }
 
     loadMessageInfo(data) {

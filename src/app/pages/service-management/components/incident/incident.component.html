@@ -1,5 +1,5 @@
 <page-wrapper [nzTitle]="pageTitle">
-    <button ad-button nzColor="red" (click)="displayFilter=!displayFilter">{{'tab.filter' | translate }}</button>
+    <button ad-button nzColor="primary" (click)="displayFilter=!displayFilter">{{'tab.filter' | translate }}</button>
     <filter (search)="search($event)" [display]="displayFilter"></filter>
     <order-grid [(model)]="query" [hiddenFields]="['totalCost', 'payment', 'servicer', 'services', 'processingStaff']"
         [visibleFields]="['incident']" [actions]="orderActions" #orderGrid></order-grid>

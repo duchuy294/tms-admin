@@ -74,7 +74,7 @@
             (click)="process()">
             {{'actions.process' | translate}}
         </button>
-        <button *ngIf="model.status !== 'success'" ad-button nzUpper nzType="default" nzColor="red" (click)="reject()">
+        <button *ngIf="model.status !== 'success'" ad-button nzUpper nzType="default" nzColor="primary" (click)="reject()">
             {{'actions.reject' | translate}}
         </button>
     </ng-template>

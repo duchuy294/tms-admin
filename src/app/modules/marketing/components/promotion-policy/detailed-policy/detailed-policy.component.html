@@ -10,7 +10,7 @@
                                     {{ 'marketing.promotion-policy-detail.appliedCode' | translate | uppercase }}
                                 </div>
                                 <div class="titleButton">
-                                    <button ad-button nzUpper nzColor="red" style="margin: auto 5px; border-radius: 5px"
+                                    <button ad-button nzUpper nzColor="primary" style="margin: auto 5px; border-radius: 5px"
                                         (click)="handleCreatePromotionCode()">
                                         {{ 'button.add' | translate | uppercase }}
                                     </button>
@@ -35,7 +35,7 @@
                                     {{ 'marketing.promotion-policy-detail.priceForm' | translate | uppercase }}
                                 </div>
                                 <div class="titleButton">
-                                    <button ad-button nzUpper nzColor="red" style="margin: auto 5px; border-radius: 5px"
+                                    <button ad-button nzUpper nzColor="primary" style="margin: auto 5px; border-radius: 5px"
                                         (click)="handleAddConditions('','','','priceForm',priceFormConditionOptions)">
                                         {{ 'button.add' | translate | uppercase }}
                                     </button>
@@ -157,7 +157,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-12" *ngIf="userTopUpRadioValue === 'byCustomerTopUpAmount'">
-                                            <button #customerTopUpAmountAddButton ad-button nzUpper nzColor="red"
+                                            <button #customerTopUpAmountAddButton ad-button nzUpper nzColor="primary"
                                                 style="margin: 10px 5px; border-radius: 10px"
                                                 (click)="handleAddConditions('user', 'amount', userTopUpWalletType, 'deposit', customerTopUpConditionOptions)">
                                                 {{ 'button.add' | translate | uppercase }}
@@ -214,7 +214,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-12" *ngIf="userTopUpRadioValue === 'byCustomerTopUpPercent'">
-                                            <button #customerTopUpAddPercentAddButton ad-button nzUpper nzColor="red"
+                                            <button #customerTopUpAddPercentAddButton ad-button nzUpper nzColor="primary"
                                                 style="margin: 10px 5px; border-radius: 10px"
                                                 (click)="handleAddConditions('user', 'percent', userTopUpWalletType, 'deposit', customerTopUpConditionOptions)">
                                                 {{ 'button.add' | translate | uppercase }}
@@ -292,7 +292,7 @@
                                     <div class="row">
                                         <div class="col-12"
                                             *ngIf="userPromotionRadioValue === 'byCustomerPromotionAmount'">
-                                            <button #customerPromotionAmountAddButton ad-button nzUpper nzColor="red"
+                                            <button #customerPromotionAmountAddButton ad-button nzUpper nzColor="primary"
                                                 style="margin: 10px 5px; border-radius: 10px"
                                                 (click)="handleAddConditions('user', 'amount', userPromotionWalletType, 'promotion', bonusForCustomerConditionOptions)">
                                                 {{ 'button.add' | translate | uppercase }}
@@ -351,7 +351,7 @@
                                     <div class="row">
                                         <div class="col-12"
                                             *ngIf="userPromotionRadioValue === 'byCustomerPromotionPercent'">
-                                            <button #customerPromotionPercentAddButton ad-button nzUpper nzColor="red"
+                                            <button #customerPromotionPercentAddButton ad-button nzUpper nzColor="primary"
                                                 style="margin: 10px 5px; border-radius: 10px"
                                                 (click)="handleAddConditions( 'user', 'percent', userPromotionWalletType, 'promotion', bonusForCustomerConditionOptions)">
                                                 {{ 'button.add' | translate | uppercase }}
@@ -433,7 +433,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-12" *ngIf="servicerTopUpRadioValue ==='byServicerTopUpAmount'">
-                                            <button #servicerTopUpAmountAddButton ad-button nzUpper nzColor="red"
+                                            <button #servicerTopUpAmountAddButton ad-button nzUpper nzColor="primary"
                                                 style="margin: 10px 5px; border-radius: 10px"
                                                 (click)="handleAddConditions( 'servicer', 'amount', servicerTopUpWalletType, 'deposit', partnerTopUpConditionOptions)">
                                                 {{ 'button.add' | translate | uppercase }}
@@ -491,7 +491,7 @@
                                     <div class="row">
                                         <div class="col-12"
                                             *ngIf="servicerTopUpRadioValue === 'byServicerTopUpPercent'">
-                                            <button #servicerTopUpPercentAddButton ad-button nzUpper nzColor="red"
+                                            <button #servicerTopUpPercentAddButton ad-button nzUpper nzColor="primary"
                                                 style="margin: 10px 5px; border-radius: 10px"
                                                 (click)="handleAddConditions('servicer', 'percent', servicerTopUpWalletType, 'deposit', partnerTopUpConditionOptions)">
                                                 {{ 'button.add' | translate | uppercase }}
@@ -570,7 +570,7 @@
                                     <div class="row">
                                         <div class="col-12"
                                             *ngIf="servicerPromotionRadioValue === 'byServicerPromotionAmount'">
-                                            <button #servicerPromotionAmountAddButton ad-button nzUpper nzColor="red"
+                                            <button #servicerPromotionAmountAddButton ad-button nzUpper nzColor="primary"
                                                 style="margin: 10px 5px; border-radius: 10px"
                                                 (click)=" handleAddConditions('servicer', 'amount', servicerPromotionWalletType, 'promotion', bonusForPartnerConditionOptions)">
                                                 {{ 'button.add' | translate | uppercase }}
@@ -629,7 +629,7 @@
                                     <div class="row">
                                         <div class="col-12"
                                             *ngIf="servicerPromotionRadioValue === 'byServicerPromotionPercent'">
-                                            <button #servicerPromotionPercentAddButton ad-button nzUpper nzColor="red"
+                                            <button #servicerPromotionPercentAddButton ad-button nzUpper nzColor="primary"
                                                 style="margin: 10px 5px; border-radius: 10px"
                                                 (click)="
                                                     handleAddConditions('servicer','percent',servicerPromotionWalletType,'promotion',bonusForPartnerConditionOptions)">

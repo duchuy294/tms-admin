@@ -271,7 +271,7 @@
                 <nz-form-control>
                     <div class="formControlWithAction">
                         <input nz-input placeholder="ABCD1234" [(ngModel)]="managerCode" name="manager" />
-                        <button ad-button nzColor="red" (click)="addManager()">
+                        <button ad-button nzColor="primary" (click)="addManager()">
                             {{ "button.add" | translate }}
                         </button>
                     </div>
@@ -307,7 +307,7 @@
                 <td>{{ data?.fullName }}</td>
                 <td>{{ data.phone }}</td>
                 <td>
-                    <button ad-button nzColor="red" nzType="dashed" (click)="deleteManager()">
+                    <button ad-button nzColor="primary" nzType="dashed" (click)="deleteManager()">
                         {{ "common.delete" | translate }}
                     </button>
                 </td>
@@ -329,7 +329,7 @@
                 <nz-form-control>
                     <div class="formControlWithAction">
                         <input nz-input placeholder="ABCD1234" [(ngModel)]="staffCode" name="staff" />
-                        <button ad-button nzColor="red" (click)="addStaff()">
+                        <button ad-button nzColor="primary" (click)="addStaff()">
                             {{ "button.add" | translate }}
                         </button>
                     </div>
@@ -359,7 +359,7 @@
                 <td>{{ data?.fullName }}</td>
                 <td>{{ data.phone }}</td>
                 <td>
-                    <button ad-button nzColor="red" nzType="dashed" (click)="deleteStaff(data._id)">
+                    <button ad-button nzColor="primary" nzType="dashed" (click)="deleteStaff(data._id)">
                         {{ "common.delete" | translate }}
                     </button>
                 </td>

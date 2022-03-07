@@ -6,7 +6,7 @@
                 <input type="text" [(ngModel)]="searchValue" nz-input (ngModelChange)="onFind($event)"
                     [placeholder]="'warranty-repair.find-brand'|translate" />
             </nz-input-group>&nbsp;
-            <button ad-button nzColor="red" (click)="handleVisible(true)">
+            <button ad-button nzColor="primary" (click)="handleVisible(true)">
                 {{'button.add'|translate}}
             </button>
         </div>
@@ -30,7 +30,7 @@
                     <td><img [src]="data.image" height="50" /></td>
                     <td>{{ data.priority }}</td>
                     <td>
-                        <button nz-popconfirm ad-button nzColor="red" (click)="handleDelete(data._id)">
+                        <button nz-popconfirm ad-button nzColor="primary" (click)="handleDelete(data._id)">
                             {{'common.delete'|translate}}
                         </button>
                         &nbsp;

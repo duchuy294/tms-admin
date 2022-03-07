@@ -1,48 +1,47 @@
 <div class="grid__container">
     <div class="grid__header">
         <div class="grid__action__left">
-            <button ad-button nzColor="red" (click)="showFilter = !showFilter">
+            <!-- <button ad-button nzColor="primary" (click)="showFilter = !showFilter">
                 {{ "filter.filter" | translate }}
             </button>
-            &nbsp;
-            <button ad-button nzColor="primary" (click)="export()" style="display:none">
+            &nbsp; -->
+            <!-- <button ad-button nzColor="primary" (click)="export()">
                 {{ "actions.export" | translate }}
             </button>
-            &nbsp;
-            <button ad-button nzColor="primary" (click)="exportForUser()">
-                {{ "actions.exportForUser" | translate }}
+            &nbsp; -->
+            <button ad-button style="font-weight: bold;" nzColor="primary" (click)="exportForUser()">
+                {{ "actions.exportForUser" | translate | uppercase }}
             </button>
             &nbsp;
-            <button ad-button style="background: #079ce0; color:#fff" (click)="exportForSo()">
-                {{ "actions.exportForSo" | translate }}
+            <button ad-button style="font-weight: bold;" nzColor="primary" (click)="exportForSo()">
+                {{ "actions.exportForSo" | translate | uppercase }}
             </button>
             &nbsp;
-            <button ad-button nzColor="primary" (click)="exportDistance()" style="display:none">
-                {{ "actions.exportDistance" | translate }}
+            <!-- <button ad-button style="background: #f3c74c; color:rgb(0, 0, 0) ;font-weight: bold;" (click)="exportDistance()" style="display:none">
+                {{ "actions.exportDistance" | translate | uppercase }}
+            </button>
+            &nbsp; -->
+            <button ad-button style="background: #079ce0; color:#ffffff ;font-weight: bold;" (click)="showModalAssign()">
+                {{ "actions.quickAssign" | translate | uppercase }}
             </button>
             &nbsp;
-            <button ad-button nzColor="primary" (click)="showModalAssign()">
-                {{ "actions.quickAssign" | translate }}
-            </button>
-            &nbsp;
-            <button ad-button nzColor="primary" (click)="showModalAssign(true)">
-                {{ "actions.quickAssignBySO" | translate }}
-            </button>
-            &nbsp;
-            <button *ngIf="currentUser.roles.includes(AdminPermission.ASSIGN_3PL)" ad-button
-                style="background: #28a745; color:#fff" (click)="showModal3PLOrder(false)">
-                {{ "actions.quick3PLAssign" | translate }}
+            <button ad-button style="background: #079ce0; color:rgb(255, 255, 255) ;font-weight: bold;" (click)="showModalAssign(true)">
+                {{ "actions.quickAssignBySO" | translate | uppercase }}
             </button>
             &nbsp;
             <button *ngIf="currentUser.roles.includes(AdminPermission.ASSIGN_3PL)" ad-button
-                style="background: #28a745; color:#fff" (click)="showModal3PLOrder(true)">
-                {{ "actions.quick3PLAssignBySO" | translate }}
+                style="background: #28a745; color:#fff;font-weight: bold;" (click)="showModal3PLOrder(false)">
+                {{ "actions.quick3PLAssign" | translate | uppercase }}
             </button>
-
             &nbsp;
-            <button *ngIf="currentUser.roles.includes(AdminPermission.CANCEL_ORDERS_FASTLY)" ad-button nzColor="primary"
+            <button *ngIf="currentUser.roles.includes(AdminPermission.ASSIGN_3PL)" ad-button
+                style="background: #28a745; color:#fff; font-weight: bold;" (click)="showModal3PLOrder(true)">
+                {{ "actions.quick3PLAssignBySO" | translate | uppercase }}
+            </button>
+            &nbsp;
+            <button *ngIf="currentUser.roles.includes(AdminPermission.CANCEL_ORDERS_FASTLY)" ad-button style="font-weight: bold;" nzColor="primary"
                 (click)="showModalQuickCancelOrder()">
-                {{ "actions.quickCancelOrder" | translate }}
+                {{ "actions.quickCancelOrder" | translate | uppercase }}
             </button>
         </div>
     </div>

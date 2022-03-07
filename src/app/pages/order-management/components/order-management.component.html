@@ -1,6 +1,6 @@
 <page-wrapper [nzTitle]="'order.list'|translate">
-    <nz-tabset>
-        <nz-tab [nzTitle]="'common.all' | translate | uppercase">
+    <nz-tabset >
+        <nz-tab class="page__wrapper" [nzTitle]="'common.all' | translate | uppercase">
             <ng-template nz-tab>
                 <order-list></order-list>
             </ng-template>
@@ -16,7 +16,7 @@
             </ng-template>
         </nz-tab> -->
         <nz-tab [nzTitle]="'service.return-pending.title' | translate | uppercase">
-            <ng-template nz-tab>
+            <ng-template  nz-tab>
                 <return-management></return-management>
             </ng-template>
         </nz-tab>

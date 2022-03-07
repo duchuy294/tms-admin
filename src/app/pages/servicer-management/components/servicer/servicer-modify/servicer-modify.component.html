@@ -371,10 +371,10 @@
                                                         : teams
                                                 " [nzValue]="item" [nzLabel]="item.name"></nz-option>
                                         </nz-select>
-                                        <button type="button" ad-button nzColor="red" (click)="addTeam()">
+                                        <button type="button" ad-button nzColor="primary" (click)="addTeam()">
                                             {{ "button.add" | translate }}
                                         </button>
-                                        <button type="button" ad-button nzColor="red" (click)="addAllTeams()">
+                                        <button type="button" ad-button nzColor="primary" (click)="addAllTeams()">
                                             {{ "button.addAll" | translate }}
                                         </button>
                                     </div>
@@ -475,7 +475,7 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <button ad-button nzColor="red" (click)="addVehicle()">
+                                <button ad-button nzColor="primary" (click)="addVehicle()">
                                     {{ "vehicle.add" | translate }}
                                 </button>
                             </div>
@@ -504,12 +504,12 @@
                                                     " [nzValue]="item._id">
                                                 </nz-option>
                                             </nz-select>
-                                            <button type="button" ad-button nzColor="red" (click)="
+                                            <button type="button" ad-button nzColor="primary" (click)="
                                                     addVehicleEnterpriseStaff()
                                                 ">
                                                 {{ "button.add" | translate }}
                                             </button>
-                                            <button type="button" ad-button nzColor="red" (click)="
+                                            <button type="button" ad-button nzColor="primary" (click)="
                                                     addVehicleEnterpriseStaff(
                                                         'all'
                                                     )

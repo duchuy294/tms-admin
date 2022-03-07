@@ -28,7 +28,7 @@
                         <input nz-input [(ngModel)]="statisticQueryModel.servicerCodes"
                             placeholder="{{ 'table.servicer-code' | translate}}">
                     </div>
-                    <button ad-button (click)="filterStatistic()" nzColor="red">{{ 'table.apply' | translate }}</button>
+                    <button ad-button (click)="filterStatistic()" nzColor="primary">{{ 'table.apply' | translate }}</button>
                 </div>
                 <div class="servicer__statistic-footer">
                     <nz-tag [nzColor]="'magenta'">{{'dashboard.status.incident'|translate}}:
